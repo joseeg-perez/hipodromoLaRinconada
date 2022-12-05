@@ -8,7 +8,7 @@ const v1EntrenadorRouter = require("./v1/routes/entrenadorRoutes.js");
 const v1PropietarioRouter = require("./v1/routes/propietarioRoutes.js");
 const v1RolRouter = require("./v1/routes/rolRoutes.js");
 const v1StudRouter = require("./v1/routes/studRoutes.js");
-
+const v1ReporteRouter = require("./reports/reportes.js")
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +21,7 @@ app.use("/api/v1/entrenadores", v1EntrenadorRouter);
 app.use("/api/v1/propietarios", v1PropietarioRouter);
 app.use("/api/v1/roles",v1RolRouter);
 app.use("/api/v1/studs",v1StudRouter);
+app.use("/api/v1/reportes",v1ReporteRouter);
 
 app.listen(PORT, () => {
     console.log(`Servidor conectado en el puerto ${PORT} :)`);
