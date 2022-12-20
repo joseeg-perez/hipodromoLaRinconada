@@ -1,8 +1,25 @@
 const authService = require("../services/authServices.js");
+const validator = require("email-validator");
 
 const registrarse = async (req, res) => {
         
     const { username, password } = req.body;
+
+    const emailValido = validator.validate(username);
+
+    if (!emailValido){
+        res
+        .status(422)
+        .send({
+            status: "FAILED",
+            data: {
+                error:
+                "La direccion de correo electronico es invalida",
+            }
+        })
+            return;
+    }
+
     if (!username || !password){
         res 
         .status(400)
