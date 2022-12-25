@@ -1,10 +1,8 @@
 const Auth = require("../database/auth.js");
 
 const registrarse = (nuevoUsuario) => {
-    const usuarioAInsertar = nuevoUsuario;
-
     try{
-        const usuarioCreado = Auth.registrarse(usuarioAInsertar);
+        const usuarioCreado = Auth.registrarse(nuevoUsuario);
         return(usuarioCreado);
     }
     catch(error){

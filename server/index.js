@@ -1,5 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+
+dotenv.config();//Para usar las variables de entorno
 
 const v1JineteRouter = require("./v1/routes/jineteRoutes.js");
 const v1CarreraRouter = require("./v1/routes/carreraRoutes.js");
@@ -12,7 +15,7 @@ const v1ReporteRouter = require("./reports/reportes.js");
 const v1AuthRouter = require("./v1/routes/authRoutes.js");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // app.use(express.urlencoded({ extended: false }));
 app.use(express.json())

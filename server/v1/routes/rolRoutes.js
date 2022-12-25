@@ -11,6 +11,6 @@ router.post("/registrar_rol", rolController.registrarRol);
 
 router.patch("/actualizar_rol", rolController.actualizarRol);
 
-router.delete("/eliminar_rol", rolController.borrarRol);
+router.delete("/:rolId", rolController.borrarRol);
 
 module.exports = router;

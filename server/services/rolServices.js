@@ -1,22 +1,46 @@
 const Rol = require("../database/rol.js");
 
-const obtenerListaDeRoles = (filtrar) => {
+const obtenerListaDeRoles = async () => {
+    try {
+        const listaRoles = await Rol.obtenerListaDeRoles();
+
+        return(listaRoles);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerRolIndividual = async (rolId) => {
+    try {
+        const rol = await Rol.obtenerRolIndividual(rolId);
+
+        return(rol);
+    } catch (error) {
+        throw(error);
+    }
 
 };
 
-const obtenerRolIndividual = (rolId) => {
-
-};
-
-const registrarRol = (nuevoRol) => {
-
+const registrarRol = async(nuevoRol) => {
+    try {
+        const RolCreado = await Rol.registrarRol(nuevoRol);
+        
+        return(RolCreado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const actualizarRol = (rolId, cambios) => {
 
 };
 
-const borrarRol = (rolId) => {
+const borrarRol = async(rolId) => {
+    try {
+        return(await Rol.borrarRol(rolId));
+    } catch (error) {
+        throw(error);
+    }
 
 };
 

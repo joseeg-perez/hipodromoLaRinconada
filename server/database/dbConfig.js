@@ -10,10 +10,11 @@ const { Pool }= require("pg");
 // };
 
 const config = {
-    user: "postgres",
-    host: "localhost",
-    password: "123",
-    database: "test"
+    user: "BPG_grupo3",
+    port: "5432",
+    host: "labs-dbservices01.ucab.edu.ve",
+    password: "123456",
+    database: "ProyectoGrupo3"
 };
 
 const pool = new Pool(config);
