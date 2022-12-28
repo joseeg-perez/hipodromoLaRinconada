@@ -1,6 +1,6 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 dotenv.config();//Para usar las variables de entorno
 
@@ -17,8 +17,10 @@ const v1AuthRouter = require("./v1/routes/authRoutes.js");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
+app.use(cors());
+
 
 app.use("/api/v1/jinetes", v1JineteRouter);
 app.use("/api/v1/carreras", v1CarreraRouter);

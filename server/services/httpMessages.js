@@ -25,6 +25,14 @@ const registroExistente = (nombreRegistro) => {
         status: 400,
         message: `Este ${nombreRegistro} ya se encuentra registrado`};
 };
+
+const idNoEncontrado = (nombreCampo, id) => {
+    throw{
+        status: 404,
+        message: `${nombreCampo} con el id: '${id}' no ha sido registrado.`
+    }
+};
+
 //Ocurre cuando se accede a una tabla vacia
 const nadaQueMostrar = (res) => {
     res
@@ -54,4 +62,5 @@ module.exports = {
     registroExistente,
     nadaQueMostrar,
     idVacio,
+    idNoEncontrado,
 };

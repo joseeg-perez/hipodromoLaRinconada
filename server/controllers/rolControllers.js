@@ -58,7 +58,7 @@ const actualizarRol = (req, res) => {
 
 };
 
-const borrarRol = async(req, res) => {
+const borrarRol = async (req, res) => {
     const {
         params: {rolId},
     } = req;

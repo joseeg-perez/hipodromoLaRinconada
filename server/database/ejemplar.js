@@ -1,24 +1,157 @@
-//const DB
+const dbConnection = require("../database/dbConfig.js");
+const httpError = require("../services/httpMessages.js");
 
+const obtenerListaDeEjemplares = async (filtrar) => {
+    const query = {
+        text: "SELECT * FROM ejemplar",
+        rowMode: "array",
+    };
 
-const obtenerListaDeEjemplares = (filtrar) => {
+    try {
+        const { rows } = await dbConnection.query(query)
+        if (rows.length === 0){
+            throw{
+                status: 404,
+                message: "No se ha registrado ningun ejemplar por los momentos.",
+            }
+        }
+        dbConnection.end;
 
+        return (rows);
+
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
-const obtenerEjemplarIndividual = (ejemplarId) => {
+const obtenerEjemplarIndividual = async (ejemplarId) => {
+    const query = {
+        text: "SELECT * FROM ejemplar WHERE codigo_ejemplar=$1",
+        values: [ejemplarId],
+        rowMode: "array",
+    };
 
+    try {
+        const { rows } = await dbConnection.query(query);
+        dbConnection.end;
+
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
-const registrarEjemplar = (nuevoEjemplar) => {
+const registrarEjemplar = async (nuevoEjemplar) => {
+    const { 
+        nombreEjemplar,
+        numeroEjemplar,
+        tatlabialEjemplar,
+        precioEjemplar,
+        fecha_nacEjemplar,
+        pesoEjemplar,
+        padreEjemplar,
+        madreEjemplar,
+        imagenEjemplar,
+        propietarioEjemplar,
+        haraEjemplar,
+        pelajeEjemplar,
+        generoEjemplar,
+     } = nuevoEjemplar;
 
+    const text = `INSERT INTO ejemplar(
+        nombre_ejemplar,
+        numero_ejemplar,
+        numero_tatuaje_labial,
+        sexo_ejemplar,
+        fecha_nacimiento_ejemplar,
+        imagen_ejemplar,
+        peso_ejemplar,
+        precio_ejemplar,
+        fk_hara,
+        fk_madre_ejemplar,
+        fk_padre_ejemplar,
+        fk_pelaje) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
+    const values = [nombreEjemplar,
+         numeroEjemplar,
+         tatlabialEjemplar,
+         generoEjemplar,
+         fecha_nacEjemplar, 
+         imagenEjemplar, 
+         pesoEjemplar, 
+         precioEjemplar, 
+         haraEjemplar, 
+         madreEjemplar, 
+         padreEjemplar, 
+         pelajeEjemplar];
+
+    try {
+        const res = await dbConnection.query(text, values);
+        console.log(res)
+        dbConnection.end;
+
+        return (values);
+    } catch (error) {
+        if (error.code === '23505') {
+            throw {
+                status: 409,
+                message: `El ejemplar '${nombre}' ya ha sido registrado.`,
+            }
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
-const actualizarEjemplar = (ejemplarId, cambios) => {
+const actualizarEjemplar = async (ejemplarId, cambios) => {
 
+    //terminar de aclarar que campos se editan
+    const query = {
+        text:"UPDATE ejemplar SET ejemplar=$1 WHERE numero_tatuaje_labial =$2",
+        values: [cambios, ejemplarId],
+        rowMode: "array",
+    }
+
+    const {
+
+    } = cambios;
+
+    console.log(cambios)
+        try {
+            const res = await dbConnection.query(query);
+            if (res.rows.length === 0)
+                httpError.idNoEncontrado("El ejemplar", ejemplarId);
+              
+        } catch (error) {
+            throw(error);
+        }
+        return;
+
+        // rows = cambios;
+        // console.log("Estas son las filas  con cambios: ", )
+
+    
 };
 
-const borrarEjemplar = (ejemplarId) => {
+const borrarEjemplar = async (ejemplarId) => {
+    const query = {
+        text: "DELETE FROM ejemplar WHERE codigo_ejemplar=$1",
+        values: [ejemplarId],
+        rowMode: "array",
+    };
 
+    try {
+       
+        const res = await dbConnection.query(query);        
+        if (res.rowCount === 0){
+            throw{
+                status: 404,
+                message: `El ejemplar con el id: '${ejemplarId}' no se encuentra registrado.`,
+            }
+        }
+        dbConnection.end;
+        return(res.rowCount > 0);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
 module.exports = {

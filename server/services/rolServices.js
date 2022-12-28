@@ -18,7 +18,6 @@ const obtenerRolIndividual = async (rolId) => {
     } catch (error) {
         throw(error);
     }
-
 };
 
 const registrarRol = async(nuevoRol) => {
@@ -41,7 +40,6 @@ const borrarRol = async(rolId) => {
     } catch (error) {
         throw(error);
     }
-
 };
 
 module.exports = {

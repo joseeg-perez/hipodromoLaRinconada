@@ -1,23 +1,51 @@
 const Ejemplar = require("../database/ejemplar.js");
 
-const obtenerListaDeEjemplares = (filtrar) => {
+const obtenerListaDeEjemplares = async (filtrar) => {
+    try {
+        const listaEjemplares = await Ejemplar.obtenerListaDeEjemplares();
 
+        return(listaEjemplares);
+    } catch (error) {
+        throw(error);
+    }
 };
 
-const obtenerEjemplarIndividual = (ejemplarId) => {
+const obtenerEjemplarIndividual = async (ejemplarId) => {
+    try {
+        const ejemplar = await Ejemplar.obtenerEjemplarIndividual(ejemplarId);
 
+        return(ejemplar);
+    } catch (error) {
+        throw(error);
+    }
 };
 
-const registrarEjemplar = (nuevoEjemplar) => {
-
+const registrarEjemplar = async (nuevoEjemplar) => {
+    try {
+        const ejemplarCreado = await Ejemplar.registrarEjemplar(nuevoEjemplar);
+        
+        return(ejemplarCreado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const actualizarEjemplar = (ejemplarId, cambios) => {
-
+    try {
+        const ejemplarActualizado = Ejemplar.actualizarEjemplar(ejemplarId, cambios);
+        
+        return(ejemplarActualizado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
-const borrarEjemplar = (ejemplarId) => {
-
+const borrarEjemplar = async (ejemplarId) => {
+    try {
+        return(await Ejemplar.borrarEjemplar(ejemplarId));
+    } catch (error) {
+        throw(error);
+    }
 };
 
 module.exports = {
