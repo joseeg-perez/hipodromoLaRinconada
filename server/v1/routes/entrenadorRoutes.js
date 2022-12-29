@@ -9,8 +9,8 @@ router.get("/:entrenadorId", entrenadorController.obtenerEntrenadorIndividual);
 
 router.post("/registrar_entrenador", entrenadorController.registrarEntrenador);
 
-router.patch("/actualizar_entrenador", entrenadorController.actualizarEntrenador);
+router.patch("/:entrenadorId", entrenadorController.actualizarEntrenador);
 
-router.delete("/eliminar_entrenador", entrenadorController.borrarEntrenador);
+router.delete("/:entrenadorId", entrenadorController.borrarEntrenador);
 
 module.exports = router;

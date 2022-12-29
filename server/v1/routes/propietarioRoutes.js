@@ -9,8 +9,8 @@ router.get("/:propietarioId", propietarioController.obtenerPropietarioIndividual
 
 router.post("/registrar_propietario", propietarioController.registrarPropietario);
 
-router.patch("/actualizar_propietario", propietarioController.actualizarPropietario);
+router.patch("/:propietarioId", propietarioController.actualizarPropietario);
 
-router.delete("/eliminar_propietario", propietarioController.borrarPropietario);
+router.delete("/:propietarioId", propietarioController.borrarPropietario);
 
 module.exports = router;

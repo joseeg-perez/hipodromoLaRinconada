@@ -9,8 +9,8 @@ router.get("/:carreraId", carreraController.obtenerCarreraIndividual);
 
 router.post("/registrar_carrera", carreraController.registrarCarrera);
 
-router.patch("/actualizar_carrera", carreraController.actualizarCarrera);
+router.patch("/:carreraId", carreraController.actualizarCarrera);
 
-router.delete("/eliminar_carrera", carreraController.borrarCarrera);
+router.delete("/:carreraId", carreraController.borrarCarrera);
 
 module.exports = router;

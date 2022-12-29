@@ -1,23 +1,40 @@
 const Jinete = require("../database/jinete.js");
 
-const obtenerListaDeJinetes = (filtrar) => {
+
+const obtenerListaDeJinetes = async () => {
+    try {
+        const listaJinetes = await Jinete.obtenerListaDeJinetes();
+
+        return(listaJinetes);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerJineteIndividual = async (jineteId) => {
+    try {
+        const jinete = await Jinete.obtenerJineteIndividual(jineteId);
+
+        return(jinete);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const registrarJinete = async (nuevoJinete) => {
 
 };
 
-const obtenerJineteIndividual = (jineteId) => {
+const actualizarJinete = async (jineteId, cambios) => {
 
 };
 
-const registrarJinete = (nuevoJinete) => {
-
-};
-
-const actualizarJinete = (jineteId, cambios) => {
-
-};
-
-const borrarJinete = (jineteId) => {
-
+const borrarJinete = async (jineteId) => {
+    try {
+        return(await Jinete.borrarJinete(jineteId));
+    } catch (error) {
+        throw(error);
+    }
 };
 
 module.exports = {

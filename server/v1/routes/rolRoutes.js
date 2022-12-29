@@ -9,7 +9,7 @@ router.get("/:rolId", rolController.obtenerRolIndividual);
 
 router.post("/registrar_rol", rolController.registrarRol);
 
-router.patch("/actualizar_rol", rolController.actualizarRol);
+router.patch("/:rolId", rolController.actualizarRol);
 
 router.delete("/:rolId", rolController.borrarRol);
 

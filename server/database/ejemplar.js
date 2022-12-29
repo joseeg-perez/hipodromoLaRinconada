@@ -1,24 +1,19 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../services/httpMessages.js");
 
-const obtenerListaDeEjemplares = async (filtrar) => {
+const obtenerListaDeEjemplares = async () => {
     const query = {
         text: "SELECT * FROM ejemplar",
         rowMode: "array",
     };
 
     try {
-        const { rows } = await dbConnection.query(query)
-        if (rows.length === 0){
-            throw{
-                status: 404,
-                message: "No se ha registrado ningun ejemplar por los momentos.",
-            }
-        }
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.noRegistrado("ningun ejemplar");
+
         dbConnection.end;
-
         return (rows);
-
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
     }
@@ -33,8 +28,10 @@ const obtenerEjemplarIndividual = async (ejemplarId) => {
 
     try {
         const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.idNoEncontrado("El ejemplar", ejemplarId);
+        
         dbConnection.end;
-
         return (rows);
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };

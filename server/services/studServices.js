@@ -1,22 +1,34 @@
 const Stud = require("../database/stud.js");
 
-const obtenerListaDeStuds = (filtrar) => {
+const obtenerListaDeStuds = async () => {
+    try {
+        const listaStuds = await Stud.obtenerListaDeStuds();
+
+        return(listaStuds);
+    } catch (error) {
+        throw(error);
+    }
+};  
+
+const obtenerStudIndividual = async (studId) => {
+    try {
+        const stud = await Stud.obtenerStudIndividual(studId);
+
+        return(stud);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const registrarStud = async (nuevoStud) => {
 
 };
 
-const obtenerStudIndividual = (studId) => {
+const actualizarStud = async (studId, cambios) => {
 
 };
 
-const registrarStud = (nuevoStud) => {
-
-};
-
-const actualizarStud = (studId, cambios) => {
-
-};
-
-const borrarStud = (studId) => {
+const borrarStud = async (studId) => {
 
 };
 

@@ -11,6 +11,6 @@ router.post("/registrar_ejemplar", ejemplarController.registrarEjemplar);
 
 router.patch("/:ejemplarId", ejemplarController.actualizarEjemplar);
 
-router.delete("/eliminar_ejemplar", ejemplarController.borrarEjemplar);
+router.delete("/:ejemplarId", ejemplarController.borrarEjemplar);
 
 module.exports = router;

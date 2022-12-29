@@ -7,7 +7,6 @@ const faltaInformacion = (res) =>{
             error:"Falta informacion en uno de los campos obligatorios."},
     });
 };
-
 //Ocurre cuando se realizan errores de sintaxis
 const campoInvalido = (res, nombreCampo) => {
     res
@@ -25,6 +24,7 @@ const registroExistente = (nombreRegistro) => {
         status: 400,
         message: `Este ${nombreRegistro} ya se encuentra registrado`};
 };
+
 
 const idNoEncontrado = (nombreCampo, id) => {
     throw{
@@ -54,7 +54,22 @@ const idVacio = (res, parametro) => {
     });
 };
 
-
+const idInvalido = (res, parametro) => {
+    res
+    .status(400)
+    .send({
+        status: "FAILED",
+        data: {
+            error:`El parametro '${parametro}' unicamente puede contener numeros.`},
+    });
+}
+/////////////////////////////////////////////////////////////
+const noRegistrado = (nombreCampo) => {
+    throw{
+        status: 404,
+        message: `No se ha registrado ${nombreCampo} por los momentos.`,
+    }
+}
 
 module.exports = {
     faltaInformacion,
@@ -63,4 +78,6 @@ module.exports = {
     nadaQueMostrar,
     idVacio,
     idNoEncontrado,
+    idInvalido,
+    noRegistrado,
 };

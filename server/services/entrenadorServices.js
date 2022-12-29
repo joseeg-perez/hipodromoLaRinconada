@@ -1,22 +1,34 @@
 const Entrenador = require("../database/entrenador.js");
 
-const obtenerListaDeEntrenadores = (filtrar) => {
+const obtenerListaDeEntrenadores = async () => {
+    try {
+        const listaEntrenadores = await Entrenador.obtenerListaDeEntrenadores();
+
+        return(listaEntrenadores);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerEntrenadorIndividual = async (entrenadorId) => {
+    try {
+        const entrenador = await Entrenador.obtenerEntrenadorIndividual(entrenadorId);
+
+        return(entrenador);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const registrarEntrenador = async (nuevoEntrenador) => {
 
 };
 
-const obtenerEntrenadorIndividual = (entrenadorId) => {
+const actualizarEntrenador = async (entrenadorId, cambios) => {
 
 };
 
-const registrarEntrenador = (nuevoEntrenador) => {
-
-};
-
-const actualizarEntrenador = (entrenadorId, cambios) => {
-
-};
-
-const borrarEntrenador = (entrenadorId) => {
+const borrarEntrenador = async (entrenadorId) => {
 
 };
 

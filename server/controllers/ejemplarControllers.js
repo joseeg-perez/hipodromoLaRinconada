@@ -5,13 +5,12 @@ const obtenerListaDeEjemplares = async (req, res) => {
     try {
         const listaEjemplares =  await ejemplarService.obtenerListaDeEjemplares();
 
-        res.send({ status: "OK", data: listaEjemplares });
-
+        res.status(200).send({ status: "OK", data: listaEjemplares });
     } catch (error) {
         res 
         .status(error?.status || 500)
         .send({ status: "FAILED", data: { error: error?.message || error }});
-    };
+    }
 };
 
 const obtenerEjemplarIndividual = async (req, res) => { 
@@ -21,13 +20,13 @@ const obtenerEjemplarIndividual = async (req, res) => {
     
     try {
         if (!ejemplarId)
-            httpError.idVacio(res, ":ejemplarId");
+            return(httpError.idVacio(res, ":ejemplarId"));
+
+        if (isNaN(ejemplarId) || ejemplarId === ' ')
+            return(httpError.idInvalido(res, ":ejemplarId"));
 
         const ejemplar = await ejemplarService.obtenerEjemplarIndividual(ejemplarId);
-        if (ejemplar.length === 0)
-            return(res.status(202).send({status: "FAILED", data:`El ejemplar con codigo '${ejemplarId}' no se encuentra registrado.`}));
-
-        return(res.status(200).send({ status: "OK", data: ejemplar}));
+        res.status(200).send({ status: "OK", data: ejemplar});
     } catch (error) {
         res
         .status(error?.status || 500)

@@ -10,25 +10,27 @@ const obtenerListaDeRoles = async (req, res) => {
         res 
         .status(error?.status || 500)
         .send({ status: "FAILED", data: { error: error?.message || error }});
-    };
+    }
 };
-//Este es el que esta dando el error
+
 const obtenerRolIndividual = async (req, res) => {
     const {
         params: { rolId },
     } = req;
-    
+
     try {
         if (!rolId)
-            httpError.idVacio(res, ":rolId");
+            return(httpError.idVacio(res, ":rolId"));
+
+        if (isNaN(rolId) || rolId === ' ')
+            return(httpError.idInvalido(res, ":rolId"));
 
         const rol = await rolService.obtenerRolIndividual(rolId);
-        if (rol.length === 0)
-            return(res.status(202).send({status: "FAILED", data:`El rol con codigo '${rolId}' no se encuentra registrado.`}));
-
-        return(res.status(200).send({ status: "OK", data: rol}));
+        res.status(200).send({ status: "OK", data: rol});
     } catch (error) {
-        throw(error);        
+        res 
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error }});       
     }
 };
 
@@ -39,12 +41,11 @@ const registrarRol = async (req, res) => {
         return (httpError.faltaInformacion(res));
 
     const nuevoRol = {
-        nombre: nombre.toLowerCase()
+        nombre: nombre.toLowerCase(),
     };
 
     try {
         const rolCreado = await rolService.registrarRol(nuevoRol);
-
         res.status(200).send({ status: "OK", data: `Se ha creado el rol '${rolCreado}' de forma satisfactoria` });
     } catch (error) {
         res
@@ -63,12 +64,14 @@ const borrarRol = async (req, res) => {
         params: {rolId},
     } = req;
 
-    if (!rolId)
-        httpError.faltaInformacion(res);
-
     try {
-        await rolService.borrarRol(rolId);
+        if (isNaN(rolId) || jineteId === ' ')
+            return(httpError.idInvalido(res, ":rolId"));
 
+        if (!rolId)
+            httpError.faltaInformacion(res);
+
+        await rolService.borrarRol(rolId);
         res.status(200).send({ status: "OK", data: "Rol eliminado con exito." });
     } catch (error) {
         res

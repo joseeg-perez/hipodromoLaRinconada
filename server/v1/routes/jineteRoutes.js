@@ -9,8 +9,8 @@ router.get("/:jineteId", jineteController.obtenerJineteIndividual);
 
 router.post("/registrar_jinete", jineteController.registrarJinete);
 
-router.patch("/actualizar_jinete", jineteController.actualizarJinete);
+router.patch("/:jineteId", jineteController.actualizarJinete);
 
-router.delete("/eliminar_jinete", jineteController.borrarJinete);
+router.delete("/:jineteId", jineteController.borrarJinete);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const dbConnection = require("../database/dbConfig.js");
+const httpError = require("../services/httpMessages.js");
 
 const obtenerListaDeRoles = async () => {
     const query = {
@@ -7,17 +8,12 @@ const obtenerListaDeRoles = async () => {
     };
 
     try {
-        const { rows } = await dbConnection.query(query)
-        if (rows.length === 0){
-            throw{
-                status: 404,
-                message: "No se ha registrado ningun rol por los momentos.",
-            }
-        }
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.noRegistrado("ningun rol");
+
         dbConnection.end;
-
         return (rows);
-
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
     }
@@ -32,8 +28,10 @@ const obtenerRolIndividual = async (rolId) => {
 
     try {
         const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.idNoEncontrado("El rol", rolId);
+        
         dbConnection.end;
-
         return (rows);
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
@@ -73,14 +71,9 @@ const borrarRol = async (rolId) => {
     };
 
     try {
-       
         const res = await dbConnection.query(query);        
-        if (res.rowCount === 0){
-            throw{
-                status: 404,
-                message: `El rol con el id: '${rolId}' no se encuentra registrado.`,
-            }
-        }
+        if (res.rowCount === 0)
+        httpError.idNoEncontrado("El rol", rolId);
         dbConnection.end;
         return(res.rowCount > 0);
     } catch (error) {

@@ -21,7 +21,7 @@ const registrarse = async (req, res) => {
         username,
         password,
     };
-
+    
     try{
          const usuarioCreado = await authService.registrarse(nuevoUsuario);
          res.status(201).send({ status: "OK" , data: usuarioCreado });

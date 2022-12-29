@@ -1,25 +1,50 @@
 const studService = require("../services/studServices.js");
+const httpError = require("../services/httpMessages.js");
 
-const obtenerListaDeStuds = (req, res) => {
-    res.send("Estamos en listado de studs");
+const obtenerListaDeStuds = async (req, res) => {
+    try {
+        const listaStuds = await studService.obtenerListaDeStuds();
 
+        res.status(200).send({ status: "OK", data: listaStuds });
+    } catch (error) {
+        res 
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error }});
+    }
 };
 
-const obtenerStudIndividual = (req, res) => {
-    res.send("Estamos en stud individual");
+const obtenerStudIndividual = async (req, res) => {
+    const {
+        params: { studId },
+    } = req;
+    
+    try {
+        if (!studId)
+            return(httpError.idVacio(res, ":studId"));
+
+        if (isNaN(studId) || studId === ' ')
+            return(httpError.idInvalido(res, ":studId"));
+
+        const stud = await studService.obtenerStudIndividual(studId);
+        res.status(200).send({ status: "OK", data: stud});
+    } catch (error) {
+        res 
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error }});        
+    }
 };
 
-const registrarStud = (req, res) => {
+const registrarStud = async (req, res) => {
     res.send("Estamos en registar stud");
 
 };
 
-const actualizarStud = (req, res) => {
+const actualizarStud = async (req, res) => {
     res.send("Estamos en actualizar stud");
 
 };
 
-const borrarStud = (req, res) => {
+const borrarStud = async (req, res) => {
     res.send("Estamos en borrar stud");
 
 };

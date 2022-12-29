@@ -9,8 +9,8 @@ router.get("/:studId", studController.obtenerStudIndividual);
 
 router.post("/registrar_stud", studController.registrarStud);
 
-router.patch("/actualizar_stud", studController.actualizarStud);
+router.patch("/:studId", studController.actualizarStud);
 
-router.delete("/eliminar_stud", studController.borrarStud);
+router.delete("/:studId", studController.borrarStud);
 
 module.exports = router;

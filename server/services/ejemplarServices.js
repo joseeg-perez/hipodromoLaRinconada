@@ -1,6 +1,6 @@
 const Ejemplar = require("../database/ejemplar.js");
 
-const obtenerListaDeEjemplares = async (filtrar) => {
+const obtenerListaDeEjemplares = async () => {
     try {
         const listaEjemplares = await Ejemplar.obtenerListaDeEjemplares();
 

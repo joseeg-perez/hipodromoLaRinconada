@@ -1,22 +1,34 @@
 const Carrera = require("../database/carrera.js");
 
-const obtenerListaDeCarreras = (filtrar) => {
+const obtenerListaDeCarreras = async () => {
+    try {
+        const listaCarreras = await Carrera.obtenerListaDeCarreras();
+
+        return(listaCarreras);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerCarreraIndividual = async (carreraId) => {
+    try {
+        const carrera = await Carrera.obtenerCarreraIndividual(carreraId);
+
+        return(carrera);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const registrarCarrera = async (nuevaCarrera) => {
 
 };
 
-const obtenerCarreraIndividual = (carreraId) => {
+const actualizarCarrera = async (carreraId, cambios) => {
 
 };
 
-const registrarCarrera = (nuevaCarrera) => {
-
-};
-
-const actualizarCarrera = (carreraId, cambios) => {
-
-};
-
-const borrarCarrera = (carreraId) => {
+const borrarCarrera = async (carreraId) => {
 
 };
 
