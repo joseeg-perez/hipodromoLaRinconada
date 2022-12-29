@@ -35,7 +35,47 @@ const obtenerJineteIndividual = async (req, res) => {
 };
 
 const registrarJinete = async (req, res) => {
-    
+    const { 
+        cedulaPersona,
+        nombre1Persona,
+        nombre2Persona,
+        apellido1Persona,
+        apellido2Persona,
+        fechaNacimiento,
+        alturaJinete,
+        fkRango,
+        pesoJinete, 
+    } = req.body;
+
+    if (!cedulaPersona ||
+        !nombre1Persona||
+        !apellido1Persona ||
+        !fechaNacimiento ||
+        !alturaJinete || 
+        !fkRango || 
+        !pesoJinete)
+        return (httpError.faltaInformacion(res));
+
+    const nuevoJinete = {
+        cedulaPersona,
+        nombre1Persona: nombre1Persona.toLowerCase(),
+        nombre2Persona: nombre2Persona.toLowerCase(),
+        apellido1Persona: apellido1Persona.toLowerCase(),
+        apellido2Persona: apellido2Persona.toLowerCase(),
+        fechaNacimiento,
+        alturaJinete,
+        fkRango,
+        pesoJinete,
+    };
+
+    try {
+        const jineteCreado = await jineteService.registrarJinete(nuevoJinete);
+        res.status(200).send({ status: "OK", data: `Se ha registrado el jinete '${jineteCreado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const actualizarJinete = async (req, res) => {
@@ -53,10 +93,10 @@ const borrarJinete = async (req, res) => {
             return(httpError.idInvalido(res, ":jineteId"));
 
         if (!jineteId)
-            httpError.faltaInformacion(res);
+            return(httpError.faltaInformacion(res));
 
         await jineteService.borrarJinete(jineteId);
-        res.status(200).send({ status: "OK", data: "Jinete eliminado con exito." });
+        res.status(200).send({ status: "OK", data: `El jinete con el id '${jineteId}' se ha eliminado con exito.` });
     } catch (error) {
         res
         .status(error?.status || 500)

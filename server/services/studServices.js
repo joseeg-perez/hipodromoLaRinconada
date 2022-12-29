@@ -21,7 +21,13 @@ const obtenerStudIndividual = async (studId) => {
 };
 
 const registrarStud = async (nuevoStud) => {
-
+    try {
+        const studCreado = await Stud.registrarStud(nuevoStud);
+        
+        return(studCreado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const actualizarStud = async (studId, cambios) => {
@@ -29,7 +35,11 @@ const actualizarStud = async (studId, cambios) => {
 };
 
 const borrarStud = async (studId) => {
-
+    try {
+        await Stud.borrarStud(studId);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 module.exports = {

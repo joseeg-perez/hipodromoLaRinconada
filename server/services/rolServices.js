@@ -22,9 +22,9 @@ const obtenerRolIndividual = async (rolId) => {
 
 const registrarRol = async(nuevoRol) => {
     try {
-        const RolCreado = await Rol.registrarRol(nuevoRol);
+        const rolCreado = await Rol.registrarRol(nuevoRol);
         
-        return(RolCreado);
+        return(rolCreado);
     } catch (error) {
         throw(error);
     }
@@ -36,7 +36,7 @@ const actualizarRol = (rolId, cambios) => {
 
 const borrarRol = async(rolId) => {
     try {
-        return(await Rol.borrarRol(rolId));
+        await Rol.borrarRol(rolId);
     } catch (error) {
         throw(error);
     }

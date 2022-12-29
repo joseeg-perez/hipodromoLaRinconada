@@ -46,7 +46,7 @@ const registrarRol = async (req, res) => {
 
     try {
         const rolCreado = await rolService.registrarRol(nuevoRol);
-        res.status(200).send({ status: "OK", data: `Se ha creado el rol '${rolCreado}' de forma satisfactoria` });
+        res.status(200).send({ status: "OK", data: `Se ha creado el rol '${rolCreado}' de forma satisfactoria.` });
     } catch (error) {
         res
         .status(error?.status || 500)
@@ -61,18 +61,18 @@ const actualizarRol = (req, res) => {
 
 const borrarRol = async (req, res) => {
     const {
-        params: {rolId},
+        params: { rolId },
     } = req;
 
     try {
-        if (isNaN(rolId) || jineteId === ' ')
+        if (!rolId)
+            return(httpError.faltaInformacion(res));
+
+        if (isNaN(rolId) || rolId === ' ')
             return(httpError.idInvalido(res, ":rolId"));
 
-        if (!rolId)
-            httpError.faltaInformacion(res);
-
         await rolService.borrarRol(rolId);
-        res.status(200).send({ status: "OK", data: "Rol eliminado con exito." });
+        res.status(200).send({ status: "OK", data: `El rol con el id '${rolId}' se ha eliminado con exito.` });
     } catch (error) {
         res
         .status(error?.status || 500)

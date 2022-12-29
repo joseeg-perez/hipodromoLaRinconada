@@ -39,7 +39,55 @@ const obtenerJineteIndividual = async( jineteId) => {
 };
 
 const registrarJinete = async (nuevoJinete) => {
+    const { 
+        cedulaPersona,
+        nombre1Persona,
+        nombre2Persona,
+        apellido1Persona,
+        apellido2Persona,
+        fechaNacimiento,
+        alturaJinete,
+        fkRango,
+        pesoJinete,
+     } = nuevoJinete;
+     
+    const text = `INSERT INTO persona_jinete(
+        cedula_persona,
+        nombre1_persona,
+        nombre2_persona,
+        apellido1_persona,
+        apellido2_persona,
+        fecha_nacimiento_persona,
+        altura_jinete,
+        fk_rango,
+        peso_jinete) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+    
+    const values = [
+        cedulaPersona,
+        nombre1Persona,
+        nombre2Persona,
+        apellido1Persona,
+        apellido2Persona,
+        fechaNacimiento,
+        alturaJinete,
+        fkRango,
+        pesoJinete
+    ];
 
+    try {
+        await dbConnection.query(text, values);
+        dbConnection.end;
+
+        return (nombre1Persona+" "+apellido1Persona);
+    } catch (error) {
+        if (error.code === '23505') {
+            throw {
+                status: 409,
+                message: `El jinete con cedula '${ cedulaPersona }' ya ha sido registrado.`,
+            }
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
 const actualizarJinete = async (jineteId, cambios) => {

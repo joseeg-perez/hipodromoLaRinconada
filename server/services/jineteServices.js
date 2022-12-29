@@ -22,7 +22,13 @@ const obtenerJineteIndividual = async (jineteId) => {
 };
 
 const registrarJinete = async (nuevoJinete) => {
-
+    try {
+        const jineteCreado = await Jinete.registrarJinete(nuevoJinete);
+        
+        return(jineteCreado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const actualizarJinete = async (jineteId, cambios) => {

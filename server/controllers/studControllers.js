@@ -35,7 +35,27 @@ const obtenerStudIndividual = async (req, res) => {
 };
 
 const registrarStud = async (req, res) => {
-    res.send("Estamos en registar stud");
+    const { 
+        nombreStud,
+        fechaCreacion,
+     } = req.body;
+
+    if (!nombreStud || !fechaCreacion)
+        return (httpError.faltaInformacion(res));
+
+    const nuevoStud = {
+        nombreStud: nombreStud.toLowerCase(),
+        fechaCreacion,
+    };
+
+    try {
+        const studCreado = await studService.registrarStud(nuevoStud);
+        res.status(200).send({ status: "OK", data: `Se ha creado el stud '${ nombreStud }' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 
 };
 
@@ -45,8 +65,24 @@ const actualizarStud = async (req, res) => {
 };
 
 const borrarStud = async (req, res) => {
-    res.send("Estamos en borrar stud");
+    const {
+        params: { studId },
+    } = req;
 
+    try {
+        if (!studId)
+            return(httpError.faltaInformacion(res));
+
+        if (isNaN(studId) || studId === ' ')
+            return(httpError.idInvalido(res, ":studId"));
+
+        await studService.borrarStud(studId);
+        res.status(200).send({ status: "OK", data: `El stud con el id '${studId}' se ha eliminado con exito.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: {error: error?.message || error} });
+    }
 };
 
 module.exports = {

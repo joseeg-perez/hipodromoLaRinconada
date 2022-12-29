@@ -21,7 +21,13 @@ const obtenerPropietarioIndividual = async(propietarioId) => {
 };
 
 const registrarPropietario = async (nuevoPropietario) => {
-
+    try {
+        const propietarioCreado = await Propietario.registrarPropietario(nuevoPropietario);
+        
+        return(propietarioCreado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const actualizarPropietario = async (propietarioId, cambios) => {
@@ -29,7 +35,11 @@ const actualizarPropietario = async (propietarioId, cambios) => {
 };
 
 const borrarPropietario = async (propietarioId) => {
-
+    try {
+        await Propietario.borrarPropietario(propietarioId);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 module.exports = {

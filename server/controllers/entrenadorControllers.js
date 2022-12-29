@@ -35,7 +35,38 @@ const obtenerEntrenadorIndividual = async (req, res) => {
 };
 
 const registrarEntrenador = async (req, res) => {
-    res.send("Estamos en registrar entrenador ROUTER");
+    const { 
+        cedulaPersona,
+        nombre1Persona,
+        nombre2Persona,
+        apellido1Persona,
+        apellido2Persona,
+        fechaNacimiento, 
+    } = req.body;
+
+    if (!cedulaPersona ||
+        !nombre1Persona||
+        !apellido1Persona ||
+        !fechaNacimiento)
+        return (httpError.faltaInformacion(res));
+
+    const nuevoEntrenador = {
+        cedulaPersona,
+        nombre1Persona: nombre1Persona.toLowerCase(),
+        nombre2Persona: nombre2Persona.toLowerCase(),
+        apellido1Persona: apellido1Persona.toLowerCase(),
+        apellido2Persona: apellido2Persona.toLowerCase(),
+        fechaNacimiento,
+    };
+
+    try {
+        const entrenadorCreado = await entrenadorService.registrarEntrenador(nuevoEntrenador);
+        res.status(200).send({ status: "OK", data: `Se ha registrado el entrenador '${entrenadorCreado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 
 };
 
@@ -45,7 +76,24 @@ const actualizarEntrenador = async (req, res) => {
 };
 
 const borrarEntrenador = async (req, res) => {
-    res.send("Estamos en borrar entrenador ROUTER");
+    const {
+        params: { entrenadorId },
+    } = req;
+
+    try {
+        if (!entrenadorId)
+            return(httpError.faltaInformacion(res));
+
+        if (isNaN(entrenadorId) || entrenadorId === ' ')
+            return(httpError.idInvalido(res, ":entrenadorId"));
+
+        await entrenadorService.borrarEntrenador(entrenadorId);
+        res.status(200).send({ status: "OK", data: `El entrenador con el id '${entrenadorId}' se ha eliminado con exito.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: {error: error?.message || error} });
+    }
 
 };
 

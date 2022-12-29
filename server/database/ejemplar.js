@@ -68,18 +68,20 @@ const registrarEjemplar = async (nuevoEjemplar) => {
         fk_madre_ejemplar,
         fk_padre_ejemplar,
         fk_pelaje) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
-    const values = [nombreEjemplar,
-         numeroEjemplar,
-         tatlabialEjemplar,
-         generoEjemplar,
-         fecha_nacEjemplar, 
-         imagenEjemplar, 
-         pesoEjemplar, 
-         precioEjemplar, 
-         haraEjemplar, 
-         madreEjemplar, 
-         padreEjemplar, 
-         pelajeEjemplar];
+    const values = [
+        nombreEjemplar,
+        numeroEjemplar,
+        tatlabialEjemplar,
+        generoEjemplar,
+        fecha_nacEjemplar, 
+        imagenEjemplar, 
+        pesoEjemplar, 
+        precioEjemplar, 
+        haraEjemplar, 
+        madreEjemplar, 
+        padreEjemplar, 
+        pelajeEjemplar
+        ];
 
     try {
         const res = await dbConnection.query(text, values);
@@ -136,16 +138,12 @@ const borrarEjemplar = async (ejemplarId) => {
     };
 
     try {
-       
         const res = await dbConnection.query(query);        
-        if (res.rowCount === 0){
-            throw{
-                status: 404,
-                message: `El ejemplar con el id: '${ejemplarId}' no se encuentra registrado.`,
-            }
-        }
+        if (res.rowCount === 0)
+            httpError.idNoEncontrado("El ejemplar", ejemplarId);
+
         dbConnection.end;
-        return(res.rowCount > 0);
+        return;
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
     }

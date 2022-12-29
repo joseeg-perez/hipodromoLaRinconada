@@ -21,7 +21,13 @@ const obtenerEntrenadorIndividual = async (entrenadorId) => {
 };
 
 const registrarEntrenador = async (nuevoEntrenador) => {
-
+    try {
+        const entrenadorCreado = await Entrenador.registrarEntrenador(nuevoEntrenador);
+        
+        return(entrenadorCreado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const actualizarEntrenador = async (entrenadorId, cambios) => {
@@ -29,7 +35,11 @@ const actualizarEntrenador = async (entrenadorId, cambios) => {
 };
 
 const borrarEntrenador = async (entrenadorId) => {
-
+    try {
+        await Entrenador.borrarEntrenador(entrenadorId);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 module.exports = {

@@ -42,7 +42,7 @@ const actualizarEjemplar = (ejemplarId, cambios) => {
 
 const borrarEjemplar = async (ejemplarId) => {
     try {
-        return(await Ejemplar.borrarEjemplar(ejemplarId));
+        await Ejemplar.borrarEjemplar(ejemplarId);
     } catch (error) {
         throw(error);
     }

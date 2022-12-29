@@ -73,9 +73,10 @@ const borrarRol = async (rolId) => {
     try {
         const res = await dbConnection.query(query);        
         if (res.rowCount === 0)
-        httpError.idNoEncontrado("El rol", rolId);
+            httpError.idNoEncontrado("El rol", rolId);
+
         dbConnection.end;
-        return(res.rowCount > 0);
+        return;
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
     }

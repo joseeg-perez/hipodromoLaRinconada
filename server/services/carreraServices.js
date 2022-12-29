@@ -21,7 +21,13 @@ const obtenerCarreraIndividual = async (carreraId) => {
 };
 
 const registrarCarrera = async (nuevaCarrera) => {
-
+    try {
+        const carreraCreada = await Carrera.registrarCarrera(nuevaCarrera);
+        
+        return(carreraCreada);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const actualizarCarrera = async (carreraId, cambios) => {
@@ -29,7 +35,11 @@ const actualizarCarrera = async (carreraId, cambios) => {
 };
 
 const borrarCarrera = async (carreraId) => {
-
+    try {
+        await Carrera.borrarCarrera(carreraId);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 module.exports = {

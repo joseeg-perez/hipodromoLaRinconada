@@ -67,13 +67,11 @@ const registrarEjemplar = async (req, res) => {
         !generoEjemplar)
         return (httpError.faltaInformacion(res));
     
-
-
     if (isNaN(numeroEjemplar) || isNaN(tatlabialEjemplar) || isNaN(pesoEjemplar) || isNaN(precioEjemplar))
         return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }))
    
    
-        const nuevoEjemplar = {
+    const nuevoEjemplar = {
         nombreEjemplar: nombreEjemplar.toLowerCase(),
         numeroEjemplar,
         tatlabialEjemplar,
@@ -125,13 +123,15 @@ const borrarEjemplar = async (req, res) => {
         params: { ejemplarId },
     } = req;
 
-    if (!ejemplarId)
-        httpError.idVacio(res, "ejemplarId");
-
     try {
-        await ejemplarService.borrarEjemplar(ejemplarId);
+        if (!ejemplarId)
+            return(httpError.idVacio(res, "ejemplarId"));
 
-        res.status(200).send({ status: "OK", data: "Ejemplar eliminado con exito." });
+        if (isNaN(ejemplarId) || ejemplarId === ' ')
+            return(httpError.idInvalido(res, ":ejemplarId"));
+
+        await ejemplarService.borrarEjemplar(ejemplarId);
+        res.status(200).send({ status: "OK", data: `El ejemplar con el id '${ejemplarId}' se ha eliminado con exito.` });
     } catch (error) {
         res
         .status(error?.status || 500)

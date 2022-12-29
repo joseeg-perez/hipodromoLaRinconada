@@ -39,7 +39,28 @@ const obtenerStudIndividual = async (studId) => {
 };
 
 const registrarStud = async (nuevoStud) => {
+    const { 
+        nombreStud,
+        fechaCreacion,
+     } = nuevoStud;
 
+    const text = "INSERT INTO stud(nombre_stud, fecha_creacion_stud) VALUES($1, $2)";
+    const values = [nombreStud, fechaCreacion];
+
+    try {
+        await dbConnection.query(text, values);
+        dbConnection.end;
+
+        return (nombreStud);
+    } catch (error) {
+        if (error.code === '23505') {
+            throw {
+                status: 409,
+                message: `El stud '${nombreStud}' ya ha sido registrado.`,
+            }
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
 const actualizarStud = async (studId, cambios) => {
@@ -47,7 +68,22 @@ const actualizarStud = async (studId, cambios) => {
 };
 
 const borrarStud = async (studId) => {
+    const query = {
+        text: "DELETE FROM stud WHERE codigo_stud=$1",
+        values: [studId],
+        rowMode: "array",
+    };
 
+    try {
+        const res = await dbConnection.query(query);        
+        if (res.rowCount === 0)
+            httpError.idNoEncontrado("El stud", studId);
+
+        dbConnection.end;
+        return;
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
 module.exports = {
