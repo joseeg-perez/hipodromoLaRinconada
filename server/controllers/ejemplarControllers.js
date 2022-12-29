@@ -50,7 +50,6 @@ const registrarEjemplar = async (req, res) => {
         pelajeEjemplar,
         generoEjemplar,
      } =  req.body;
-     console.log(req.body)
 
     if (!nombreEjemplar ||
         !numeroEjemplar ||
@@ -70,7 +69,6 @@ const registrarEjemplar = async (req, res) => {
     if (isNaN(numeroEjemplar) || isNaN(tatlabialEjemplar) || isNaN(pesoEjemplar) || isNaN(precioEjemplar))
         return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }))
    
-   
     const nuevoEjemplar = {
         nombreEjemplar: nombreEjemplar.toLowerCase(),
         numeroEjemplar,
@@ -86,6 +84,7 @@ const registrarEjemplar = async (req, res) => {
         pelajeEjemplar,
         generoEjemplar,
     };
+
     try {
         const ejemplarCreado = await ejemplarService.registrarEjemplar(nuevoEjemplar);
         res.status(200).send({ status: "OK", data: `Se ha creado el ejemplar '${ejemplarCreado}' de forma satisfactoria.` });
@@ -137,7 +136,6 @@ const borrarEjemplar = async (req, res) => {
         .status(error?.status || 500)
         .send({ status: "FAILED", data: {error: error?.message || error} });
     }
-
 };
 
 module.exports = {

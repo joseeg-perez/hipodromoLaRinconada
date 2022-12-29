@@ -82,19 +82,18 @@ const registrarEjemplar = async (nuevoEjemplar) => {
         madreEjemplar, 
         padreEjemplar, 
         pelajeEjemplar
-        ];
+    ];
 
     try {
         const res = await dbConnection.query(text, values);
-        console.log(res)
         dbConnection.end;
 
-        return (values);
+        return (nombreEjemplar);
     } catch (error) {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `El ejemplar '${nombre}' ya ha sido registrado.`,
+                message: `El ejemplar con tatuaje labial'${tatlabialEjemplar}' ya ha sido registrado.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
