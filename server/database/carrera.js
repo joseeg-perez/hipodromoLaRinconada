@@ -63,6 +63,7 @@ const registrarCarrera = async (nuevaCarrera) => {
         hora_carrera,
         fk_evento,
         fk_categoria_carrera) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
+
     const values = [
         nombreCarrera,
         numeroCarrera,

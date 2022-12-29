@@ -68,6 +68,7 @@ const registrarEjemplar = async (nuevoEjemplar) => {
         fk_madre_ejemplar,
         fk_padre_ejemplar,
         fk_pelaje) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
+        
     const values = [
         nombreEjemplar,
         numeroEjemplar,

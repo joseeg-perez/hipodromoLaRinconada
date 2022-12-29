@@ -47,6 +47,7 @@ const registrarEntrenador = async (nuevoEntrenador) => {
         apellido2Persona,
         fechaNacimiento,
      } = nuevoEntrenador;
+     
     const text = `INSERT INTO persona_entrenador(
         cedula_persona,
         nombre1_persona,
@@ -54,6 +55,7 @@ const registrarEntrenador = async (nuevoEntrenador) => {
         apellido1_persona,
         apellido2_persona,
         fecha_nacimiento_persona) VALUES($1, $2, $3, $4, $5, $6)`;
+
     const values = [
         cedulaPersona,
         nombre1Persona,
