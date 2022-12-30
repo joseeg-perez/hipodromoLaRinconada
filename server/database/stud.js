@@ -1,5 +1,5 @@
 const dbConnection = require("../database/dbConfig.js");
-const httpError = require("../services/httpMessages.js");
+const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeStuds = async () => {
     const query = {

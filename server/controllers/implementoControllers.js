@@ -1,5 +1,5 @@
 const implementoService = require("../services/implementoServices.js");
-const httpError = require("../services/httpMessages.js");
+const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeImplementos = async (req, res) => {
     try {

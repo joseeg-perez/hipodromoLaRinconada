@@ -1,5 +1,5 @@
 const carreraService = require("../services/carreraServices.js");
-const httpError = require("../services/httpMessages.js");
+const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeCarreras = async (req, res) => {
     try {

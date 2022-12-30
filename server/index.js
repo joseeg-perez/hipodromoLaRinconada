@@ -33,7 +33,7 @@ app.use("/api/v1/propietarios", v1PropietarioRouter);
 app.use("/api/v1/roles",v1RolRouter);
 app.use("/api/v1/studs",v1StudRouter);
 app.use("/api/v1/reportes",v1ReporteRouter);
-app.use("/api/v1/autentificacion",v1AuthRouter);
+app.use("/api/v1/auth",v1AuthRouter);
 app.use("/api/v1/haras",v1HaraRouter);
 app.use("/api/v1/implementos",v1ImplementoRouter);
 app.use("/api/v1/medicamentos", v1MedicamentoRouter);

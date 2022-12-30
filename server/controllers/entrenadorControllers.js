@@ -1,5 +1,5 @@
 const entrenadorService = require("../services/entrenadorServices.js");
-const httpError = require("../services/httpMessages.js");
+const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeEntrenadores = async (req, res) => {
     try {

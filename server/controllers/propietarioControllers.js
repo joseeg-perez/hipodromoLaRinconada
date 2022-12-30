@@ -1,6 +1,6 @@
 const propietarioService = require("../services/propietarioServices.js");
 const validator = require("email-validator");
-const httpError = require("../services/httpMessages.js");
+const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePropietarios = async (req, res) => {
     try {

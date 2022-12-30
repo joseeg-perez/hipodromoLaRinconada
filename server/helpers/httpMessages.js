@@ -69,7 +69,14 @@ const noRegistrado = (nombreCampo) => {
         status: 404,
         message: `No se ha registrado ${nombreCampo} por los momentos.`,
     }
-}
+};
+
+const contrasenaIncorrecta = () => {
+    throw{
+        status: 400,
+        message: "Contrasena incorrecta",
+    }
+};
 
 module.exports = {
     faltaInformacion,
@@ -80,4 +87,5 @@ module.exports = {
     idNoEncontrado,
     idInvalido,
     noRegistrado,
+    contrasenaIncorrecta,
 };

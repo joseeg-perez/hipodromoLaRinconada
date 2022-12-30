@@ -1,30 +1,30 @@
 const authService = require("../services/authServices.js");
 const validator = require("email-validator");
-const httpError = require("../services/httpMessages.js");
+const httpError = require("../helpers/httpMessages.js");
+const { generarToken } = require("../helpers/jwt.js")
 
 const registrarse = async (req, res) => {
         
-    const { username, password } = req.body;
+    const { username, password, fkCliente, fkRol } = req.body;
 
     const emailValido = validator.validate(username);
 
-    if (!emailValido)
-        return(httpError.campoInvalido(res, "email"));
-    
-
     if (!username || !password)
         return(httpError.faltaInformacion(res));
-       
-    
+
+    if (!emailValido)
+        return(httpError.campoInvalido(res, "email"));
 
     const nuevoUsuario = {
         username,
         password,
+        fkCliente,
+        fkRol,
     };
     
     try{
          const usuarioCreado = await authService.registrarse(nuevoUsuario);
-         res.status(201).send({ status: "OK" , data: usuarioCreado });
+         res.status(201).send({ status: "OK" , data: `Se ha registrado el usuario '${username}' de forma satisfactoria.` });
     }catch(error){
         res
         .status(error?.status || 500)
@@ -46,6 +46,9 @@ const iniciarSesion = async (req, res) => {
 
     try{
         const inicioSesionCreado = await authService.iniciarSesion(nuevoinicioSesion);
+        const token = await generarToken(inicioSesionCreado);
+        console.log(token);
+
         return (res.status(200).send({ status: "OK", data: "Inicio de sesion exitoso." }));
 
     }catch(error){

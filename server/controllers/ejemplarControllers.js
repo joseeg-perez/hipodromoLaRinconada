@@ -1,5 +1,5 @@
 const ejemplarService = require("../services/ejemplarServices.js");
-const httpError = require("../services/httpMessages.js");
+const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeEjemplares = async (req, res) => {
     try {

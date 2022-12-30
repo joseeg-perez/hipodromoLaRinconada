@@ -1,5 +1,5 @@
 const rolService = require("../services/rolServices.js");
-const httpError = require("../services/httpMessages.js");
+const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeRoles = async (req, res) => {
     try {

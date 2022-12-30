@@ -1,5 +1,5 @@
 const medicamentoService = require("../services/medicamentoServices.js");
-const httpError = require("../services/httpMessages.js");
+const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeMedicamentos = async (req, res) => {
     try {
