@@ -18,20 +18,20 @@ const CardEjemplar = (props) => {
               <h2>{ejemplar.nombre}</h2>
             </Card.Header>
             <Card.Body>
-                {/* 
+              {/* 
                 <FormLabel className="fw-bold px-2 py-2">Entrenador: </FormLabel>
                 <text>{ejemplar.padre}</text> */}
               <Row className="align-items-center">
                 <Col className="col-3">
-                <Image
-                  className="thumbnail mx-2"
-                  src={ejemplar.imagen}
-                  alt="/"
-                  width={125}
-                  height={125}
-                  align="start"
-                  rounded={20}
-                />
+                  <Image
+                    className="thumbnail mx-2"
+                    src={ejemplar.imagen}
+                    alt="/"
+                    width={125}
+                    height={125}
+                    align="start"
+                    rounded={20}
+                  />
                 </Col>
                 <Col>
                   <Row>
@@ -39,24 +39,41 @@ const CardEjemplar = (props) => {
                       <FormLabel className="fw-bold my-auto">Padre: </FormLabel>
                       {ejemplar.padre}
                     </Col>
-                    <Col><FormLabel className="fw-bold my-auto">Madre: </FormLabel>
-                     {ejemplar.madre}</Col>
+                    <Col>
+                      <FormLabel className="fw-bold my-auto">Madre: </FormLabel>
+                      {ejemplar.madre}
+                    </Col>
                   </Row>
                   <Row>
-                    <Col className="col-5"><FormLabel className="fw-bold my-auto">Stud: </FormLabel> {ejemplar.stud}</Col>
-                    <Col><FormLabel className="fw-bold my-auto">pelaje: </FormLabel> {ejemplar.pelaje}</Col>
+                    <Col className="col-5">
+                      <FormLabel className="fw-bold my-auto">Stud: </FormLabel>{" "}
+                      {ejemplar.stud}
+                    </Col>
+                    <Col>
+                      <FormLabel className="fw-bold my-auto">
+                        pelaje:{" "}
+                      </FormLabel>{" "}
+                      {ejemplar.pelaje}
+                    </Col>
                   </Row>
 
                   <Row>
-                    <Col className="col-5"><FormLabel className="fw-bold my-auto">Sexo: </FormLabel> {ejemplar.sexo}</Col>
-                    <Col><FormLabel className="fw-bold my-auto">Fecha de nacimiento: </FormLabel> {ejemplar.fecha_nac}</Col>
+                    <Col className="col-5">
+                      <FormLabel className="fw-bold my-auto">Sexo: </FormLabel>{" "}
+                      {ejemplar.sexo}
+                    </Col>
+                    <Col>
+                      <FormLabel className="fw-bold my-auto">
+                        Fecha de nacimiento:{" "}
+                      </FormLabel>{" "}
+                      {ejemplar.fecha_nac}
+                    </Col>
                   </Row>
 
                   <Row>
-                    
                     <Col className="d-flex justify-content-end mt-2">
                       <div className="btn-toolbar">
-                      <Button className="btn btn-light btn-outline-primary btn-sm mx-1">
+                        <Button className="btn btn-light btn-outline-primary btn-sm mx-1">
                           Ver mas
                         </Button>
                         <Button className="btn btn-light btn-outline-success btn-sm mx-1">
@@ -66,7 +83,6 @@ const CardEjemplar = (props) => {
                         <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
                           <img src={trash} alt="/" width={20} />
                         </Button>
-                        <ModalEliminar id="modal" />
                       </div>
                     </Col>
                   </Row>
