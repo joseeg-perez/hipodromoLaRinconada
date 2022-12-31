@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Button, Card, Container, Form, FormLabel } from "react-bootstrap";
+import axios from "axios";
 
 const CrearImplemento = () => {
-  const [NombreImplemento, setNombreImplemento] = useState("");
-  const [DescImplemento, setDescImplemento] = useState("");
+  const [nombreImplemento, setNombreImplemento] = useState("");
+  const [descripcionImplemento, setDescImplemento] = useState("");
 
   const handleNombreImplemento = (event) => {
     setNombreImplemento(event.target.value);
@@ -11,9 +12,20 @@ const CrearImplemento = () => {
   const handleDescImplemento = (event) => {
     setDescImplemento(event.target.value);
   };
-  const handleData = (event) => {
+  const handleData = async (event) => {
     event.preventDefault();
-    console.warn(NombreImplemento, DescImplemento);
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/implementos/registrar_implemento",
+        {
+          nombreImplemento,
+          descripcionImplemento,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+    console.warn(nombreImplemento, descripcionImplemento);
     setNombreImplemento("");
     setDescImplemento("");
   };
@@ -27,7 +39,7 @@ const CrearImplemento = () => {
               <FormLabel className="fw-bold">Nombre del Implemento</FormLabel>
               <div>
                 <input
-                  value={NombreImplemento}
+                  value={nombreImplemento}
                   type="text"
                   className="form-control bg-transparent"
                   placeholder="Implemento"
@@ -37,7 +49,7 @@ const CrearImplemento = () => {
               <div className="mt-3">
                 <FormLabel>Descripcion</FormLabel>
                 <textarea
-                  value={DescImplemento}
+                  value={descripcionImplemento}
                   className="form-control"
                   rows="4"
                   onChange={handleDescImplemento}

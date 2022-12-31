@@ -1,18 +1,30 @@
 import React, { useState } from "react";
 import { Button, Card, Container, Form, FormLabel } from "react-bootstrap";
+import axios from "axios";
 
 const CrearMedicamento = () => {
-  const [NombreMedicamento, setNombreMedicamento] = useState("");
-  const [DescMedicamento, setDescMedicamento] = useState("");
+  const [nombreMedicamento, setNombreMedicamento] = useState("");
+  const [descripcionMedicamento, setDescMedicamento] = useState("");
   const handleNombreMedicamento = (event) => {
     setNombreMedicamento(event.target.value);
   };
   const handleDescMedicamento = (event) => {
     setDescMedicamento(event.target.value);
   };
-  const handleData = (event) => {
+  const handleData = async (event) => {
     event.preventDefault();
-    console.warn(NombreMedicamento, DescMedicamento);
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/medicamentos/registrar_medicamento",
+        {
+          nombreMedicamento,
+          descripcionMedicamento,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+    console.warn(nombreMedicamento, descripcionMedicamento);
     setNombreMedicamento("");
     setDescMedicamento("");
   };
@@ -26,7 +38,7 @@ const CrearMedicamento = () => {
               <FormLabel className="fw-bold">Nombre del Medicamento</FormLabel>
               <div>
                 <input
-                  value={NombreMedicamento}
+                  value={nombreMedicamento}
                   type="text"
                   className="form-control bg-transparent"
                   placeholder="Medicamento"
@@ -36,7 +48,7 @@ const CrearMedicamento = () => {
               <div className="mt-3">
                 <FormLabel>Descripcion</FormLabel>
                 <textarea
-                  value={DescMedicamento}
+                  value={descripcionMedicamento}
                   className="form-control"
                   rows="4"
                   onChange={handleDescMedicamento}
