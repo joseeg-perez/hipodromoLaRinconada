@@ -4,7 +4,6 @@ const httpError = require("../helpers/httpMessages.js");
 const obtenerListaDeEjemplares = async () => {
     const query = {
         text: "SELECT * FROM ejemplar",
-        rowMode: "array",
     };
 
     try {
@@ -23,7 +22,6 @@ const obtenerEjemplarIndividual = async (ejemplarId) => {
     const query = {
         text: "SELECT * FROM ejemplar WHERE codigo_ejemplar=$1",
         values: [ejemplarId],
-        rowMode: "array",
     };
 
     try {
@@ -106,7 +104,6 @@ const actualizarEjemplar = async (ejemplarId, cambios) => {
     const query = {
         text:"UPDATE ejemplar SET ejemplar=$1 WHERE numero_tatuaje_labial =$2",
         values: [cambios, ejemplarId],
-        rowMode: "array",
     }
 
     const {
@@ -134,12 +131,11 @@ const borrarEjemplar = async (ejemplarId) => {
     const query = {
         text: "DELETE FROM ejemplar WHERE codigo_ejemplar=$1",
         values: [ejemplarId],
-        rowMode: "array",
     };
 
     try {
-        const res = await dbConnection.query(query);        
-        if (res.rowCount === 0)
+        const { rowCount } = await dbConnection.query(query);        
+        if (rowCount === 0)
             httpError.idNoEncontrado("El ejemplar", ejemplarId);
 
         dbConnection.end;

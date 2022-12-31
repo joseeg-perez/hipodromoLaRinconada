@@ -21,7 +21,6 @@ const obtenerMedicamentoIndividual = async (medicamentoId) => {
   const query = {
     text: "SELECT * FROM medicamento WHERE codigo_medicamento=$1",
     values: [medicamentoId],
-    rowMode: "array",
   };
 
   try {
@@ -64,12 +63,11 @@ const borrarMedicamento = async (medicamentoId) => {
   const query = {
     text: "DELETE FROM medicamento WHERE codigo_medicamento=$1",
     values: [medicamentoId],
-    rowMode: "array",
   };
 
   try {
-    const res = await dbConnection.query(query);
-    if (res.rowCount === 0)
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0)
       httpError.idNoEncontrado("El medicamento", medicamentoId);
 
     dbConnection.end;

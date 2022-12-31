@@ -4,7 +4,6 @@ const httpError = require("../helpers/httpMessages.js");
 const obtenerListaDeHaras = async () => {
     const query = {
         text: "SELECT * FROM hara",
-        rowMode: "array",
     };
 
     try {
@@ -23,7 +22,6 @@ const obtenerHaraIndividual = async (haraId) => {
     const query = {
         text: "SELECT * FROM hara WHERE codigo_hara=$1",
         values: [haraId],
-        rowMode: "array",
     };
 
     try {
@@ -75,7 +73,6 @@ const borrarHara = async (haraId) => {
     const query = {
         text: "DELETE FROM hara WHERE codigo_hara=$1",
         values: [haraId],
-        rowMode: "array",
     };
 
     try {

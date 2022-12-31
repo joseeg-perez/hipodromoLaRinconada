@@ -4,7 +4,6 @@ const httpError = require("../helpers/httpMessages.js");
 const obtenerListaDeStuds = async () => {
     const query = {
         text: "SELECT * FROM stud",
-        rowMode: "array",
     };
 
     try {
@@ -23,7 +22,6 @@ const obtenerStudIndividual = async (studId) => {
     const query = {
         text: "SELECT * FROM stud WHERE codigo_stud=$1",
         values: [studId],
-        rowMode: "array",
     };
 
     try {
@@ -71,12 +69,11 @@ const borrarStud = async (studId) => {
     const query = {
         text: "DELETE FROM stud WHERE codigo_stud=$1",
         values: [studId],
-        rowMode: "array",
     };
 
     try {
-        const res = await dbConnection.query(query);        
-        if (res.rowCount === 0)
+        const { rowCount } = await dbConnection.query(query);        
+        if (rowCount === 0)
             httpError.idNoEncontrado("El stud", studId);
 
         dbConnection.end;

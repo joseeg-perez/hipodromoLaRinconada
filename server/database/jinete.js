@@ -4,7 +4,6 @@ const httpError = require("../helpers/httpMessages.js");
 const obtenerListaDeJinetes = async () => {
     const query = {
         text: "SELECT * FROM persona_jinete",
-        rowMode: "array",
     };
 
     try {
@@ -23,7 +22,6 @@ const obtenerJineteIndividual = async( jineteId) => {
     const query = {
         text: "SELECT * FROM persona_jinete WHERE codigo_persona=$1",
         values: [jineteId],
-        rowMode: "array",
     };
 
     try {
@@ -98,12 +96,11 @@ const borrarJinete = async (jineteId) => {
     const query = {
         text: "DELETE FROM persona_jinete WHERE codigo_persona=$1",
         values: [jineteId],
-        rowMode: "array",
     };
 
     try {
-        const res = await dbConnection.query(query);        
-        if (res.rowCount === 0)
+        const { rowCount } = await dbConnection.query(query);        
+        if (rowCount === 0)
             httpError.idNoEncontrado("El jinete", jineteId);
         
         dbConnection.end;

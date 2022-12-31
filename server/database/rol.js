@@ -4,7 +4,6 @@ const httpError = require("../helpers/httpMessages.js");
 const obtenerListaDeRoles = async () => {
     const query = {
         text: "SELECT * FROM rol",
-        rowMode: "array",
     };
 
     try {
@@ -23,7 +22,6 @@ const obtenerRolIndividual = async (rolId) => {
     const query = {
         text: "SELECT * FROM rol WHERE codigo_rol=$1",
         values: [rolId],
-        rowMode: "array",
     };
 
     try {
@@ -67,12 +65,11 @@ const borrarRol = async (rolId) => {
     const query = {
         text: "DELETE FROM rol WHERE codigo_rol=$1",
         values: [rolId],
-        rowMode: "array",
     };
 
     try {
-        const res = await dbConnection.query(query);        
-        if (res.rowCount === 0)
+        const { rowCount } = await dbConnection.query(query);        
+        if (rowCount === 0)
             httpError.idNoEncontrado("El rol", rolId);
 
         dbConnection.end;
