@@ -496,7 +496,7 @@ function App() {
       /> */}
       {/* <CrearImplemento /> */}
       {/* <CrearMedicamento /> */}
-      <RangoJinete />
+      {/* <RangoJinete /> */}
       {/* <CrearMotivoRetiro />
       <CrearPelaje />
       <CrearArea />
