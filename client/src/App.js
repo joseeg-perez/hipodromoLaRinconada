@@ -46,6 +46,9 @@ import { ConsultaEntrenadores } from "./components/Entrenadores/ConsultaEntrenad
 import { ConsultaEntrenador } from "./components/Entrenadores/ConsultaEntrenador";
 import { ConsultaJinete } from "./components/Jinetes/ConsultaJinete";
 import { EditarJinete } from "./components/Jinetes/EditarJinete";
+import CardN from "./components/PagEjemplar/CardN";
+import { ConsultaImplementos } from "./components/Implementos/ConsultaImplementos";
+import { ConsultaMedicamentos } from "./components/Medicamentos/ConsultaMedicamentos";
 
 function App() {
   const Ejemplares = [
@@ -466,7 +469,7 @@ function App() {
             cantidad2do={ejemplar.cantidad2do}
             ganancia={ejemplar.ganancia}
           />
-        ))} 
+        ))}
       </Row> */}
       {/* <PagEj /> */}
       {/* <EditarEj
@@ -491,13 +494,12 @@ function App() {
         hara={Ejemplares[0].hara}
         puesto={Ejemplares[0].puesto}
       /> */}
-      {/* <RangoJinete />
-      <CrearImplemento />
-      <CrearMedicamento />
-      <CrearMotivoRetiro />
+      {/* <CrearImplemento /> */}
+      {/* <CrearMedicamento /> */}
+      <RangoJinete />
+      {/* <CrearMotivoRetiro />
       <CrearPelaje />
       <CrearArea />
-      
       <CrearCuerpoDiferencia />
       <CrearCategoriaCarrera /> */}
       {/* <CrearRestaurante />
@@ -508,9 +510,11 @@ function App() {
         capacidad={Restaurantes[0].capacidad}
         key={Restaurantes[0].key}
       /> */}
-      {/* <PagMedImpRetiro items={Medicamentos} titulo={"Medicamentos"} />
-      <PagMedImpRetiro items={Implementos} titulo={"Implementos"} />
-      <PagMedImpRetiro items={Retiros} titulo={"Retiros"} /> */}
+      {/* <PagMedImpRetiro items={Medicamentos} titulo={"Medicamentos"} /> */}
+      {/* <PagMedImpRetiro items={Implementos} titulo={"Implementos"} /> */}
+      {/* <ConsultaImplementos /> */}
+      {/* <ConsultaMedicamentos /> */}
+      {/* <PagMedImpRetiro items={Retiros} titulo={"Retiros"} /> */}
       {/* <EditarMedImpRet
         nombre={Implementos[0].nombre}
         descripcion={Implementos[0].descripcion}
@@ -519,9 +523,9 @@ function App() {
       {/* <PagPelaje pelajes={Pelajes} /> */}
       {/* <PagConsultaEjemplar ejemplares={Ejemplares} /> */}
       {/* <CardLugar lugares={Lugares} /> */}
-      {/* <RegistrarJinete rangos={rangos} /> */}
-      {/* <RegistrarEntrenador />
-      <RegistrarVeterinario />
+      <RegistrarJinete />
+      {/* <RegistrarEntrenador /> */}
+      {/* <RegistrarVeterinario />
       <RegistrarPropietario lugares={Lugares} />
       <RegistrarStud />
       <CrearVestimenta /> */}
@@ -567,7 +571,7 @@ function App() {
         columnas={columnas2}
         info={informacionJinete}
       /> */}
-      <EditarJinete
+      {/* <EditarJinete
         key={Jinetes[2].key}
         nombre1={Jinetes[2].nombre1}
         apellido1={Jinetes[2].apellido1}
@@ -580,7 +584,7 @@ function App() {
         edad={Jinetes[2].edad}
         ejemplar={Jinetes[2].ejemplar}
         fecha_nac={Jinetes[2].fecha_nac}
-      />
+      /> */}
     </div>
   );
 }

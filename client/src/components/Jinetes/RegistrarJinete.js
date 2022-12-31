@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Container,
@@ -10,8 +10,9 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
+import axios from "axios";
 
-export const RegistrarJinete = (props) => {
+export const RegistrarJinete = () => {
   const [cedulaJinete, setCedulaJinete] = useState("");
   const [pnombreJinete, setPnombreJinete] = useState("");
   const [snombreJinete, setSnombreJinete] = useState("");
@@ -22,6 +23,25 @@ export const RegistrarJinete = (props) => {
   const [alturaJinete, setAlturaJinete] = useState("");
   const [pesoJinete, setPesoJinete] = useState("");
   const [togglePeso, setTogglePeso] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const [rangos, setRangos] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/rango_jinetes/listado_de_rgoJinetes")
+      .then((res) => {
+        // console.log(res);
+        setRangos(res.data);
+        setLoading(false);
+      });
+    //   .catch((err) => console.log(err));
+  }, []);
+
+  console.log(rangos);
+
+  if (isLoading) {
+    return <div></div>;
+  }
 
   const handleCedula = (event) => {
     setCedulaJinete(event.target.value);
@@ -76,6 +96,9 @@ export const RegistrarJinete = (props) => {
     setPesoJinete("");
   };
 
+  if (isLoading) {
+    return <div></div>;
+  }
   return (
     <Container>
       <Row className="justify-content-center align-items-center m-5">
@@ -174,7 +197,7 @@ export const RegistrarJinete = (props) => {
                     onChange={handleRango}
                   >
                     <FormSelect>
-                      {props.rangos.map((rango) => (
+                      {rangos.map((rango) => (
                         <option value={rango} key={rango.key}>
                           {rango.nombre}
                         </option>

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card, Col, Container } from "react-bootstrap";
 import edit from "../assets/editicon.png";
 import trash from "../assets/trashicon.png";
-export const CardMedicamento = (props) => {
+export const CardMedImpRetiro = (props) => {
   return (
     <Card className="mx-5 mt-3">
       <Card.Header>{props.nombre}</Card.Header>

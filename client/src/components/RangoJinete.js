@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Card, Form, FormLabel } from "react-bootstrap";
+import axios from "axios";
 
 const RangoJinete = () => {
   const [pesoMax, setPesoMax] = useState("");
   const [pesoMin, setPesoMin] = useState("");
-  const [NombreRango, setNombreRango] = useState("");
-  const [DescRango, setDescRango] = useState("");
+  const [nombreRango, setNombreRango] = useState("");
+  const [descripcionRango, setDescRango] = useState("");
 
   const handlePesoMin = (event) => {
     setPesoMin(event.target.value);
@@ -19,9 +20,22 @@ const RangoJinete = () => {
   const handleDescRango = (event) => {
     setDescRango(event.target.value);
   };
-  const handleData = (event) => {
+  const handleData = async (event) => {
     event.preventDefault();
-    console.warn(NombreRango, DescRango, pesoMax, pesoMin);
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/rango_jinetes/registrar_rgoJinete",
+        {
+          nombreRango,
+          descripcionRango,
+          pesoMin,
+          pesoMax,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+    console.warn(nombreRango, descripcionRango, pesoMax, pesoMin);
     setNombreRango("");
     setDescRango("");
     setPesoMin("");
@@ -37,7 +51,7 @@ const RangoJinete = () => {
             <FormLabel className="fw-bold">Nombre del rango</FormLabel>
             <div>
               <input
-                value={NombreRango}
+                value={nombreRango}
                 type="text"
                 className="form-control bg-transparent"
                 placeholder="rango"
@@ -47,7 +61,7 @@ const RangoJinete = () => {
             <div className="mt-3">
               <FormLabel>Descripcion</FormLabel>
               <textarea
-                value={DescRango}
+                value={descripcionRango}
                 className="form-control"
                 rows="4"
                 onChange={handleDescRango}
