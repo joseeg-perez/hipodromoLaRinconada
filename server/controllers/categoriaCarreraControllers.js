@@ -1,4 +1,4 @@
-const categoriaCarreraService = require("");
+const categoriaCarreraService = require("../services/categoriaCarreraServices.js");
 const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeCategorias = async (req, res) => {
@@ -43,11 +43,11 @@ const registrarCategoria = async (req, res) => {
     if (!codigoCategoria || !nombreCategoria)
         return (httpError.faltaInformacion(res));
     
-    // if (isNaN(codigoCategoria) || codigoCategoria === ' ')
-    //     return(httpError.idInvalido(res, "codigo categoria"));
-    //poner el de idINvaliddd
+    if (isNaN(codigoCategoria) || codigoCategoria === ' ')
+        return(httpError.idInvalido(res, "codigo categoria"));
    
     const nuevaCategoria = {
+        codigoCategoria,
         nombreCategoria: nombreCategoria.toLowerCase(),
     };
 
