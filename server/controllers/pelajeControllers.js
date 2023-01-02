@@ -36,21 +36,16 @@ const obtenerPelajeIndividual = async (req, res) => {
 
 const registrarPelaje = async (req, res) => { 
     const {
-        codigoPelaje, 
         nombrePelaje,
         abrevPelaje,
      } =  req.body;
 
-    if (!codigoPelaje || !nombrePelaje || !abrevPelaje)
+    if (!nombrePelaje || !abrevPelaje)
         return (httpError.faltaInformacion(res));
-    
-    if (isNaN(codigoPelaje) || codigoPelaje === ' ')
-        return(httpError.idInvalido(res, "codigo Pelaje"));
    
     const nuevoPelaje = {
-        codigoPelaje,
         nombrePelaje: nombrePelaje.toLowerCase(),
-        abrevPelaje,
+        abrevPelaje: abrevPelaje.toLowerCase(),
     };
 
     try {

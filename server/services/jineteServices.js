@@ -1,6 +1,5 @@
 const Jinete = require("../database/jinete.js");
 
-
 const obtenerListaDeJinetes = async () => {
     try {
         const listaJinetes = await Jinete.obtenerListaDeJinetes();

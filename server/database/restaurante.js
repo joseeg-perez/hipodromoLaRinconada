@@ -38,22 +38,19 @@ const obtenerRestauranteIndividual = async (restauranteId) => {
 
 const registrarRestaurante = async (nuevoRestaurante) => {
     const { 
-        codigoRestaurante, 
         nombreRestaurante,
         descripcionRestaurante,
         capacidadRestaurante,
         fk_area,
      } = nuevoRestaurante;
 
-    const text = `INSERT INTO restaurante(
-        codigo_restaurante, 
+    const text = `INSERT INTO restaurante( 
         nombre_restaurante,
         descripcion_restaurante,
         capacidad_restaurante,
-        fk_area) VALUES($1, $2, $3, $4, $5)`;
+        fk_area) VALUES($1, $2, $3, $4)`;
         
     const values = [
-        codigoRestaurante, 
         nombreRestaurante,
         descripcionRestaurante,
         capacidadRestaurante,
@@ -69,7 +66,7 @@ const registrarRestaurante = async (nuevoRestaurante) => {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `El restaurante con el codigo '${codigoRestaurante}' ya ha sido registrado.`,
+                message: `El restaurante con el nombre '${nombreRestaurante}' ya ha sido registrado.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };

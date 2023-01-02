@@ -48,13 +48,8 @@ const registrarImplemento = async (req, res) => {
   };
 
   try {
-    const implementoCreado = await implementoService.registrarImplemento(
-      nuevoImplemento
-    );
-    res.status(200).send({
-      status: "OK",
-      data: `Se ha registrado el implemento '${implementoCreado}' de forma satisfactoria.`,
-    });
+    const implementoCreado = await implementoService.registrarImplemento(nuevoImplemento);
+    res.status(200).send({ status: "OK", data: `Se ha registrado el implemento '${implementoCreado}' de forma satisfactoria.` });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -76,10 +71,7 @@ const borrarImplemento = async (req, res) => {
       return httpError.idInvalido(res, ":implementoId");
 
     await implementoService.borrarImplemento(implementoId);
-    res.status(200).send({
-      status: "OK",
-      data: `El implemento con el id '${implementoId}' se ha eliminado con exito.`,
-    });
+    res.status(200).send({ status: "OK", data: `El implemento con el id '${implementoId}' se ha eliminado con exito.` });
   } catch (error) {
     res
       .status(error?.status || 500)

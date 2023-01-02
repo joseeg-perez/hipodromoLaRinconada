@@ -1,33 +1,33 @@
 const dbConnection = require("./dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
-const obtenerListaDeVestimentas = async () => {
+const obtenerListaDePuestos = async () => {
     const query = {
-        text: "SELECT * FROM vestimenta",
+        text: "SELECT * FROM puesto",
     };
 
     try {
         const { rows } = await dbConnection.query(query);
         if (rows.length === 0)
-            httpError.noRegistrado("ninguna vestimenta");
+            httpError.noRegistrado("ningun puesto");
 
         dbConnection.end;
         return (rows);
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
-    }
+    }  
 };
 
-const obtenerVestimentaIndividual = async (vestimentaId) => {
+const obtenerPuestoIndividual = async (puestoId) => {
     const query = {
-        text: "SELECT * FROM vestimenta WHERE codigo_vestimenta=$1",
-        values: [vestimentaId],
+        text: "SELECT * FROM puesto WHERE codigo_puesto=$1",
+        values: [puestoId],
     };
 
     try {
         const { rows } = await dbConnection.query(query);
         if (rows.length === 0)
-            httpError.idNoEncontrado("La vestimenta", vestimentaId);
+            httpError.idNoEncontrado("El puesto", puestoId);
         
         dbConnection.end;
         return (rows);
@@ -36,57 +36,60 @@ const obtenerVestimentaIndividual = async (vestimentaId) => {
     }
 };
 
-const registrarVestimenta = async (nuevaVestimenta) => {
+const registrarPuesto = async (nuevoPuesto) => {
     const { 
-        nombreVestimenta,
-     } = nuevaVestimenta;
+        numeroPuesto,
+        fkCaballeriza,
+     } = nuevoPuesto;
 
-    const text = `INSERT INTO vestimenta(nombre_vestimenta) VALUES($1)`;
+    const text = `INSERT INTO puesto(
+        numero_puesto,
+        fk_caballeriza) VALUES($1, $2)`;
         
-    const values = [nombreVestimenta];
+    const values = [numeroPuesto, fkCaballeriza];
 
     try {
-        await dbConnection.query(text, values);
+         const { rows } = await dbConnection.query(text, values);
     
         dbConnection.end;
-        return (nombreVestimenta);
+        return(numeroPuesto) ;
     } catch (error) {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `La vestimenta con el nombre '${nombreVestimenta}' ya ha sido registrada.`,
+                message: `El puesto con numero ${numeroPuesto} ya ha sido registrado.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
-    }
+    }   
 };
 
-const actualizarVestimenta = (vestimentaId, cambios) => {
+const actualizarPuesto = (puestoId, cambios) => {
     
 };
 
-const borrarVestimenta = async (vestimentaId) => {
+const borrarPuesto = async (puestoId) => {
     const query = {
-        text: "DELETE FROM vestimenta WHERE codigo_vestimenta=$1",
-        values: [vestimentaId],
+        text: "DELETE FROM puesto WHERE codigo_puesto=$1",
+        values: [puestoId],
     };
 
     try {
         const { rowCount } = await dbConnection.query(query);        
         if (rowCount === 0)
-            httpError.idNoEncontrado("La vestimenta", vestimentaId);
+            httpError.idNoEncontrado("El puesto", puestoId);
 
         dbConnection.end;
         return;
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
-    }
+    }    
 };
 
 module.exports = {
-    obtenerListaDeVestimentas,
-    obtenerVestimentaIndividual,
-    registrarVestimenta,
-    actualizarVestimenta,
-    borrarVestimenta,
+    obtenerListaDePuestos,
+    obtenerPuestoIndividual,
+    registrarPuesto,
+    actualizarPuesto,
+    borrarPuesto,
 };

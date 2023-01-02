@@ -1,34 +1,16 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
-const obtenerListaDePelajes = async () => {
+const obtenerListaDeMotivosDeRetiro = async () => {
     const query = {
-        text: "SELECT * FROM pelaje",
+        text: "SELECT * FROM motivo",
     };
 
     try {
         const { rows } = await dbConnection.query(query);
         if (rows.length === 0)
-            httpError.noRegistrado("ningun tipo de pelaje");
+            httpError.noRegistrado("ningun motivo");
 
-        dbConnection.end;
-        return (rows);
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }   
-};
-
-const obtenerPelajeIndividual = async (pelajeId) => {
-    const query = {
-        text: "SELECT * FROM pelaje WHERE codigo_pelaje=$1",
-        values: [pelajeId],
-    };
-
-    try {
-        const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.idNoEncontrado("El pelaje", pelajeId);
-        
         dbConnection.end;
         return (rows);
     } catch (error) {
@@ -36,47 +18,68 @@ const obtenerPelajeIndividual = async (pelajeId) => {
     }
 };
 
-const registrarPelaje = async (nuevoPelaje) => {
-    const { 
-        nombrePelaje,
-        abrevPelaje,
-     } = nuevoPelaje;
+const obtenerMotivoDeRetiroIndividual = async (motivoRetiroId) => {
+    const query = {
+        text: "SELECT * FROM motivo WHERE codigo_motivo=$1",
+        values: [motivoRetiroId],
+    };
 
-    const text = `INSERT INTO pelaje(nombre_pelaje, abrev_pelaje) VALUES($1, $2)`;
+    try {
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.idNoEncontrado("El motivo", motivoRetiroId);
         
-    const values = [nombrePelaje, abrevPelaje];
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }  
+};
+
+const registrarMotivoDeRetiro = async (nuevoMotivoRetiro) => {
+    const { 
+        nombreMotivo,
+        descripcionMotivo,
+     } = nuevoMotivoRetiro;
+     
+    const text = `INSERT INTO motivo(nombre_motivo, descripcion_motivo) VALUES($1, $2)`;
+    
+    const values = [
+        nombreMotivo,
+        descripcionMotivo
+    ];
 
     try {
         await dbConnection.query(text, values);
-    
         dbConnection.end;
-        return (nombrePelaje);
+
+        return (nombreMotivo);
     } catch (error) {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `El tipo de pelaje con el codigo '${codigoPelaje}' ya ha sido registrado.`,
+                message: `El motivo '${nombreMotivo}' ya ha sido registrado.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
-    }
+    }  
 };
 
-const actualizarPelaje = (pelajeId, cambios) => {
-    
+const actualizarMotivoDeRetiro = async (motivoRetiroId, cambios) => {
+
 };
 
-const borrarPelaje = async (pelajeId) => {
+const borrarMotivoDeRetiro = async (motivoRetiroId) => {
     const query = {
-        text: "DELETE FROM pelaje WHERE codigo_pelaje=$1",
-        values: [pelajeId],
+        text: "DELETE FROM motivo WHERE codigo_motivo=$1",
+        values: [motivoRetiroId],
     };
 
     try {
         const { rowCount } = await dbConnection.query(query);        
         if (rowCount === 0)
-            httpError.idNoEncontrado("El pelaje ", pelajeId);
-
+            httpError.idNoEncontrado("El motivo", motivoRetiroId);
+        
         dbConnection.end;
         return;
     } catch (error) {
@@ -85,9 +88,9 @@ const borrarPelaje = async (pelajeId) => {
 };
 
 module.exports = {
-    obtenerListaDePelajes,
-    obtenerPelajeIndividual,
-    registrarPelaje,
-    actualizarPelaje,
-    borrarPelaje,
+    obtenerListaDeMotivosDeRetiro,
+    obtenerMotivoDeRetiroIndividual,
+    registrarMotivoDeRetiro,
+    actualizarMotivoDeRetiro,
+    borrarMotivoDeRetiro,
 };

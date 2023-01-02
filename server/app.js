@@ -26,6 +26,13 @@ const v1PelajeRouter = require("./v1/routes/pelajeRoutes.js");
 const v1RestauranteRouter = require("./v1/routes/restauranteRoutes.js");
 const v1RetiroRoutes = require("./v1/routes/retiroRoutes.js");
 const v1VestimentaRoutes = require("./v1/routes/vestimentaRoutes.js");
+const v1VeterinarioRoutes = require("./v1/routes/veterinarioRoutes.js");
+const v1CaballerizaRoutes = require("./v1/routes/caballerizaRoutes.js");
+const v1TelefonoRoutes = require("./v1/routes/telefonoRoutes.js");
+const v1PuestoRoutes = require("./v1/routes/puestoRoutes.js");
+const v1AreaRoutes = require("./v1/routes/areaRoutes.js");
+const v1LugarRoutes = require("./v1/routes/lugarRoutes.js");
+const v1MotivoRetiroRoutes = require("./v1/routes/motivoRetiroRoutes.js");
 
 // Puerto
 const PORT = process.env.PORT || 5000;
@@ -56,5 +63,13 @@ app.use("/api/v1/pelajes", v1PelajeRouter);
 app.use("/api/v1/restaurantes", v1RestauranteRouter);
 app.use("/api/v1/retiros", v1RetiroRoutes);
 app.use("/api/v1/vestimentas", v1VestimentaRoutes);
+app.use("/api/v1/veterinarios", v1VeterinarioRoutes);
+app.use("/api/v1/caballerizas", v1CaballerizaRoutes);
+app.use("/api/v1/telefonos", v1TelefonoRoutes);
+app.use("/api/v1/puestos", v1PuestoRoutes);
+app.use("/api/v1/areas", v1AreaRoutes);
+app.use("/api/v1/lugares", v1LugarRoutes);
+app.use("/api/v1/motivos", v1MotivoRetiroRoutes);
+
 
 module.exports = {app, PORT};

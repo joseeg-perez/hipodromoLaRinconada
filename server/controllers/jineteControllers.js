@@ -68,6 +68,12 @@ const registrarJinete = async (req, res) => {
         pesoJinete,
     };
 
+    if (isNaN(cedulaPersona)||
+        isNaN(alturaJinete ) ||
+        isNaN(fkRango) ||
+        isNaN(pesoJinete))
+        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
+
     try {
         const jineteCreado = await jineteService.registrarJinete(nuevoJinete);
         res.status(200).send({ status: "OK", data: `Se ha registrado el jinete '${jineteCreado}' de forma satisfactoria.` });

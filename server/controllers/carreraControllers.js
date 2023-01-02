@@ -60,6 +60,15 @@ const registrarCarrera = async (req, res) => {
         !fkCategorioCarrera)
         return (httpError.faltaInformacion(res));
 
+    if (isNaN(numeroCarrera) || 
+        isNaN(premioPrimero) || 
+        isNaN(premioSegundo) || 
+        isNaN(premioCuarto) ||
+        isNaN(premioQuinto) ||
+        isNaN(fkEvento) ||
+        isNaN(fkCategorioCarrera))
+        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
+
     const nuevaCarrera = {
         nombreCarrera: nombreCarrera.toLowerCase(),
         numeroCarrera,
