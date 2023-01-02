@@ -494,8 +494,8 @@ function App() {
         hara={Ejemplares[0].hara}
         puesto={Ejemplares[0].puesto}
       /> */}
-      {/* <CrearImplemento /> */}
-      {/* <CrearMedicamento /> */}
+      <CrearImplemento />
+      <CrearMedicamento />
       {/* <RangoJinete /> */}
       {/* <CrearMotivoRetiro />
       <CrearPelaje />
@@ -512,8 +512,8 @@ function App() {
       /> */}
       {/* <PagMedImpRetiro items={Medicamentos} titulo={"Medicamentos"} /> */}
       {/* <PagMedImpRetiro items={Implementos} titulo={"Implementos"} /> */}
-      {/* <ConsultaImplementos /> */}
-      {/* <ConsultaMedicamentos /> */}
+      <ConsultaImplementos />
+      <ConsultaMedicamentos />
       {/* <PagMedImpRetiro items={Retiros} titulo={"Retiros"} /> */}
       {/* <EditarMedImpRet
         nombre={Implementos[0].nombre}
@@ -523,7 +523,7 @@ function App() {
       {/* <PagPelaje pelajes={Pelajes} /> */}
       {/* <PagConsultaEjemplar ejemplares={Ejemplares} /> */}
       {/* <CardLugar lugares={Lugares} /> */}
-      <RegistrarJinete />
+      {/* <RegistrarJinete /> */}
       {/* <RegistrarEntrenador /> */}
       {/* <RegistrarVeterinario />
       <RegistrarPropietario lugares={Lugares} />
