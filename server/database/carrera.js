@@ -4,7 +4,6 @@ const httpError = require("../helpers/httpMessages.js");
 const obtenerListaDeCarreras = async () => {
     const query = {
         text: "SELECT * FROM carrera",
-        rowMode: "array",
     };
 
     try {
@@ -23,7 +22,6 @@ const obtenerCarreraIndividual = async (carreraId) => {
     const query = {
         text: "SELECT * FROM carrera WHERE codigo_carrera=$1",
         values: [carreraId],
-        rowMode: "array",
     };
 
     try {
@@ -79,8 +77,8 @@ const registrarCarrera = async (nuevaCarrera) => {
 
     try {
         await dbConnection.query(text, values);
+        
         dbConnection.end;
-
         return (nombreCarrera);
     } catch (error) {
         if (error.code === '23505') {
@@ -102,12 +100,11 @@ const borrarCarrera = async (carreraId) => {
     const query = {
         text: "DELETE FROM carrera WHERE codigo_carrera=$1",
         values: [carreraId],
-        rowMode: "array",
     };
 
     try {
-        const res = await dbConnection.query(query);        
-        if (res.rowCount === 0)
+        const { rowCount } = await dbConnection.query(query);        
+        if (rowCount === 0)
             httpError.idNoEncontrado("La carrera", carreraId);
 
         dbConnection.end;

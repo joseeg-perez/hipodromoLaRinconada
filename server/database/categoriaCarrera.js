@@ -1,15 +1,15 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
-const obtenerListaDeRoles = async () => {
+const obtenerListaDeCategorias = async () => {
     const query = {
-        text: "SELECT * FROM rol",
+        text: "SELECT * FROM categoria_carrera",
     };
 
     try {
         const { rows } = await dbConnection.query(query);
         if (rows.length === 0)
-            httpError.noRegistrado("ningun rol");
+            httpError.noRegistrado("ninguna categoria");
 
         dbConnection.end;
         return (rows);
@@ -18,16 +18,16 @@ const obtenerListaDeRoles = async () => {
     }
 };
 
-const obtenerRolIndividual = async (rolId) => {
+const obtenerCategoriaIndividual = async (categoriaId) => {
     const query = {
-        text: "SELECT * FROM rol WHERE codigo_rol=$1",
-        values: [rolId],
+        text: "SELECT * FROM categoria_carrera WHERE codigo_categoria=$1",
+        values: [categoriaId],
     };
 
     try {
         const { rows } = await dbConnection.query(query);
         if (rows.length === 0)
-            httpError.idNoEncontrado("El rol", rolId);
+            httpError.idNoEncontrado("La categoria", categoriaId);
         
         dbConnection.end;
         return (rows);
@@ -36,41 +36,46 @@ const obtenerRolIndividual = async (rolId) => {
     }
 };
 
-const registrarRol = async (nuevoRol) => {
-    const { nombre } = nuevoRol;
-    const text = "INSERT INTO rol(nombre_rol) VALUES($1)";
-    const values = [nombre];
+const registrarCategoria = async (nuevaCategoria) => {
+    const { 
+        codigoCategoria, 
+        nombreCategoria,
+     } = nuevaCategoria;
+
+    const text = `INSERT INTO categoria_carrera(codigo_categoria, nombre_categoria) VALUES($1, $2)`;
+        
+    const values = [codigoCategoria, nombreCategoria];
 
     try {
         await dbConnection.query(text, values);
+    
         dbConnection.end;
-
-        return (nombre);
+        return (nombreCategoria);
     } catch (error) {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `El rol '${nombre}' ya ha sido registrado.`,
+                message: `La categoria con el codigo '${codigoCategoria}' ya ha sido registrada.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
     }
 };
-//Restante
-const actualizarRol = (rolId, cambios) => {
 
+const actualizarCategoria = (categoriaId, cambios) => {
+    
 };
 
-const borrarRol = async (rolId) => {
+const borrarCategoria = async (categoriaId) => {
     const query = {
-        text: "DELETE FROM rol WHERE codigo_rol=$1",
-        values: [rolId],
+        text: "DELETE FROM categoria_carrera WHERE codigo_categoria=$1",
+        values: [categoriaId],
     };
 
     try {
         const { rowCount } = await dbConnection.query(query);        
         if (rowCount === 0)
-            httpError.idNoEncontrado("El rol", rolId);
+            httpError.idNoEncontrado("La categoria", categoriaId);
 
         dbConnection.end;
         return;
@@ -80,9 +85,9 @@ const borrarRol = async (rolId) => {
 };
 
 module.exports = {
-    obtenerListaDeRoles,
-    obtenerRolIndividual,
-    registrarRol,
-    actualizarRol,
-    borrarRol,
+    obtenerListaDeCategorias,
+    obtenerCategoriaIndividual,
+    registrarCategoria,
+    actualizarCategoria,
+    borrarCategoria,
 };

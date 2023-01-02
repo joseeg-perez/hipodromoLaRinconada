@@ -4,7 +4,6 @@ const httpError = require("../helpers/httpMessages.js");
 const obtenerListaDeEntrenadores = async () => {
     const query = {
         text: "SELECT * FROM persona_entrenador",
-        rowMode: "array",
     };
 
     try {
@@ -23,7 +22,6 @@ const obtenerEntrenadorIndividual = async (entrenadorId) => {
     const query = {
         text: "SELECT * FROM persona_entrenador WHERE codigo_persona=$1",
         values: [entrenadorId],
-        rowMode: "array",
     };
 
     try {
@@ -89,12 +87,11 @@ const borrarEntrenador = async (entrenadorId) => {
     const query = {
         text: "DELETE FROM persona_entrenador WHERE codigo_persona=$1",
         values: [entrenadorId],
-        rowMode: "array",
     };
 
     try {
-        const res = await dbConnection.query(query);        
-        if (res.rowCount === 0)
+        const { rowCount } = await dbConnection.query(query);        
+        if (rowCount === 0)
             httpError.idNoEncontrado("El entrenador", entrenadorId);
 
         dbConnection.end;

@@ -22,7 +22,6 @@ const obtenerRgoJineteIndividual = async (rgoJineteId) => {
   const query = {
     text: "SELECT * FROM rango_jinete WHERE codigo_rango=$1",
     values: [rgoJineteId],
-    rowMode: "array",
   };
 
   try {
@@ -70,12 +69,11 @@ const borrarRgoJinete = async (rgoJineteId) => {
   const query = {
     text: "DELETE FROM rango_jinete WHERE codigo_rango=$1",
     values: [rgoJineteId],
-    rowMode: "array",
   };
 
   try {
-    const res = await dbConnection.query(query);
-    if (res.rowCount === 0)
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0)
       httpError.idNoEncontrado("El rango asociadoa un jinete", rgoJineteId);
 
     dbConnection.end;

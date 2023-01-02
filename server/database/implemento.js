@@ -21,7 +21,6 @@ const obtenerImplementoIndividual = async (implementoId) => {
   const query = {
     text: "SELECT * FROM implemento WHERE codigo_implemento=$1",
     values: [implementoId],
-    rowMode: "array",
   };
 
   try {
@@ -65,12 +64,11 @@ const borrarImplemento = async (implementoId) => {
   const query = {
     text: "DELETE FROM implemento WHERE codigo_implemento=$1",
     values: [implementoId],
-    rowMode: "array",
   };
 
   try {
-    const res = await dbConnection.query(query);
-    if (res.rowCount === 0)
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0)
       httpError.idNoEncontrado("El implemento", implementoId);
 
     dbConnection.end;

@@ -35,7 +35,7 @@ const obtenerCarreraIndividual = async (req, res) => {
 };
 
 const registrarCarrera = async (req, res) => {
-    const { 
+    const {
         nombreCarrera,
         numeroCarrera,
         premioPrimero,
