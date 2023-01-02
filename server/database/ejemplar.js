@@ -38,6 +38,7 @@ const obtenerEjemplarIndividual = async (ejemplarId) => {
 
 const registrarEjemplar = async (nuevoEjemplar) => {
     const { 
+        codigoEjemplar,
         nombreEjemplar,
         numeroEjemplar,
         tatlabialEjemplar,
@@ -54,6 +55,7 @@ const registrarEjemplar = async (nuevoEjemplar) => {
      } = nuevoEjemplar;
 
     const text = `INSERT INTO ejemplar(
+        codigo_ejemplar,
         nombre_ejemplar,
         numero_ejemplar,
         numero_tatuaje_labial,
@@ -65,9 +67,10 @@ const registrarEjemplar = async (nuevoEjemplar) => {
         fk_hara,
         fk_madre_ejemplar,
         fk_padre_ejemplar,
-        fk_pelaje) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
+        fk_pelaje) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
         
     const values = [
+        codigoEjemplar,
         nombreEjemplar,
         numeroEjemplar,
         tatlabialEjemplar,

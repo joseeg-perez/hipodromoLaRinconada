@@ -36,6 +36,7 @@ const obtenerEjemplarIndividual = async (req, res) => {
 
 const registrarEjemplar = async (req, res) => { 
     const { 
+        codigoEjemplar,
         nombreEjemplar,
         numeroEjemplar,
         tatlabialEjemplar,
@@ -51,7 +52,8 @@ const registrarEjemplar = async (req, res) => {
         generoEjemplar,
      } =  req.body;
 
-    if (!nombreEjemplar ||
+    if (!codigoEjemplar ||
+        !nombreEjemplar ||
         !numeroEjemplar ||
         !tatlabialEjemplar ||
         !precioEjemplar ||
@@ -70,6 +72,7 @@ const registrarEjemplar = async (req, res) => {
         return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }))
    
     const nuevoEjemplar = {
+        codigoEjemplar,
         nombreEjemplar: nombreEjemplar.toLowerCase(),
         numeroEjemplar,
         tatlabialEjemplar,

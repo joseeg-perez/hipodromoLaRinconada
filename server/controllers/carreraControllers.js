@@ -36,6 +36,7 @@ const obtenerCarreraIndividual = async (req, res) => {
 
 const registrarCarrera = async (req, res) => {
     const {
+        codigoCarrera,
         nombreCarrera,
         numeroCarrera,
         premioPrimero,
@@ -48,7 +49,8 @@ const registrarCarrera = async (req, res) => {
         fkCategorioCarrera,
      } = req.body;
 
-    if (!nombreCarrera ||
+    if (!codigoCarrera ||
+        !nombreCarrera ||
         !numeroCarrera ||
         !premioPrimero ||
         !premioSegundo ||
@@ -61,6 +63,7 @@ const registrarCarrera = async (req, res) => {
         return (httpError.faltaInformacion(res));
 
     const nuevaCarrera = {
+        codigoCarrera,
         nombreCarrera: nombreCarrera.toLowerCase(),
         numeroCarrera,
         premioPrimero,

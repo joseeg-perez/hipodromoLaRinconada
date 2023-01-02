@@ -47,7 +47,7 @@ const iniciarSesion = async (req, res) => {
     try{
         const inicioSesionCreado = await authService.iniciarSesion(nuevoinicioSesion);
         const token = await generarToken(inicioSesionCreado);
-        console.log(token);
+        console.log("Este es el token: "+token);
 
         return (res.status(200).send({ status: "OK", data: "Inicio de sesion exitoso." }));
 

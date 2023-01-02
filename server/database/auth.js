@@ -38,8 +38,8 @@ const iniciarSesion = async(nuevoInicioSesion) => {
 
         if (usuarioEncontrado === undefined)    
             httpError.noRegistrado(`el usuario '${nuevoInicioSesion.username}'`);
-        
-        const match = await compararClave(nuevoInicioSesion.password, usuarioEncontrado[2]); //Pasa la clave del usuario y su hash para hacer la comparacion
+
+        const match = await compararClave(nuevoInicioSesion.password, usuarioEncontrado.contrasena_usuario); //Pasa la clave del usuario y su hash para hacer la comparacion
 
          if (!match)
             httpError.contrasenaIncorrecta();
@@ -56,12 +56,11 @@ const buscarUsuario = async(usuarioSolicitado) => {
     const query = {
         text:"SELECT * FROM usuario WHERE correo_usuario=$1",
         values: [username],
-        rowMode: "array", //Se guarda el id, correo y contrasena del usuario, en ese orden dentro de un vector v 
     };
 
     try {
-        const res = await dbConnection.query(query);
-        const usuario = res.rows[0];
+        const { rows } = await dbConnection.query(query);
+        const usuario = rows[0];
         dbConnection.end;
 
         return(usuario);

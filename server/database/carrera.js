@@ -38,6 +38,7 @@ const obtenerCarreraIndividual = async (carreraId) => {
 
 const registrarCarrera = async (nuevaCarrera) => {
     const { 
+        codigoCarrera,
         nombreCarrera,
         numeroCarrera,
         premioPrimero,
@@ -51,6 +52,7 @@ const registrarCarrera = async (nuevaCarrera) => {
      } = nuevaCarrera;
 
     const text = `INSERT INTO carrera(
+        codigo_carrera,
         nombre_carrera,
         numero_carrera,
         premio_primero,
@@ -60,9 +62,10 @@ const registrarCarrera = async (nuevaCarrera) => {
         premio_quinto,
         hora_carrera,
         fk_evento,
-        fk_categoria_carrera) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
+        fk_categoria_carrera) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`;
 
     const values = [
+        codigoCarrera,
         nombreCarrera,
         numeroCarrera,
         premioPrimero,
@@ -82,7 +85,6 @@ const registrarCarrera = async (nuevaCarrera) => {
         return (nombreCarrera);
     } catch (error) {
         if (error.code === '23505') {
-            console.log(error);
             throw {
                 status: 409,
                 message: `la carrera '${nombreCarrera}' ya ha sido registrada.`,

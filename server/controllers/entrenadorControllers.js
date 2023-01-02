@@ -36,6 +36,7 @@ const obtenerEntrenadorIndividual = async (req, res) => {
 
 const registrarEntrenador = async (req, res) => {
     const { 
+        codigoPersona,
         cedulaPersona,
         nombre1Persona,
         nombre2Persona,
@@ -44,13 +45,15 @@ const registrarEntrenador = async (req, res) => {
         fechaNacimiento, 
     } = req.body;
 
-    if (!cedulaPersona ||
+    if (!codigoPersona || 
+        !cedulaPersona ||
         !nombre1Persona||
         !apellido1Persona ||
         !fechaNacimiento)
         return (httpError.faltaInformacion(res));
 
     const nuevoEntrenador = {
+        codigoPersona, //aqui me quede
         cedulaPersona,
         nombre1Persona: nombre1Persona.toLowerCase(),
         nombre2Persona: nombre2Persona.toLowerCase(),
