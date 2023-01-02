@@ -76,10 +76,7 @@ const borrarMedicamento = async (req, res) => {
       return httpError.idInvalido(res, ":medicamentoId");
 
     await medicamentoService.borrarMedicamento(medicamentoId);
-    res.status(200).send({
-      status: "OK",
-      data: `El medicamento con el id '${medicamentoId}' se ha eliminado con exito.`,
-    });
+    res.status(200).send({ status: "OK", data: `El medicamento con el id '${medicamentoId}' se ha eliminado con exito.` });
   } catch (error) {
     res
       .status(error?.status || 500)

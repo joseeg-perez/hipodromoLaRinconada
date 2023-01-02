@@ -76,10 +76,7 @@ const borrarImplemento = async (req, res) => {
       return httpError.idInvalido(res, ":implementoId");
 
     await implementoService.borrarImplemento(implementoId);
-    res.status(200).send({
-      status: "OK",
-      data: `El implemento con el id '${implementoId}' se ha eliminado con exito.`,
-    });
+    res.status(200).send({ status: "OK", data: `El implemento con el id '${implementoId}' se ha eliminado con exito.` });
   } catch (error) {
     res
       .status(error?.status || 500)
