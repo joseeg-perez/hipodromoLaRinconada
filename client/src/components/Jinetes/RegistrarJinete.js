@@ -114,6 +114,10 @@ export const RegistrarJinete = () => {
     setfkRango("");
     setAlturaJinete("");
     setPesoJinete("");
+    setToggleRango(false);
+    setTogglePeso(false);
+    setLoading(true);
+    setRangos([]);
   };
 
   if (isLoading) {
