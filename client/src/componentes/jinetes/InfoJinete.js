@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, Card, Col } from "react-bootstrap";
+import { Card, Col, Button, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
 
-export const CardJinete = (props) => {
+const InfoJinete = (props) => {
   return (
     <Col>
       <Card className="mt-5">
@@ -31,7 +32,7 @@ export const CardJinete = (props) => {
                   <div className="mx-3">
                     <p className="small mb-1 fw-bold">Altura</p>
                     <p className="mb-0 text-center text-muted">
-                      {props.peso} cm
+                      {props.altura} cm
                     </p>
                   </div>
                   <div className="mx-3">
@@ -53,12 +54,26 @@ export const CardJinete = (props) => {
                 </div>
               </Card.Text>
               <div className="d-flex pt-1 justify-content-end mt-4">
-                <Button className="btn btn-light btn-outline-primary btn-sm mx-1">
-                  Ver mas
-                </Button>
-                <Button className="btn btn-light btn-outline-success btn-sm mx-1">
-                  <img src={edit} alt="/" width={20} />
-                </Button>
+                <Row className="d-flex align-items-center">
+                  <Link
+                    size="sm"
+                    to={`/jinetes/${props.Id}`}
+                    className="text-center"
+                  >
+                    <Button className="btn btn-light btn-outline-primary btn-sm mx-1">
+                      Mas Info
+                    </Button>
+                  </Link>
+                </Row>
+                <Link
+                  size="sm"
+                  to={`/jinetes/${props.Id}/updateJinete`}
+                  className="text-center"
+                >
+                  <Button className="btn btn-light btn-outline-success btn-sm mx-1">
+                    <img src={edit} alt="/" width={20} />
+                  </Button>
+                </Link>
 
                 <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
                   <img src={trash} alt="/" width={20} />
@@ -71,3 +86,5 @@ export const CardJinete = (props) => {
     </Col>
   );
 };
+
+export default InfoJinete;

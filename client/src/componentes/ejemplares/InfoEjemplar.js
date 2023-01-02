@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, Card, Col, Container, Row, Image } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
 
-const CardN = (props) => {
+const InfoEjemplar = (props) => {
   return (
     <Col>
       <Card className="mt-5">
@@ -53,12 +54,26 @@ const CardN = (props) => {
                 </div>
               </Card.Text>
               <div className="d-flex pt-1 justify-content-end mt-4">
-                <Button className="btn btn-light btn-outline-primary btn-sm mx-1">
-                  Ver mas
-                </Button>
-                <Button className="btn btn-light btn-outline-success btn-sm mx-1">
-                  <img src={edit} alt="/" width={20} />
-                </Button>
+                <Row className="d-flex align-items-center">
+                  <Link
+                    size="sm"
+                    to={`/ejemplares/${props.Id}`}
+                    className="text-center"
+                  >
+                    <Button className="btn btn-light btn-outline-primary btn-sm mx-1">
+                      Mas Info
+                    </Button>
+                  </Link>
+                </Row>
+                <Link
+                  size="sm"
+                  to={`/ejemplares/${props.Id}/updateEjemplar`}
+                  className="text-center"
+                >
+                  <Button className="btn btn-light btn-outline-success btn-sm mx-1">
+                    <img src={edit} alt="/" width={20} />
+                  </Button>
+                </Link>
 
                 <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
                   <img src={trash} alt="/" width={20} />
@@ -72,4 +87,4 @@ const CardN = (props) => {
   );
 };
 
-export default CardN;
+export default InfoEjemplar;
