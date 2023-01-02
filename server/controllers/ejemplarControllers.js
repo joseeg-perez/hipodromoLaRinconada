@@ -45,7 +45,6 @@ const registrarEjemplar = async (req, res) => {
         padreEjemplar,
         madreEjemplar,
         imagenEjemplar,
-        propietarioEjemplar,
         haraEjemplar,
         pelajeEjemplar,
         generoEjemplar,
@@ -57,17 +56,20 @@ const registrarEjemplar = async (req, res) => {
         !precioEjemplar ||
         !fecha_nacEjemplar ||
         !pesoEjemplar ||
-        !padreEjemplar ||
-        !madreEjemplar ||
         !imagenEjemplar ||
-        !propietarioEjemplar ||
         !haraEjemplar ||
         !pelajeEjemplar ||
         !generoEjemplar)
         return (httpError.faltaInformacion(res));
     
-    if (isNaN(numeroEjemplar) || isNaN(tatlabialEjemplar) || isNaN(pesoEjemplar) || isNaN(precioEjemplar))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }))
+    if (isNaN(numeroEjemplar) || 
+        isNaN(tatlabialEjemplar) || 
+        isNaN(pesoEjemplar) || 
+        isNaN(precioEjemplar) ||
+        isNaN(padreEjemplar) ||
+        isNaN(madreEjemplar) ||
+        isNaN(pelaje))
+        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
    
     const nuevoEjemplar = {
         nombreEjemplar: nombreEjemplar.toLowerCase(),
@@ -79,7 +81,6 @@ const registrarEjemplar = async (req, res) => {
         padreEjemplar,
         madreEjemplar,
         imagenEjemplar,
-        propietarioEjemplar,
         haraEjemplar,
         pelajeEjemplar,
         generoEjemplar,

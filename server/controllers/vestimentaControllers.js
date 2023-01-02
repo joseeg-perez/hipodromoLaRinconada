@@ -36,18 +36,13 @@ const obtenerVestimentaIndividual = async (req, res) => {
 
 const registrarVestimenta = async (req, res) => { 
     const {
-        codigoVestimenta, 
         nombreVestimenta,
      } =  req.body;
 
-    if (!codigoVestimenta || !nombreVestimenta)
+    if (!nombreVestimenta)
         return (httpError.faltaInformacion(res));
-    
-    if (isNaN(codigoVestimenta) || codigoVestimenta === ' ')
-        return(httpError.idInvalido(res, "codigo Vestimenta"));
    
     const nuevaVestimenta = {
-        codigoVestimenta,
         nombreVestimenta: nombreVestimenta.toLowerCase(),
     };
 

@@ -44,7 +44,7 @@ const registrarCaballeriza = async (req, res) => {
         return (httpError.faltaInformacion(res));
 
     if (isNaN(codigoCaballeriza) || codigoCaballeriza === ' ')
-        return(httpError.idInvalido(res, "cantidad puestos"));
+        return(httpError.idInvalido(res, "codigo caballeriza"));
     
     else if (isNaN(cantidadPuestos) || cantidadPuestos === ' ')
         return(httpError.idInvalido(res, "cantidad puestos"));

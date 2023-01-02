@@ -34,7 +34,6 @@ const obtenerPuestoIndividual = async (req, res) => {
     }
 };
 
-
 const actualizarPuesto = async (req, res) => {
 
 };

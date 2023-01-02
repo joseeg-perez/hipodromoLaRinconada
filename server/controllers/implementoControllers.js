@@ -48,13 +48,8 @@ const registrarImplemento = async (req, res) => {
   };
 
   try {
-    const implementoCreado = await implementoService.registrarImplemento(
-      nuevoImplemento
-    );
-    res.status(200).send({
-      status: "OK",
-      data: `Se ha registrado el implemento '${implementoCreado}' de forma satisfactoria.`,
-    });
+    const implementoCreado = await implementoService.registrarImplemento(nuevoImplemento);
+    res.status(200).send({ status: "OK", data: `Se ha registrado el implemento '${implementoCreado}' de forma satisfactoria.` });
   } catch (error) {
     res
       .status(error?.status || 500)

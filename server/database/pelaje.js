@@ -38,14 +38,13 @@ const obtenerPelajeIndividual = async (pelajeId) => {
 
 const registrarPelaje = async (nuevoPelaje) => {
     const { 
-        codigoPelaje, 
         nombrePelaje,
         abrevPelaje,
      } = nuevoPelaje;
 
-    const text = `INSERT INTO pelaje(codigo_pelaje, nombre_pelaje, abrev_pelaje) VALUES($1, $2, $3)`;
+    const text = `INSERT INTO pelaje(nombre_pelaje, abrev_pelaje) VALUES($1, $2)`;
         
-    const values = [codigoPelaje, nombrePelaje, abrevPelaje];
+    const values = [nombrePelaje, abrevPelaje];
 
     try {
         await dbConnection.query(text, values);

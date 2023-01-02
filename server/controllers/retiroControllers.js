@@ -36,29 +36,24 @@ const obtenerRetiroIndividual = async (req, res) => {
 
 const registrarRetiro = async (req, res) => { 
     const {
-        codigoRetiro, 
         fechaRetiro,
         fkMotivo,
      } =  req.body;
 
-    if (!codigoRetiro || !fechaRetiro || !fkMotivo)
+    if (!fechaRetiro || !fkMotivo)
         return (httpError.faltaInformacion(res));
-    
-    if (isNaN(codigoRetiro))
-        return(httpError.idInvalido(res, "codigo retiro"));
 
-    else if (isNaN(fkMotivo))
+    if (isNaN(fkMotivo))
         return(httpError.idInvalido(res, "fk_motivo"));
     
     const nuevoRetiro = {
-        codigoRetiro,
         fechaRetiro,
         fkMotivo,
     };
 
     try {
-        const retiroCreado = await retiroService.registrarRetiro(nuevoRetiro);
-        res.status(200).send({ status: "OK", data: `Se ha registrado el retiro numero '${retiroCreado}' de forma satisfactoria.` });
+        await retiroService.registrarRetiro(nuevoRetiro);
+        res.status(200).send({ status: "OK", data: `Se ha registrado el retiro de forma satisfactoria.` });
     } catch (error) {
         res
         .status(error?.status || 500)

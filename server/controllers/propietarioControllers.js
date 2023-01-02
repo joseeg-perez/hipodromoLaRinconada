@@ -59,6 +59,9 @@ const registrarPropietario = async (req, res) => {
     if (!emailValido)
         return(httpError.campoInvalido(res, "correo"));
 
+    if (isNaN(cedulaPersona) || isNaN(fkLugar))
+        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
+
     const nuevoPropietario = {
         cedulaPersona,
         nombre1Persona: nombre1Persona.toLowerCase(),

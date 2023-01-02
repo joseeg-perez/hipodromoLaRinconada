@@ -38,25 +38,24 @@ const obtenerRetiroIndividual = async (retiroId) => {
 
 const registrarRetiro = async (nuevoRetiro) => {
     const { 
-        codigoRetiro, 
         fechaRetiro,
         fkMotivo,
      } = nuevoRetiro;
 
-    const text = `INSERT INTO retiro(codigo_retiro, fecha_retiro, fk_motivo) VALUES($1, $2, $3)`;
+    const text = `INSERT INTO retiro(fecha_retiro, fk_motivo) VALUES($1, $2)`;
         
-    const values = [codigoRetiro, fechaRetiro, fkMotivo];
+    const values = [fechaRetiro, fkMotivo];
 
     try {
         await dbConnection.query(text, values);
     
         dbConnection.end;
-        return (codigoRetiro);
+        return;
     } catch (error) {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `El retiro con el codigo '${codigoRetiro}' ya ha sido registrado.`,
+                message: `El retiro ya ha sido registrado con anterioridad.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };

@@ -36,25 +36,22 @@ const obtenerRestauranteIndividual = async (req, res) => {
 
 const registrarRestaurante = async (req, res) => { 
     const {
-        codigoRestaurante, 
         nombreRestaurante,
         descripcionRestaurante,
         capacidadRestaurante,
         fk_area,
      } =  req.body;
 
-    if (!codigoRestaurante || 
-        !nombreRestaurante ||
+    if (!nombreRestaurante ||
         !descripcionRestaurante ||
         !capacidadRestaurante ||
         !fk_area)
         return (httpError.faltaInformacion(res));
-    
-    if (isNaN(codigoRestaurante) || codigoRestaurante === ' ')
-        return(httpError.idInvalido(res, "codigo restaurante"));
+
+    if (isNaN(capacidadRestaurante) || isNaN(fk_area))
+        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
    
     const nuevoRestaurante = {
-        codigoRestaurante,
         nombreRestaurante: nombreRestaurante.toLowerCase(),
         descripcionRestaurante: descripcionRestaurante.toLowerCase(),
         capacidadRestaurante,

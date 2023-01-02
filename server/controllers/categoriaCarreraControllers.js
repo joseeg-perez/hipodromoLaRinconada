@@ -36,18 +36,13 @@ const obtenerCategoriaIndividual = async (req, res) => {
 
 const registrarCategoria = async (req, res) => { 
     const {
-        codigoCategoria, 
         nombreCategoria,
      } =  req.body;
 
-    if (!codigoCategoria || !nombreCategoria)
+    if (!nombreCategoria)
         return (httpError.faltaInformacion(res));
-    
-    if (isNaN(codigoCategoria) || codigoCategoria === ' ')
-        return(httpError.idInvalido(res, "codigo categoria"));
    
     const nuevaCategoria = {
-        codigoCategoria,
         nombreCategoria: nombreCategoria.toLowerCase(),
     };
 

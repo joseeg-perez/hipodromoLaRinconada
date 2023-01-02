@@ -50,6 +50,10 @@ const registrarEntrenador = async (req, res) => {
         !fechaNacimiento)
         return (httpError.faltaInformacion(res));
 
+    if (isNaN(cedulaPersona))
+        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
+
+
     const nuevoEntrenador = {
         cedulaPersona,
         nombre1Persona: nombre1Persona.toLowerCase(),

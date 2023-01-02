@@ -44,7 +44,7 @@ const registrarMedicamento = async (req, res) => {
 
   const nuevoMedicamento = {
     nombreMedicamento: nombreMedicamento.toLowerCase(),
-    descripcionMedicamento,
+    descripcionMedicamento: descripcionMedicamento.toLowerCase(),
   };
 
   try {
