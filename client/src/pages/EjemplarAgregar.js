@@ -12,9 +12,8 @@ import {
   FormSelect,
   FormControl,
 } from "react-bootstrap";
-import ModalExitoso from "../ModalExitoso";
 
-const RegistrarEjemplar = () => {
+const EjemplarAgregar = () => {
   const [nombreEjemplar, setNombreEjemplar] = useState("");
   const [numeroEjemplar, setNumeroEjemplar] = useState("");
   const [tatlabialEjemplar, setTatlabialEjemplar] = useState(0);
@@ -100,9 +99,6 @@ const RegistrarEjemplar = () => {
   };
   const handleGenero = (event) => {
     setGeneroEjemplar(event.target.value);
-  };
-  const handleModal = () => {
-    <ModalExitoso show={true} />;
   };
 
   return (
@@ -316,4 +312,4 @@ const RegistrarEjemplar = () => {
   );
 };
 
-export default RegistrarEjemplar;
+export default EjemplarAgregar;

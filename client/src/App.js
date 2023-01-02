@@ -27,6 +27,15 @@ import { EjemplarUpdate } from "./pages/EjemplarUpdate";
 import JineteDetail from "./pages/JineteDetail";
 import JineteUpdate from "./pages/JineteUpdate";
 import JineteAgregar from "./pages/JineteAgregar";
+import EjemplarAgregar from "./pages/EjemplarAgregar";
+import Medicamentos from "./pages/Medicamentos";
+import MedicamentoAgregar from "./pages/MedicamentoAgregar";
+import Implementos from "./pages/Implementos";
+import ImplementoAgregar from "./pages/ImplementoAgregar";
+import MotivosRetiro from "./pages/MotivosRetiro";
+import MotivoRetiroAgregar from "./pages/MotivoRetiroAgregar";
+import PropietariosAgregar from "./pages/PropietarioAgregar";
+import PropietarioAgregar from "./pages/PropietarioAgregar";
 
 function App() {
   return (
@@ -52,11 +61,15 @@ function App() {
           <Ejemplares></Ejemplares>
         </Route>
 
+        <Route path="/ejemplares/createEjemplar" exact>
+          <EjemplarAgregar></EjemplarAgregar>
+        </Route>
+
         <Route path="/ejemplares/:ejemplarId" exact>
           <EjemplarDetail></EjemplarDetail>
         </Route>
 
-        <Route path="/ejemplares/:ejemplarId/updateEjemplar">
+        <Route path="/ejemplares/:ejemplarId/updateEjemplar" exact>
           <EjemplarUpdate></EjemplarUpdate>
         </Route>
 
@@ -88,8 +101,11 @@ function App() {
           <Perfil></Perfil>
         </Route>
 
-        <Route path="/propietarios">
+        <Route path="/propietarios" exact>
           <Propietarios></Propietarios>
+        </Route>
+        <Route path="/propietarios/createPropietario" exact>
+          <PropietarioAgregar></PropietarioAgregar>
         </Route>
 
         <Route path="/resultados" exact>
@@ -118,6 +134,30 @@ function App() {
 
         <Route path="/caballeriza/agregar" exact>
           <CaballerizaRegistrar></CaballerizaRegistrar>
+        </Route>
+
+        <Route path="/medicamentos" exact>
+          <Medicamentos></Medicamentos>
+        </Route>
+
+        <Route path="/medicamentos/agregar" exact>
+          <MedicamentoAgregar></MedicamentoAgregar>
+        </Route>
+
+        <Route path="/implementos" exact>
+          <Implementos></Implementos>
+        </Route>
+
+        <Route path="/implementos/agregar" exact>
+          <ImplementoAgregar></ImplementoAgregar>
+        </Route>
+
+        <Route path="/motivosRet" exact>
+          <MotivosRetiro></MotivosRetiro>
+        </Route>
+
+        <Route path="/motivosRet/agregar" exact>
+          <MotivoRetiroAgregar></MotivoRetiroAgregar>
         </Route>
 
         <Route path="/resultados/:eventoId">

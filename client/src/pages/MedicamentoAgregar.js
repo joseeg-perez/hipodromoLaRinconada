@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Container, Form, FormLabel } from "react-bootstrap";
 import axios from "axios";
 
-const CrearMedicamento = () => {
+const MedicamentoAgregar = () => {
   const [nombreMedicamento, setNombreMedicamento] = useState("");
   const [descripcionMedicamento, setDescMedicamento] = useState("");
   const handleNombreMedicamento = (event) => {
@@ -70,4 +70,4 @@ const CrearMedicamento = () => {
   );
 };
 
-export default CrearMedicamento;
+export default MedicamentoAgregar;

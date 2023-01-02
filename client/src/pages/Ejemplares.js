@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Col, Container, Row, Image, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import caballo1 from "../assets/caballo1.jpg";
 import caballo2 from "../assets/caballo2.jpg";
 import caballo3 from "../assets/caballo3.jpg";
@@ -89,17 +90,23 @@ const Ejemplares = (props) => {
           className="rounded-end d-flex align-items-center"
           style={{ backgroundColor: "#AFBBF7", width: "180px", height: "40px" }}
         >
-          <Button
-            className="btn fw-bold"
+          <Link
             size="sm"
-            style={{
-              backgroundColor: "#E8EEDF",
-              color: "black",
-              border: "black",
-            }}
+            to={`/ejemplares/createEjemplar`}
+            className="text-center"
           >
-            AGREGAR EJEMPLAR
-          </Button>
+            <Button
+              className="btn fw-bold"
+              size="sm"
+              style={{
+                backgroundColor: "#E8EEDF",
+                color: "black",
+                border: "black",
+              }}
+            >
+              AGREGAR EJEMPLAR
+            </Button>
+          </Link>
         </div>
       </Row>
       <Row className="row-cols-2 mx-5">

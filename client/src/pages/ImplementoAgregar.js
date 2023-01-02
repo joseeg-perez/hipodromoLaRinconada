@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Container, Form, FormLabel } from "react-bootstrap";
 import axios from "axios";
 
-const CrearImplemento = () => {
+const ImplementoAgregar = () => {
   const [nombreImplemento, setNombreImplemento] = useState("");
   const [descripcionImplemento, setDescImplemento] = useState("");
 
@@ -71,4 +71,4 @@ const CrearImplemento = () => {
   );
 };
 
-export default CrearImplemento;
+export default ImplementoAgregar;

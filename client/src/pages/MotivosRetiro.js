@@ -1,15 +1,31 @@
-import React from "react";
-import { Container, Row, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Row } from "react-bootstrap";
+import axios from "axios";
+import { CardMedImpRetiro } from "../componentes/Medicamentos,Implementos,Retiros/CardMedImpRetiro";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
 
-const Propietarios = () => {
+const MotivosRetiro = () => {
+  const [retiros, setRetiros] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  //   useEffect(() => {
+  //     axios
+  //       .get("http://localhost:5000/api/v1/retiros/listado_de_retiros")
+  //       .then((res) => {
+  //         console.log(res);
+  //         setRetiros(res.data);
+  //         setLoading(false);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }, []);
+
+  //   console.log(retiros);
+  //   if (isLoading) {
+  //     return <div></div>;
+  //   }
   return (
     <Container>
-      <Row className="text-center">
-        <h1>LISTADO DE PROPIETARIOS</h1>
-      </Row>
-
       <Row className="row justify-content-center">
         <div
           className="rounded-start d-flex align-items-center"
@@ -45,13 +61,9 @@ const Propietarios = () => {
 
         <div
           className="rounded-end d-flex align-items-center"
-          style={{ backgroundColor: "#AFBBF7", width: "200px", height: "40px" }}
+          style={{ backgroundColor: "#AFBBF7", width: "220px", height: "40px" }}
         >
-          <Link
-            size="sm"
-            to={`/propietarios/createPropietario`}
-            className="text-center"
-          >
+          <Link size="sm" to={`/motivosRet/agregar`} className="text-center">
             <Button
               className="btn fw-bold"
               size="sm"
@@ -61,13 +73,24 @@ const Propietarios = () => {
                 border: "black",
               }}
             >
-              AGREGAR PROPIETARIO
+              AGREGAR MOTIVO
             </Button>
           </Link>
         </div>
+      </Row>
+
+      <h2 className="text-center mt-3">LISTADO DE MOTIVOS DE RETIRO</h2>
+      <Row className="row-cols-4">
+        {retiros.data.map((retiro) => (
+          <CardMedImpRetiro
+            key={retiro.codigo_retiro}
+            nombre={retiro.nombre_retiro}
+            descripcion={retiro.descripcion_retiro}
+          />
+        ))}
       </Row>
     </Container>
   );
 };
 
-export default Propietarios;
+export default MotivosRetiro;

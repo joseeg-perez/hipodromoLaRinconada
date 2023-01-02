@@ -21,11 +21,21 @@ const Menu = () => {
                 <li className="list-group-item">CONSULTAR JINETES</li>
                 <li className="list-group-item">CONSULTAR EJEMPLARES</li>
                 <li className="list-group-item">CONSULTAR PROPIETARIOS</li>
-                <Link className="list-group-item" to="/studs">CONSULTAR STUDS</Link>
-                <li className="list-group-item">
-                  CONSULTAR MEDICAMENTOS,IMPLEMENTOS,RETIROS
-                </li>
-                <Link className="list-group-item" to="/caballerizas">CONSULTAR CABALLERIZA</Link>
+                <Link className="list-group-item" to="/studs">
+                  CONSULTAR STUDS
+                </Link>
+                <Link className="list-group-item" to="/medicamentos">
+                  CONSULTAR MEDICAMENTOS
+                </Link>
+                <Link className="list-group-item" to="/implementos">
+                  CONSULTAR IMPLEMENTOS
+                </Link>
+                <Link className="list-group-item" to="/motivosRet">
+                  CONSULTAR MOTIVOS DE RETIRO
+                </Link>
+                <Link className="list-group-item" to="/caballerizas">
+                  CONSULTAR CABALLERIZA
+                </Link>
                 <li className="list-group-item">CONSULTAR VETERINARIO</li>
                 <li className="list-group-item">CONSULTAR RESTAURANTES</li>
                 <li className="list-group-item">CONSULTAR EVENTOS</li>

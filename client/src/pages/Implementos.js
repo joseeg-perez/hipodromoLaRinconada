@@ -1,14 +1,33 @@
-import React from "react";
-import { Container, Row, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Row } from "react-bootstrap";
+import axios from "axios";
+import { CardMedImpRetiro } from "../componentes/Medicamentos,Implementos,Retiros/CardMedImpRetiro";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
 
-const Propietarios = () => {
+const Implementos = () => {
+  const [implementos, setImplementos] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/implementos/listado_de_implementos")
+      .then((res) => {
+        // console.log(res);
+        setImplementos(res.data);
+        setLoading(false);
+      });
+    //   .catch((err) => console.log(err));
+  }, []);
+
+  console.log(implementos);
+
+  if (isLoading) {
+    return <div></div>;
+  }
   return (
     <Container>
-      <Row className="text-center">
-        <h1>LISTADO DE PROPIETARIOS</h1>
-      </Row>
+      <h2 className="text-center mt-3">LISTADO DE IMPLEMENTOS</h2>
 
       <Row className="row justify-content-center">
         <div
@@ -45,13 +64,9 @@ const Propietarios = () => {
 
         <div
           className="rounded-end d-flex align-items-center"
-          style={{ backgroundColor: "#AFBBF7", width: "200px", height: "40px" }}
+          style={{ backgroundColor: "#AFBBF7", width: "210px", height: "40px" }}
         >
-          <Link
-            size="sm"
-            to={`/propietarios/createPropietario`}
-            className="text-center"
-          >
+          <Link size="sm" to={`/implementos/agregar`} className="text-center">
             <Button
               className="btn fw-bold"
               size="sm"
@@ -61,13 +76,22 @@ const Propietarios = () => {
                 border: "black",
               }}
             >
-              AGREGAR PROPIETARIO
+              AGREGAR IMPLEMENTO
             </Button>
           </Link>
         </div>
+      </Row>
+      <Row className="row-cols-4">
+        {implementos.data.map((implemento) => (
+          <CardMedImpRetiro
+            key={implemento.codigo_implemento}
+            nombre={implemento.nombre_implemento}
+            descripcion={implemento.descripcion_implemento}
+          />
+        ))}
       </Row>
     </Container>
   );
 };
 
-export default Propietarios;
+export default Implementos;
