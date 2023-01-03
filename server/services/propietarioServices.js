@@ -1,4 +1,5 @@
 const Propietario = require("../database/propietario.js");
+const { registrarTelefono } = require("../database/telefono.js");
 
 const obtenerListaDePropietarios = async () => {
     try {
@@ -24,8 +25,15 @@ const registrarPropietario = async (nuevoPropietario) => {
     try {
         const propietarioCreado = await Propietario.registrarPropietario(nuevoPropietario);
         const idPropietarioCreado = await Propietario.obtenerIdPropietarioNuevo(nuevoPropietario);
+        const telefonoPropietario = {
+            extension_tlf: nuevoPropietario.extension_tlf,
+            cuerpo_tlf: nuevoPropietario.cuerpo_tlf,
+            fk_propietario: idPropietarioCreado,
+            fk_cliente: null,
+        };
+        await registrarTelefono(telefonoPropietario);//Registrando el telefono del propietario
         
-        return([propietarioCreado, idPropietarioCreado]);
+        return(propietarioCreado);
     } catch (error) {
         throw(error);
     }

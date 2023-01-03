@@ -38,10 +38,10 @@ const obtenerTelefonoIndividual = async (telefonoId) => {
 
 const registrarTelefono = async (nuevoTelefono) => {
     const { 
-        extensionTelefono,
-        cuerpoTelefono,
-        fkPropietario,
-        fkCliente,
+        extension_tlf,
+        cuerpo_tlf,
+        fk_propietario,
+        fk_cliente,
      } = nuevoTelefono;
 
     const text = `INSERT INTO telefono(
@@ -51,10 +51,10 @@ const registrarTelefono = async (nuevoTelefono) => {
         fk_cliente) VALUES($1, $2, $3, $4)`;
         
     const values = [
-        extensionTelefono,
-        cuerpoTelefono,
-        fkPropietario,
-        fkCliente 
+        extension_tlf,
+        cuerpo_tlf,
+        fk_propietario,
+        fk_cliente, 
     ];
 
     try {

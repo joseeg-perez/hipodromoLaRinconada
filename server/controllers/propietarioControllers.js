@@ -38,18 +38,19 @@ const obtenerPropietarioIndividual = async (req, res) => {
 };
 
 const registrarPropietario = async (req, res) => {
-  const {
-    cedulaPersona,
-    nombre1Persona,
-    nombre2Persona,
-    apellido1Persona,
-    apellido2Persona,
-    fechaNacimiento,
-    correo,
-    fkLugar,
-    extension_tlf,
-    cuerpo_tlf,
-  } = req.body;
+    const { 
+        cedulaPersona,
+        nombre1Persona,
+        nombre2Persona,
+        apellido1Persona,
+        apellido2Persona,
+        fechaNacimiento,
+        correo,
+        fkLugar,
+        extension_tlf,
+        cuerpo_tlf,
+
+     } = req.body;
 
   if (
     !cedulaPersona ||
@@ -70,38 +71,27 @@ const registrarPropietario = async (req, res) => {
       data: "Uno de los campos que espera valores numericos es invalido.",
     });
 
-  const nuevoPropietario = {
-    cedulaPersona,
-    nombre1Persona: nombre1Persona.toLowerCase(),
-    nombre2Persona: nombre2Persona.toLowerCase(),
-    apellido1Persona: apellido1Persona.toLowerCase(),
-    apellido2Persona: apellido2Persona.toLowerCase(),
-    fechaNacimiento,
-    correo,
-    fkLugar,
-  };
-
-  try {
-    const propietarioCreado = await propietarioService.registrarPropietario(
-      nuevoPropietario
-    );
-    console.log(propietarioCreado[1]);
-    const telefono = {
-      extension_tlf: extension_tlf,
-      cuerpo_tlf: cuerpo_tlf,
-      fk_propietario: propietarioCreado[1],
+    const nuevoPropietario = {
+        cedulaPersona,
+        nombre1Persona: nombre1Persona.toLowerCase(),
+        nombre2Persona: nombre2Persona.toLowerCase(),
+        apellido1Persona: apellido1Persona.toLowerCase(),
+        apellido2Persona: apellido2Persona.toLowerCase(),
+        fechaNacimiento,
+        correo,
+        fkLugar,
+        extension_tlf,
+        cuerpo_tlf,
     };
-    res.status(200).send({
-      status: "OK",
-      data:
-        `Se ha registrado el propietario '${propietarioCreado[0]}' de forma satisfactoria.` +
-        propietarioCreado[1],
-    });
-  } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
-  }
+
+    try {
+        const propietarioCreado = await propietarioService.registrarPropietario(nuevoPropietario);
+        res.status(200).send({ status: "OK", data: `Se ha registrado el propietario '${propietarioCreado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const actualizarPropietario = async (req, res) => {

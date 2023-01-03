@@ -83,10 +83,33 @@ const borrarStud = async (studId) => {
     }
 };
 
+const obtenerIdStudNueva = async (nuevoPropietario) => {
+    const { 
+        nombreStud,
+     } = nuevoPropietario;
+
+    const query = {
+        text: `SELECT codigo_stud
+        FROM stud
+        WHERE nombre_stud = $1`,
+        values: [nombreStud]
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        const idStud = rows[0].codigo_stud;
+
+        return(idStud);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 module.exports = {
     obtenerListaDeStuds,
     obtenerStudIndividual,
     registrarStud,
     actualizarStud,
     borrarStud,
+    obtenerIdStudNueva,
 };
