@@ -62,7 +62,6 @@ const registrarEntrenador = async (req, res) => {
         apellido2Persona: apellido2Persona.toLowerCase(),
         fechaNacimiento,
     };
-
     try {
         const entrenadorCreado = await entrenadorService.registrarEntrenador(nuevoEntrenador);
         res.status(200).send({ status: "OK", data: `Se ha registrado el entrenador '${entrenadorCreado}' de forma satisfactoria.` });
@@ -71,7 +70,6 @@ const registrarEntrenador = async (req, res) => {
         .status(error?.status || 500)
         .send({ status: "FAILED", data: { error: error?.message || error } });
     }
-
 };
 
 const actualizarEntrenador = async (req, res) => {

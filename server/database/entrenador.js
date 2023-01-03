@@ -72,7 +72,7 @@ const registrarEntrenador = async (nuevoEntrenador) => {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `El entrenador con cedula '${ cedulaPersona}' ya ha sido registrado.`,
+                message: `El entrenador con cedula '${ cedulaPersona }' ya ha sido registrado.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
@@ -101,10 +101,33 @@ const borrarEntrenador = async (entrenadorId) => {
     }
 };
 
+const obtenerIdEntrenadorNuevo = async (nuevoEntrenador) => {
+    const { 
+        cedulaPersona,
+     } = nuevoEntrenador;
+
+    const query = {
+        text: `SELECT codigo_persona
+        FROM persona_entrenador
+        WHERE cedula_persona = $1`,
+        values: [cedulaPersona],
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        const idEntrenador = rows[0].codigo_persona;
+
+        return(idEntrenador);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 module.exports = {
     obtenerListaDeEntrenadores,
     obtenerEntrenadorIndividual,
     registrarEntrenador,
     actualizarEntrenador,
     borrarEntrenador,
+    obtenerIdEntrenadorNuevo,
 };

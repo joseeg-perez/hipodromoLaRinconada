@@ -83,10 +83,10 @@ const borrarStud = async (studId) => {
     }
 };
 
-const obtenerIdStudNueva = async (nuevoPropietario) => {
+const obtenerIdStudNueva = async (nuevoStud) => {
     const { 
         nombreStud,
-     } = nuevoPropietario;
+     } = nuevoStud;
 
     const query = {
         text: `SELECT codigo_stud

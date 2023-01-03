@@ -101,10 +101,33 @@ const borrarVeterinario = async (veterinarioId) => {
     }
 };
 
+const obtenerIdVeterinarioNuevo = async (nuevoVeterinario) => {
+    const { 
+        cedulaPersona,
+     } = nuevoVeterinario;
+
+    const query = {
+        text: `SELECT codigo_persona
+        FROM persona_veterinario
+        WHERE cedula_persona = $1`,
+        values: [cedulaPersona],
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        const idVeterinario = rows[0].codigo_persona;
+
+        return(idVeterinario);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 module.exports = {
     obtenerListaDeVeterinarios,
     obtenerVeterinarioIndividual,
     registrarVeterinario,
     actualizarVeterinario,
     borrarVeterinario,
+    obtenerIdVeterinarioNuevo,
 };
