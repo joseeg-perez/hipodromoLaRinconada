@@ -64,7 +64,7 @@ const registrarParticipacion = async (nuevaParticipacion) => {
         fk_entrenador,
         fk_retiro,
         fk_resultado,
-        fk_stud,) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
+        fk_stud) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
         
     const values = [
         gualdrapa,
@@ -85,7 +85,7 @@ const registrarParticipacion = async (nuevaParticipacion) => {
         await dbConnection.query(text, values);
     
         dbConnection.end;
-        return (nombrePelaje);
+        return (puestoPista);
     } catch (error) {
         if (error.code === '23505') {
             throw {

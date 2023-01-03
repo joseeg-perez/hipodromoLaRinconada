@@ -78,7 +78,7 @@ const registrarParticipacion = async (req, res) => {
         puestoPista,
         pesoCaballo,
         precioEjemplar,
-        comentario: comentario.tolowercase(),
+        comentario: comentario.toLowerCase(),
         fkEjemplar,
         fkCarrera,
         fkJinete,
@@ -90,7 +90,7 @@ const registrarParticipacion = async (req, res) => {
 
     try {
         const participacionCreada = await participacionService.registrarParticipacion(nuevaParticipacion);
-        res.status(200).send({ status: "OK", data: `Se ha registrado la participacion '${ participacionCreada }' de forma satisfactoria.` });
+        res.status(200).send({ status: "OK", data: `Se ha registrado la participacion en el puesto '${ participacionCreada }' de forma satisfactoria.` });
     } catch (error) {
         res
         .status(error?.status || 500)

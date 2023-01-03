@@ -1,4 +1,4 @@
-const Participacion = require("../database/Participacion.js");
+const Participacion = require("../database/participacion.js");
 
 const obtenerListaDeParticipaciones = async () => {
     try {
