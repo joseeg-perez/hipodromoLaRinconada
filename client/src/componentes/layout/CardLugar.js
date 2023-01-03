@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Container,
@@ -9,15 +9,42 @@ import {
   Row,
   FormSelect,
 } from "react-bootstrap";
+import axios from "axios";
 
 export const CardLugar = (props) => {
-  const [estado, setEstado] = useState("");
+  const [estado, setEstado] = useState([]);
   const [municipio, setMunicipio] = useState("");
   const [parroquia, setParroquia] = useState("");
+  const [isLoading, setLoading] = useState(true);
+  const [lugares, setLugares] = useState(true);
+  const [direccion, setdireccion] = useState(true);
+  let estados = [];
 
   const handleEstado = (event) => {
     setEstado(event.target.value);
   };
+  const handleParroquia = (event) => {
+    setParroquia(event.target.value);
+  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/lugares/listado_de_lugares")
+      .then((res) => {
+        console.log(res);
+        setLugares(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(lugares);
+
+  props.onSaveLugar(parroquia);
+
+  if (isLoading) {
+    return <div></div>;
+  }
 
   return (
     <Container>
@@ -29,9 +56,11 @@ export const CardLugar = (props) => {
               <Col>
                 <FormLabel>Estado:</FormLabel>
                 <FormSelect onChange={handleEstado}>
-                  {/* {estados.map((estado) => (
-                    <option key={estado}>{estado}</option>
-                  ))} */}
+                  {lugares.data.map((lugar) => (
+                    <option key={lugar.id_lugar} value={lugar.id_lugar}>
+                      {lugar.nombre_lugar}
+                    </option>
+                  ))}
                 </FormSelect>
               </Col>
               <Col>
@@ -46,10 +75,10 @@ export const CardLugar = (props) => {
             <Row>
               <Col>
                 <FormLabel>Parroquia:</FormLabel>
-                <FormSelect>
-                  <option>1</option>
-                  <option>1</option>
-                  <option>1</option>
+                <FormSelect onChange={handleParroquia}>
+                  <option value={1}>1</option>
+                  <option value={77}>1</option>
+                  <option value={150}>1</option>
                 </FormSelect>
               </Col>
               <Col></Col>

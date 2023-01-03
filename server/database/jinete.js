@@ -2,9 +2,9 @@ const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeJinetes = async () => {
-    const query = {
-        text: "SELECT * FROM persona_jinete",
-    };
+  const query = {
+    text: "SELECT codigo_persona, nombre1_persona, apellido1_persona, peso_jinete, altura_jinete, nombre_rango FROM persona_jinete, rango_jinete WHERE fk_rango = codigo_rango",
+  };
 
   try {
     const { rows } = await dbConnection.query(query);
@@ -17,11 +17,11 @@ const obtenerListaDeJinetes = async () => {
   }
 };
 
-const obtenerJineteIndividual = async( jineteId) => {
-    const query = {
-        text: "SELECT * FROM persona_jinete WHERE codigo_persona=$1",
-        values: [jineteId],
-    };
+const obtenerJineteIndividual = async (jineteId) => {
+  const query = {
+    text: "SELECT * FROM persona_jinete WHERE codigo_persona=$1",
+    values: [jineteId],
+  };
 
   try {
     const { rows } = await dbConnection.query(query);
@@ -89,21 +89,20 @@ const registrarJinete = async (nuevoJinete) => {
 const actualizarJinete = async (jineteId, cambios) => {};
 
 const borrarJinete = async (jineteId) => {
-    const query = {
-        text: "DELETE FROM persona_jinete WHERE codigo_persona=$1",
-        values: [jineteId],
-    };
+  const query = {
+    text: "DELETE FROM persona_jinete WHERE codigo_persona=$1",
+    values: [jineteId],
+  };
 
-    try {
-        const { rowCount } = await dbConnection.query(query);        
-        if (rowCount === 0)
-            httpError.idNoEncontrado("El jinete", jineteId);
-        
-        dbConnection.end;
-        return;
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0) httpError.idNoEncontrado("El jinete", jineteId);
+
+    dbConnection.end;
+    return;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 module.exports = {

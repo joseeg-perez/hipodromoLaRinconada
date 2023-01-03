@@ -24,9 +24,6 @@ const MedicamentoAgregar = () => {
     } catch (error) {
       throw error;
     }
-    console.warn(nombreMedicamento, descripcionMedicamento);
-    setNombreMedicamento("");
-    setDescMedicamento("");
   };
   return (
     <Container>

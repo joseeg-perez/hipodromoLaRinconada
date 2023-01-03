@@ -9,6 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { CardLugar } from "../componentes/layout/CardLugar";
+import CardTelefono from "../componentes/layout/CardTelefono";
 
 const PropietarioAgregar = (props) => {
   const [cedulaPropietario, setCedulaPropietario] = useState("");
@@ -41,7 +42,32 @@ const PropietarioAgregar = (props) => {
     setCorreoPropietario(event.target.value);
   };
 
+  const handleTelefono = (enteredPrefijo, enteredNumero) => {
+    const telefono = {
+      prefijo: enteredPrefijo,
+      numero: enteredNumero,
+    };
+    console.log(telefono);
+  };
+
+  const handleLugar = (enteredLugar) => {
+    const fk_lugar = enteredLugar;
+    console.log(fk_lugar);
+  };
+
   const handleData = (event) => {
+    // extensionTelefono,
+    //     cuerpoTelefono,
+    //     fkPropietario,
+    //     fkCliente,
+    // cedulaPersona,
+    //     nombre1Persona,
+    //     nombre2Persona,
+    //     apellido1Persona,
+    //     apellido2Persona,
+    //     fechaNacimiento,
+    //     correo,
+    //     fkLugar,
     event.preventDefault();
     console.warn(
       cedulaPropietario,
@@ -81,18 +107,7 @@ const PropietarioAgregar = (props) => {
                     <FormLabel>Cédula</FormLabel>
                   </div>
                 </Col>
-                <Col>
-                  <div className="mb-3 form-floating">
-                    <input
-                      value={cedulaPropietario}
-                      type="number"
-                      className="form-control"
-                      placeholder="First name"
-                      onChange={handleCedula}
-                    />
-                    <FormLabel>Número de teléfono</FormLabel>
-                  </div>
-                </Col>
+                <Col></Col>
               </Row>
               <Row className="align-items-center">
                 <Col md="6">
@@ -174,7 +189,8 @@ const PropietarioAgregar = (props) => {
                   </div>
                 </Col>
               </Row>
-              <CardLugar lugares={props.lugares} />
+              <CardLugar onSaveLugar={handleLugar} />
+              <CardTelefono onSaveTelefono={handleTelefono} />
               <Button
                 className="mb-4 mt-4 align"
                 size="lg"
