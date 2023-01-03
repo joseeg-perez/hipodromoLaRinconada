@@ -23,8 +23,9 @@ const obtenerStudIndividual = async (studId) => {
 const registrarStud = async (nuevoStud) => {
     try {
         const studCreado = await Stud.registrarStud(nuevoStud);
+        const idStudCreado = await Stud.obtenerIdStudNueva(studCreado);
         
-        return(studCreado);
+        return([studCreado, idStudCreado]);
     } catch (error) {
         throw(error);
     }

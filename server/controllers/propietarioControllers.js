@@ -45,6 +45,9 @@ const registrarPropietario = async (req, res) => {
         fechaNacimiento,
         correo,
         fkLugar,
+        extension_tlf,
+        cuerpo_tlf,
+
      } = req.body;
 
      if (!cedulaPersona ||
@@ -71,11 +74,13 @@ const registrarPropietario = async (req, res) => {
         fechaNacimiento,
         correo,
         fkLugar,
+        extension_tlf,
+        cuerpo_tlf,
     };
 
     try {
         const propietarioCreado = await propietarioService.registrarPropietario(nuevoPropietario);
-        res.status(200).send({ status: "OK", data: `Se ha registrado el propietario '${propietarioCreado[0]}' de forma satisfactoria.`+propietarioCreado[1] });
+        res.status(200).send({ status: "OK", data: `Se ha registrado el propietario '${propietarioCreado}' de forma satisfactoria.` });
     } catch (error) {
         res
         .status(error?.status || 500)

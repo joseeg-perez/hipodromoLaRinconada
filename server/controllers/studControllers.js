@@ -50,7 +50,7 @@ const registrarStud = async (req, res) => {
 
     try {
         const studCreado = await studService.registrarStud(nuevoStud);
-        res.status(200).send({ status: "OK", data: `Se ha creado el stud '${ nombreStud }' de forma satisfactoria.` });
+        res.status(200).send({ status: "OK", data: `Se ha creado el stud '${ nombreStud }' de forma satisfactoria.`+studCreado[1] });
     } catch (error) {
         res
         .status(error?.status || 500)
