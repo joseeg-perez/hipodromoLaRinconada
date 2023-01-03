@@ -3,11 +3,11 @@ import { Container, Row, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
 
-const Entrenadores = () => {
+const Veterinarios = () => {
   return (
     <Container>
       <Row className="text-center">
-        <h1>LISTADO DE ENTRENADORES</h1>
+        <h1>LISTADO DE VETERINARIOS</h1>
       </Row>
 
       <Row className="row justify-content-center">
@@ -49,7 +49,7 @@ const Entrenadores = () => {
         >
           <Link
             size="sm"
-            to={`/entrenadores/createEntrenador`}
+            to={`/veterinarios/createVeterinario`}
             className="text-center"
           >
             <Button
@@ -61,7 +61,7 @@ const Entrenadores = () => {
                 border: "black",
               }}
             >
-              AGREGAR ENTRENADOR
+              AGREGAR VETERINARIO
             </Button>
           </Link>
         </div>
@@ -70,4 +70,4 @@ const Entrenadores = () => {
   );
 };
 
-export default Entrenadores;
+export default Veterinarios;

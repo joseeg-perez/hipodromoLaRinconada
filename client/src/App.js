@@ -39,6 +39,9 @@ import PropietarioAgregar from "./pages/PropietarioAgregar";
 import VestimentaAgregar from "./pages/VestimentaAgregar";
 import PropietarioUpdate from "./pages/PropietarioUpdate";
 import PropietarioDetail from "./pages/PropietarioDetail";
+import EntrenadorAgregar from "./pages/EntrenadorAgregar";
+import Veterinarios from "./pages/Veterinarios";
+import VeterinarioAgregar from "./pages/VeterinarioAgregar";
 
 function App() {
   return (
@@ -76,8 +79,20 @@ function App() {
           <EjemplarUpdate></EjemplarUpdate>
         </Route>
 
-        <Route path="/entrenadores">
+        <Route path="/entrenadores" exact>
           <Entrenadores></Entrenadores>
+        </Route>
+
+        <Route path="/entrenadores/createEntrenador" exact>
+          <EntrenadorAgregar></EntrenadorAgregar>
+        </Route>
+
+        <Route path="/veterinarios" exact>
+          <Veterinarios></Veterinarios>
+        </Route>
+
+        <Route path="/veterinarios/createVeterinario" exact>
+          <VeterinarioAgregar></VeterinarioAgregar>
         </Route>
 
         <Route path="/eventos" exact>

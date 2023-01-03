@@ -34,9 +34,11 @@ const Menu = () => {
                   CONSULTAR MOTIVOS DE RETIRO
                 </Link>
                 <Link className="list-group-item" to="/caballerizas">
-                  CONSULTAR CABALLERIZA
+                  CONSULTAR CABALLERIZAS
                 </Link>
-                <li className="list-group-item">CONSULTAR VETERINARIO</li>
+                <Link className="list-group-item" to="/veterinarios">
+                  CONSULTAR VETERINARIOS
+                </Link>
                 <li className="list-group-item">CONSULTAR RESTAURANTES</li>
                 <li className="list-group-item">CONSULTAR EVENTOS</li>
                 <li className="list-group-item">
