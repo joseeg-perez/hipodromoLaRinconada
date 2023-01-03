@@ -99,12 +99,34 @@ const borrarPropietario = async (propietarioId) => {
     try {
         const { rowCount } = await dbConnection.query(query);        
         if (rowCount === 0)
-            httpError.idNoEncontrado("El rol", propietarioId);
+            httpError.idNoEncontrado("El propietario", propietarioId);
 
         dbConnection.end;
         return;
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
+const obtenerIdPropietarioNuevo = async (nuevoPropietario) => {
+    const { 
+        correo,
+     } = nuevoPropietario;
+
+    const query = {
+        text: `SELECT codigo_persona
+        FROM persona_propietario
+        WHERE correo = $1`,
+        values: [correo]
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        const idPropietario = rows[0].codigo_persona;
+
+        return(idPropietario);
+    } catch (error) {
+        throw(error);
     }
 };
 
@@ -114,4 +136,5 @@ module.exports = {
     registrarPropietario,
     actualizarPropietario,
     borrarPropietario,
+    obtenerIdPropietarioNuevo,
 };
