@@ -1,9 +1,10 @@
 import React from "react";
 import { Col, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
 
-const InfoEntrenador = () => {
+const InfoEntrenador = (props) => {
   return (
     <Col>
       <Card className="mt-5">
@@ -14,19 +15,22 @@ const InfoEntrenador = () => {
         </Card.Header>
         <Card.Body>
           <Card.Text>
-            <span className="fw-bold">Stud:</span> <span>{props.stud}</span>
-          </Card.Text>
-          <Card.Text>
             <span className="fw-bold">Caballeriza:</span>{" "}
             <span>{props.caballeriza}</span>
           </Card.Text>
           <Col className="text-end">
-            <Button className="btn btn-light btn-outline-primary btn-sm mx-1">
-              <text>Ver más</text>
-            </Button>
             <Link
               size="sm"
-              to={`/propietarios/${props.Id}/updatePropietario`}
+              to={`/entrenadores/${props.Id}`}
+              className="text-center"
+            >
+              <Button className="btn btn-light btn-outline-primary btn-sm mx-1">
+                Mas Info
+              </Button>
+            </Link>
+            <Link
+              size="sm"
+              to={`/entrenadores/${props.Id}/updateEntrenador`}
               className="text-center"
             >
               <Button className="btn btn-light btn-outline-success btn-sm mx-1">

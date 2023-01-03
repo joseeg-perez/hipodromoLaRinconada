@@ -19,22 +19,11 @@ const EntrenadorAgregar = () => {
   const [apellido2Persona, setapellido2Persona] = useState("");
   const [fechaNacimiento, setfechaNacimiento] = useState("");
   const [isLoading, setLoading] = useState(true);
-  const [studs, setStuds] = useState("");
   const [caballerizas, setCaballerizas] = useState("");
   const [caballeriza, setCaballeriza] = useState("");
-  const [stud, setStud] = useState("");
-  const [toggleStud, setToggleStud] = useState(false);
   const [toggleCaballeriza, setToggleCaballeriza] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/v1/studs/listado_de_studs")
-      .then((res) => {
-        console.log(res);
-        setStuds(res.data);
-      })
-      .catch((err) => console.log(err));
-
     axios
       .get("http://localhost:5000/api/v1/caballerizas/listado_de_caballerizas")
       .then((res) => {
@@ -45,7 +34,6 @@ const EntrenadorAgregar = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(studs);
   console.log(caballerizas);
 
   if (isLoading) {
@@ -71,11 +59,6 @@ const EntrenadorAgregar = () => {
     setfechaNacimiento(event.target.value);
   };
 
-  const handleStud = (event) => {
-    setStud(event.target.value);
-    setToggleStud(true);
-  };
-
   const handleCaballeriza = (event) => {
     setCaballeriza(event.target.value);
     setToggleCaballeriza(true);
@@ -90,7 +73,6 @@ const EntrenadorAgregar = () => {
       apellido1Persona,
       apellido2Persona,
       fechaNacimiento,
-      stud,
       caballeriza
     );
     setCedulaPersona("");
@@ -191,19 +173,6 @@ const EntrenadorAgregar = () => {
               </Row>
               <Row>
                 <Col>
-                  <FormLabel>Stud:</FormLabel>
-                  <FormSelect onChange={handleStud}>
-                    <option key={-1} disabled={toggleStud}>
-                      Stud
-                    </option>
-                    {studs.data.map((stud) => (
-                      <option key={stud.codigo_stud} value={stud.codigo_stud}>
-                        {stud.nombre_stud}
-                      </option>
-                    ))}
-                  </FormSelect>
-                </Col>
-                <Col>
                   <FormLabel>Caballeriza:</FormLabel>
                   <FormSelect onChange={handleCaballeriza}>
                     <option key={-1} disabled={toggleCaballeriza}>
@@ -221,6 +190,7 @@ const EntrenadorAgregar = () => {
                     ))}
                   </FormSelect>
                 </Col>
+                <Col></Col>
               </Row>
               <Button
                 className="mb-4 mt-4 align"

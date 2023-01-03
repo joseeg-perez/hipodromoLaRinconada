@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
+import InfoVeterinarios from "../componentes/veterinarios/InfoVeterinarios";
+import axios from "axios";
 
 const Veterinarios = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [veterinarios, setVeterinarios] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/veterinarios/listado_de_veterinarios")
+      .then((res) => {
+        console.log(res);
+        setVeterinarios(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(veterinarios);
+
+  if (isLoading) {
+    return <div></div>;
+  }
   return (
     <Container>
       <Row className="text-center">
@@ -65,6 +86,20 @@ const Veterinarios = () => {
             </Button>
           </Link>
         </div>
+      </Row>
+
+      <Row className="row-cols-2 mx-5">
+        {veterinarios.data.map((veterinario) => (
+          <InfoVeterinarios
+            Id={veterinario.codigo_persona}
+            key={veterinario.codigo_persona}
+            nombre={veterinario.nombre1_persona}
+            apellido={veterinario.apellido1_persona}
+            caballeriza={veterinario.codigo_caballeriza}
+            puestos={veterinario.cantidad_puestos}
+            fecha={veterinario.fecha_inicio}
+          />
+        ))}
       </Row>
     </Container>
   );

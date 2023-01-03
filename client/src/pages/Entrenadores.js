@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
+import axios from "axios";
+import InfoEntrenador from "../componentes/entrenadores/InfoEntrenador";
 
 const Entrenadores = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [entrenadores, setEntrenadores] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/entrenadores/listado_de_entrenadores")
+      .then((res) => {
+        console.log(res);
+        setEntrenadores(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(entrenadores);
+
+  if (isLoading) {
+    return <div></div>;
+  }
   return (
     <Container>
       <Row className="text-center">
@@ -65,6 +86,19 @@ const Entrenadores = () => {
             </Button>
           </Link>
         </div>
+      </Row>
+
+      <Row className="row-cols-2 mx-5">
+        {entrenadores.data.map((entrenador) => (
+          <InfoEntrenador
+            Id={entrenador.codigo_persona}
+            key={entrenador.codigo_persona}
+            nombre={entrenador.nombre1_persona}
+            apellido={entrenador.apellido1_persona}
+            caballeriza={entrenador.caballeriza}
+            puestos={entrenador.cantidad_puestos}
+          />
+        ))}
       </Row>
     </Container>
   );
