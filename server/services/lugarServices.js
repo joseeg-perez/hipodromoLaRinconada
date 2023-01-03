@@ -10,6 +10,17 @@ const obtenerListaDeLugares = async () => {
     }
 };
 
+const obtenerEMP = async () => {
+    try {
+        const listaEMP = await Lugar.obtenerEMP();
+
+        return(listaEMP);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 module.exports = {
     obtenerListaDeLugares,
+    obtenerEMP,
 };
