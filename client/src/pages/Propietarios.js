@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
+import axios from "axios";
+import InfoPropietario from "../componentes/propietarios/InfoPropietario";
 
 const Propietarios = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [propietarios, setPropietarios] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
+      .then((res) => {
+        console.log(res);
+        setPropietarios(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(propietarios);
+
+  if (isLoading) {
+    return <div></div>;
+  }
   return (
     <Container>
       <Row className="text-center">
@@ -65,6 +86,21 @@ const Propietarios = () => {
             </Button>
           </Link>
         </div>
+      </Row>
+
+      <Row className="row-cols-2 mx-5">
+        {propietarios.data.map((propietario) => (
+          <InfoPropietario
+            Id={propietario.codigo_persona}
+            key={propietario.codigo_persona}
+            nombre={propietario.nombre1_persona}
+            apellido={propietario.apellido1_persona}
+            peso={propietario.peso_propietario}
+            altura={propietario.altura_propietario}
+            rango={propietario.nombre_rango}
+            correo={propietario.correo}
+          />
+        ))}
       </Row>
     </Container>
   );

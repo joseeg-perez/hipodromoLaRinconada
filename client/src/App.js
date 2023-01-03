@@ -37,6 +37,8 @@ import MotivoRetiroAgregar from "./pages/MotivoRetiroAgregar";
 import PropietariosAgregar from "./pages/PropietarioAgregar";
 import PropietarioAgregar from "./pages/PropietarioAgregar";
 import VestimentaAgregar from "./pages/VestimentaAgregar";
+import PropietarioUpdate from "./pages/PropietarioUpdate";
+import PropietarioDetail from "./pages/PropietarioDetail";
 
 function App() {
   return (
@@ -105,8 +107,17 @@ function App() {
         <Route path="/propietarios" exact>
           <Propietarios></Propietarios>
         </Route>
+
         <Route path="/propietarios/createPropietario" exact>
           <PropietarioAgregar></PropietarioAgregar>
+        </Route>
+
+        <Route path="/propietarios/:propietarioId" exact>
+          <PropietarioDetail></PropietarioDetail>
+        </Route>
+
+        <Route path="/propietarios/:propietarioId/updatePropietario" exact>
+          <PropietarioUpdate></PropietarioUpdate>
         </Route>
 
         <Route path="/resultados" exact>
