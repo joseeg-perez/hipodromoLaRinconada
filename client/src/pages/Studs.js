@@ -14,6 +14,7 @@ import {
 } from "react-bootstrap";
 import InfoStud from "../componentes/studs/InfoStud";
 import lupa from "../assets/lupa.svg";
+import { Link } from "react-router-dom";
 const Studs = () => {
   const studs = [
     {
@@ -90,17 +91,19 @@ const Studs = () => {
           className="rounded-end d-flex align-items-center"
           style={{ backgroundColor: "#AFBBF7", width: "150px", height: "40px" }}
         >
-          <Button
-            className="btn fw-bold"
-            size="sm"
-            style={{
-              backgroundColor: "#E8EEDF",
-              color: "black",
-              border: "black",
-            }}
-          >
-            AGREGAR STUD
-          </Button>
+          <Link size="sm" to={`/studs/createStud`} className="text-center">
+            <Button
+              className="btn fw-bold"
+              size="sm"
+              style={{
+                backgroundColor: "#E8EEDF",
+                color: "black",
+                border: "black",
+              }}
+            >
+              AGREGAR STUD
+            </Button>
+          </Link>
         </div>
       </Row>
 

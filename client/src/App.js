@@ -44,6 +44,7 @@ import Veterinarios from "./pages/Veterinarios";
 import VeterinarioAgregar from "./pages/VeterinarioAgregar";
 import VeterinarioUpdate from "./pages/VeterinarioUpdate";
 import VeterinarioDetail from "./pages/VeterinarioDetail";
+import StudAgregar from "./pages/StudAgregar";
 
 function App() {
   return (
@@ -151,6 +152,10 @@ function App() {
 
         <Route path="/studs" exact>
           <Studs></Studs>
+        </Route>
+
+        <Route path="/studs/createStud" exact>
+          <StudAgregar></StudAgregar>
         </Route>
 
         <Route path="/studs/:studId" exact>
