@@ -75,7 +75,7 @@ const registrarPropietario = async (req, res) => {
 
     try {
         const propietarioCreado = await propietarioService.registrarPropietario(nuevoPropietario);
-        res.status(200).send({ status: "OK", data: `Se ha registrado el propietario '${propietarioCreado}' de forma satisfactoria.` });
+        res.status(200).send({ status: "OK", data: `Se ha registrado el propietario '${propietarioCreado[0]}' de forma satisfactoria.`+propietarioCreado[1] });
     } catch (error) {
         res
         .status(error?.status || 500)
@@ -108,6 +108,7 @@ const borrarPropietario = async (req, res) => {
         .send({ status: "FAILED", data: {error: error?.message || error} });
     }
 };
+
 
 module.exports = {
     obtenerListaDePropietarios,

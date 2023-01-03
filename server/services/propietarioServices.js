@@ -23,8 +23,9 @@ const obtenerPropietarioIndividual = async(propietarioId) => {
 const registrarPropietario = async (nuevoPropietario) => {
     try {
         const propietarioCreado = await Propietario.registrarPropietario(nuevoPropietario);
+        const idPropietarioCreado = await Propietario.obtenerIdPropietarioNuevo(nuevoPropietario);
         
-        return(propietarioCreado);
+        return([propietarioCreado, idPropietarioCreado]);
     } catch (error) {
         throw(error);
     }
