@@ -12,77 +12,70 @@ import { CardLugar } from "../componentes/layout/CardLugar";
 import CardTelefono from "../componentes/layout/CardTelefono";
 
 const PropietarioAgregar = (props) => {
-  const [cedulaPropietario, setCedulaPropietario] = useState("");
-  const [pnombrePropietario, setPnombrePropietario] = useState("");
-  const [snombrePropietario, setSnombrePropietario] = useState("");
-  const [papellidoPropietario, setPapellidoPropietario] = useState("");
-  const [sapellidoPropietario, setSapellidoPropietario] = useState("");
-  const [fecha_nacPropietario, setFecha_nacPropietario] = useState("");
-  const [correoPropietario, setCorreoPropietario] = useState("");
+  const [cedulaPersona, setCedulaPersona] = useState("");
+  const [nombre1Persona, setnombre1Persona] = useState("");
+  const [nombre2Persona, setnombre2Persona] = useState("");
+  const [apellido1Persona, setapellido1Persona] = useState("");
+  const [apellido2Persona, setapellido2Persona] = useState("");
+  const [fechaNacimiento, setfechaNacimiento] = useState("");
+  const [correo, setcorreo] = useState("");
 
   const handleCedula = (event) => {
-    setCedulaPropietario(event.target.value);
+    setCedulaPersona(event.target.value);
   };
   const handlePnombre = (event) => {
-    setPnombrePropietario(event.target.value);
+    setnombre1Persona(event.target.value);
   };
   const handleSnombre = (event) => {
-    setSnombrePropietario(event.target.value);
+    setnombre2Persona(event.target.value);
   };
   const handlePapellido = (event) => {
-    setPapellidoPropietario(event.target.value);
+    setapellido1Persona(event.target.value);
   };
   const handleSapellido = (event) => {
-    setSapellidoPropietario(event.target.value);
+    setapellido2Persona(event.target.value);
   };
   const handleFecha_nac = (event) => {
-    setFecha_nacPropietario(event.target.value);
+    setfechaNacimiento(event.target.value);
   };
   const handleCorreo = (event) => {
-    setCorreoPropietario(event.target.value);
+    setcorreo(event.target.value);
   };
 
+  var telefono;
   const handleTelefono = (enteredPrefijo, enteredNumero) => {
-    const telefono = {
+    telefono = {
       prefijo: enteredPrefijo,
       numero: enteredNumero,
     };
     console.log(telefono);
   };
 
+  var fk_lugar;
   const handleLugar = (enteredLugar) => {
-    const fk_lugar = enteredLugar;
+    fk_lugar = enteredLugar;
     console.log(fk_lugar);
   };
 
   const handleData = (event) => {
-    // extensionTelefono,
-    //     cuerpoTelefono,
-    //     fkPropietario,
-    //     fkCliente,
-    // cedulaPersona,
-    //     nombre1Persona,
-    //     nombre2Persona,
-    //     apellido1Persona,
-    //     apellido2Persona,
-    //     fechaNacimiento,
-    //     correo,
-    //     fkLugar,
     event.preventDefault();
     console.warn(
-      cedulaPropietario,
-      pnombrePropietario,
-      snombrePropietario,
-      papellidoPropietario,
-      sapellidoPropietario,
-      fecha_nacPropietario
+      cedulaPersona,
+      nombre1Persona,
+      nombre2Persona,
+      apellido1Persona,
+      apellido2Persona,
+      fechaNacimiento,
+      correo,
+      telefono,
+      fk_lugar
     );
-    setCedulaPropietario("");
-    setPnombrePropietario("");
-    setSnombrePropietario("");
-    setPapellidoPropietario("");
-    setSapellidoPropietario("");
-    setFecha_nacPropietario("");
+    setCedulaPersona("");
+    setnombre1Persona("");
+    setnombre2Persona("");
+    setapellido1Persona("");
+    setapellido2Persona("");
+    setfechaNacimiento("");
   };
 
   return (
@@ -98,7 +91,7 @@ const PropietarioAgregar = (props) => {
                 <Col>
                   <div className="mb-3 form-floating">
                     <input
-                      value={cedulaPropietario}
+                      value={cedulaPersona}
                       type="number"
                       className="form-control"
                       placeholder="First name"
@@ -113,7 +106,7 @@ const PropietarioAgregar = (props) => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={pnombrePropietario}
+                      value={nombre1Persona}
                       type="text"
                       className="form-control"
                       placeholder="First name"
@@ -126,7 +119,7 @@ const PropietarioAgregar = (props) => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={snombrePropietario}
+                      value={nombre2Persona}
                       type="text"
                       className="form-control"
                       placeholder="First name"
@@ -140,7 +133,7 @@ const PropietarioAgregar = (props) => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={papellidoPropietario}
+                      value={apellido1Persona}
                       type="text"
                       className="form-control"
                       placeholder="First name"
@@ -153,7 +146,7 @@ const PropietarioAgregar = (props) => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={sapellidoPropietario}
+                      value={apellido2Persona}
                       type="text"
                       className="form-control"
                       placeholder="First name"
@@ -167,7 +160,7 @@ const PropietarioAgregar = (props) => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={fecha_nacPropietario}
+                      value={fechaNacimiento}
                       type="date"
                       className="form-control"
                       placeholder="First name"
@@ -179,7 +172,7 @@ const PropietarioAgregar = (props) => {
                 <Col>
                   <div className="mb-3 form-floating">
                     <input
-                      value={correoPropietario}
+                      value={correo}
                       type="text"
                       className="form-control"
                       placeholder="First name"

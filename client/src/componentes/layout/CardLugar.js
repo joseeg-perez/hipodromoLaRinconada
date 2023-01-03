@@ -12,27 +12,37 @@ import {
 import axios from "axios";
 
 export const CardLugar = (props) => {
-  const [estado, setEstado] = useState([]);
+  const [estado, setEstado] = useState("");
+  const [estados, setEstados] = useState([]);
   const [municipio, setMunicipio] = useState("");
   const [parroquia, setParroquia] = useState("");
+  const [lugares, setLugares] = useState("");
   const [isLoading, setLoading] = useState(true);
-  const [lugares, setLugares] = useState(true);
   const [direccion, setdireccion] = useState(true);
-  let estados = [];
+  const [toggleEstado, setToggleEstadtoggleEstado] = useState(false);
+  const [toggleMunicipio, setToggleMunicipio] = useState(true);
+  const [toggleParroquia, setToggleParroquia] = useState(true);
 
   const handleEstado = (event) => {
     setEstado(event.target.value);
+    setToggleEstadtoggleEstado(true);
+    setToggleMunicipio(false);
   };
+  const handleMunicipio = (event) => {
+    setMunicipio(event.target.value);
+    setToggleParroquia(false);
+  };
+
   const handleParroquia = (event) => {
     setParroquia(event.target.value);
   };
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/lugares/listado_de_lugares")
+      .get("http://localhost:5000/api/v1/lugares/listado_de_emp")
       .then((res) => {
         console.log(res);
-        setLugares(res.data);
+        setLugares(res.data.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
@@ -56,29 +66,53 @@ export const CardLugar = (props) => {
               <Col>
                 <FormLabel>Estado:</FormLabel>
                 <FormSelect onChange={handleEstado}>
-                  {lugares.data.map((lugar) => (
-                    <option key={lugar.id_lugar} value={lugar.id_lugar}>
-                      {lugar.nombre_lugar}
+                  <option value={-1} disabled={toggleEstado}>
+                    Estado
+                  </option>
+                  {lugares[0].map((estado) => (
+                    <option key={estado.id_lugar} value={estado.id_lugar}>
+                      {estado.nombre_lugar}
                     </option>
                   ))}
                 </FormSelect>
               </Col>
               <Col>
                 <FormLabel>Municipio:</FormLabel>
-                <FormSelect>
-                  {/* {municipios.map((municipio) => (
-                    <option key={municipio}>{municipio}</option>
-                  ))} */}
+                <FormSelect
+                  onChange={handleMunicipio}
+                  disabled={toggleMunicipio}
+                >
+                  {lugares[1]
+                    .filter((municipio) => municipio.fk_lugar == estado)
+                    .map((municipio) => (
+                      <option
+                        key={municipio.id_lugar}
+                        value={municipio.id_lugar}
+                      >
+                        {municipio.nombre_lugar}
+                      </option>
+                    ))}
                 </FormSelect>
               </Col>
             </Row>
             <Row>
               <Col>
                 <FormLabel>Parroquia:</FormLabel>
-                <FormSelect onChange={handleParroquia}>
-                  <option value={1}>1</option>
-                  <option value={77}>1</option>
-                  <option value={150}>1</option>
+                <FormSelect
+                  onChange={handleParroquia}
+                  disabled={toggleParroquia}
+                >
+                  <option></option>
+                  {lugares[2]
+                    .filter((parroquia) => parroquia.fk_lugar == municipio)
+                    .map((parroquia) => (
+                      <option
+                        key={parroquia.id_lugar}
+                        value={parroquia.id_lugar}
+                      >
+                        {parroquia.nombre_lugar}
+                      </option>
+                    ))}
                 </FormSelect>
               </Col>
               <Col></Col>
