@@ -33,6 +33,7 @@ const v1PuestoRoutes = require("./v1/routes/puestoRoutes.js");
 const v1AreaRoutes = require("./v1/routes/areaRoutes.js");
 const v1LugarRoutes = require("./v1/routes/lugarRoutes.js");
 const v1MotivoRetiroRoutes = require("./v1/routes/motivoRetiroRoutes.js");
+const v1ParticipacionRoutes = require("./v1/routes/participacionRoutes.js");
 
 // Puerto
 const PORT = process.env.PORT || 5000;
@@ -70,6 +71,7 @@ app.use("/api/v1/puestos", v1PuestoRoutes);
 app.use("/api/v1/areas", v1AreaRoutes);
 app.use("/api/v1/lugares", v1LugarRoutes);
 app.use("/api/v1/motivos", v1MotivoRetiroRoutes);
+app.use("/api/v1/participaciones", v1ParticipacionRoutes);
 
 
 module.exports = {app, PORT};
