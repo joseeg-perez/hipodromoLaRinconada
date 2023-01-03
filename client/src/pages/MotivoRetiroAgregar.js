@@ -3,30 +3,30 @@ import { Container, Card, Form, FormLabel, Button } from "react-bootstrap";
 import axios from "axios";
 
 const MotivoRetiroAgregar = () => {
-  const [NombreMotivoRetiro, setNombreMotivoRetiro] = useState("");
-  const [DescMotivoRetiro, setDescMotivoRetiro] = useState("");
-  const handleNombreMotivoRetiro = (event) => {
-    setNombreMotivoRetiro(event.target.value);
+  const [nombreMotivo, setNombreMotivo] = useState("");
+  const [descripcionMotivo, setDescMotivo] = useState("");
+  const handleNombreMotivo = (event) => {
+    setNombreMotivo(event.target.value);
   };
-  const handleDescMotivoRetiro = (event) => {
-    setDescMotivoRetiro(event.target.value);
+  const handleDescMotivo = (event) => {
+    setDescMotivo(event.target.value);
   };
   const handleData = async (event) => {
     event.preventDefault();
-    // try {
-    //   await axios.post(
-    //     "http://localhost:5000/api/v1/retiros/registrar_retiro",
-    //     {
-    //       nombreMedicamento,
-    //       descripcionMedicamento,
-    //     }
-    //   );
-    // } catch (error) {
-    //   throw error;
-    // }
-    console.warn(NombreMotivoRetiro, DescMotivoRetiro);
-    setNombreMotivoRetiro("");
-    setDescMotivoRetiro("");
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/motivos/registrar_motivo",
+        {
+          nombreMotivo,
+          descripcionMotivo,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+    console.warn(nombreMotivo, descripcionMotivo);
+    setNombreMotivo("");
+    setDescMotivo("");
   };
 
   return (
@@ -41,20 +41,20 @@ const MotivoRetiroAgregar = () => {
               </FormLabel>
               <div>
                 <input
-                  value={NombreMotivoRetiro}
+                  value={nombreMotivo}
                   type="text"
                   className="form-control bg-transparent"
-                  placeholder="MotivoRetiro"
-                  onChange={handleNombreMotivoRetiro}
+                  placeholder="Motivo"
+                  onChange={handleNombreMotivo}
                 />
               </div>
               <div className="mt-3">
                 <FormLabel>Descripcion</FormLabel>
                 <textarea
-                  value={DescMotivoRetiro}
+                  value={descripcionMotivo}
                   className="form-control"
                   rows="4"
-                  onChange={handleDescMotivoRetiro}
+                  onChange={handleDescMotivo}
                 ></textarea>
               </div>
             </Form>
@@ -64,7 +64,7 @@ const MotivoRetiroAgregar = () => {
               type="submit"
               onClick={handleData}
             >
-              Crear MotivoRetiro
+              Crear Motivo
             </Button>
           </Card.Body>
         </Card>

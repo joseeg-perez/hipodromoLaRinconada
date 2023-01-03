@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { CardLugar } from "../componentes/layout/CardLugar";
 import CardTelefono from "../componentes/layout/CardTelefono";
+import axios from "axios";
 
 const PropietarioAgregar = (props) => {
   const [cedulaPersona, setCedulaPersona] = useState("");
@@ -42,23 +43,40 @@ const PropietarioAgregar = (props) => {
     setcorreo(event.target.value);
   };
 
-  var telefono;
+  var extension_tlf;
+  var cuerpo_tlf;
   const handleTelefono = (enteredPrefijo, enteredNumero) => {
-    telefono = {
-      prefijo: enteredPrefijo,
-      numero: enteredNumero,
-    };
-    console.log(telefono);
+    extension_tlf = enteredPrefijo;
+    cuerpo_tlf = enteredNumero;
   };
 
-  var fk_lugar;
+  var fkLugar;
   const handleLugar = (enteredLugar) => {
-    fk_lugar = enteredLugar;
-    console.log(fk_lugar);
+    fkLugar = enteredLugar;
+    console.log(fkLugar);
   };
 
-  const handleData = (event) => {
+  const handleData = async (event) => {
     event.preventDefault();
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/propietarios/registrar_propietario",
+        {
+          cedulaPersona,
+          nombre1Persona,
+          nombre2Persona,
+          apellido1Persona,
+          apellido2Persona,
+          fechaNacimiento,
+          correo,
+          extension_tlf,
+          cuerpo_tlf,
+          fkLugar,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
     console.warn(
       cedulaPersona,
       nombre1Persona,
@@ -67,8 +85,9 @@ const PropietarioAgregar = (props) => {
       apellido2Persona,
       fechaNacimiento,
       correo,
-      telefono,
-      fk_lugar
+      extension_tlf,
+      cuerpo_tlf,
+      fkLugar
     );
     setCedulaPersona("");
     setnombre1Persona("");

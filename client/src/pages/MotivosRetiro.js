@@ -9,21 +9,21 @@ const MotivosRetiro = () => {
   const [retiros, setRetiros] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  //   useEffect(() => {
-  //     axios
-  //       .get("http://localhost:5000/api/v1/retiros/listado_de_retiros")
-  //       .then((res) => {
-  //         console.log(res);
-  //         setRetiros(res.data);
-  //         setLoading(false);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/motivos/listado_de_motivos")
+      .then((res) => {
+        console.log(res);
+        setRetiros(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-  //   console.log(retiros);
-  //   if (isLoading) {
-  //     return <div></div>;
-  //   }
+  console.log(retiros);
+  if (isLoading) {
+    return <div></div>;
+  }
   return (
     <Container>
       <Row className="row justify-content-center">
@@ -81,11 +81,11 @@ const MotivosRetiro = () => {
 
       <h2 className="text-center mt-3">LISTADO DE MOTIVOS DE RETIRO</h2>
       <Row className="row-cols-4">
-        {retiros.data.map((retiro) => (
+        {retiros.data.map((motivo) => (
           <CardMedImpRetiro
-            key={retiro.codigo_retiro}
-            nombre={retiro.nombre_retiro}
-            descripcion={retiro.descripcion_retiro}
+            key={motivo.codigo_motivo}
+            nombre={motivo.nombre_motivo}
+            descripcion={motivo.descripcion_motivo}
           />
         ))}
       </Row>

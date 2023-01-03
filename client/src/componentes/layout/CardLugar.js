@@ -82,6 +82,9 @@ export const CardLugar = (props) => {
                   onChange={handleMunicipio}
                   disabled={toggleMunicipio}
                 >
+                  <option value={-1} disabled={!toggleMunicipio}>
+                    Municipio
+                  </option>
                   {lugares[1]
                     .filter((municipio) => municipio.fk_lugar == estado)
                     .map((municipio) => (
@@ -102,7 +105,9 @@ export const CardLugar = (props) => {
                   onChange={handleParroquia}
                   disabled={toggleParroquia}
                 >
-                  <option></option>
+                  <option value={-1} disabled={!toggleParroquia}>
+                    Parroquia
+                  </option>
                   {lugares[2]
                     .filter((parroquia) => parroquia.fk_lugar == municipio)
                     .map((parroquia) => (
