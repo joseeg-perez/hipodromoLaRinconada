@@ -42,6 +42,9 @@ const Menu = () => {
                 <li className="list-group-item">
                   CONSULTAR HISTORIAL DE CAMBIOS
                 </li>
+                <Link className="list-group-item" to="/vestimentas">
+                  REGISTRAR VESTIMENTA
+                </Link>
               </ul>
             </Card.Body>
           </Card>

@@ -36,6 +36,7 @@ import MotivosRetiro from "./pages/MotivosRetiro";
 import MotivoRetiroAgregar from "./pages/MotivoRetiroAgregar";
 import PropietariosAgregar from "./pages/PropietarioAgregar";
 import PropietarioAgregar from "./pages/PropietarioAgregar";
+import VestimentaAgregar from "./pages/VestimentaAgregar";
 
 function App() {
   return (
@@ -178,6 +179,10 @@ function App() {
 
         <Route path="/inscribir/ejemplar">
           <InscribirEjemplar></InscribirEjemplar>
+        </Route>
+
+        <Route path="/vestimentas" exact>
+          <VestimentaAgregar></VestimentaAgregar>
         </Route>
       </Switch>
     </Layout>
