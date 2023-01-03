@@ -3,7 +3,9 @@ const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeJinetes = async () => {
     const query = {
-        text: "SELECT * FROM persona_jinete",
+        text: `SELECT codigo_persona, nombre1_persona, apellido1_persona, peso_jinete, altura_jinete, nombre_rango 
+        FROM persona_jinete, rango_jinete 
+        WHERE fk_rango = codigo_rango`,
     };
 
     try {

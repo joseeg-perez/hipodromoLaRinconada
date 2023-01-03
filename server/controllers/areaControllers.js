@@ -1,6 +1,6 @@
 const areaService = require("../services/areaServices.js");
 
-const obtenerListaDeareas = async (req, res) => {
+const obtenerListaDeAreas = async (req, res) => {
     try {
         const listaAreas =  await areaService.obtenerListaDeAreas();
 
@@ -13,5 +13,5 @@ const obtenerListaDeareas = async (req, res) => {
 };
 
 module.exports = {
-    obtenerListaDeareas,
+    obtenerListaDeAreas,
 };
