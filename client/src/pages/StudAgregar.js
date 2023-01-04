@@ -26,6 +26,7 @@ const StudAgregar = () => {
   const [vestimentas, setVestimentas] = useState([]);
   const [vestimenta, setVestimenta] = useState("");
   const [color, setColor] = useState("#fff");
+  const [colores, setColores] = useState("#fff");
   const [color1, setColor1] = useState("#fff");
   const [color2, setColor2] = useState("#fff");
   const [togglecolor, setToggleColor] = useState(false);
@@ -75,12 +76,20 @@ const StudAgregar = () => {
 
   const handleData = (event) => {
     event.preventDefault();
+    console.log(color2);
+
+    vestimentas.map(
+      (vestimenta) =>
+        (vestimenta.colorV = colores.data.find(
+          (colorD) => colorD.codigo_del_color == vestimenta.colorV
+        ).id_color)
+    );
     console.warn(
       fechaCreacion,
       nombreStud,
       propietarioStud,
-      color1,
-      color2,
+      colores.data.find((color) => color.codigo_del_color == color1).id_color,
+      colores.data.find((color) => color.codigo_del_color == color2).id_color,
       vestimentas
     );
     setColor1("");
@@ -105,6 +114,14 @@ const StudAgregar = () => {
       .then((res) => {
         console.log(res);
         setVestimentasDispo(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:5000/api/v1/colores/listado_de_colores")
+      .then((res) => {
+        console.log(res);
+        setColores(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
@@ -114,6 +131,7 @@ const StudAgregar = () => {
   console.log(vestimentasDispo);
   console.log(vestimentas);
   console.log(color1);
+  console.log(colores);
 
   if (isLoading) {
     return <div></div>;
