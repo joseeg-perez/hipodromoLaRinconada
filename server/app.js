@@ -40,6 +40,8 @@ const v1StudVestimentaRoutes = require("./v1/routes/studVestimentaRoutes.js");
 const v1ColorRoutes = require("./v1/routes/colorRoutes.js");
 const v1VeterinarioCaballerizaRoutes = require("./v1/routes/veterinarioCaballerizaRoutes.js");
 const v1EntrenadorCaballerizaRoutes = require("./v1/routes/entrenadorCaballerizaRoutes.js");
+const v1ColorStudVestimentaRoutes = require("./v1/routes/colorStudVestimentaRoutes.js");
+const v1ResultadoRoutes = require("./v1/routes/resultadoRoutes.js");
 
 // Puerto
 const PORT = process.env.PORT || 5000;
@@ -84,6 +86,8 @@ app.use("/api/v1/vestimentas_studs", v1StudVestimentaRoutes);
 app.use("/api/v1/colores", v1ColorRoutes);
 app.use("/api/v1/veterinarios_de_caballerizas", v1VeterinarioCaballerizaRoutes);
 app.use("/api/v1/entrenadores_de_caballerizas", v1EntrenadorCaballerizaRoutes);
+app.use("/api/v1/color_stud_vestimenta", v1ColorStudVestimentaRoutes);
+// app.use("/api/v1/resultados", v1ResultadoRoutes);
 
 
 

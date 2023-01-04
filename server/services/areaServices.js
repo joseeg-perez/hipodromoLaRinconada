@@ -1,4 +1,4 @@
-const Area = require("../database/Area.js");
+const Area = require("../database/area.js");
 
 const obtenerListaDeAreas = async () => {
     try {
@@ -10,6 +10,17 @@ const obtenerListaDeAreas = async () => {
     }
 };
 
+const obtenerIGPFA = async () => {
+    try {
+        const listaIGPFA = await Area.obtenerIGPFA();
+
+        return(listaIGPFA);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 module.exports = {
     obtenerListaDeAreas,
+    obtenerIGPFA,
 };

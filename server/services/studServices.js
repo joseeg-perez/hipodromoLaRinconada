@@ -1,6 +1,8 @@
 const Stud = require("../database/stud.js");
 const { registrarPropietarioStud } = require("./propietarioStudServices.js");
 const { registrarStudColor } = require("./studColorServices.js");
+const { registrarStudVestimenta, buscarStudVestimentaId } = require("./studVestimentaServices.js");
+const { registrarColorStudVestimenta } = require("./colorStudVestimentaServices.js");
 
 const obtenerListaDeStuds = async () => {
     try {
@@ -43,11 +45,44 @@ const registrarStud = async (nuevoStud) => {
             fkStud: idStudCreado,
         };
 
-        console.log(studColor1.fkStud)
         await registrarPropietarioStud(propietarioStud);
-        await registrarStudColor(studColor1);
-        await registrarStudColor(studColor2);
+        await registrarStudColor(studColor1);//Registro del primer color del stud
+        await registrarStudColor(studColor2);//Registro del segundo color del stud
 
+        const listaVestimentas = nuevoStud.vestimentas;
+        for (let i = 0; i < listaVestimentas.length; i++) {
+
+            const studVestimenta = {
+                fkVestimenta: listaVestimentas[i].codigo,
+                fkStud: idStudCreado,
+            };
+             await registrarStudVestimenta(studVestimenta);
+        }
+        const array = await buscarStudVestimentaId()
+        
+        //Saco los IDs de las 'n' stud vestimentas creadas
+        const ultimasStudVestimentas = array.slice(-listaVestimentas.length); 
+
+        //Ejecuto mientras el array contenga algo y voy eliminando desde adelante
+        const contadorVes = ultimasStudVestimentas.length;
+
+        for (let i = 0; i < contadorVes; i++) {
+            const actual = ultimasStudVestimentas.shift();//Saco el id del stud vestimenta por delante
+            const colorStudVestimenta = {
+                fkStudVestimenta: actual.codigo_sv,
+                fkColor: nuevoStud.vestimentas[i].colorV,
+            };
+            await registrarColorStudVestimenta(colorStudVestimenta);
+        }
+
+        // while (ultimasStudVestimentas.length) {
+        //     const actual = ultimasStudVestimentas.shift();//Saco el id del stud vestimenta por delante
+        //     const colorStudVestimenta = {
+        //         fkStudVestimenta: actual.codigo_sv,
+        //         fkColor: nuevoStud.colorV,
+        //     };
+        //     await registrarColorStudVestimenta(colorStudVestimenta);
+        // }
 
         return(studCreado);
     } catch (error) {
