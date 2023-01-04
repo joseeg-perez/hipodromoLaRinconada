@@ -5,6 +5,8 @@ const veterinarioController = require("../../controllers/veterinarioControllers.
 
 router.get("/listado_de_veterinarios", veterinarioController.obtenerListaDeVeterinarios);
 
+router.get("/listado_de_caballerizas", veterinarioController.obtenerListaDeCaballerizasVacias);
+
 router.get("/:veterinarioId", veterinarioController.obtenerVeterinarioIndividual);
 
 router.post("/registrar_veterinario", veterinarioController.registrarVeterinario);
