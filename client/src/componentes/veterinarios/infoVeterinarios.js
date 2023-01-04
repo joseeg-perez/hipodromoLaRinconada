@@ -16,9 +16,10 @@ const InfoVeterinarios = (props) => {
         <Card.Body>
           <Card.Text>
             <span className="fw-bold">Caballeriza:</span>{" "}
-            <span>
-              {props.caballeriza} ({props.puestos})
-            </span>
+            <span>{props.caballeriza}</span>
+            <div className="mt-2 text-muted">
+              (Cantidad de ejemplares a cargo: {props.puestos})
+            </div>
           </Card.Text>
           <Card.Text>
             <span className="fw-bold">Está desde:</span>{" "}

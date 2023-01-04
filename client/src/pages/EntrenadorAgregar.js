@@ -19,16 +19,16 @@ const EntrenadorAgregar = () => {
   const [apellido2Persona, setapellido2Persona] = useState("");
   const [fechaNacimiento, setfechaNacimiento] = useState("");
   const [isLoading, setLoading] = useState(true);
-  const [caballerizas, setCaballerizas] = useState("");
-  const [caballeriza, setCaballeriza] = useState("");
+  const [caballerizas, setfkCaballerizas] = useState("");
+  const [fkCaballeriza, setfkCaballeriza] = useState("");
   const [toggleCaballeriza, setToggleCaballeriza] = useState(false);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/caballerizas/listado_de_caballerizas")
+      .get("http://localhost:5000/api/v1/entrenadores/listado_de_caballerizas")
       .then((res) => {
         console.log(res);
-        setCaballerizas(res.data);
+        setfkCaballerizas(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
@@ -60,12 +60,29 @@ const EntrenadorAgregar = () => {
   };
 
   const handleCaballeriza = (event) => {
-    setCaballeriza(event.target.value);
+    setfkCaballeriza(event.target.value);
     setToggleCaballeriza(true);
   };
 
-  const handleData = (event) => {
+  const handleData = async (event) => {
     event.preventDefault();
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/entrenadores/registrar_entrenador",
+        {
+          cedulaPersona,
+          nombre1Persona,
+          nombre2Persona,
+          apellido1Persona,
+          apellido2Persona,
+          fechaNacimiento,
+          fkCaballeriza,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+
     console.warn(
       cedulaPersona,
       nombre1Persona,
@@ -73,7 +90,7 @@ const EntrenadorAgregar = () => {
       apellido1Persona,
       apellido2Persona,
       fechaNacimiento,
-      caballeriza
+      fkCaballeriza
     );
     setCedulaPersona("");
     setnombre1Persona("");
@@ -89,7 +106,7 @@ const EntrenadorAgregar = () => {
           <Card.Body className="px-4">
             <Form>
               <h3 className="fw-bold mb-4 pb-2 pb-md-0 mb-md-5">
-                Registro de Entrenador
+                Registro de entrenador
               </h3>
               <Row className="align-items-center">
                 <Col>

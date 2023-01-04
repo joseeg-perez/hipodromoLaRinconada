@@ -17,6 +17,13 @@ const InfoEntrenador = (props) => {
           <Card.Text>
             <span className="fw-bold">Caballeriza:</span>{" "}
             <span>{props.caballeriza}</span>
+            <div className="mt-2 text-muted">
+              (Cantidad de ejemplares a cargo: {props.puestos})
+            </div>
+          </Card.Text>
+          <Card.Text>
+            <span className="fw-bold">Está desde:</span>{" "}
+            <span>{props.fecha}</span>
           </Card.Text>
           <Col className="text-end">
             <Link

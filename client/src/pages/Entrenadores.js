@@ -95,8 +95,9 @@ const Entrenadores = () => {
             key={entrenador.codigo_persona}
             nombre={entrenador.nombre1_persona}
             apellido={entrenador.apellido1_persona}
-            caballeriza={entrenador.caballeriza}
+            caballeriza={entrenador.codigo_caballeriza}
             puestos={entrenador.cantidad_puestos}
+            fecha={entrenador.fecha_inicio}
           />
         ))}
       </Row>
