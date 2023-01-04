@@ -23,18 +23,23 @@ const obtenerVeterinarioIndividual = async (veterinarioId) => {
 const registrarVeterinario = async (nuevaVeterinario) => {
     try {
         const veterinarioCreado = await Veterinario.registrarVeterinario(nuevaVeterinario);
-        
+        const idVeterinarioCreado = await Veterinario.obtenerIdVeterinarioNuevo(nuevaVeterinario);
+        console.log("Este es el ID del veterinario: "+idVeterinarioCreado);
+
         return(veterinarioCreado);
     } catch (error) {
         throw(error);
     }
+
+  
+
 };
 
 const actualizarVeterinario = (veterinarioId, cambios) => {
     try {
-        const veterinarioActualizada = Veterinario.actualizarVeterinario(veterinarioId, cambios);
+        const VeterinarioActualizada = Veterinario.actualizarVeterinario(veterinarioId, cambios);
         
-        return(veterinarioActualizada);
+        return(VeterinarioActualizada);
     } catch (error) {
         throw(error);
     }

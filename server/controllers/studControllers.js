@@ -36,8 +36,12 @@ const obtenerStudIndividual = async (req, res) => {
 
 const registrarStud = async (req, res) => {
     const { 
-        nombreStud,
         fechaCreacion,
+        nombreStud,
+        propietarioStud,
+        color1,
+        color2,
+        vestimentas,
      } = req.body;
 
     if (!nombreStud || !fechaCreacion)
@@ -46,11 +50,15 @@ const registrarStud = async (req, res) => {
     const nuevoStud = {
         nombreStud: nombreStud.toLowerCase(),
         fechaCreacion,
+        propietarioStud,
+        color1,
+        color2,
+        vestimentas,
     };
 
     try {
         const studCreado = await studService.registrarStud(nuevoStud);
-        res.status(200).send({ status: "OK", data: `Se ha creado el stud '${ nombreStud }' de forma satisfactoria.`+studCreado[1] });
+        res.status(200).send({ status: "OK", data: `Se ha creado el stud '${ studCreado }' de forma satisfactoria.` });
     } catch (error) {
         res
         .status(error?.status || 500)

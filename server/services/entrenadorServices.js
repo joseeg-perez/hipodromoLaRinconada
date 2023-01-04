@@ -23,7 +23,9 @@ const obtenerEntrenadorIndividual = async (entrenadorId) => {
 const registrarEntrenador = async (nuevoEntrenador) => {
     try {
         const entrenadorCreado = await Entrenador.registrarEntrenador(nuevoEntrenador);
-        
+        const idEntrenadorCreado = await Entrenador.obtenerIdEntrenadorNuevo(nuevoEntrenador);
+        console.log("Este es el ID del entrenador: "+idEntrenadorCreado);
+                
         return(entrenadorCreado);
     } catch (error) {
         throw(error);
