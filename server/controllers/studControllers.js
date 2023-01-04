@@ -36,8 +36,12 @@ const obtenerStudIndividual = async (req, res) => {
 
 const registrarStud = async (req, res) => {
     const { 
-        nombreStud,
         fechaCreacion,
+        nombreStud,
+        propietarioStud,
+        color1,
+        color2,
+        vestimentas,
      } = req.body;
 
     if (!nombreStud || !fechaCreacion)
@@ -46,6 +50,10 @@ const registrarStud = async (req, res) => {
     const nuevoStud = {
         nombreStud: nombreStud.toLowerCase(),
         fechaCreacion,
+        propietarioStud,
+        color1,
+        color2,
+        vestimentas,
     };
 
     try {

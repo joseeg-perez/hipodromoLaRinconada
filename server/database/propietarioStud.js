@@ -12,15 +12,11 @@ const registrarPropietarioStud = async (nuevoPropietarioStud) => {
      
     const text = `INSERT INTO propietario_stud(
         porcentaje_propiedad,
-        fecha_inicio_propiedad,
-        fecha_fin_propiedad,
         fk_stud,
-        fk_propietario) VALUES($1, $2, $3, $4, $5)`;
+        fk_propietario) VALUES($1, $2, $3)`;
     
     const values = [
         porcentajePropiedad,
-        fechaInicioPropiedad,
-        fechaFinPropiedad,
         fkStud,
         fkPropietario,
     ];
