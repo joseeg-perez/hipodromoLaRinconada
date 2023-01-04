@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Container,
   Card,
@@ -15,7 +15,27 @@ import {
 import InfoStud from "../componentes/studs/InfoStud";
 import lupa from "../assets/lupa.svg";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const Studs = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [Studs, setStuds] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/studs/listado_de_studs")
+      .then((res) => {
+        console.log(res);
+        setStuds(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(Studs);
+
+  if (isLoading) {
+    return <div></div>;
+  }
   const studs = [
     {
       id: "1",
@@ -108,12 +128,14 @@ const Studs = () => {
       </Row>
 
       <Row className="row-cols-3 my-4">
-        {studs.map((x) => (
+        {Studs.data.map((stud) => (
           <InfoStud
-            key={x.id}
-            id={x.id}
-            nombre={x.nombre}
-            record={x.record}
+            key={stud.codigo_stud}
+            id={stud.codigo_stud}
+            nombre={stud.nombre_stud}
+            record={stud.record}
+            propietario={stud.propietario}
+            fecha={stud.fecha_creacion}
           ></InfoStud>
         ))}
       </Row>
