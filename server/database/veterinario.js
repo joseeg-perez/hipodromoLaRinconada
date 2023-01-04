@@ -3,13 +3,38 @@ const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeVeterinarios = async () => {
     const query = {
-        text: "SELECT * FROM persona_veterinario",
+        text: `SELECT codigo_persona, nombre1_persona, apellido1_persona, to_char(fecha_inicio :: DATE, 'dd/mm/yyyy') as fecha_inicio, codigo_caballeriza, cantidad_puestos 
+        FROM persona_veterinario, veterinario_caballeriza, caballeriza 
+        WHERE fk_veterinario = codigo_persona and fk_caballeriza = codigo_caballeriza and fecha_fin IS NULL`,
     };
 
     try {
         const { rows } = await dbConnection.query(query);
         if (rows.length === 0)
             httpError.noRegistrado("ningun veterinario");
+
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
+const obtenerListaDeCaballerizasVacias = async () => {
+    const query = {
+        text: `SELECT codigo_caballeriza, cantidad_puestos 
+        FROM caballeriza, veterinario_caballeriza
+        WHERE codigo_caballeriza NOT IN (
+            SELECT fk_caballeriza
+            FROM veterinario_caballeriza
+            WHERE fecha_fin IS NULL
+        )`,
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.noRegistrado("ninguna caballeriza");
 
         dbConnection.end;
         return (rows);
@@ -125,6 +150,7 @@ const obtenerIdVeterinarioNuevo = async (nuevoVeterinario) => {
 
 module.exports = {
     obtenerListaDeVeterinarios,
+    obtenerListaDeCaballerizasVacias,
     obtenerVeterinarioIndividual,
     registrarVeterinario,
     actualizarVeterinario,

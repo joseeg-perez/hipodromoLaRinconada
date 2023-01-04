@@ -13,6 +13,18 @@ const obtenerListaDeEntrenadores = async (req, res) => {
     }
 };
 
+const obtenerListaDeCaballerizasVacias = async (req, res) => {
+    try {
+        const listaCaballerizas =  await entrenadorService.obtenerListaDeCaballerizasVacias();
+
+        res.status(200).send({ status: "OK", data: listaCaballerizas });
+    } catch (error) {
+        res 
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error }});
+    }
+};
+
 const obtenerEntrenadorIndividual = async (req, res) => {
     const {
         params: { entrenadorId },
@@ -42,6 +54,7 @@ const registrarEntrenador = async (req, res) => {
         apellido1Persona,
         apellido2Persona,
         fechaNacimiento, 
+        fkCaballeriza,
     } = req.body;
 
     if (!cedulaPersona ||
@@ -61,6 +74,7 @@ const registrarEntrenador = async (req, res) => {
         apellido1Persona: apellido1Persona.toLowerCase(),
         apellido2Persona: apellido2Persona.toLowerCase(),
         fechaNacimiento,
+        fkCaballeriza,
     };
     try {
         const entrenadorCreado = await entrenadorService.registrarEntrenador(nuevoEntrenador);
@@ -101,6 +115,7 @@ const borrarEntrenador = async (req, res) => {
 
 module.exports = {
     obtenerListaDeEntrenadores,
+    obtenerListaDeCaballerizasVacias,
     obtenerEntrenadorIndividual,
     registrarEntrenador,
     actualizarEntrenador,

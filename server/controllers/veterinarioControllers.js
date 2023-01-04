@@ -13,6 +13,18 @@ const obtenerListaDeVeterinarios = async (req, res) => {
     }
 };
 
+const obtenerListaDeCaballerizasVacias = async (req, res) => {
+    try {
+        const listaCaballerizas =  await veterinarioService.obtenerListaDeVeterinarios();
+
+        res.status(200).send({ status: "OK", data: listaCaballerizas });
+    } catch (error) {
+        res 
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error }});
+    }
+};
+
 const obtenerVeterinarioIndividual = async (req, res) => { 
     const {
         params: { veterinarioId },
@@ -42,6 +54,7 @@ const registrarVeterinario = async (req, res) => {
         apellido1Persona,
         apellido2Persona,
         fechaNacimiento,
+        fkCaballeriza,
      } =  req.body;
 
     if (!cedulaPersona || 
@@ -60,6 +73,7 @@ const registrarVeterinario = async (req, res) => {
         apellido1Persona: apellido1Persona.toLowerCase(),
         apellido2Persona: apellido2Persona.toLowerCase(),
         fechaNacimiento,
+        fkCaballeriza,
     };
 
     try {
@@ -99,6 +113,7 @@ const borrarVeterinario = async (req, res) => {
 
 module.exports = {
     obtenerListaDeVeterinarios,
+    obtenerListaDeCaballerizasVacias,
     obtenerVeterinarioIndividual,
     registrarVeterinario,
     actualizarVeterinario,
