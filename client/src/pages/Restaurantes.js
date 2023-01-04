@@ -12,27 +12,27 @@ import {
   FormSelect,
   FormControl,
 } from "react-bootstrap";
-import InfoStud from "../componentes/studs/InfoStud";
 import lupa from "../assets/lupa.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import InfoRestaurante from "../componentes/restaurantes/InfoRestaurante";
 
 const Restaurantes = () => {
   const [isLoading, setLoading] = useState(true);
-  const [Studs, setStuds] = useState([]);
+  const [restaurantes, setrestaurantes] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/studs/listado_de_studs")
+      .get("http://localhost:5000/api/v1/restaurantes/listado_de_restaurantes")
       .then((res) => {
         console.log(res);
-        setStuds(res.data);
+        setrestaurantes(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(Studs);
+  console.log(restaurantes);
 
   if (isLoading) {
     return <div></div>;
@@ -98,6 +98,18 @@ const Restaurantes = () => {
             </Button>
           </Link>
         </div>
+      </Row>
+      <Row className="row-cols-3 mx-5">
+        {restaurantes.data.map((restaurante) => (
+          <InfoRestaurante
+            Id={restaurante.codigo_restaurante}
+            key={restaurante.codigo_restaurante}
+            nombre={restaurante.nombre_restaurante}
+            capacidad={restaurante.capacidad_restaurante}
+            descripcion={restaurante.descripcion_restaurante}
+            area={restaurante.nombre_area}
+          />
+        ))}
       </Row>
     </Container>
   );

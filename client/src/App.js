@@ -51,6 +51,7 @@ import Haras from "./pages/Haras";
 import HaraAgregar from "./pages/HaraAgregar";
 import HaraUpdate from "./pages/HaraUpdate";
 import CaballerizaAgregar from "./pages/CaballerizaAgregar";
+import RestauranteUpdate from "./pages/RestauranteUpdate";
 
 function App() {
   return (
@@ -211,8 +212,13 @@ function App() {
         <Route path="/restaurantes" exact>
           <Restaurantes></Restaurantes>
         </Route>
+
         <Route path="/restaurantes/createRestaurante" exact>
           <RestauranteAgregar></RestauranteAgregar>
+        </Route>
+
+        <Route path="/restaurantes/:restauranteId/updateRestaurante" exact>
+          <RestauranteUpdate></RestauranteUpdate>
         </Route>
 
         <Route path="/resultados/:eventoId">
