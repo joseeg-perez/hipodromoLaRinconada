@@ -52,8 +52,23 @@ const borrarStudVestimenta = async (studVestimentaId) => {
     }
 };
 
+const buscarStudVestimentaId = async () => {
+    const query = {
+        text: "SELECT codigo_sv FROM stud_vestimenta",
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
 module.exports = {
     registrarStudVestimenta,
     actualizarStudVestimenta,
     borrarStudVestimenta,
+    buscarStudVestimentaId,
 };

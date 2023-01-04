@@ -22,8 +22,19 @@ const borrarStudVestimenta = async (studVestimentaId) => {
     }
 };
 
+const buscarStudVestimentaId = async () => {
+    try {
+        const listaIds = await StudVestimenta.buscarStudVestimentaId();
+        
+        return(listaIds);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 module.exports = {
     registrarStudVestimenta,
     actualizarStudVestimenta,
     borrarStudVestimenta,
+    buscarStudVestimentaId,
 };
