@@ -54,7 +54,6 @@ const borrarStudVestimenta = async (req, res) => {
     }
 };
 
-
 module.exports = {
     registrarStudVestimenta,
     actualizarStudVestimenta,

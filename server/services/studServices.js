@@ -63,7 +63,7 @@ const registrarStud = async (nuevoStud) => {
         //Saco los IDs de las 'n' stud vestimentas creadas
         const ultimasStudVestimentas = array.slice(-listaVestimentas.length); 
 
-        //Ejecuto mientras el array contenga algo y voy eliminando desde adelante
+        //Mantiene el orden en el ciclo
         const contadorVes = ultimasStudVestimentas.length;
 
         for (let i = 0; i < contadorVes; i++) {
@@ -74,15 +74,6 @@ const registrarStud = async (nuevoStud) => {
             };
             await registrarColorStudVestimenta(colorStudVestimenta);
         }
-
-        // while (ultimasStudVestimentas.length) {
-        //     const actual = ultimasStudVestimentas.shift();//Saco el id del stud vestimenta por delante
-        //     const colorStudVestimenta = {
-        //         fkStudVestimenta: actual.codigo_sv,
-        //         fkColor: nuevoStud.colorV,
-        //     };
-        //     await registrarColorStudVestimenta(colorStudVestimenta);
-        // }
 
         return(studCreado);
     } catch (error) {

@@ -1,6 +1,18 @@
 const studColorService = require("../services/studColorServices.js");
 const httpError = require("../helpers/httpMessages.js");
 
+const obtenerListaDeStudColor = async (req, res) => {
+    try {
+      const listaStudColor = await studColorService.obtenerListaDeStudColor();
+  
+      res.status(200).send({ status: "OK", data: listaStudColor });
+    } catch (error) {
+      res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
+  };
+
 const registrarStudColor = async (req, res) => {
     const { 
         fkColor,
@@ -56,6 +68,7 @@ const borrarStudColor = async (req, res) => {
 
 
 module.exports = {
+    obtenerListaDeStudColor,
     registrarStudColor,
     actualizarStudColor,
     borrarStudColor,

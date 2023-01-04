@@ -38,16 +38,15 @@ const obtenerCaballerizaIndividual = async (caballerizaId) => {
 
 const registrarCaballeriza = async (nuevaCaballeriza) => {
     const { 
-        codigoCaballeriza,
         cantidadPuestos,
      } = nuevaCaballeriza;
 
-    const text = `INSERT INTO caballeriza(codigo_caballeriza, cantidad_puestos) VALUES($1, $2)`;
+    const text = `INSERT INTO caballeriza(cantidad_puestos) VALUES($1)`;
         
-    const values = [codigoCaballeriza ,cantidadPuestos];
+    const values = [cantidadPuestos];
 
     try {
-         const { rows } = await dbConnection.query(text, values);
+        await dbConnection.query(text, values);
     
         dbConnection.end;
         return ;
@@ -84,10 +83,25 @@ const borrarCaballeriza = async (caballerizaId) => {
     }
 };
 
+const obtenerIdCaballerizaNueva = async () => {
+    const query = {
+        text: "SELECT codigo_caballeriza FROM caballeriza",
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
 module.exports = {
     obtenerListaDeCaballerizas,
     obtenerCaballerizaIndividual,
     registrarCaballeriza,
     actualizarCaballeriza,
     borrarCaballeriza,
+    obtenerIdCaballerizaNueva,
 };

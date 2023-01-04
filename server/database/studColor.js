@@ -1,6 +1,23 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
+const obtenerListaDeStudColor = async () => {
+    const query = {
+        text: "SELECT * FROM stud_color",
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.noRegistrado("ningun color de stud");
+
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
 const registrarStudColor = async (nuevoStudColor) => {
     const { 
         fkColor,
@@ -53,6 +70,7 @@ const borrarStudColor = async (studColorId) => {
 };
 
 module.exports = {
+    obtenerListaDeStudColor,
     registrarStudColor,
     actualizarStudColor,
     borrarStudColor,

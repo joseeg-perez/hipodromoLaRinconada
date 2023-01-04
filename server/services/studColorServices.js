@@ -1,10 +1,10 @@
 const StudColor = require("../database/studColor.js");
 
-const registrarStudColor = async (nuevoStudColor) => {
+const obtenerListaDeStudColor = async () => {
     try {
-        await StudColor.registrarStudColor(nuevoStudColor);
-        
-        return;
+        const listaStudColor = await StudColor.obtenerListaDeStudColor();
+
+        return(listaStudColor);
     } catch (error) {
         throw(error);
     }
@@ -23,7 +23,7 @@ const borrarStudColor = async (studColorId) => {
 };
 
 module.exports = {
-    registrarStudColor,
+    obtenerListaDeStudColor,
     actualizarStudColor,
     borrarStudColor,
 };
