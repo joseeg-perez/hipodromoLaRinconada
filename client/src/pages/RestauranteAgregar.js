@@ -16,20 +16,21 @@ const RestauranteAgregar = () => {
   const handlecapacidadRestaurante = (event) => {
     setCapacidadRestaurante(event.target.value);
   };
-  var fkArea;
+  var fk_area;
   const handleArea = (enteredArea) => {
-    fkArea = enteredArea;
-    console.log(fkArea);
+    fk_area = enteredArea;
+    console.log(fk_area);
   };
   const handleData = async (event) => {
     event.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/api/v1/propietarios/registrar_propietario",
+        "http://localhost:5000/api/v1/restaurantes/registrar_restaurante",
         {
           nombreRestaurante,
           descripcionRestaurante,
           capacidadRestaurante,
+          fk_area,
         }
       );
     } catch (error) {
@@ -80,7 +81,7 @@ const RestauranteAgregar = () => {
                   onChange={handlecapacidadRestaurante}
                 />
               </div>
-              <CardArea onSaveLugar={handleArea} />
+              <CardArea onSaveArea={handleArea} />
               <Button
                 className="mt-3 float-end"
                 size="lg"

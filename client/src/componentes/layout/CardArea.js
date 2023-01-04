@@ -12,29 +12,19 @@ import {
 import axios from "axios";
 
 const CardArea = (props) => {
-  const [estado, setEstado] = useState("");
-  const [estados, setEstados] = useState([]);
-  const [municipio, setMunicipio] = useState("");
-  const [parroquia, setParroquia] = useState("");
   const [areas, setareas] = useState("");
+  const [IP, setIP] = useState("");
+  const [Ubicacion, setUbicacion] = useState("");
   const [isLoading, setLoading] = useState(true);
-  const [direccion, setdireccion] = useState(true);
-  const [toggleEstado, setToggleEstadtoggleEstado] = useState(false);
-  const [toggleMunicipio, setToggleMunicipio] = useState(true);
-  const [toggleParroquia, setToggleParroquia] = useState(true);
+  const [toggleIP, setToggleIP] = useState(false);
 
-  const handleEstado = (event) => {
-    setEstado(event.target.value);
-    setToggleEstadtoggleEstado(true);
-    setToggleMunicipio(false);
-  };
-  const handleMunicipio = (event) => {
-    setMunicipio(event.target.value);
-    setToggleParroquia(false);
+  const handleIP = (event) => {
+    setToggleIP(true);
+    setIP(event.target.value);
   };
 
-  const handleParroquia = (event) => {
-    setParroquia(event.target.value);
+  const handleUbicacion = (event) => {
+    setUbicacion(event.target.value);
   };
 
   useEffect(() => {
@@ -42,7 +32,7 @@ const CardArea = (props) => {
       .get("http://localhost:5000/api/v1/areas/listado_de_areas")
       .then((res) => {
         console.log(res);
-        setareas(res.data.data);
+        setareas(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
@@ -50,7 +40,7 @@ const CardArea = (props) => {
 
   console.log(areas);
 
-  props.onSaveLugar(parroquia);
+  props.onSaveArea(Ubicacion);
 
   if (isLoading) {
     return <div></div>;
@@ -61,66 +51,35 @@ const CardArea = (props) => {
       <Card className="mx-5 mt-3">
         <Card.Body>
           <Card.Title>Ubicación: </Card.Title>
+          <FormSelect onChange={handleIP}>
+            <option value={-1} disabled={toggleIP}>
+              Ubicacion
+            </option>
+            <option key={0} value={"Infraestructura"}>
+              Intraestructura
+            </option>
+            <option key={1} value={"patio"}>
+              Patio
+            </option>
+          </FormSelect>
           <Card.Body>
             <Row>
               <Col>
-                <FormLabel>Estado:</FormLabel>
-                <FormSelect onChange={handleEstado}>
-                  <option value={-1} disabled={toggleEstado}>
-                    Estado
+                <FormLabel>Infraestructura:</FormLabel>
+                <FormSelect onChange={handleUbicacion}>
+                  <option value={-1} disabled={toggleIP}>
+                    Lugar
                   </option>
-                  {/* {areas[0].map((estado) => (
-                    <option key={estado.id_lugar} value={estado.id_lugar}>
-                      {estado.nombre_lugar}
-                    </option>
-                  ))} */}
+                  {areas.data.map(
+                    (area) =>
+                      area.tipo_area == IP && (
+                        <option key={area.codigo_area} value={area.codigo_area}>
+                          {area.nombre_area}
+                        </option>
+                      )
+                  )}
                 </FormSelect>
               </Col>
-              <Col>
-                <FormLabel>Municipio:</FormLabel>
-                <FormSelect
-                  onChange={handleMunicipio}
-                  disabled={toggleMunicipio}
-                >
-                  <option value={-1} disabled={!toggleMunicipio}>
-                    Municipio
-                  </option>
-                  {/* {areas[1]
-                    .filter((municipio) => municipio.fk_lugar == estado)
-                    .map((municipio) => (
-                      <option
-                        key={municipio.id_lugar}
-                        value={municipio.id_lugar}
-                      >
-                        {municipio.nombre_lugar}
-                      </option>
-                    ))} */}
-                </FormSelect>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <FormLabel>Parroquia:</FormLabel>
-                <FormSelect
-                  onChange={handleParroquia}
-                  disabled={toggleParroquia}
-                >
-                  <option value={-1} disabled={!toggleParroquia}>
-                    Parroquia
-                  </option>
-                  {/* {areas[2]
-                    .filter((parroquia) => parroquia.fk_lugar == municipio)
-                    .map((parroquia) => (
-                      <option
-                        key={parroquia.id_lugar}
-                        value={parroquia.id_lugar}
-                      >
-                        {parroquia.nombre_lugar}
-                      </option>
-                    ))} */}
-                </FormSelect>
-              </Col>
-              <Col></Col>
             </Row>
           </Card.Body>
         </Card.Body>

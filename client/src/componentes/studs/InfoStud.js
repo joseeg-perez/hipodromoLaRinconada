@@ -7,11 +7,10 @@ const InfoStud = (props) => {
   return (
     <Col className="my-3">
       <Card className="w-100">
+        <Card.Header>
+          <h5>{props.nombre}</h5>
+        </Card.Header>
         <Card.Body>
-          <Row>
-            <h5>{props.nombre}</h5>
-          </Row>
-
           <Row className="row row-cols-2">
             <Col className="d-flex align-items-stretch col-5">
               <Row className="row row-cols-2 flex-fill">
@@ -28,8 +27,16 @@ const InfoStud = (props) => {
             </Col>
 
             <Col className="col-6 ms-3">
-              <Row className="text-center align-content-center">
-                <p>{props.record}</p>
+              <Row className="text-start">
+                <p className="fw-bold">
+                  Propietario:{" "}
+                  <span className="text-muted"> {props.propietario}</span>
+                </p>
+              </Row>
+              <Row className="text-start">
+                <p className="fw-bold">
+                  Está desde: <span className="text-muted"> {props.fecha}</span>
+                </p>
               </Row>
               <Row className="">
                 <div className="justify-content-end mt-4 text-end">

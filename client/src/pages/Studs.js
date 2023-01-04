@@ -127,15 +127,21 @@ const Studs = () => {
         </div>
       </Row>
 
+      {/*select codigo_stud, nombre_stud, fecha_creacion_stud, 
+		concat(nombre1_persona,' ',apellido1_persona) as nombre
+        from stud, persona_propietario, 
+		propietario_stud
+        where propietario_stud.fk_stud = codigo_stud
+		and fk_propietario = codigo_persona*/}
+
       <Row className="row-cols-3 my-4">
         {Studs.data.map((stud) => (
           <InfoStud
             key={stud.codigo_stud}
             id={stud.codigo_stud}
             nombre={stud.nombre_stud}
-            record={stud.record}
-            propietario={stud.propietario}
-            fecha={stud.fecha_creacion}
+            propietario={stud.nombre}
+            fecha={stud.fecha}
           ></InfoStud>
         ))}
       </Row>

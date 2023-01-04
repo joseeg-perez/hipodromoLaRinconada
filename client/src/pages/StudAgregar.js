@@ -27,8 +27,8 @@ const StudAgregar = () => {
   const [vestimenta, setVestimenta] = useState("");
   const [color, setColor] = useState("#fff");
   const [colores, setColores] = useState("#fff");
-  const [color1, setColor1] = useState("#fff");
-  const [color2, setColor2] = useState("#fff");
+  const [color1stud, setColor1stud] = useState("#fff");
+  const [color2stud, setColor2stud] = useState("#fff");
   const [togglecolor, setToggleColor] = useState(false);
   const [toggleboton, setToggleBoton] = useState(false);
   const [toggleAgregarVestimenta, setToggleAgregarVestimenta] = useState(false);
@@ -48,11 +48,11 @@ const StudAgregar = () => {
     setColor(color.hex);
     setToggleAgregarVestimenta(true);
   };
-  const handleColor1Stud = (color, event) => {
-    setColor1(color.hex);
+  const handleColor1 = (color, event) => {
+    setColor1stud(color.hex);
   };
-  const handleColor2Stud = (color, event) => {
-    setColor2(color.hex);
+  const handleColor2 = (color, event) => {
+    setColor2stud(color.hex);
   };
   const handleToggleColor = (event) => {
     setToggleColor(true);
@@ -74,26 +74,46 @@ const StudAgregar = () => {
     setVestimentas((vestimentas) => [...vestimentas, vestimentaStud]);
   };
 
-  const handleData = (event) => {
+  const handleData = async (event) => {
     event.preventDefault();
-    console.log(color2);
-
+    const color1 = colores.data.find(
+      (color) => color.codigo_del_color == color1stud
+    ).id_color;
+    const color2 = colores.data.find(
+      (color) => color.codigo_del_color == color2stud
+    ).id_color;
+    console.log(vestimentas);
     vestimentas.map(
       (vestimenta) =>
         (vestimenta.colorV = colores.data.find(
           (colorD) => colorD.codigo_del_color == vestimenta.colorV
         ).id_color)
     );
+    console.log(vestimentas);
+    try {
+      await axios.post("http://localhost:5000/api/v1/studs/registrar_stud", {
+        fechaCreacion,
+        nombreStud,
+        propietarioStud,
+        color1,
+        color2,
+        vestimentas,
+      });
+    } catch (error) {
+      throw error;
+    }
+    console.log(color2stud);
+
     console.warn(
       fechaCreacion,
       nombreStud,
       propietarioStud,
-      colores.data.find((color) => color.codigo_del_color == color1).id_color,
-      colores.data.find((color) => color.codigo_del_color == color2).id_color,
+      color1,
+      color2,
       vestimentas
     );
-    setColor1("");
-    setColor2("");
+    setColor1stud("");
+    setColor2stud("");
     setFechaCreacion("");
     setNombreStud("");
     setPropietarioStud("");
@@ -130,7 +150,7 @@ const StudAgregar = () => {
   console.log(propietarios);
   console.log(vestimentasDispo);
   console.log(vestimentas);
-  console.log(color1);
+  console.log(color1stud);
   console.log(colores);
 
   if (isLoading) {
@@ -280,12 +300,12 @@ const StudAgregar = () => {
                       <h5 className="mt-3 text-muted">Color 1 del Stud:</h5>
                       <CirclePicker
                         className="mt-3"
-                        onChangeComplete={handleColor1Stud}
+                        onChangeComplete={handleColor1}
                       />
                       <h5 className="mt-3 text-muted">Color 2 del Stud:</h5>
                       <CirclePicker
                         className="mt-3"
-                        onChangeComplete={handleColor2Stud}
+                        onChangeComplete={handleColor2}
                       />
                     </Col>
                     <Col className="col-6 mx-auto my-auto">
@@ -293,11 +313,11 @@ const StudAgregar = () => {
                         <Card.Body>
                           <Col
                             className="square p-5 rounded-top"
-                            style={{ backgroundColor: color1 }}
+                            style={{ backgroundColor: color1stud }}
                           ></Col>
                           <Col
                             className="square p-5 rounded-bottom"
-                            style={{ backgroundColor: color2 }}
+                            style={{ backgroundColor: color2stud }}
                           ></Col>
                         </Card.Body>
                       </Card>
