@@ -8,9 +8,11 @@ import {
   FormLabel,
   FormSelect,
   Button,
+  Table,
 } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { CirclePicker } from "react-color";
 
 const StudAgregar = () => {
   const [fechaCreacion, setFechaCreacion] = useState("");
@@ -21,6 +23,14 @@ const StudAgregar = () => {
   const [isLoading, setLoading] = useState(true);
   const [propietarios, setPropietarios] = useState([]);
   const [vestimentasDispo, setVestimentasDispo] = useState([]);
+  const [vestimentas, setVestimentas] = useState([]);
+  const [vestimenta, setVestimenta] = useState("");
+  const [color, setColor] = useState("#fff");
+  const [color1, setColor1] = useState("#fff");
+  const [color2, setColor2] = useState("#fff");
+  const [togglecolor, setToggleColor] = useState(false);
+  const [toggleboton, setToggleBoton] = useState(false);
+  const [toggleAgregarVestimenta, setToggleAgregarVestimenta] = useState(false);
 
   const handleFechaCreacion = (event) => {
     setFechaCreacion(event.target.value);
@@ -31,6 +41,54 @@ const StudAgregar = () => {
   const handlePropietario = (event) => {
     setPropietarioStud(event.target.value);
     setTogglePropietario(true);
+  };
+
+  const handleColor = (color, event) => {
+    setColor(color.hex);
+    setToggleAgregarVestimenta(true);
+  };
+  const handleColor1Stud = (color, event) => {
+    setColor1(color.hex);
+  };
+  const handleColor2Stud = (color, event) => {
+    setColor2(color.hex);
+  };
+  const handleToggleColor = (event) => {
+    setToggleColor(true);
+  };
+
+  const handleVestimenta = (event) => {
+    setToggleBoton(true);
+    setToggleVestimenta(true);
+    setVestimenta(event.target.value);
+  };
+  const handleVestimentas = (event) => {
+    setToggleAgregarVestimenta(false);
+    setToggleColor(false);
+    setToggleBoton(false);
+    const vestimentaStud = {
+      codigo: vestimenta,
+      colorV: color,
+    };
+    setVestimentas((vestimentas) => [...vestimentas, vestimentaStud]);
+  };
+
+  const handleData = (event) => {
+    event.preventDefault();
+    console.warn(
+      fechaCreacion,
+      nombreStud,
+      propietarioStud,
+      color1,
+      color2,
+      vestimentas
+    );
+    setColor1("");
+    setColor2("");
+    setFechaCreacion("");
+    setNombreStud("");
+    setPropietarioStud("");
+    setVestimentas([]);
   };
 
   useEffect(() => {
@@ -54,6 +112,8 @@ const StudAgregar = () => {
 
   console.log(propietarios);
   console.log(vestimentasDispo);
+  console.log(vestimentas);
+  console.log(color1);
 
   if (isLoading) {
     return <div></div>;
@@ -98,18 +158,14 @@ const StudAgregar = () => {
                         </option>
                       ))}
                     </FormSelect>
+                    <Link
+                      size="sm"
+                      to={`/propietarios/createPropietario`}
+                      className="text-center"
+                    >
+                      <p>No está registrado el propietario?</p>
+                    </Link>
                   </Col>
-                </Col>
-                <Col className="mt-2">
-                  <Link
-                    size="sm"
-                    to={`/propietarios/createPropietario`}
-                    className="text-center"
-                  >
-                    <Button size="sm" type="submit">
-                      Agregar Propietario
-                    </Button>
-                  </Link>
                 </Col>
               </Row>
               <Row>
@@ -130,26 +186,112 @@ const StudAgregar = () => {
               <Card className="mt-3">
                 <Card.Body>
                   <Card.Title>Vestimentas del stud</Card.Title>
-                  <Col className="col-6">
-                    <FormSelect className="mt-3">
-                      {vestimentasDispo.data.map((vestimenta) => (
-                        <option
-                          value={vestimenta.codigo_vestimenta}
-                          key={vestimenta.codigo_vestimenta}
-                        >
-                          {vestimenta.nombre_vestimenta}
+                  <Row>
+                    <Col className="col-4">
+                      <FormSelect className="mt-3" onChange={handleVestimenta}>
+                        <option key={-1} disabled={toggleVestimenta}>
+                          Vestimenta
                         </option>
-                      ))}
-                    </FormSelect>
-                  </Col>
-                  <Col></Col>
+                        {vestimentasDispo.data.map((vestimenta) => (
+                          <option
+                            value={vestimenta.codigo_vestimenta}
+                            key={vestimenta.codigo_vestimenta}
+                          >
+                            {vestimenta.nombre_vestimenta}
+                          </option>
+                        ))}
+                      </FormSelect>
+                      {toggleAgregarVestimenta && (
+                        <Button className="sm mt-4" onClick={handleVestimentas}>
+                          Agregar Vestimenta
+                        </Button>
+                      )}
+                    </Col>
+                    <Col className="col-4">
+                      <Button
+                        className="mt-3"
+                        onClick={handleToggleColor}
+                        disabled={!toggleboton}
+                      >
+                        Color
+                      </Button>
+                      {togglecolor && (
+                        <CirclePicker
+                          className="mt-3"
+                          onChangeComplete={handleColor}
+                        />
+                      )}
+                    </Col>
+                    <Col className="col-4">
+                      <Table>
+                        <thead>
+                          <tr>
+                            <th>Vestimenta</th>
+                            <th>Color</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {vestimentas.map((vestimentaS) => (
+                            <tr>
+                              <td>
+                                {
+                                  vestimentasDispo.data.find(
+                                    (vestimenta) =>
+                                      vestimenta.codigo_vestimenta ==
+                                      vestimentaS.codigo
+                                  ).nombre_vestimenta
+                                }
+                              </td>
+                              <td
+                                className="col-1 rounded"
+                                style={{ backgroundColor: vestimentaS.colorV }}
+                              ></td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+              <Card className="mt-3">
+                <Card.Body>
+                  <Card.Title>Colores del stud</Card.Title>
+                  <Row>
+                    <Col className="col-6">
+                      <h5 className="mt-3 text-muted">Color 1 del Stud:</h5>
+                      <CirclePicker
+                        className="mt-3"
+                        onChangeComplete={handleColor1Stud}
+                      />
+                      <h5 className="mt-3 text-muted">Color 2 del Stud:</h5>
+                      <CirclePicker
+                        className="mt-3"
+                        onChangeComplete={handleColor2Stud}
+                      />
+                    </Col>
+                    <Col className="col-6 mx-auto my-auto">
+                      <Card className="w-50">
+                        <Card.Body>
+                          <Col
+                            className="square p-5 rounded-top"
+                            style={{ backgroundColor: color1 }}
+                          ></Col>
+                          <Col
+                            className="square p-5 rounded-bottom"
+                            style={{ backgroundColor: color2 }}
+                          ></Col>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </Row>
                 </Card.Body>
               </Card>
               <Button
                 className="mb-4 mt-4 align"
                 size="lg"
                 type="submit"
-                // onClick={handleData}
+                onClick={handleData}
               >
                 Registrar
               </Button>
