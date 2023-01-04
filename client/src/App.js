@@ -16,7 +16,7 @@ import StudDetail from "./pages/StudDetail";
 import StudUpdate from "./pages/StudUpdate";
 import Caballerizas from "./pages/Caballerizas";
 import CaballerizaDetail from "./pages/CaballerizaDetail";
-import CaballerizaRegistrar from "./pages/CaballerizaRegistrar";
+import CaballerizaRegistrar from "./components/CaballerizaRegistrar";
 import ResultadoEvento from "./pages/ResultadoEvento";
 import ResultadoAgregar from "./pages/ResultadoAgregar";
 import CarrerasEvento from "./pages/CarrerasEvento";
@@ -45,6 +45,12 @@ import VeterinarioAgregar from "./pages/VeterinarioAgregar";
 import VeterinarioUpdate from "./pages/VeterinarioUpdate";
 import VeterinarioDetail from "./pages/VeterinarioDetail";
 import StudAgregar from "./pages/StudAgregar";
+import Restaurantes from "./pages/Restaurantes";
+import RestauranteAgregar from "./pages/RestauranteAgregar";
+import Haras from "./pages/Haras";
+import HaraAgregar from "./pages/HaraAgregar";
+import HaraUpdate from "./pages/HaraUpdate";
+import CaballerizaAgregar from "./pages/CaballerizaAgregar";
 
 function App() {
   return (
@@ -174,8 +180,8 @@ function App() {
           <CaballerizaDetail></CaballerizaDetail>
         </Route>
 
-        <Route path="/caballeriza/agregar" exact>
-          <CaballerizaRegistrar></CaballerizaRegistrar>
+        <Route path="/caballeriza/createCaballeriza" exact>
+          <CaballerizaAgregar></CaballerizaAgregar>
         </Route>
 
         <Route path="/medicamentos" exact>
@@ -202,6 +208,13 @@ function App() {
           <MotivoRetiroAgregar></MotivoRetiroAgregar>
         </Route>
 
+        <Route path="/restaurantes" exact>
+          <Restaurantes></Restaurantes>
+        </Route>
+        <Route path="/restaurantes/createRestaurante" exact>
+          <RestauranteAgregar></RestauranteAgregar>
+        </Route>
+
         <Route path="/resultados/:eventoId">
           <ResultadoEvento></ResultadoEvento>
         </Route>
@@ -224,6 +237,18 @@ function App() {
 
         <Route path="/vestimentas" exact>
           <VestimentaAgregar></VestimentaAgregar>
+        </Route>
+
+        <Route path="/haras" exact>
+          <Haras></Haras>
+        </Route>
+
+        <Route path="/haras/createHara" exact>
+          <HaraAgregar></HaraAgregar>
+        </Route>
+
+        <Route path="/haras/updateHara" exact>
+          <HaraUpdate></HaraUpdate>
         </Route>
       </Switch>
     </Layout>

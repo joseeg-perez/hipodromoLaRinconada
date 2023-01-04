@@ -39,13 +39,18 @@ const Menu = () => {
                 <Link className="list-group-item" to="/veterinarios">
                   CONSULTAR VETERINARIOS
                 </Link>
-                <li className="list-group-item">CONSULTAR RESTAURANTES</li>
+                <Link className="list-group-item" to="/restaurantes">
+                  CONSULTAR RESTAURANTES
+                </Link>
                 <li className="list-group-item">CONSULTAR EVENTOS</li>
                 <li className="list-group-item">
                   CONSULTAR HISTORIAL DE CAMBIOS
                 </li>
                 <Link className="list-group-item" to="/vestimentas">
                   REGISTRAR VESTIMENTA
+                </Link>
+                <Link className="list-group-item" to="/haras">
+                  CONSULTAR HARAS
                 </Link>
               </ul>
             </Card.Body>

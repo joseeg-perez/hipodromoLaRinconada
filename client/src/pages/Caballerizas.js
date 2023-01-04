@@ -106,7 +106,7 @@ const Caballerizas = () => {
               color: "black",
               border: "black",
             }}
-            to={{pathname: "/caballeriza/agregar"}}
+            to={{ pathname: "/caballeriza/createCaballeriza" }}
           >
             AGREGAR CABALLERIZA
           </Link>
