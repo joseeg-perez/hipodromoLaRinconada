@@ -39,12 +39,6 @@ const obtenerCaballerizaIndividual = async (req, res) => {
 const registrarCaballeriza = async (req, res) => {
   const { cantidadPuestos } = req.body;
 
-  if (!cantidadPuestos) 
-    return httpError.faltaInformacion(res);
-
-  if (isNaN(cantidadPuestos) || cantidadPuestos === " ")
-    return httpError.idInvalido(res, "cantidad puestos");
-
   const nuevaCaballeriza = {
     cantidadPuestos,
   };

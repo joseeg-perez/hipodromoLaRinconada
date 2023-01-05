@@ -9,12 +9,6 @@ const registrarVeterinarioCaballeriza = async (req, res) => {
         fkVeterinario,
      } = req.body;
 
-    if (!fechaInicio || !fkCaballeriza || !fkVeterinario)
-        return (httpError.faltaInformacion(res));
-
-    if (isNaN(fkCaballeriza) || isNaN(fkVeterinario))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
-
     const nuevoVeterinarioCaballeriza = {
         fechaInicio,
         fechaFin,

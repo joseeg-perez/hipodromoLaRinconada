@@ -39,9 +39,6 @@ const registrarCategoria = async (req, res) => {
         nombreCategoria,
      } =  req.body;
 
-    if (!nombreCategoria)
-        return (httpError.faltaInformacion(res));
-   
     const nuevaCategoria = {
         nombreCategoria: nombreCategoria.toLowerCase(),
     };

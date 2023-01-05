@@ -10,6 +10,16 @@ const obtenerListaDeStudColor = async () => {
     }
 };
 
+const registrarStudColor = async (nuevoStudColor) => {
+    try {
+        await StudColor.registrarStudColor(nuevoStudColor);
+
+        return;
+    } catch (error) {
+        throw(error);
+    }
+};
+
 const actualizarStudColor = async (studColorId, cambios) => {
 
 };
@@ -24,6 +34,7 @@ const borrarStudColor = async (studColorId) => {
 
 module.exports = {
     obtenerListaDeStudColor,
+    registrarStudColor,
     actualizarStudColor,
     borrarStudColor,
 };

@@ -50,29 +50,6 @@ const registrarParticipacion = async (req, res) => {
         fkStud,
     } = req.body;
 
-    if (!gualdrapa ||
-        !puestoPista ||
-        !pesoCaballo ||
-        !fkEjemplar ||
-        !fkCarrera ||
-        !fkJinete ||
-        !fkEntrenador ||
-        !fkStud)
-        return (httpError.faltaInformacion(res));
-
-    if (isNaN(gualdrapa) ||
-        isNaN(puestoPista) ||
-        isNaN(pesoCaballo) || 
-        isNaN(precioEjemplar) ||
-        isNaN(fkEjemplar) ||
-        isNaN(fkCarrera) ||
-        isNaN(fkJinete) ||
-        isNaN(fkEntrenador) ||
-        isNaN(fkRetiro) ||
-        isNaN(fkResultado) ||
-        isNaN(fkStud))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
-
     const nuevaParticipacion = {
         gualdrapa,
         puestoPista,

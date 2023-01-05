@@ -25,9 +25,7 @@ const obtenerResultadoIndividual = async (req, res) => {
     if (isNaN(resultadoId) || resultadoId === " ")
       return httpError.idInvalido(res, ":resultadoId");
 
-    const resultado = await resultadoId.obtenerResultadoIndividual(
-      resultadoId
-    );
+    const resultado = await resultadoservice.obtenerResultadoIndividual(resultadoId);
     res.status(200).send({ status: "OK", data: resultado });
   } catch (error) {
     res
@@ -36,8 +34,8 @@ const obtenerResultadoIndividual = async (req, res) => {
   }
 };
 
-const registrarresultado = async (req, res) => {
-  const { 
+const registrarResultado = async (req, res) => {
+  const {
     diferenciaTiempo,
     speedRating,
     speedRating300m,
@@ -52,28 +50,23 @@ const registrarresultado = async (req, res) => {
     fkCuerpoDiferencia,
  } = req.body;
 
-  if (!diferenciaTiempo ||
-      !speedRating ||
-      !speedRating300m ||
-      !speedRating400m ||
-      !speedRating800m ||
-      !gananciaEntrenador ||
-      !gananciaJinete ||
-      !gananciaPropietario ||
-      !tiempoTotal ||
-      !fkTipoResultado ||
-      !fkCuerpoDiferencia) 
-    return httpError.faltaInformacion(res);
-
-  if (isNaN(cantidadPuestos) || cantidadPuestos === " ")
-    return httpError.idInvalido(res, "cantidad puestos");
-
   const nuevaresultado = {
-    cantidadPuestos,
+    diferenciaTiempo,
+    speedRating,
+    speedRating300m,
+    speedRating400m,
+    speedRating800m,
+    observacion,
+    gananciaEntrenador,
+    gananciaJinete,
+    gananciaPropietario,
+    tiempoTotal,
+    fkTipoResultado,
+    fkCuerpoDiferencia,
   };
 
   try {
-    await Resultadoservice.registrarresultado(nuevaresultado);
+    await resultadoservice.registrarResultado(nuevaresultado);
     res
       .status(200)
       .send({
@@ -87,9 +80,9 @@ const registrarresultado = async (req, res) => {
   }
 };
 
-const actualizarresultado = async (req, res) => {};
+const actualizarResultado = async (req, res) => {};
 
-const borrarresultado = async (req, res) => {
+const borrarResultado = async (req, res) => {
   const {
     params: { resultadoId },
   } = req;
@@ -100,12 +93,12 @@ const borrarresultado = async (req, res) => {
     if (isNaN(resultadoId) || resultadoId === " ")
       return httpError.idInvalido(res, ":resultadoId");
 
-    await Resultadoservice.borrarresultado(resultadoId);
+    await resultadoservice.borrarResultado(resultadoId);
     res
       .status(200)
       .send({
         status: "OK",
-        data: `La resultado con el id '${resultadoId}' se ha eliminado con exito.`,
+        data: `El resultado con el id '${resultadoId}' se ha eliminado con exito.`,
       });
   } catch (error) {
     res
@@ -116,8 +109,8 @@ const borrarresultado = async (req, res) => {
 
 module.exports = {
   obtenerListaDeResultados,
-  obtenerresultadoIndividual,
-  registrarresultado,
-  actualizarresultado,
-  borrarresultado,
+  obtenerResultadoIndividual,
+  registrarResultado,
+  actualizarResultado,
+  borrarResultado,
 };

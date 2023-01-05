@@ -19,12 +19,6 @@ const registrarStudColor = async (req, res) => {
         fkStud,
      } = req.body;
 
-    if (!fkColor || !fkStud)
-        return (httpError.faltaInformacion(res));
-
-    if (isNaN(fkColor) || isNaN(fkStud))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
-
     const nuevostudColor = {
         fkColor,
         fkStud,

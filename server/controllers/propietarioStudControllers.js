@@ -10,17 +10,6 @@ const registrarPropietarioStud = async (req, res) => {
         fkPropietario,
      } = req.body;
 
-    if (!porcentajePropiedad || !fkStud || !fkPropietario)
-        return (httpError.faltaInformacion(res));
-
-    if (isNaN(porcentajePropiedad) || 
-        isNaN(fkStud) ||    
-        isNaN(fkPropietario))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
-
-    if ((porcentajePropiedad <= -1) || (porcentajePropiedad >= 101))
-        return(res.status(422).send({ status:"FAILED", data: "Porcentaje de propiedad invalido." }))
-
     const nuevopropietarioStud = {
         porcentajePropiedad,
         fechaInicioPropiedad,

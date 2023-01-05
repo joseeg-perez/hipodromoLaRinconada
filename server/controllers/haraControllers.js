@@ -40,12 +40,6 @@ const registrarHara = async (req, res) => {
         fkLugar,
      } =  req.body;
 
-    if (!nombreHara || !fkLugar)
-        return (httpError.faltaInformacion(res));
-    
-    if (isNaN(fkLugar))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }))
-   
     const nuevaHara = {
         nombreHara: nombreHara.toLowerCase(),
         fkLugar,

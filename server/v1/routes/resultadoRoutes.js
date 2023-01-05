@@ -1,16 +1,18 @@
-// const express = require("express");
-// const router = express.Router();
+const express = require("express");
+const router = express.Router();
+const { validateCreate } = require("../../validators/resultadoValidators.js");
 
-// const resultadoController = require("../../controllers/resultadoControllers.js");
 
-// router.get("/listado_de_resultados", resultadoController.obtenerListaDeResultados);
+const resultadoController = require("../../controllers/resultadoControllers.js");
 
-// router.get("/:resultadoId", resultadoController.obtenerResultadoIndividual);
+router.get("/listado_de_resultados", resultadoController.obtenerListaDeResultados);
 
-// router.post("/registrar_resultado", resultadoController.registrarResultado);
+router.get("/:resultadoId", resultadoController.obtenerResultadoIndividual);
 
-// router.patch("/:resultadoId", resultadoController.actualizarResultado);
+router.post("/registrar_resultado", validateCreate, resultadoController.registrarResultado);
 
-// router.delete("/:resultadoId", resultadoController.borrarResultado);
+router.patch("/:resultadoId", resultadoController.actualizarResultado);
 
-// module.exports = router;
+router.delete("/:resultadoId", resultadoController.borrarResultado);
+
+module.exports = router;

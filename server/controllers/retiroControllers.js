@@ -39,12 +39,6 @@ const registrarRetiro = async (req, res) => {
         fechaRetiro,
         fkMotivo,
      } =  req.body;
-
-    if (!fechaRetiro || !fkMotivo)
-        return (httpError.faltaInformacion(res));
-
-    if (isNaN(fkMotivo))
-        return(httpError.idInvalido(res, "fk_motivo"));
     
     const nuevoRetiro = {
         fechaRetiro,

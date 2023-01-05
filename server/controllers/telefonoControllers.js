@@ -41,15 +41,6 @@ const registrarTelefono = async (req, res) => {
         fkPropietario,
         fkCliente,
      } =  req.body;
-
-    if (!extensionTelefono || !cuerpoTelefono)
-        return (httpError.faltaInformacion(res));
-    
-    if (isNaN(extensionTelefono)||
-        isNaN(cuerpoTelefono) ||
-        isNaN(fkPropietario) ||
-        isNaN(fkCliente))
-    return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
    
     const nuevoTelefono = {
         extensionTelefono,
