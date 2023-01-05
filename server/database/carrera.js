@@ -47,7 +47,7 @@ const registrarCarrera = async (nuevaCarrera) => {
         premioQuinto,
         horaCarrera,
         fkEvento,
-        fkCategorioCarrera,
+        fkCategoriaCarrera,
      } = nuevaCarrera;
 
     const text = `INSERT INTO carrera(
@@ -72,7 +72,7 @@ const registrarCarrera = async (nuevaCarrera) => {
         premioQuinto,
         horaCarrera,
         fkEvento,
-        fkCategorioCarrera
+        fkCategoriaCarrera
     ];
 
     try {

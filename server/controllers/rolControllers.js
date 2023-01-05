@@ -37,9 +37,6 @@ const obtenerRolIndividual = async (req, res) => {
 const registrarRol = async (req, res) => {
     const { nombre } = req.body;
 
-    if (!nombre)
-        return (httpError.faltaInformacion(res));
-
     const nuevoRol = {
         nombre: nombre.toLowerCase(),
     };

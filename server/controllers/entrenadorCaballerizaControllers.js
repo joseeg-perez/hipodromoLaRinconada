@@ -9,12 +9,6 @@ const registrarEntrenadorCaballeriza = async (req, res) => {
         fkEntrenador,
      } = req.body;
 
-    if (!fechaInicio || !fkCaballeriza || !fkEntrenador)
-        return (httpError.faltaInformacion(res));
-
-    if (isNaN(fkCaballeriza) || isNaN(fkEntrenador))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
-
     const nuevoEntrenadorCaballeriza = {
         fechaInicio,
         fechaFin,

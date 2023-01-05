@@ -44,9 +44,6 @@ const registrarStud = async (req, res) => {
         vestimentas,
      } = req.body;
 
-    if (!nombreStud || !fechaCreacion)
-        return (httpError.faltaInformacion(res));
-
     const nuevoStud = {
         nombreStud: nombreStud.toLowerCase(),
         fechaCreacion,

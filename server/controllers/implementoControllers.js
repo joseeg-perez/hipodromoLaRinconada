@@ -39,12 +39,9 @@ const obtenerImplementoIndividual = async (req, res) => {
 const registrarImplemento = async (req, res) => {
   const { nombreImplemento, descripcionImplemento } = req.body;
 
-  if (!nombreImplemento || !descripcionImplemento)
-    return httpError.faltaInformacion(res);
-
   const nuevoImplemento = {
     nombreImplemento: nombreImplemento.toLowerCase(),
-    descripcionImplemento,
+    descripcionImplemento: descripcionImplemento.toLowerCase(),
   };
 
   try {

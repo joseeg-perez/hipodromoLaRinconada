@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { validateCreate } = require("../../validators/participacionValidators.js");
 
 const participacionController = require("../../controllers/participacionControllers.js");
 
@@ -7,7 +8,7 @@ router.get("/listado_de_participaciones", participacionController.obtenerListaDe
 
 router.get("/:participacionId", participacionController.obtenerParticipacionIndividual);
 
-router.post("/registrar_participacion", participacionController.registrarParticipacion);
+router.post("/registrar_participacion", validateCreate ,participacionController.registrarParticipacion);
 
 router.patch("/:participacionId", participacionController.actualizarParticipacion);
 

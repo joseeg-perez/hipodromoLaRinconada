@@ -42,12 +42,6 @@ const registrarRgoJinete = async (req, res) => {
         pesoMax,
      } =  req.body;
 
-    if (!nombreRango || !descripcionRango || !pesoMin || !pesoMax)
-        return (httpError.faltaInformacion(res));
-    
-    if (isNaN(pesoMin) || isNaN(pesoMax))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }))
-   
     const nuevoRgoJinete = {
         nombreRango: nombreRango.toLowerCase(),
         descripcionRango: descripcionRango.toLowerCase(),

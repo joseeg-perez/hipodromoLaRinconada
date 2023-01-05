@@ -56,15 +56,6 @@ const registrarVeterinario = async (req, res) => {
         fechaNacimiento,
         fkCaballeriza,
      } =  req.body;
-
-    if (!cedulaPersona || 
-        !nombre1Persona ||
-        !apellido1Persona ||
-        !fechaNacimiento)
-        return (httpError.faltaInformacion(res));
-    
-    if (isNaN(cedulaPersona) || cedulaPersona === ' ')
-        return(httpError.idInvalido(res, "cedula veterinario"));
    
     const nuevoVeterinario = {
         cedulaPersona,

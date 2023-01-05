@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { validateCreate } = require("../../validators/caballerizaValidators.js");
 
 const caballerizaController = require("../../controllers/caballerizaControllers");
 
@@ -7,7 +8,7 @@ router.get("/listado_de_caballerizas", caballerizaController.obtenerListaDeCabal
 
 router.get("/:caballerizaId", caballerizaController.obtenerCaballerizaIndividual);
 
-router.post("/registrar_caballeriza", caballerizaController.registrarCaballeriza);
+router.post("/registrar_caballeriza", validateCreate, caballerizaController.registrarCaballeriza);
 
 router.patch("/:caballerizaId", caballerizaController.actualizarCaballeriza);
 
