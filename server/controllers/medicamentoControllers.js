@@ -39,18 +39,13 @@ const obtenerMedicamentoIndividual = async (req, res) => {
 const registrarMedicamento = async (req, res) => {
   const { nombreMedicamento, descripcionMedicamento } = req.body;
 
-  if (!nombreMedicamento || !descripcionMedicamento)
-    return httpError.faltaInformacion(res);
-
   const nuevoMedicamento = {
     nombreMedicamento: nombreMedicamento.toLowerCase(),
     descripcionMedicamento: descripcionMedicamento.toLowerCase(),
   };
 
   try {
-    const medicamentoCreado = await medicamentoService.registrarMedicamento(
-      nuevoMedicamento
-    );
+    const medicamentoCreado = await medicamentoService.registrarMedicamento(nuevoMedicamento);
     res.status(200).send({
       status: "OK",
       data: `Se ha registrado el medicamento '${medicamentoCreado}' de forma satisfactoria.`,

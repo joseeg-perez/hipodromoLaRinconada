@@ -41,15 +41,6 @@ const registrarRestaurante = async (req, res) => {
         capacidadRestaurante,
         fk_area,
      } =  req.body;
-
-    if (!nombreRestaurante ||
-        !descripcionRestaurante ||
-        !capacidadRestaurante ||
-        !fk_area)
-        return (httpError.faltaInformacion(res));
-
-    if (isNaN(capacidadRestaurante) || isNaN(fk_area))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
    
     const nuevoRestaurante = {
         nombreRestaurante: nombreRestaurante.toLowerCase(),

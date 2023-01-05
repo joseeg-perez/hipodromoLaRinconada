@@ -40,9 +40,6 @@ const registrarPelaje = async (req, res) => {
         abrevPelaje,
      } =  req.body;
 
-    if (!nombrePelaje || !abrevPelaje)
-        return (httpError.faltaInformacion(res));
-   
     const nuevoPelaje = {
         nombrePelaje: nombrePelaje.toLowerCase(),
         abrevPelaje: abrevPelaje.toLowerCase(),

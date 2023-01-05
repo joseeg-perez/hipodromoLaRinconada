@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { validateCreate } = require("../../validators/vestimentaValidators.js");
 
 const vestimentaController = require("../../controllers/vestimentaControllers.js");
 
@@ -7,7 +8,7 @@ router.get("/listado_de_vestimentas", vestimentaController.obtenerListaDeVestime
 
 router.get("/:vestimentaId", vestimentaController.obtenerVestimentaIndividual);
 
-router.post("/registrar_vestimenta", vestimentaController.registrarVestimenta);
+router.post("/registrar_vestimenta", validateCreate, vestimentaController.registrarVestimenta);
 
 router.patch("/:vestimentaId", vestimentaController.actualizarVestimenta);
 

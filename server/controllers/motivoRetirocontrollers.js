@@ -39,10 +39,7 @@ const registrarMotivoDeRetiro = async (req, res) => {
         nombreMotivo,
         descripcionMotivo, 
     } = req.body;
-
-    if (!nombreMotivo || !descripcionMotivo)
-        return (httpError.faltaInformacion(res));
-
+    
     const nuevomotivoRetiro = {
         nombreMotivo: nombreMotivo.toLowerCase(),
         descripcionMotivo: descripcionMotivo.toLowerCase(),

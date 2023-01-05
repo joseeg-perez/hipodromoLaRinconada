@@ -5,15 +5,12 @@ const { generarToken } = require("../helpers/jwt.js")
 
 const registrarse = async (req, res) => {
         
-    const { username, password, fkCliente, fkRol } = req.body;
-
-    const emailValido = validator.validate(username);
-
-    if (!username || !password)
-        return(httpError.faltaInformacion(res));
-
-    if (!emailValido)
-        return(httpError.campoInvalido(res, "email"));
+    const { 
+        username, 
+        password, 
+        fkCliente, 
+        fkRol, 
+    } = req.body;
 
     const nuevoUsuario = {
         username,
@@ -33,11 +30,8 @@ const registrarse = async (req, res) => {
 };
 
 const iniciarSesion = async (req, res) => {
-    
-    const { username, password } = req.body;
 
-    if (!username || !password)
-        return(httpError.faltaInformacion(res));
+    const { username, password } = req.body;
 
     const nuevoinicioSesion = {
         username: username.toLowerCase(),

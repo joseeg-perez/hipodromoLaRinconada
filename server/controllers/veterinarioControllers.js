@@ -60,17 +60,6 @@ const registrarVeterinario = async (req, res) => {
     fkCaballeriza,
   } = req.body;
 
-  if (
-    !cedulaPersona ||
-    !nombre1Persona ||
-    !apellido1Persona ||
-    !fechaNacimiento
-  )
-    return httpError.faltaInformacion(res);
-
-  if (isNaN(cedulaPersona) || cedulaPersona === " ")
-    return httpError.idInvalido(res, "cedula veterinario");
-
   const nuevoVeterinario = {
     cedulaPersona,
     nombre1Persona: nombre1Persona.toLowerCase(),
@@ -85,12 +74,10 @@ const registrarVeterinario = async (req, res) => {
     const veterinarioCreado = await veterinarioService.registrarVeterinario(
       nuevoVeterinario
     );
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `Se ha registrado el veterinario '${veterinarioCreado}' de forma satisfactoria.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `Se ha registrado el veterinario '${veterinarioCreado}' de forma satisfactoria.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -112,12 +99,10 @@ const borrarVeterinario = async (req, res) => {
       return httpError.idInvalido(res, ":veterinarioId");
 
     await veterinarioService.borrarVeterinario(veterinarioId);
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `El veterinario con el id '${veterinarioId}' se ha eliminado con exito.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `El veterinario con el id '${veterinarioId}' se ha eliminado con exito.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)

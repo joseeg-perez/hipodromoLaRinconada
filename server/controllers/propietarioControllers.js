@@ -52,25 +52,6 @@ const registrarPropietario = async (req, res) => {
 
      } = req.body;
 
-  if (
-    !cedulaPersona ||
-    !nombre1Persona ||
-    !apellido1Persona ||
-    !fechaNacimiento ||
-    !correo
-  )
-    return httpError.faltaInformacion(res);
-
-  const emailValido = validator.validate(correo);
-
-  if (!emailValido) return httpError.campoInvalido(res, "correo");
-
-  if (isNaN(cedulaPersona) || isNaN(fkLugar))
-    return res.status(422).send({
-      status: "FAILED",
-      data: "Uno de los campos que espera valores numericos es invalido.",
-    });
-
     const nuevoPropietario = {
         cedulaPersona,
         nombre1Persona: nombre1Persona.toLowerCase(),

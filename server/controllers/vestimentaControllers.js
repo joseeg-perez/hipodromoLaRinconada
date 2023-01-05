@@ -39,9 +39,6 @@ const registrarVestimenta = async (req, res) => {
         nombreVestimenta,
      } =  req.body;
 
-    if (!nombreVestimenta)
-        return (httpError.faltaInformacion(res));
-   
     const nuevaVestimenta = {
         nombreVestimenta: nombreVestimenta.toLowerCase(),
     };
