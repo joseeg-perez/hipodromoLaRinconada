@@ -3,12 +3,16 @@ const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeStuds = async () => {
   const query = {
-    text: `select codigo_stud, nombre_stud, to_char(fecha_creacion_stud :: DATE, 'dd/mm/yyyy') as fecha, 
-    concat(nombre1_persona,' ',apellido1_persona) as nombre
-    from stud, persona_propietario, 
-    propietario_stud
-    where propietario_stud.fk_stud = codigo_stud
-    and fk_propietario = codigo_persona`,
+    text: `SELECT s.codigo_stud, s.nombre_stud, 
+	to_char(s.fecha_creacion_stud :: DATE, 'dd/mm/yyyy') as fecha,
+	concat(p.nombre1_persona,' ',p.apellido1_persona) as nombre,
+	c.codigo_del_color
+	FROM	persona_propietario p, color c, stud_color sc, stud s, 
+	propietario_stud ps
+	WHERE	sc.fk_stud = s.codigo_stud
+	AND		sc.fk_color = c.id_color
+	AND		ps.fk_propietario = p.codigo_persona
+	AND		ps.fk_stud = s.codigo_stud`,
   };
 
   try {

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
+import axios from "axios";
+
 const InfoStud = (props) => {
   return (
     <Col className="my-3">
@@ -16,12 +18,12 @@ const InfoStud = (props) => {
               <Row className="row row-cols-2 flex-fill">
                 <Col
                   className="rounded-left"
-                  style={{ backgroundColor: "#DEC618" }}
+                  style={{ backgroundColor: props.color1 }}
                 ></Col>
 
                 <Col
                   className="rounded-right"
-                  style={{ backgroundColor: "#9900FF" }}
+                  style={{ backgroundColor: props.color2 }}
                 ></Col>
               </Row>
             </Col>
@@ -39,13 +41,13 @@ const InfoStud = (props) => {
                 </p>
               </Row>
               <Row className="">
-                <div className="justify-content-end mt-4 text-end">
+                <div className="justify-content-end mt-4 text-end ">
                   <Link
                     size="sm"
                     to={`/studs/${props.id}`}
                     className="text-center"
                   >
-                    <Button className="btn btn-light btn-outline-primary btn-sm">
+                    <Button className="btn btn-light btn-outline-primary btn-sm mx-1">
                       Mas Info
                     </Button>
                   </Link>
