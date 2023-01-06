@@ -3,24 +3,24 @@ import { Container, Row, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
 import axios from "axios";
-import InfoEntrenador from "../componentes/entrenadores/InfoEntrenador";
+import { CardPelaje } from "../components/Pelaje/CardPelaje";
+import InfoPelaje from "../componentes/pelajes/InfoPelaje";
 
-const EntrenadorUpdate = () => {
+const Pelajes = (props) => {
   const [isLoading, setLoading] = useState(true);
-  const [entrenadores, setEntrenadores] = useState([]);
-
+  const [pelajes, setPelajes] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/entrenadores/listado_de_entrenadores")
+      .get("http://localhost:5000/api/v1/pelajes/listado_de_pelajes")
       .then((res) => {
         console.log(res);
-        setEntrenadores(res.data);
+        setPelajes(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(entrenadores);
+  console.log(pelajes);
 
   if (isLoading) {
     return <div></div>;
@@ -28,7 +28,7 @@ const EntrenadorUpdate = () => {
   return (
     <Container>
       <Row className="text-center">
-        <h1>LISTADO DE ENTRENADORES</h1>
+        <h1>LISTADO DE PELAJES</h1>
       </Row>
 
       <Row className="row justify-content-center">
@@ -66,13 +66,9 @@ const EntrenadorUpdate = () => {
 
         <div
           className="rounded-end d-flex align-items-center"
-          style={{ backgroundColor: "#AFBBF7", width: "210px", height: "40px" }}
+          style={{ backgroundColor: "#AFBBF7", width: "160px", height: "40px" }}
         >
-          <Link
-            size="sm"
-            to={`/entrenadores/createEntrenador`}
-            className="text-center"
-          >
+          <Link size="sm" to={`/pelajes/createPelaje`} className="text-center">
             <Button
               className="btn fw-bold"
               size="sm"
@@ -82,27 +78,26 @@ const EntrenadorUpdate = () => {
                 border: "black",
               }}
             >
-              AGREGAR ENTRENADOR
+              AGREGAR PELAJE
             </Button>
           </Link>
         </div>
       </Row>
-
-      <Row className="row-cols-2 mx-5">
-        {entrenadores.data.map((entrenador) => (
-          <InfoEntrenador
-            Id={entrenador.codigo_persona}
-            key={entrenador.codigo_persona}
-            nombre={entrenador.nombre1_persona}
-            apellido={entrenador.apellido1_persona}
-            caballeriza={entrenador.codigo_caballeriza}
-            puestos={entrenador.cantidad_puestos}
-            fecha={entrenador.fecha_inicio}
-          />
-        ))}
+      <Row>
+        <h2 className="text-center mt-4">Pelajes</h2>
+        <Row className="row-cols-4">
+          {pelajes.data.map((pelaje) => (
+            <InfoPelaje
+              nombre={pelaje.nombre_pelaje}
+              abrev={pelaje.abrev_pelaje}
+              codigo={pelaje.codigo_pelaje}
+              key={pelaje.codigo_pelaje}
+            />
+          ))}
+        </Row>
       </Row>
     </Container>
   );
 };
 
-export default EntrenadorUpdate;
+export default Pelajes;

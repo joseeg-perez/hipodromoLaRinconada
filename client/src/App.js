@@ -52,6 +52,8 @@ import HaraAgregar from "./pages/HaraAgregar";
 import HaraUpdate from "./pages/HaraUpdate";
 import CaballerizaAgregar from "./pages/CaballerizaAgregar";
 import RestauranteUpdate from "./pages/RestauranteUpdate";
+import Pelajes from "./pages/Pelajes";
+import PelajeAgregar from "./pages/PelajeAgregar";
 
 function App() {
   return (
@@ -251,6 +253,14 @@ function App() {
 
         <Route path="/haras/createHara" exact>
           <HaraAgregar></HaraAgregar>
+        </Route>
+
+        <Route path="/pelajes" exact>
+          <Pelajes></Pelajes>
+        </Route>
+
+        <Route path="/pelajes/createPelaje" exact>
+          <PelajeAgregar></PelajeAgregar>
         </Route>
 
         <Route path="/haras/updateHara" exact>

@@ -52,6 +52,9 @@ const Menu = () => {
                 <Link className="list-group-item" to="/haras">
                   CONSULTAR HARAS
                 </Link>
+                <Link className="list-group-item" to="/pelajes">
+                  CONSULTAR PELAEJES
+                </Link>
               </ul>
             </Card.Body>
           </Card>

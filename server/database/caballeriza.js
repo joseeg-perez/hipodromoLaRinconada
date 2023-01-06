@@ -3,17 +3,7 @@ const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeCaballerizas = async () => {
   const query = {
-    text: `select codigo_caballeriza, cantidad_puestos, 
-        concat(e.nombre1_persona, ' ', e.apellido1_persona) as nombreEntrenador,
-        concat(v.nombre1_persona, ' ', v.apellido1_persona) as nombreVeterinario
-        from caballeriza, persona_entrenador e, persona_veterinario v, entrenador_caballeriza ec, veterinario_caballeriza vc
-        where ec.fk_entrenador = e.codigo_persona
-        AND vc.fk_caballeriza = codigo_caballeriza
-        AND ec.fk_caballeriza = codigo_caballeriza
-        AND vc.fk_veterinario = v.codigo_persona
-        AND ec.fecha_fin is null
-        AND vc.fecha_fin is null
-        ORDER BY codigo_caballeriza`,
+    text: `select * from caballeriza`,
   };
 
   try {
