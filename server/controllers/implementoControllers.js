@@ -20,11 +20,6 @@ const obtenerImplementoIndividual = async (req, res) => {
   } = req;
 
   try {
-    if (!implementoId) return httpError.idVacio(res, ":implementoId");
-
-    if (isNaN(implementoId) || implementoId === " ")
-      return httpError.idInvalido(res, ":implementoId");
-
     const implemento = await implementoService.obtenerImplementoIndividual(
       implementoId
     );
@@ -62,11 +57,6 @@ const borrarImplemento = async (req, res) => {
   } = req;
 
   try {
-    if (!implementoId) return httpError.idVacio(res, "implementoId");
-
-    if (isNaN(implementoId) || implementoId === " ")
-      return httpError.idInvalido(res, ":implementoId");
-
     await implementoService.borrarImplemento(implementoId);
     res.status(200).send({ status: "OK", data: `El implemento con el id '${implementoId}' se ha eliminado con exito.` });
   } catch (error) {

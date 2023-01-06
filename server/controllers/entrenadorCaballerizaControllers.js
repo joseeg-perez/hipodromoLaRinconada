@@ -37,12 +37,6 @@ const borrarEntrenadorCaballeriza = async (req, res) => {
     } = req;
 
     try {
-        if (!entrenadorCaballerizaId)
-            return(httpError.faltaInformacion(res));
-
-        if (isNaN(entrenadorCaballerizaId) || entrenadorCaballerizaId === ' ')
-            return(httpError.idInvalido(res, ":entrenadorCaballerizaId"));
-
         await entrenadorCaballerizaService.borrarEntrenadorCaballeriza(entrenadorCaballerizaId);
         res.status(200).send({ status: "OK", data: `El entrenador de la caballeriza con el id '${entrenadorCaballerizaId}' se ha eliminado con exito.` });
     } catch (error) {

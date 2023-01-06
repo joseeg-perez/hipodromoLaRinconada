@@ -19,12 +19,6 @@ const obtenerParticipacionIndividual = async (req, res) => {
     } = req;
 
     try {
-        if (!participacionId)
-            return(httpError.idVacio(res, ":participacionId"));
-
-        if (isNaN(participacionId) || participacionId === ' ')
-            return(httpError.idInvalido(res, ":participacionId"));
-
         const participacion = await participacionService.obtenerParticipacionIndividual(participacionId);
         res.status(200).send({ status: "OK", data: participacion});
     } catch (error) {
@@ -86,12 +80,6 @@ const borrarParticipacion = async (req, res) => {
     } = req;
 
     try {
-        if (isNaN(participacionId) || participacionId === ' ')
-            return(httpError.idInvalido(res, ":participacionId"));
-
-        if (!participacionId)
-            return(httpError.faltaInformacion(res));
-
         await participacionService.borrarParticipacion(participacionId);
         res.status(200).send({ status: "OK", data: `El participacion con el id '${ participacionId }' se ha eliminado con exito.` });
     } catch (error) {

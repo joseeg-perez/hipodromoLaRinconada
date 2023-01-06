@@ -1,6 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const bodyParser = require('body-parser');
+
 //const apicache = require("apicache");
 
 
@@ -43,6 +45,9 @@ const v1EntrenadorCaballerizaRoutes = require("./v1/routes/entrenadorCaballeriza
 const v1ColorStudVestimentaRoutes = require("./v1/routes/colorStudVestimentaRoutes.js");
 const v1ResultadoRoutes = require("./v1/routes/resultadoRoutes.js");
 const v1tipoResultadoRoutes = require("./v1/routes/tipoResultadoRoutes.js");
+const v1CuerpoDiferenciaRoutes = require("./v1/routes/cuerpoDiferenciaRoutes.js");
+const v1CarreraReglaRoutes = require("./v1/routes/carreraReglaRoutes.js");
+
 // Puerto
 const PORT = process.env.PORT || 5000;
 
@@ -50,6 +55,8 @@ const PORT = process.env.PORT || 5000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.text());
+
 //const cache = apicache.middleware;
 //app.use(cache("2 minutes"));
 
@@ -88,6 +95,9 @@ app.use("/api/v1/veterinarios_de_caballerizas", v1VeterinarioCaballerizaRoutes);
 app.use("/api/v1/entrenadores_de_caballerizas", v1EntrenadorCaballerizaRoutes);
 app.use("/api/v1/color_stud_vestimenta", v1ColorStudVestimentaRoutes);
 app.use("/api/v1/resultados", v1ResultadoRoutes);
+app.use("/api/v1/cuerpos_de_diferencia", v1CuerpoDiferenciaRoutes);
+// app.use("/api/v1/reglas_de_carreras", v1CarreraReglaRoutes);
+
 // app.use("/api/v1/tipo_resultados", v1tipoResultadoRoutes);
 
 

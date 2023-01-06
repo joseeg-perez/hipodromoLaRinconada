@@ -39,12 +39,6 @@ const borrarPropietarioStud = async (req, res) => {
     } = req;
 
     try {
-        if (!propietarioStudId)
-            return(httpError.faltaInformacion(res));
-
-        if (isNaN(propietarioStudId) || propietarioStudId === ' ')
-            return(httpError.idInvalido(res, ":propietarioStudId"));
-
         await propietarioStudService.borrarPropietarioStud(propietarioStudId);
         res.status(200).send({ status: "OK", data: `El propietario de stud con el id '${propietarioStudId}' se ha eliminado con exito.` });
     } catch (error) {

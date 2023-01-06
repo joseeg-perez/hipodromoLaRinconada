@@ -19,12 +19,6 @@ const obtenerPuestoIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!puestoId)
-            return(httpError.idVacio(res, ":puestoId"));
-
-        if (isNaN(puestoId) || puestoId === ' ')
-            return(httpError.idInvalido(res, ":puestoId"));
-
         const puesto = await puestoService.obtenerPuestoIndividual(puestoId);
         res.status(200).send({ status: "OK", data: puesto});
     } catch (error) {
@@ -44,12 +38,6 @@ const borrarPuesto = async (req, res) => {
     } = req;
 
     try {
-        if (!puestoId)
-            return(httpError.idVacio(res, "puestoId"));
-
-        if (isNaN(puestoId) || puestoId === ' ')
-            return(httpError.idInvalido(res, ":puestoId"));
-
         await puestoService.borrarPuesto(puestoId);
         res.status(200).send({ status: "OK", data: `La puesto con el id '${puestoId}' se ha eliminado con exito.` });
     } catch (error) {

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { validateId } = require("../../validators/IDsValidator.js");
 
 const colorController = require("../../controllers/colorControllers.js");
 

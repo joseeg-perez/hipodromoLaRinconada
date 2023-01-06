@@ -20,11 +20,6 @@ const obtenerResultadoIndividual = async (req, res) => {
   } = req;
 
   try {
-    if (!resultadoId) return httpError.idVacio(res, ":resultadoId");
-
-    if (isNaN(resultadoId) || resultadoId === " ")
-      return httpError.idInvalido(res, ":resultadoId");
-
     const resultado = await resultadoservice.obtenerResultadoIndividual(resultadoId);
     res.status(200).send({ status: "OK", data: resultado });
   } catch (error) {
@@ -88,11 +83,6 @@ const borrarResultado = async (req, res) => {
   } = req;
 
   try {
-    if (!resultadoId) return httpError.idVacio(res, "resultadoId");
-
-    if (isNaN(resultadoId) || resultadoId === " ")
-      return httpError.idInvalido(res, ":resultadoId");
-
     await resultadoservice.borrarResultado(resultadoId);
     res
       .status(200)

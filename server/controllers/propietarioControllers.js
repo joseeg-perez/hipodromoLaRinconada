@@ -21,11 +21,6 @@ const obtenerPropietarioIndividual = async (req, res) => {
   } = req;
 
   try {
-    if (!propietarioId) return httpError.idVacio(res, ":propietarioId");
-
-    if (isNaN(propietarioId) || propietarioId === " ")
-      return httpError.idInvalido(res, ":propietarioId");
-
     const propietario = await propietarioService.obtenerPropietarioIndividual(
       propietarioId
     );
@@ -85,11 +80,6 @@ const borrarPropietario = async (req, res) => {
   } = req;
 
   try {
-    if (!propietarioId) return httpError.faltaInformacion(res);
-
-    if (isNaN(propietarioId) || propietarioId === " ")
-      return httpError.idInvalido(res, ":propietarioId");
-
     await propietarioService.borrarPropietario(propietarioId);
     res.status(200).send({
       status: "OK",

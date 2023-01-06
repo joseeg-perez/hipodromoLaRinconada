@@ -19,12 +19,6 @@ const obtenerPelajeIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!pelajeId)
-            return(httpError.idVacio(res, ":pelajeId"));
-
-        if (isNaN(pelajeId) || pelajeId === ' ')
-            return(httpError.idInvalido(res, ":pelajeId"));
-
         const pelaje = await pelajeService.obtenerPelajeIndividual(pelajeId);
         res.status(200).send({ status: "OK", data: pelaje});
     } catch (error) {
@@ -65,12 +59,6 @@ const borrarPelaje = async (req, res) => {
     } = req;
 
     try {
-        if (!pelajeId)
-            return(httpError.idVacio(res, "pelajeId"));
-
-        if (isNaN(pelajeId) || pelajeId === ' ')
-            return(httpError.idInvalido(res, ":pelajeId"));
-
         await pelajeService.borrarPelaje(pelajeId);
         res.status(200).send({ status: "OK", data: `El pelaje con el id '${pelajeId}' se ha eliminado con exito.` });
     } catch (error) {
