@@ -19,12 +19,6 @@ const obtenerJineteIndividual = async (req, res) => {
     } = req;
 
     try {
-        if (!jineteId)
-            return(httpError.idVacio(res, ":jineteId"));
-
-        if (isNaN(jineteId) || jineteId === ' ')
-            return(httpError.idInvalido(res, ":jineteId"));
-
         const jinete = await jineteService.obtenerJineteIndividual(jineteId);
         res.status(200).send({ status: "OK", data: jinete});
     } catch (error) {
@@ -80,12 +74,6 @@ const borrarJinete = async (req, res) => {
     } = req;
 
     try {
-        if (isNaN(jineteId) || jineteId === ' ')
-            return(httpError.idInvalido(res, ":jineteId"));
-
-        if (!jineteId)
-            return(httpError.faltaInformacion(res));
-
         await jineteService.borrarJinete(jineteId);
         res.status(200).send({ status: "OK", data: `El jinete con el id '${jineteId}' se ha eliminado con exito.` });
     } catch (error) {

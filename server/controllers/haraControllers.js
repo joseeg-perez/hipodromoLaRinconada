@@ -19,12 +19,6 @@ const obtenerHaraIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!haraId)
-            return(httpError.idVacio(res, ":haraId"));
-
-        if (isNaN(haraId) || haraId === ' ')
-            return(httpError.idInvalido(res, ":haraId"));
-
         const hara = await haraService.obtenerHaraIndividual(haraId);
         res.status(200).send({ status: "OK", data: hara});
     } catch (error) {
@@ -65,12 +59,6 @@ const borrarHara = async (req, res) => {
     } = req;
 
     try {
-        if (!haraId)
-            return(httpError.idVacio(res, "haraId"));
-
-        if (isNaN(haraId) || haraId === ' ')
-            return(httpError.idInvalido(res, ":haraId"));
-
         await haraService.borrarHara(haraId);
         res.status(200).send({ status: "OK", data: `El hara con el id '${haraId}' se ha eliminado con exito.` });
     } catch (error) {

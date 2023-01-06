@@ -37,12 +37,6 @@ const borrarVeterinarioCaballeriza = async (req, res) => {
     } = req;
 
     try {
-        if (!veterinarioCaballerizaId)
-            return(httpError.faltaInformacion(res));
-
-        if (isNaN(veterinarioCaballerizaId) || veterinarioCaballerizaId === ' ')
-            return(httpError.idInvalido(res, ":veterinarioCaballerizaId"));
-
         await veterinarioCaballerizaService.borrarVeterinarioCaballeriza(veterinarioCaballerizaId);
         res.status(200).send({ status: "OK", data: `El veterinario de la caballeriza con el id '${veterinarioCaballerizaId}' se ha eliminado con exito.` });
     } catch (error) {

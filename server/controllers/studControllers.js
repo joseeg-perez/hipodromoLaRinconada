@@ -19,12 +19,6 @@ const obtenerStudIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!studId)
-            return(httpError.idVacio(res, ":studId"));
-
-        if (isNaN(studId) || studId === ' ')
-            return(httpError.idInvalido(res, ":studId"));
-
         const stud = await studService.obtenerStudIndividual(studId);
         res.status(200).send({ status: "OK", data: stud});
     } catch (error) {
@@ -75,12 +69,6 @@ const borrarStud = async (req, res) => {
     } = req;
 
     try {
-        if (!studId)
-            return(httpError.faltaInformacion(res));
-
-        if (isNaN(studId) || studId === ' ')
-            return(httpError.idInvalido(res, ":studId"));
-
         await studService.borrarStud(studId);
         res.status(200).send({ status: "OK", data: `El stud con el id '${studId}' se ha eliminado con exito.` });
     } catch (error) {

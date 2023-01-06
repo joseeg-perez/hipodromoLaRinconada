@@ -19,12 +19,6 @@ const obtenerRestauranteIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!restauranteId)
-            return(httpError.idVacio(res, ":restauranteId"));
-
-        if (isNaN(restauranteId) || restauranteId === ' ')
-            return(httpError.idInvalido(res, ":restauranteId"));
-
         const restaurante = await restauranteService.obtenerRestauranteIndividual(restauranteId);
         res.status(200).send({ status: "OK", data: restaurante});
     } catch (error) {
@@ -69,12 +63,6 @@ const borrarRestaurante = async (req, res) => {
     } = req;
 
     try {
-        if (!restauranteId)
-            return(httpError.idVacio(res, "restauranteId"));
-
-        if (isNaN(restauranteId) || restauranteId === ' ')
-            return(httpError.idInvalido(res, ":restauranteId"));
-
         await restauranteService.borrarRestaurante(restauranteId);
         res.status(200).send({ status: "OK", data: `El restaurante con el id '${restauranteId}' se ha eliminado con exito.` });
     } catch (error) {

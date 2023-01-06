@@ -30,13 +30,7 @@ const obtenerEntrenadorIndividual = async (req, res) => {
         params: { entrenadorId },
     } = req;
     
-    try {
-        if (!entrenadorId)
-            return(httpError.idVacio(res, ":entrenadorId"));
-
-        if (isNaN(entrenadorId) || entrenadorId === ' ')
-            return(httpError.idInvalido(res, ":entrenadorId"));
-            
+    try {        
         const entrenador = await entrenadorService.obtenerEntrenadorIndividual(entrenadorId);
         res.status(200).send({ status: "OK", data: entrenador});
     } catch (error) {
@@ -87,12 +81,6 @@ const borrarEntrenador = async (req, res) => {
     } = req;
 
     try {
-        if (!entrenadorId)
-            return(httpError.faltaInformacion(res));
-
-        if (isNaN(entrenadorId) || entrenadorId === ' ')
-            return(httpError.idInvalido(res, ":entrenadorId"));
-
         await entrenadorService.borrarEntrenador(entrenadorId);
         res.status(200).send({ status: "OK", data: `El entrenador con el id '${entrenadorId}' se ha eliminado con exito.` });
     } catch (error) {

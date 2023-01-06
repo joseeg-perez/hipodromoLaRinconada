@@ -19,12 +19,6 @@ const obtenerRgoJineteIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!rgoJineteId)
-            return(httpError.idVacio(res, ":rgoJineteId"));
-
-        if (isNaN(rgoJineteId) || rgoJineteId === ' ')
-            return(httpError.idInvalido(res, ":rgoJineteId"));
-
         const rgoJinete = await rgoJineteService.obtenerRgoJineteIndividual(rgoJineteId);
         res.status(200).send({ status: "OK", data: rgoJinete});
     } catch (error) {
@@ -69,12 +63,6 @@ const borrarRgoJinete = async (req, res) => {
     } = req;
 
     try {
-        if (!rgoJineteId)
-            return(httpError.idVacio(res, "rgoJineteId"));
-
-        if (isNaN(rgoJineteId) || rgoJineteId === ' ')
-            return(httpError.idInvalido(res, ":rgoJineteId"));
-
         await rgoJineteService.borrarRgoJinete(rgoJineteId);
         res.status(200).send({ status: "OK", data: `El rango asociado a un jinete con el id '${rgoJineteId}' se ha eliminado con exito.` });
     } catch (error) {

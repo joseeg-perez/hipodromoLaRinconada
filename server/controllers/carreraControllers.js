@@ -19,12 +19,6 @@ const obtenerCarreraIndividual = async (req, res) => {
     } = req;
 
     try {
-        if (!carreraId)
-            return(httpError.idVacio(res, ":carreraId"));
-
-        if (isNaN(carreraId) || carreraId === ' ')
-            return(httpError.idInvalido(res, ":carreraId"));
-            
         const carrera = await carreraService.obtenerCarreraIndividual(carreraId);
         res.status(200).send({ status: "OK", data: carrera});
     } catch (error) {
@@ -81,12 +75,6 @@ const borrarCarrera = async (req, res) => {
     } = req;
 
     try {
-        if (!carreraId)
-            return(httpError.faltaInformacion(res));
-        
-        if (isNaN(carreraId) || carreraId === ' ')
-            return(httpError.idInvalido(res, ":carreraId"));
-
         await carreraService.borrarCarrera(carreraId);
         res.status(200).send({ status: "OK", data: `La carrera con el id '${carreraId}' se ha eliminado con exito.` });
     } catch (error) {

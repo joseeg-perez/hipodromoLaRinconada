@@ -15,7 +15,7 @@ const obtenerListaDeVeterinarios = async (req, res) => {
 
 const obtenerListaDeCaballerizasVacias = async (req, res) => {
     try {
-        const listaCaballerizas =  await veterinarioService.obtenerListaDeVeterinarios();
+        const listaCaballerizas =  await veterinarioService.obtenerListaDeCaballerizasVacias();
 
         res.status(200).send({ status: "OK", data: listaCaballerizas });
     } catch (error) {

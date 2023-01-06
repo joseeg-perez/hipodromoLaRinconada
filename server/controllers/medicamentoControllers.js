@@ -20,14 +20,7 @@ const obtenerMedicamentoIndividual = async (req, res) => {
   } = req;
 
   try {
-    if (!medicamentoId) return httpError.idVacio(res, ":medicamentoId");
-
-    if (isNaN(medicamentoId) || medicamentoId === " ")
-      return httpError.idInvalido(res, ":medicamentoId");
-
-    const medicamento = await medicamentoService.obtenerMedicamentoIndividual(
-      medicamentoId
-    );
+    const medicamento = await medicamentoService.obtenerMedicamentoIndividual(medicamentoId);
     res.status(200).send({ status: "OK", data: medicamento });
   } catch (error) {
     res
@@ -65,11 +58,6 @@ const borrarMedicamento = async (req, res) => {
   } = req;
 
   try {
-    if (!medicamentoId) return httpError.idVacio(res, "medicamentoId");
-
-    if (isNaN(medicamentoId) || medicamentoId === " ")
-      return httpError.idInvalido(res, ":medicamentoId");
-
     await medicamentoService.borrarMedicamento(medicamentoId);
     res.status(200).send({ status: "OK", data: `El medicamento con el id '${medicamentoId}' se ha eliminado con exito.` });
   } catch (error) {

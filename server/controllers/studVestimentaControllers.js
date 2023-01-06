@@ -33,12 +33,6 @@ const borrarStudVestimenta = async (req, res) => {
     } = req;
 
     try {
-        if (!studVestimentaId)
-            return(httpError.faltaInformacion(res));
-
-        if (isNaN(studVestimentaId) || studVestimentaId === ' ')
-            return(httpError.idInvalido(res, ":studVestimentaId"));
-
         await studVestimentaService.borrarStudVestimenta(studVestimentaId);
         res.status(200).send({ status: "OK", data: `El color de stud con el id '${studVestimentaId}' se ha eliminado con exito.` });
     } catch (error) {

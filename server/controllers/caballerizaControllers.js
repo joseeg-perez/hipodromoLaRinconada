@@ -20,14 +20,7 @@ const obtenerCaballerizaIndividual = async (req, res) => {
   } = req;
 
   try {
-    if (!caballerizaId) return httpError.idVacio(res, ":caballerizaId");
-
-    if (isNaN(caballerizaId) || caballerizaId === " ")
-      return httpError.idInvalido(res, ":caballerizaId");
-
-    const caballeriza = await caballerizaService.obtenerCaballerizaIndividual(
-      caballerizaId
-    );
+    const caballeriza = await caballerizaService.obtenerCaballerizaIndividual(caballerizaId);
     res.status(200).send({ status: "OK", data: caballeriza });
   } catch (error) {
     res
@@ -66,11 +59,6 @@ const borrarCaballeriza = async (req, res) => {
   } = req;
 
   try {
-    if (!caballerizaId) return httpError.idVacio(res, "caballerizaId");
-
-    if (isNaN(caballerizaId) || caballerizaId === " ")
-      return httpError.idInvalido(res, ":caballerizaId");
-
     await caballerizaService.borrarCaballeriza(caballerizaId);
     res
       .status(200)

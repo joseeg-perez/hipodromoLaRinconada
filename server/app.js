@@ -1,6 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const bodyParser = require('body-parser');
+
 //const apicache = require("apicache");
 
 
@@ -50,6 +52,8 @@ const PORT = process.env.PORT || 5000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.text());
+
 //const cache = apicache.middleware;
 //app.use(cache("2 minutes"));
 

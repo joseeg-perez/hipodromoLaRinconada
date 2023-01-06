@@ -19,12 +19,6 @@ const obtenerTipoResultadoIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!tipoResultado)
-            return(httpError.idVacio(res, ":tipoResultado"));
-
-        if (isNaN(tipoResultado) || tipoResultado === ' ')
-            return(httpError.idInvalido(res, ":tipoResultado"));
-
         const TipoResultado = await tipoResultadoService.obtenerTipoResultadoIndividual(tipoResultado);
         res.status(200).send({ status: "OK", data: TipoResultado});
     } catch (error) {
@@ -63,12 +57,6 @@ const borrarTipoResultado = async (req, res) => {
     } = req;
 
     try {
-        if (!tipoResultado)
-            return(httpError.idVacio(res, "tipoResultado"));
-
-        if (isNaN(tipoResultado) || tipoResultado === ' ')
-            return(httpError.idInvalido(res, ":tipoResultado"));
-
         await tipoResultadoService.borrarTipoResultado(tipoResultado);
         res.status(200).send({ status: "OK", data: `El tipo de resultado con el id '${tipoResultado}' se ha eliminado con exito.` });
     } catch (error) {
