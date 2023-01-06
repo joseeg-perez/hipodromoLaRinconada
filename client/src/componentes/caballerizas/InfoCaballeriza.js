@@ -2,8 +2,20 @@ import React from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import basura from "../../assets/trashicon.png";
+import axios from "axios";
 
 const InfoCaballeriza = (props) => {
+  const handleDelete = (event) => {
+    console.log(props.codigo);
+    axios
+      .delete(`http://localhost:5000/api/v1/caballerizas/${props.codigo}`)
+      .then((res) => {
+        if (res.data != null) {
+          alert("La caballeriza se ha eliminado con éxito");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   //[numero,entrenador,veterinatio,total,disponible]=[props.numero,props.entrenador,props.veterinario,props.total,props.disponible];
   const numero = props.numero;
   return (
@@ -37,7 +49,10 @@ const InfoCaballeriza = (props) => {
               </Col>
 
               <Col className="d-flex justify-content-end col-auto">
-                <Button style={{backgroundColor: "#FA6660", border: "#FA6660"}}>
+                <Button
+                  style={{ backgroundColor: "#FA6660", border: "#FA6660" }}
+                  onClick={handleDelete}
+                >
                   <img src={basura} width={25} height={25}></img>
                 </Button>
               </Col>

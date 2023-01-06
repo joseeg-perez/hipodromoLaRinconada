@@ -6,6 +6,17 @@ import trash from "../../assets/trashicon.png";
 import axios from "axios";
 
 const InfoStud = (props) => {
+  const handleDelete = (event) => {
+    console.log(props.codigo);
+    axios
+      .delete(`http://localhost:5000/api/v1/studs/${props.Id}`)
+      .then((res) => {
+        if (res.data != null) {
+          alert("Se borró con exito el pelaje pa");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <Col className="my-3">
       <Card className="w-100">
@@ -60,7 +71,10 @@ const InfoStud = (props) => {
                       <img src={edit} alt="/" width={20} />
                     </Button>
                   </Link>
-                  <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
+                  <Button
+                    className="btn btn-light btn-outline-danger btn-sm mx-1"
+                    onClick={handleDelete}
+                  >
                     <img src={trash} alt="/" width={20} />
                   </Button>
                 </div>

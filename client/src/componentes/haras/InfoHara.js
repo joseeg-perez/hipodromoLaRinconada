@@ -6,6 +6,17 @@ import trash from "../../assets/trashicon.png";
 import axios from "axios";
 
 const InfoHara = (props) => {
+  const handleDelete = (event) => {
+    console.log(props.codigo);
+    axios
+      .delete(`http://localhost:5000/api/v1/haras/${props.Id}`)
+      .then((res) => {
+        if (res.data != null) {
+          alert("Se eliminó el hara con éxito");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   const [isLoading, setLoading] = useState(true);
   const [lugares, setLugares] = useState("");
   const [Estado, setEstado] = useState("");
@@ -67,7 +78,10 @@ const InfoHara = (props) => {
               </Button>
             </Link>
 
-            <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
+            <Button
+              className="btn btn-light btn-outline-danger btn-sm mx-1"
+              onClick={handleDelete}
+            >
               <img src={trash} alt="/" width={20} />
             </Button>
           </Col>

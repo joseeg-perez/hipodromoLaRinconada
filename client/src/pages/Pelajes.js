@@ -84,16 +84,18 @@ const Pelajes = (props) => {
         </div>
       </Row>
       <Row>
-        <h2 className="text-center mt-4">Pelajes</h2>
         <Row className="row-cols-4">
-          {pelajes.data.map((pelaje) => (
-            <InfoPelaje
-              nombre={pelaje.nombre_pelaje}
-              abrev={pelaje.abrev_pelaje}
-              codigo={pelaje.codigo_pelaje}
-              key={pelaje.codigo_pelaje}
-            />
-          ))}
+          {pelajes.data.map(
+            (pelaje) =>
+              pelaje.codigo_pelaje !== 1 && (
+                <InfoPelaje
+                  nombre={pelaje.nombre_pelaje}
+                  abrev={pelaje.abrev_pelaje}
+                  codigo={pelaje.codigo_pelaje}
+                  key={pelaje.codigo_pelaje}
+                />
+              )
+          )}
         </Row>
       </Row>
     </Container>

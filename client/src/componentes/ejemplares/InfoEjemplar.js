@@ -3,8 +3,20 @@ import { Button, Card, Col, Container, Row, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
+import axios from "axios";
 
 const InfoEjemplar = (props) => {
+  const handleDelete = (event) => {
+    console.log(props.codigo);
+    axios
+      .delete(`http://localhost:5000/api/v1/ejemplares/${props.Id}`)
+      .then((res) => {
+        if (res.data != null) {
+          alert("El ejemplar se ha eliminado con éxito");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <Col>
       <Card className="mt-5">
@@ -75,7 +87,10 @@ const InfoEjemplar = (props) => {
                   </Button>
                 </Link>
 
-                <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
+                <Button
+                  className="btn btn-light btn-outline-danger btn-sm mx-1"
+                  onClick={handleDelete}
+                >
                   <img src={trash} alt="/" width={20} />
                 </Button>
               </div>

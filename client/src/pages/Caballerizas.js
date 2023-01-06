@@ -150,6 +150,7 @@ ORDER BY codigo_caballeriza*/}
         {caballerizas.data.map((caballeriza) => (
           <InfoCaballeriza
             key={caballeriza.codigo_caballeriza}
+            codigo={caballeriza.codigo_caballeriza}
             id={caballeriza.codigo_caballeriza}
             numero={caballeriza.codigo_caballeriza}
             total={caballeriza.cantidad_puestos}

@@ -8,7 +8,6 @@ import InfoEntrenador from "../componentes/entrenadores/InfoEntrenador";
 const Entrenadores = () => {
   const [isLoading, setLoading] = useState(true);
   const [entrenadores, setEntrenadores] = useState([]);
-
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/v1/entrenadores/listado_de_entrenadores")

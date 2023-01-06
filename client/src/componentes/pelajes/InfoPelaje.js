@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Col, Row, Button } from "react-bootstrap";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
@@ -8,7 +8,7 @@ const InfoPelaje = (props) => {
   const handleDelete = (event) => {
     console.log(props.codigo);
     axios
-      .delete("http://localhost:5000/api/v1/pelajes/" + props.codigo_pelaje)
+      .delete(`http://localhost:5000/api/v1/pelajes/${props.codigo}`)
       .then((res) => {
         if (res.data != null) {
           alert("Se borró con exito el pelaje pa");
