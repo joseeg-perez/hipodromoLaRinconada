@@ -45,6 +45,9 @@ const Menu = () => {
                 <Link className="list-group-item" to="/vestimentas">
                   REGISTRAR VESTIMENTA
                 </Link>
+                <Link className="list-group-item" to="/retiros/eventos">
+                  RETIROS
+                </Link>
               </ul>
             </Card.Body>
           </Card>
