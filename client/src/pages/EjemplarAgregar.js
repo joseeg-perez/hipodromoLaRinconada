@@ -100,7 +100,7 @@ const EjemplarAgregar = () => {
     return <div>Cargando</div>;
   }
   const handleData = (event) => {
-    console.log(generoEjemplar);
+    console.log(imagenEjemplar);
     event.preventDefault();
     console.warn(
       "all data",
@@ -465,7 +465,7 @@ const EjemplarAgregar = () => {
                       type="radio"
                       name="flexRadioDefault"
                       id="femenino"
-                      value={"g"}
+                      value={"f"}
                       onChange={handleGenero}
                     />
                     <label>Femenino</label>
