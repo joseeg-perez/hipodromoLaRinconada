@@ -133,10 +133,10 @@ const actualizarEntrenador = async (entrenadorId, cambios) => {
         try {
             const { rowCount } = await dbConnection.query(query);
             if (rowCount === 0)
-                httpError.idNoEncontrado("El entrenador", rolId);
+                httpError.idNoEncontrado("El entrenador", entrenadorId);
             
             dbConnection.end;
-            return(nombre)
+            return(nombre1Persona+" "+apellido1Persona);
         } catch (error) {
           if (error.code === "23505") {
             throw {

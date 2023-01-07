@@ -61,8 +61,33 @@ const registrarCaballeriza = async (nuevaCaballeriza) => {
     }
 };
 
-const actualizarCaballeriza = (caballerizaId, cambios) => {
-  
+const actualizarCaballeriza = async (caballerizaId, cambios) => {
+    const { 
+        cantidadPuestos
+       } = cambios;
+    
+        const query = {
+            text:`UPDATE caballeriza
+            SET cantidad_puestos=$1
+            WHERE codigo_caballeriza=$2;`,
+            values: [cantidadPuestos, caballerizaId],
+        }
+    try {
+        const { rowCount } = await dbConnection.query(query);
+        if (rowCount === 0)
+            httpError.idNoEncontrado("El entrenador", entrenadorId);
+                
+        dbConnection.end;
+        return(cantidadPuestos)
+    } catch (error) {
+        if (error.code === "23505") {
+            throw {
+                status: 409,
+                message: `Ya hay una caballeriza con el codigo'${caballerizaId}' registrada.`,
+            };
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
 const borrarCaballeriza = async (caballerizaId) => {

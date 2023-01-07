@@ -51,7 +51,21 @@ const registrarCaballeriza = async (req, res) => {
   }
 };
 
-const actualizarCaballeriza = async (req, res) => {};
+const actualizarCaballeriza = async (req, res) => {
+  const {
+    body,
+    params: { caballerizaId },
+} = req;
+
+try {
+    const caballerizaActualizada = await caballerizaService.actualizarCaballeriza(caballerizaId, body);
+    res.send({ status: "OK", data: `La nueva cantidad de puestos para la caballeriza es:  ${caballerizaActualizada}.` });
+} catch (error) {
+    res
+    .status(error?.status || 500)
+    .send({ status: "FAILED", data: { error: error?.message || error } });
+}
+};
 
 const borrarCaballeriza = async (req, res) => {
   const {

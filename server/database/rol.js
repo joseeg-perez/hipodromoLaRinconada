@@ -81,9 +81,7 @@ const actualizarRol = async (rolId, cambios) => {
                 };
               }
             throw { status: error?.status || 500, message: error?.message || error };
-        }    
-
-        
+        }      
 };
 
 const borrarRol = async (rolId) => {
