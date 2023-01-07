@@ -71,8 +71,19 @@ const registrarEntrenador = async (req, res) => {
 };
 
 const actualizarEntrenador = async (req, res) => {
-    res.send("Estamos en actualizar entrenador ROUTER");
+    const {
+        body,
+        params: { entrenadorId },
+    } = req;
 
+    try {
+        const entrenadorActualizado = await entrenadorService.actualizarEntrenador(entrenadorId, body)
+        res.send({ status: "OK", data: entrenadorActualizado });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarEntrenador = async (req, res) => {

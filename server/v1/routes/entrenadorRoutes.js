@@ -13,7 +13,7 @@ router.get("/:entrenadorId", validateId, entrenadorController.obtenerEntrenadorI
 
 router.post("/registrar_entrenador", validateCreate, entrenadorController.registrarEntrenador);
 
-router.patch("/:entrenadorId", validateId, entrenadorController.actualizarEntrenador);
+router.patch("/:entrenadorId", validateCreate, validateId, entrenadorController.actualizarEntrenador);
 
 router.delete("/:entrenadorId", validateId, entrenadorController.borrarEntrenador);
 
