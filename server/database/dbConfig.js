@@ -14,7 +14,7 @@ const config = {
     port: "5432",
     host: "labs-dbservices01.ucab.edu.ve",
     password: "123456",
-    database: "ProyectoGrupo3"
+    database: "Proyecto_Grupo3"
 };
 
 const pool = new Pool(config);
