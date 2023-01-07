@@ -31,7 +31,7 @@ const obtenerListaDeCaballerizasVacias = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0) httpError.noRegistrado("ninguna caballeriza");
+    // if (rows.length === 0) httpError.noRegistrado("ninguna caballeriza");
 
     dbConnection.end;
     return rows;

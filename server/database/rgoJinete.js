@@ -8,8 +8,8 @@ const obtenerListaDeRgoJinetes = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0)
-      httpError.noRegistrado("ningun rango asociado a un jinete");
+    // if (rows.length === 0)
+    //   httpError.noRegistrado("ningun rango asociado a un jinete");
 
     dbConnection.end;
     return rows;

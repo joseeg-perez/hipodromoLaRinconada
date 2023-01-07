@@ -8,7 +8,7 @@ const obtenerListaDeImplementos = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0) httpError.noRegistrado("ningun implemento");
+    // if (rows.length === 0) httpError.noRegistrado("ningun implemento");
 
     dbConnection.end;
     return rows;
@@ -68,8 +68,7 @@ const borrarImplemento = async (implementoId) => {
 
   try {
     const { rowCount } = await dbConnection.query(query);
-    if (rowCount === 0)
-      httpError.idNoEncontrado("El implemento", implementoId);
+    if (rowCount === 0) httpError.idNoEncontrado("El implemento", implementoId);
 
     dbConnection.end;
     return;

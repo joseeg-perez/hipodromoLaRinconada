@@ -2,94 +2,86 @@ const dbConnection = require("./dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePuestos = async () => {
-    const query = {
-        text: "SELECT * FROM puesto",
-    };
+  const query = {
+    text: "SELECT * FROM puesto",
+  };
 
-    try {
-        const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.noRegistrado("ningun puesto");
+  try {
+    const { rows } = await dbConnection.query(query);
+    // if (rows.length === 0) httpError.noRegistrado("ningun puesto");
 
-        dbConnection.end;
-        return (rows);
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }  
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const obtenerPuestoIndividual = async (puestoId) => {
-    const query = {
-        text: "SELECT * FROM puesto WHERE codigo_puesto=$1",
-        values: [puestoId],
-    };
+  const query = {
+    text: "SELECT * FROM puesto WHERE codigo_puesto=$1",
+    values: [puestoId],
+  };
 
-    try {
-        const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.idNoEncontrado("El puesto", puestoId);
-        
-        dbConnection.end;
-        return (rows);
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0) httpError.idNoEncontrado("El puesto", puestoId);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const registrarPuesto = async (nuevoPuesto) => {
-    const { 
-        numeroPuesto,
-        fkCaballeriza,
-     } = nuevoPuesto;
+  const { numeroPuesto, fkCaballeriza } = nuevoPuesto;
 
-    const text = `INSERT INTO puesto(
+  const text = `INSERT INTO puesto(
         numero_puesto,
         fk_caballeriza) VALUES($1, $2)`;
-        
-    const values = [numeroPuesto, fkCaballeriza];
 
-    try {
-         const { rows } = await dbConnection.query(text, values);
-    
-        dbConnection.end;
-        return(numeroPuesto) ;
-    } catch (error) {
-        if (error.code === '23505') {
-            throw {
-                status: 409,
-                message: `El puesto con numero ${numeroPuesto} ya ha sido registrado.`,
-            }
-        }
-        throw { status: error?.status || 500, message: error?.message || error };
-    }   
+  const values = [numeroPuesto, fkCaballeriza];
+
+  try {
+    const { rows } = await dbConnection.query(text, values);
+
+    dbConnection.end;
+    return numeroPuesto;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `El puesto con numero ${numeroPuesto} ya ha sido registrado.`,
+      };
+    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
-const actualizarPuesto = (puestoId, cambios) => {
-    
-};
+const actualizarPuesto = (puestoId, cambios) => {};
 
 const borrarPuesto = async (puestoId) => {
-    const query = {
-        text: "DELETE FROM puesto WHERE codigo_puesto=$1",
-        values: [puestoId],
-    };
+  const query = {
+    text: "DELETE FROM puesto WHERE codigo_puesto=$1",
+    values: [puestoId],
+  };
 
-    try {
-        const { rowCount } = await dbConnection.query(query);        
-        if (rowCount === 0)
-            httpError.idNoEncontrado("El puesto", puestoId);
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0) httpError.idNoEncontrado("El puesto", puestoId);
 
-        dbConnection.end;
-        return;
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }    
+    dbConnection.end;
+    return;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 module.exports = {
-    obtenerListaDePuestos,
-    obtenerPuestoIndividual,
-    registrarPuesto,
-    actualizarPuesto,
-    borrarPuesto,
+  obtenerListaDePuestos,
+  obtenerPuestoIndividual,
+  registrarPuesto,
+  actualizarPuesto,
+  borrarPuesto,
 };

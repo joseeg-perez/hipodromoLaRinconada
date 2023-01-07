@@ -8,7 +8,7 @@ const obtenerListaDeMedicamentos = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0) httpError.noRegistrado("ningun medicamento");
+    // if (rows.length === 0) httpError.noRegistrado("ningun medicamento");
 
     dbConnection.end;
     return rows;
