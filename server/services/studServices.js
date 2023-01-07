@@ -28,7 +28,7 @@ const registrarStud = async (nuevoStud) => {
     try {
         const studCreado = await Stud.registrarStud(nuevoStud);
         const idStudCreado = await Stud.obtenerIdStudNueva(nuevoStud); 
-
+        console.log(idStudCreado);
         const propietarioStud = {
             porcentajePropiedad: 100,
             fkStud: idStudCreado,

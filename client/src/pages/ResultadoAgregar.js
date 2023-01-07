@@ -93,11 +93,19 @@ const ResultadoAgregar = (props) => {
       <li className="list-group-item" style={{ height: "41px" }}>
         <Row className="row row-cols-2">
           <Col className="d-flex justify-content-center">
-            <input id={`dt${index + 1}`} style={{ width: "80px" }} placeholder="D.tiempo"></input>
+            <input
+              id={`dt${index + 1}`}
+              style={{ width: "80px" }}
+              placeholder="D.tiempo"
+            ></input>
           </Col>
 
           <Col className="d-flex justify-content-center">
-            <input id={`dc${index + 1}`} style={{ width: "80px" }} placeholder="D.cuerpo"></input>
+            <input
+              id={`dc${index + 1}`}
+              style={{ width: "80px" }}
+              placeholder="D.cuerpo"
+            ></input>
           </Col>
         </Row>
       </li>
@@ -110,19 +118,35 @@ const ResultadoAgregar = (props) => {
       <li className="list-group-item" style={{ height: "41px" }}>
         <Row className="row row-cols-4">
           <Col className="d-flex justify-content-center">
-            <input id={`sr300${index + 1}`} style={{ width: "65px" }} placeholder="300m"></input>
+            <input
+              id={`sr300${index + 1}`}
+              style={{ width: "65px" }}
+              placeholder="300m"
+            ></input>
           </Col>
 
           <Col className="d-flex justify-content-center">
-            <input id={`sr400${index + 1}`} style={{ width: "65px" }} placeholder="400m"></input>
+            <input
+              id={`sr400${index + 1}`}
+              style={{ width: "65px" }}
+              placeholder="400m"
+            ></input>
           </Col>
 
           <Col className="d-flex justify-content-center">
-            <input id={`sr800${index + 1}`} style={{ width: "65px" }} placeholder="800m"></input>
+            <input
+              id={`sr800${index + 1}`}
+              style={{ width: "65px" }}
+              placeholder="800m"
+            ></input>
           </Col>
 
           <Col className="d-flex justify-content-center">
-            <input id={`src${index + 1}`} style={{ width: "65px" }} placeholder="Carrera"></input>
+            <input
+              id={`src${index + 1}`}
+              style={{ width: "65px" }}
+              placeholder="Carrera"
+            ></input>
           </Col>
         </Row>
       </li>
@@ -135,31 +159,65 @@ const ResultadoAgregar = (props) => {
       <li className="list-group-item" style={{ height: "41px" }}>
         <Row className="row row-cols-4">
           <Col className="d-flex justify-content-center">
-            <input id={`tp300${index + 1}`} style={{ width: "65px" }} placeholder="300m"></input>
+            <input
+              id={`tp300${index + 1}`}
+              style={{ width: "65px" }}
+              placeholder="300m"
+            ></input>
           </Col>
 
           <Col className="d-flex justify-content-center">
-            <input id={`tp400${index + 1}`} style={{ width: "65px" }} placeholder="400m"></input>
+            <input
+              id={`tp400${index + 1}`}
+              style={{ width: "65px" }}
+              placeholder="400m"
+            ></input>
           </Col>
 
           <Col className="d-flex justify-content-center">
-            <input id={`tp800${index + 1}`} style={{ width: "65px" }} placeholder="800m"></input>
+            <input
+              id={`tp800${index + 1}`}
+              style={{ width: "65px" }}
+              placeholder="800m"
+            ></input>
           </Col>
 
           <Col className="d-flex justify-content-center">
-            <input id={`tpc${index + 1}`} style={{ width: "65px" }} placeholder="Carrera"></input>
+            <input
+              id={`tpc${index + 1}`}
+              style={{ width: "65px" }}
+              placeholder="Carrera"
+            ></input>
           </Col>
         </Row>
       </li>
     );
   }
 
+  let auxiliar;
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     console.log("entro");
-    console.log(document.getElementById(12).value);
+    auxiliar=1;
+    ejemplares.map((x) => {
+      console.log(document.getElementById(x.id).value);
+      console.log(document.getElementById(`dt${auxiliar}`).value);
+      console.log(document.getElementById(`dc${auxiliar}`).value);
+      console.log(document.getElementById(`sr300${auxiliar}`).value);
+      console.log(document.getElementById(`sr400${auxiliar}`).value);
+      console.log(document.getElementById(`sr800${auxiliar}`).value);
+      console.log(document.getElementById(`src${auxiliar}`).value);
+      console.log(document.getElementById(`tp300${auxiliar}`).value);
+      console.log(document.getElementById(`tp400${auxiliar}`).value);
+      console.log(document.getElementById(`tp800${auxiliar}`).value);
+      console.log(document.getElementById(`tpc${auxiliar}`).value);
+      auxiliar=auxiliar+1;
+
+    });
+    console.log(document.getElementById("txta").value);
+    /*console.log(document.getElementById(12).value);
     console.log(document.getElementById("dt1").value);
-    console.log(document.getElementById("dc1").value);
+    console.log(document.getElementById("dc1").value);*/
   };
   return (
     <Container>
@@ -359,20 +417,25 @@ const ResultadoAgregar = (props) => {
 
         <Row className="mt-3 ms-5">
           <Col>
-           <Row>
-            <h4>Observaciones</h4>
-           </Row>
-           <Row>
-            <textarea className="col-3" style={{height: "100px"}} id="txta"></textarea>
-           </Row>
+            <Row>
+              <h4>Observaciones</h4>
+            </Row>
+            <Row>
+              <textarea
+                className="col-3"
+                style={{ height: "100px" }}
+                id="txta"
+              ></textarea>
+            </Row>
           </Col>
         </Row>
 
         <Row className="mt-3 d-flex justify-content-center">
           <Col className="col-auto d-flex justify-content-center">
-            <Button onClick={formSubmissionHandler} size="xl">GUARDAR</Button>
+            <Button onClick={formSubmissionHandler} size="xl">
+              GUARDAR
+            </Button>
           </Col>
-          
         </Row>
       </Form>
     </Container>

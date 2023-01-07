@@ -8,8 +8,6 @@ const obtenerListaDeVestimentas = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0)
-    //     httpError.noRegistrado("ninguna vestimenta");
 
     dbConnection.end;
     return rows;

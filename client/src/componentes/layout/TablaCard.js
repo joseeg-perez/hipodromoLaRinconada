@@ -20,6 +20,7 @@ function TablaCard(props) {
                 informacion={props.informacion}
                 funcion={props.funcion}
                 titulo={props.tituloTabla}
+                estilo={props.estilo}
               ></Tabla>
             </Row>
           </Card.Body>

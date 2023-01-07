@@ -60,11 +60,31 @@ const InfoCarrera = (props) => {
                       <NavLink
                         className="btn btn-primary"
                         to={{
-                          pathname: "/inscribir/ejemplar",
+                          pathname: `/inscribir/ejemplar/${props.id}`,
                           state: { props },
                         }}
                       >
                         Inscribir
+                      </NavLink>
+                    ) : props.tipo == "editar" ? (
+                      <NavLink
+                        className="ms-5"
+                        to={{
+                          pathname: `/carrera/${props.id}/update`,
+                          state: { props },
+                        }}
+                      >
+                        <img src={lapiz} width={40} height={40}></img>
+                      </NavLink>
+                    ) : props.tipo == "retirar" ? (
+                      <NavLink
+                        className="btn btn-primary"
+                        to={{
+                          pathname: `/retiros/carrera/${props.id}`,
+                          state: { props },
+                        }}
+                      >
+                        Retirar
                       </NavLink>
                     ) : (
                       <p></p>

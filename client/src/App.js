@@ -37,6 +37,10 @@ import MotivoRetiroAgregar from "./pages/MotivoRetiroAgregar";
 import PropietariosAgregar from "./pages/PropietarioAgregar";
 import PropietarioAgregar from "./pages/PropietarioAgregar";
 import VestimentaAgregar from "./pages/VestimentaAgregar";
+import CarreraUpdate from "./pages/CarreraUpdate";
+import RegistrarCarrera from "./pages/RegistrarCarrera";
+import EventosRetirar from "./pages/EventosRetirar";
+import RetirarEjemplar from "./pages/RetirarEjemplar";
 import PropietarioUpdate from "./pages/PropietarioUpdate";
 import PropietarioDetail from "./pages/PropietarioDetail";
 import EntrenadorAgregar from "./pages/EntrenadorAgregar";
@@ -227,7 +231,7 @@ function App() {
           <ResultadoEvento></ResultadoEvento>
         </Route>
 
-        <Route path="/carreras/:eventoId">
+        <Route path="/carreras/:eventoId" exact>
           <CarrerasEvento></CarrerasEvento>
         </Route>
 
@@ -239,13 +243,29 @@ function App() {
           <RegistrarEvento></RegistrarEvento>
         </Route>
 
-        <Route path="/inscribir/ejemplar">
+        <Route path="/inscribir/ejemplar/:carreraId">
           <InscribirEjemplar></InscribirEjemplar>
         </Route>
 
         <Route path="/vestimentas" exact>
           <VestimentaAgregar></VestimentaAgregar>
         </Route>
+
+        <Route path="/carrera/:carreraId/update" exact>
+         <CarreraUpdate></CarreraUpdate>
+        </Route>
+
+        <Route path="/carrera/crear">
+          <RegistrarCarrera></RegistrarCarrera>
+        </Route>
+
+        <Route path="/retiros/eventos" exact>
+          <EventosRetirar></EventosRetirar>
+        </Route>
+
+        <Route path="/retiros/carrera/:carreraId" exact>
+          <RetirarEjemplar></RetirarEjemplar>
+          </Route>
 
         <Route path="/haras" exact>
           <Haras></Haras>

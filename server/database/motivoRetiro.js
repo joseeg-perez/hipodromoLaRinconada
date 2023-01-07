@@ -6,6 +6,7 @@ const obtenerListaDeMotivosDeRetiro = async () => {
     text: "SELECT * FROM motivo",
   };
 
+<<<<<<< HEAD
   try {
     const { rows } = await dbConnection.query(query);
     // if (rows.length === 0) httpError.noRegistrado("ningun motivo");
@@ -15,6 +16,18 @@ const obtenerListaDeMotivosDeRetiro = async () => {
   } catch (error) {
     throw { status: error?.status || 500, message: error?.message || error };
   }
+=======
+    try {
+        const { rows } = await dbConnection.query(query);
+        /*if (rows.length === 0)
+            httpError.noRegistrado("ningun motivo");
+
+        dbConnection.end;*/
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+>>>>>>> d0a805f1d71eab8af6b3e8f087b71e2b1ac21d32
 };
 
 const obtenerMotivoDeRetiroIndividual = async (motivoRetiroId) => {

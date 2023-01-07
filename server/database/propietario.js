@@ -6,6 +6,7 @@ const obtenerListaDePropietarios = async () => {
     text: "SELECT * FROM persona_propietario",
   };
 
+<<<<<<< HEAD
   try {
     const { rows } = await dbConnection.query(query);
     // if (rows.length === 0) httpError.noRegistrado("ningun propietario");
@@ -15,6 +16,18 @@ const obtenerListaDePropietarios = async () => {
   } catch (error) {
     throw { status: error?.status || 500, message: error?.message || error };
   }
+=======
+    try {
+        const { rows } = await dbConnection.query(query);
+        /*if (rows.length === 0)
+            httpError.noRegistrado("ningun propietario");
+
+        dbConnection.end;*/
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+>>>>>>> d0a805f1d71eab8af6b3e8f087b71e2b1ac21d32
 };
 
 const obtenerPropietarioIndividual = async (propietarioId) => {
