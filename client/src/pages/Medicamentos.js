@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import axios from "axios";
-import { CardMedImpRetiro } from "../componentes/Medicamentos y Retiros/CardMedImpRetiro";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
+import InfoMedicamento from "../componentes/Medicamentos/InfoMedicamento";
 
 const Medicamentos = () => {
   const [medicamentos, setMedicamentos] = useState([]);
@@ -82,8 +82,9 @@ const Medicamentos = () => {
       <h2 className="text-center mt-3">LISTADO DE MEDICAMENTOS</h2>
       <Row className="row-cols-4">
         {medicamentos.data.map((medicamento) => (
-          <CardMedImpRetiro
+          <InfoMedicamento
             key={medicamento.codigo_medicamento}
+            Id={medicamento.codigo_medicamento}
             nombre={medicamento.nombre_medicamento}
             descripcion={medicamento.descripcion_medicamento}
           />

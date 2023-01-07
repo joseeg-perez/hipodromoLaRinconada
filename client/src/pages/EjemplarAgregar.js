@@ -455,7 +455,7 @@ const EjemplarAgregar = () => {
                       type="radio"
                       name="flexRadioDefault"
                       id="masculino"
-                      value={"M"}
+                      value={"m"}
                       onChange={handleGenero}
                     />
                     <label>Masculino</label>
@@ -465,7 +465,7 @@ const EjemplarAgregar = () => {
                       type="radio"
                       name="flexRadioDefault"
                       id="femenino"
-                      value={"F"}
+                      value={"g"}
                       onChange={handleGenero}
                     />
                     <label>Femenino</label>

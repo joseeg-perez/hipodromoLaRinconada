@@ -88,7 +88,10 @@ const InfoJinete = (props) => {
                   </Button>
                 </Link>
 
-                <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
+                <Button
+                  className="btn btn-light btn-outline-danger btn-sm mx-1"
+                  onClick={handleDelete}
+                >
                   <img src={trash} alt="/" width={20} />
                 </Button>
               </div>

@@ -1,15 +1,14 @@
 const Color = require("../database/color.js");
 
-
 const obtenerListaDeColores = async () => {
-    try {
-        const listaColores = await Color.obtenerListaDeColores();
+  try {
+    const listaColores = await Color.obtenerListaDeColores();
 
-        return(listaColores);
-    } catch (error) {
-        throw(error);
-    }
-};  
+    return listaColores;
+  } catch (error) {
+    throw error;
+  }
+};
 
 // const obtenerColorIndividual = async (ColorId) => {
 //     try {
@@ -24,7 +23,7 @@ const obtenerListaDeColores = async () => {
 // const registrarColor = async (nuevoColor) => {
 //     try {
 //         const ColorCreado = await Color.registrarColor(nuevoColor);
-//         const idColorCreado = await Color.obtenerIdColorNueva(nuevoColor); 
+//         const idColorCreado = await Color.obtenerIdColorNueva(nuevoColor);
 
 //         const propietarioColor = {
 //             porcentajePropiedad: 100,
@@ -47,7 +46,6 @@ const obtenerListaDeColores = async () => {
 //         await registrarColorColor(ColorColor1);
 //         await registrarColorColor(ColorColor2);
 
-
 //         return(ColorCreado);
 //     } catch (error) {
 //         throw(error);
@@ -67,9 +65,9 @@ const obtenerListaDeColores = async () => {
 // };
 
 module.exports = {
-    obtenerListaDeColores,
-    // obtenerColorIndividual,
-    // registrarColor,
-    // actualizarColor,
-    // borrarColor,
+  obtenerListaDeColores,
+  // obtenerColorIndividual,
+  // registrarColor,
+  // actualizarColor,
+  // borrarColor,
 };
