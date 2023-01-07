@@ -55,7 +55,7 @@ const registrarPelaje = async (nuevoPelaje) => {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `El tipo de pelaje con el codigo '${codigoPelaje}' ya ha sido registrado.`,
+                message: `El tipo de pelaje con el nombre '${ nombrePelaje }' ya ha sido registrado.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };

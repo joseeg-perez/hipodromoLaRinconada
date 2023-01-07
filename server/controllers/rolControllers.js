@@ -19,12 +19,6 @@ const obtenerRolIndividual = async (req, res) => {
     } = req;
 
     try {
-        if (!rolId)
-            return(httpError.idVacio(res, ":rolId"));
-
-        if (isNaN(rolId) || rolId === ' ')
-            return(httpError.idInvalido(res, ":rolId"));
-
         const rol = await rolService.obtenerRolIndividual(rolId);
         res.status(200).send({ status: "OK", data: rol});
     } catch (error) {
@@ -36,9 +30,6 @@ const obtenerRolIndividual = async (req, res) => {
 
 const registrarRol = async (req, res) => {
     const { nombre } = req.body;
-
-    if (!nombre)
-        return (httpError.faltaInformacion(res));
 
     const nuevoRol = {
         nombre: nombre.toLowerCase(),
@@ -65,12 +56,6 @@ const borrarRol = async (req, res) => {
     } = req;
 
     try {
-        if (!rolId)
-            return(httpError.faltaInformacion(res));
-
-        if (isNaN(rolId) || rolId === ' ')
-            return(httpError.idInvalido(res, ":rolId"));
-
         await rolService.borrarRol(rolId);
         res.status(200).send({ status: "OK", data: `El rol con el id '${rolId}' se ha eliminado con exito.` });
     } catch (error) {

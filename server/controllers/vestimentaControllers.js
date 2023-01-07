@@ -19,12 +19,6 @@ const obtenerVestimentaIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!vestimentaId)
-            return(httpError.idVacio(res, ":vestimentaId"));
-
-        if (isNaN(vestimentaId) || vestimentaId === ' ')
-            return(httpError.idInvalido(res, ":vestimentaId"));
-
         const vestimenta = await vestimentaService.obtenerVestimentaIndividual(vestimentaId);
         res.status(200).send({ status: "OK", data: vestimenta});
     } catch (error) {
@@ -39,9 +33,6 @@ const registrarVestimenta = async (req, res) => {
         nombreVestimenta,
      } =  req.body;
 
-    if (!nombreVestimenta)
-        return (httpError.faltaInformacion(res));
-   
     const nuevaVestimenta = {
         nombreVestimenta: nombreVestimenta.toLowerCase(),
     };
@@ -66,12 +57,6 @@ const borrarVestimenta = async (req, res) => {
     } = req;
 
     try {
-        if (!vestimentaId)
-            return(httpError.idVacio(res, "vestimentaId"));
-
-        if (isNaN(vestimentaId) || vestimentaId === ' ')
-            return(httpError.idInvalido(res, ":vestimentaId"));
-
         await vestimentaService.borrarVestimenta(vestimentaId);
         res.status(200).send({ status: "OK", data: `La vestimenta con el id '${vestimentaId}' se ha eliminado con exito.` });
     } catch (error) {

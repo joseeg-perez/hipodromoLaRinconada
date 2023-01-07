@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
 import InfoCaballeriza from "../componentes/caballerizas/InfoCaballeriza";
+import axios from "axios";
 
 const Caballerizas = () => {
-  const caballerizas = [
+  const [isLoading, setLoading] = useState(true);
+  const [caballerizas, setCaballerizas] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/caballerizas/listado_de_caballerizas")
+      .then((res) => {
+        console.log(res);
+        setCaballerizas(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(caballerizas);
+
+  if (isLoading) {
+    return <div></div>;
+  }
+
+  const caballerizast = [
     {
       id: "1",
       numero: 1,
@@ -106,23 +127,36 @@ const Caballerizas = () => {
               color: "black",
               border: "black",
             }}
-            to={{pathname: "/caballeriza/agregar"}}
+            to={{ pathname: "/caballeriza/createCaballeriza" }}
           >
             AGREGAR CABALLERIZA
           </Link>
         </div>
       </Row>
 
+      {/* select codigo_caballeriza, cantidad_puestos, 
+concat(e.nombre1_persona, ' ', e.apellido1_persona) as nombreEntrenador,
+concat(v.nombre1_persona, ' ', v.apellido1_persona) as nombreVeterinario
+from caballeriza, persona_entrenador e, persona_veterinario v, entrenador_caballeriza ec, veterinario_caballeriza vc
+where ec.fk_entrenador = e.codigo_persona
+AND vc.fk_caballeriza = codigo_caballeriza
+AND ec.fk_caballeriza = codigo_caballeriza
+AND vc.fk_veterinario = v.codigo_persona
+AND ec.fecha_fin is null
+AND vc.fecha_fin is null
+ORDER BY codigo_caballeriza*/}
+
       <Row className="row row-cols-3">
-        {caballerizas.map((x) => (
+        {caballerizas.data.map((caballeriza) => (
           <InfoCaballeriza
-            key={x.id}
-            id={x.id}
-            numero={x.numero}
-            total={x.total}
-            disponible={x.disponible}
-            entrenador={x.entrenador}
-            veterinario={x.veterinario}
+            key={caballeriza.codigo_caballeriza}
+            codigo={caballeriza.codigo_caballeriza}
+            id={caballeriza.codigo_caballeriza}
+            numero={caballeriza.codigo_caballeriza}
+            total={caballeriza.cantidad_puestos}
+            disponible={caballeriza.disponible}
+            entrenador={caballeriza.nombreentrenador}
+            veterinario={caballeriza.nombreveterinario}
           ></InfoCaballeriza>
         ))}
       </Row>

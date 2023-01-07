@@ -19,12 +19,6 @@ const obtenerRetiroIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!retiroId)
-            return(httpError.idVacio(res, ":retiroId"));
-
-        if (isNaN(retiroId) || retiroId === ' ')
-            return(httpError.idInvalido(res, ":retiroId"));
-
         const retiro = await retiroService.obtenerRetiroIndividual(retiroId);
         res.status(200).send({ status: "OK", data: retiro});
     } catch (error) {
@@ -39,12 +33,6 @@ const registrarRetiro = async (req, res) => {
         fechaRetiro,
         fkMotivo,
      } =  req.body;
-
-    if (!fechaRetiro || !fkMotivo)
-        return (httpError.faltaInformacion(res));
-
-    if (isNaN(fkMotivo))
-        return(httpError.idInvalido(res, "fk_motivo"));
     
     const nuevoRetiro = {
         fechaRetiro,
@@ -71,12 +59,6 @@ const borrarRetiro = async (req, res) => {
     } = req;
 
     try {
-        if (!retiroId)
-            return(httpError.idVacio(res, "retiroId"));
-
-        if (isNaN(retiroId) || retiroId === ' ')
-            return(httpError.idInvalido(res, ":retiroId"));
-
         await retiroService.borrarRetiro(retiroId);
         res.status(200).send({ status: "OK", data: `El retiro con el id '${retiroId}' se ha eliminado con exito.` });
     } catch (error) {

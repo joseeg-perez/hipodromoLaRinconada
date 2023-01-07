@@ -8,10 +8,10 @@ const obtenerListaDeMotivosDeRetiro = async () => {
 
     try {
         const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
+        /*if (rows.length === 0)
             httpError.noRegistrado("ningun motivo");
 
-        dbConnection.end;
+        dbConnection.end;*/
         return (rows);
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };

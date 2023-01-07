@@ -24,12 +24,13 @@ const obtenerCaballerizaIndividual = async (caballerizaId) => {
 const registrarCaballeriza = async (nuevaCaballeriza) => {
     try {
         const caballerizaCreada = await Caballeriza.registrarCaballeriza(nuevaCaballeriza);
+        const idCaballerizaCreada = await obtenerIdCaballerizaNueva();
         
         //llena la tabla puestos dependiendo de la capacidad de cada caballeriza
         for (let i = 1; i <= nuevaCaballeriza.cantidadPuestos; i++) {
             const puesto = {
                 numeroPuesto: i,
-                fkCaballeriza: nuevaCaballeriza.codigoCaballeriza,
+                fkCaballeriza: idCaballerizaCreada,
             };
             await registrarPuesto(puesto);
         }
@@ -58,10 +59,22 @@ const borrarCaballeriza = async (caballerizaId) => {
     }
 };
 
+const obtenerIdCaballerizaNueva = async () => {
+    try {
+        const listaIds = await Caballeriza.obtenerIdCaballerizaNueva();
+        const ultimoId = listaIds.pop().codigo_caballeriza; //Para retornar el id de la caballeriza mas reciente
+        
+        return(ultimoId);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 module.exports = {
     obtenerListaDeCaballerizas,
     obtenerCaballerizaIndividual,
     registrarCaballeriza,
     actualizarCaballeriza,
     borrarCaballeriza,
+    obtenerIdCaballerizaNueva,
 };

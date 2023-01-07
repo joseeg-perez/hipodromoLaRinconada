@@ -19,12 +19,6 @@ const obtenerMotivoDeRetiroIndividual = async (req, res) => {
     } = req;
 
     try {
-        if (!motivoRetiroId)
-            return(httpError.idVacio(res, ":motivoRetiroId"));
-
-        if (isNaN(motivoRetiroId) || motivoRetiroId === ' ')
-            return(httpError.idInvalido(res, ":motivoRetiroId"));
-
         const motivoRetiro = await motivoRetiroService.obtenerMotivoDeRetiroIndividual(motivoRetiroId);
         res.status(200).send({ status: "OK", data: motivoRetiro});
     } catch (error) {
@@ -39,10 +33,7 @@ const registrarMotivoDeRetiro = async (req, res) => {
         nombreMotivo,
         descripcionMotivo, 
     } = req.body;
-
-    if (!nombreMotivo || !descripcionMotivo)
-        return (httpError.faltaInformacion(res));
-
+    
     const nuevomotivoRetiro = {
         nombreMotivo: nombreMotivo.toLowerCase(),
         descripcionMotivo: descripcionMotivo.toLowerCase(),
@@ -69,12 +60,6 @@ const borrarMotivoDeRetiro = async (req, res) => {
     } = req;
 
     try {
-        if (isNaN(motivoRetiroId) || motivoRetiroId === ' ')
-            return(httpError.idInvalido(res, ":motivoRetiroId"));
-
-        if (!motivoRetiroId)
-            return(httpError.faltaInformacion(res));
-
         await motivoRetiroService.borrarMotivoDeRetiro(motivoRetiroId);
         res.status(200).send({ status: "OK", data: `El motivoRetiro con el id '${motivoRetiroId}' se ha eliminado con exito.` });
     } catch (error) {

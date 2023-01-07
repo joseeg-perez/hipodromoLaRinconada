@@ -34,10 +34,14 @@ const Menu = () => {
                   CONSULTAR MOTIVOS DE RETIRO
                 </Link>
                 <Link className="list-group-item" to="/caballerizas">
-                  CONSULTAR CABALLERIZA
+                  CONSULTAR CABALLERIZAS
                 </Link>
-                <li className="list-group-item">CONSULTAR VETERINARIO</li>
-                <li className="list-group-item">CONSULTAR RESTAURANTES</li>
+                <Link className="list-group-item" to="/veterinarios">
+                  CONSULTAR VETERINARIOS
+                </Link>
+                <Link className="list-group-item" to="/restaurantes">
+                  CONSULTAR RESTAURANTES
+                </Link>
                 <li className="list-group-item">CONSULTAR EVENTOS</li>
                 <li className="list-group-item">
                   CONSULTAR HISTORIAL DE CAMBIOS
@@ -47,6 +51,12 @@ const Menu = () => {
                 </Link>
                 <Link className="list-group-item" to="/retiros/eventos">
                   RETIROS
+                 </Link> 
+                <Link className="list-group-item" to="/haras">
+                  CONSULTAR HARAS
+                </Link>
+                <Link className="list-group-item" to="/pelajes">
+                  CONSULTAR PELAEJES
                 </Link>
               </ul>
             </Card.Body>

@@ -2,17 +2,17 @@ const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeJinetes = async () => {
-    const query = {
-        text: `SELECT codigo_persona, nombre1_persona, apellido1_persona, peso_jinete, altura_jinete, nombre_rango 
+  const query = {
+    text: `SELECT codigo_persona, nombre1_persona, apellido1_persona, peso_jinete, altura_jinete, nombre_rango 
         FROM persona_jinete, rango_jinete 
         WHERE fk_rango = codigo_rango`,
-    };
+  };
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0) httpError.noRegistrado("ningun jinete");
+   /* if (rows.length === 0) httpError.noRegistrado("ningun jinete");
 
-    dbConnection.end;
+    dbConnection.end;*/
     return rows;
   } catch (error) {
     throw { status: error?.status || 500, message: error?.message || error };

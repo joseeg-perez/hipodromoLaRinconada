@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Card,
@@ -12,6 +12,7 @@ import {
   FormSelect,
   FormControl,
 } from "react-bootstrap";
+import axios from "axios";
 
 const EjemplarAgregar = () => {
   const [nombreEjemplar, setNombreEjemplar] = useState("");
@@ -27,7 +28,77 @@ const EjemplarAgregar = () => {
   const [haraEjemplar, setHaraEjemplar] = useState("");
   const [pelajeEjemplar, setPelajeEjemplar] = useState("");
   const [generoEjemplar, setGeneroEjemplar] = useState("");
+  const [isLoading, setLoading] = useState(true);
+  const [pelajes, setPelajes] = useState([]);
+  const [haras, setHaras] = useState([]);
+  const [propietarios, setPropietarios] = useState([]);
+  const [ejemplares, setEjemplares] = useState([]);
+  const [caballerizas, setCaballerizas] = useState([]);
+  const [caballeriza, setCaballeriza] = useState([]);
+  const [puestos, setPuestos] = useState([]);
+  const [puestoEjemplar, setPuestoEjemplar] = useState([]);
+  const [togglePelaje, settogglePelaje] = useState(false);
+  const [togglePapas, settogglePapas] = useState(false);
+  const [toggleMamas, settoggleMamas] = useState(false);
+  const [toggleHaras, settoggleHaras] = useState(false);
+  const [toggleCaballerizas, settoggleCaballerizas] = useState(false);
+  const [togglePuestos, settogglePuestos] = useState(false);
+  const [togglePropietarios, settogglePropietarios] = useState(false);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/pelajes/listado_de_pelajes")
+      .then((res) => {
+        console.log(res);
+        setPelajes(res.data);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/ejemplares/listado_de_ejemplares")
+      .then((res) => {
+        console.log(res);
+        setEjemplares(res.data);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/haras/listado_de_haras")
+      .then((res) => {
+        console.log(res);
+        setHaras(res.data);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/caballerizas/listado_de_caballerizas")
+      .then((res) => {
+        console.log(res);
+        setCaballerizas(res.data);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/puestos/listado_de_puestos")
+      .then((res) => {
+        console.log(res);
+        setPuestos(res.data);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
+      .then((res) => {
+        console.log(res);
+        setPropietarios(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  // console.log(pelajes);
+  // console.log(haras);
+  // console.log(propietarios);
+  // console.log(ejemplares);
+  // console.log(caballerizas);
+  // console.log(puestos);
+  if (isLoading) {
+    return <div>Cargando</div>;
+  }
   const handleData = (event) => {
     console.log(generoEjemplar);
     event.preventDefault();
@@ -81,24 +152,37 @@ const EjemplarAgregar = () => {
   };
   const handlePadre = (event) => {
     setPadreEjemplar(event.target.value);
+    settogglePapas(true);
   };
   const handleMadre = (event) => {
     setMadreEjemplar(event.target.value);
+    settoggleMamas(true);
   };
   const handleImagen = (event) => {
     setImagenEjemplar(event.target.value);
   };
   const handlePropietario = (event) => {
     setPropietarioEjemplar(event.target.value);
+    settogglePropietarios(true);
   };
   const handleHara = (event) => {
     setHaraEjemplar(event.target.value);
+    settoggleHaras(true);
   };
   const handlePelaje = (event) => {
     setPelajeEjemplar(event.target.value);
+    settogglePelaje(true);
   };
   const handleGenero = (event) => {
     setGeneroEjemplar(event.target.value);
+  };
+  const handleCaballerizas = (event) => {
+    setCaballeriza(event.target.value);
+    settoggleCaballerizas(true);
+    settogglePuestos(true);
+  };
+  const handlePuesto = (event) => {
+    setPuestoEjemplar(event.target.value);
   };
 
   return (
@@ -199,9 +283,20 @@ const EjemplarAgregar = () => {
                   <FormGroup>
                     <FormLabel>Padre del Ejemplar</FormLabel>
                     <FormSelect onChange={handlePadre} value={padreEjemplar}>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
+                      <option key={1} disabled={togglePapas}>
+                        Padre del ejemplar
+                      </option>
+                      {ejemplares.data.map(
+                        (ejemplar) =>
+                          ejemplar.sexo_ejemplar == "m" && (
+                            <option
+                              key={ejemplar.codigo_ejemplar}
+                              value={ejemplar.codigo_ejemplar}
+                            >
+                              {ejemplar.nombre_ejemplar}
+                            </option>
+                          )
+                      )}
                     </FormSelect>
                   </FormGroup>
                 </Col>
@@ -209,9 +304,20 @@ const EjemplarAgregar = () => {
                   <FormGroup>
                     <FormLabel>Madre del Ejemplar</FormLabel>
                     <FormSelect onChange={handleMadre} value={madreEjemplar}>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
+                      <option key={1} disabled={toggleMamas}>
+                        Madre del ejemplar
+                      </option>
+                      {ejemplares.data.map(
+                        (ejemplar) =>
+                          ejemplar.sexo_ejemplar == "f" && (
+                            <option
+                              key={ejemplar.codigo_ejemplar}
+                              value={ejemplar.codigo_ejemplar}
+                            >
+                              {ejemplar.nombre_ejemplar}
+                            </option>
+                          )
+                      )}
                     </FormSelect>
                   </FormGroup>
                 </Col>
@@ -235,11 +341,18 @@ const EjemplarAgregar = () => {
                       onChange={handlePropietario}
                       value={propietarioEjemplar}
                     >
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>Luchito Suarez</option>
-                      <option>Landon Donovan</option>
+                      <option key={1} disabled={togglePropietarios}>
+                        Propietario
+                      </option>
+                      {propietarios.data.map((propietario) => (
+                        <option
+                          key={propietario.codigo_persona}
+                          value={propietario.codigo_persona}
+                        >
+                          {propietario.nombre1_persona}{" "}
+                          {propietario.apellido1_persona}
+                        </option>
+                      ))}
                     </FormSelect>
                   </FormGroup>
                 </Col>
@@ -250,9 +363,14 @@ const EjemplarAgregar = () => {
                   <FormGroup>
                     <FormLabel>Hara de procedencia</FormLabel>
                     <FormSelect onChange={handleHara} value={haraEjemplar}>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
+                      <option key={1} disabled={toggleHaras}>
+                        Hara
+                      </option>
+                      {haras.data.map((hara) => (
+                        <option key={hara.codigo_hara} value={hara.codigo_hara}>
+                          {hara.nombre_hara}
+                        </option>
+                      ))}
                     </FormSelect>
                   </FormGroup>
                 </Col>
@@ -260,13 +378,71 @@ const EjemplarAgregar = () => {
                   <FormGroup>
                     <FormLabel>Pelaje</FormLabel>
                     <FormSelect onChange={handlePelaje} value={pelajeEjemplar}>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
+                      <option key={1} disabled={togglePelaje}>
+                        Pelaje
+                      </option>
+                      {pelajes.data.map((pelaje) => (
+                        <option
+                          key={pelaje.codigo_pelaje}
+                          value={pelaje.codigo_pelaje}
+                        >
+                          {pelaje.nombre_pelaje}
+                        </option>
+                      ))}
                     </FormSelect>
                   </FormGroup>
                 </Col>
               </Row>
+
+              <Row className="mt-2 align-content-center align-items-center">
+                <Col className="col-6">
+                  <FormGroup>
+                    <FormLabel>Caballeriza</FormLabel>
+                    <FormSelect
+                      onChange={handleCaballerizas}
+                      value={caballeriza}
+                    >
+                      <option key={1} disabled={toggleCaballerizas}>
+                        Caballeriza
+                      </option>
+                      {caballerizas.data.map((caballeriza) => (
+                        <option
+                          key={caballeriza.codigo_caballeriza}
+                          value={caballeriza.codigo_caballeriza}
+                        >
+                          {caballeriza.codigo_caballeriza}
+                        </option>
+                      ))}
+                    </FormSelect>
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <FormLabel>Puesto</FormLabel>
+                    <FormSelect
+                      onChange={handlePuesto}
+                      value={puestoEjemplar}
+                      disabled={!togglePuestos}
+                    >
+                      <option key={1} disabled={togglePuestos}>
+                        Puesto
+                      </option>
+                      {puestos.data.map(
+                        (puesto) =>
+                          puesto.fk_caballeriza == caballeriza && (
+                            <option
+                              key={puesto.codigo_puesto}
+                              value={puesto.codigo_puesto}
+                            >
+                              {puesto.numero_puesto}
+                            </option>
+                          )
+                      )}
+                    </FormSelect>
+                  </FormGroup>
+                </Col>
+              </Row>
+
               <Row>
                 <Col></Col>
                 <Col>

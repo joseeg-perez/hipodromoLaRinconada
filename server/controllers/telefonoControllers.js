@@ -19,12 +19,6 @@ const obtenerTelefonoIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!telefonoId)
-            return(httpError.idVacio(res, ":telefonoId"));
-
-        if (isNaN(telefonoId) || telefonoId === ' ')
-            return(httpError.idInvalido(res, ":telefonoId"));
-
         const telefono = await telefonoService.obtenerTelefonoIndividual(telefonoId);
         res.status(200).send({ status: "OK", data: telefono});
     } catch (error) {
@@ -41,15 +35,6 @@ const registrarTelefono = async (req, res) => {
         fkPropietario,
         fkCliente,
      } =  req.body;
-
-    if (!extensionTelefono || !cuerpoTelefono)
-        return (httpError.faltaInformacion(res));
-    
-    if (isNaN(extensionTelefono)||
-        isNaN(cuerpoTelefono) ||
-        isNaN(fkPropietario) ||
-        isNaN(fkCliente))
-    return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
    
     const nuevoTelefono = {
         extensionTelefono,
@@ -78,12 +63,6 @@ const borrarTelefono = async (req, res) => {
     } = req;
 
     try {
-        if (!telefonoId)
-            return(httpError.idVacio(res, "telefonoId"));
-
-        if (isNaN(telefonoId) || telefonoId === ' ')
-            return(httpError.idInvalido(res, ":telefonoId"));
-
         await telefonoService.borrarTelefono(telefonoId);
         res.status(200).send({ status: "OK", data: `La telefono con el id '${telefonoId}' se ha eliminado con exito.` });
     } catch (error) {

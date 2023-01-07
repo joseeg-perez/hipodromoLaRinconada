@@ -21,11 +21,6 @@ const obtenerPropietarioIndividual = async (req, res) => {
   } = req;
 
   try {
-    if (!propietarioId) return httpError.idVacio(res, ":propietarioId");
-
-    if (isNaN(propietarioId) || propietarioId === " ")
-      return httpError.idInvalido(res, ":propietarioId");
-
     const propietario = await propietarioService.obtenerPropietarioIndividual(
       propietarioId
     );
@@ -51,25 +46,6 @@ const registrarPropietario = async (req, res) => {
         cuerpo_tlf,
 
      } = req.body;
-
-  if (
-    !cedulaPersona ||
-    !nombre1Persona ||
-    !apellido1Persona ||
-    !fechaNacimiento ||
-    !correo
-  )
-    return httpError.faltaInformacion(res);
-
-  const emailValido = validator.validate(correo);
-
-  if (!emailValido) return httpError.campoInvalido(res, "correo");
-
-  if (isNaN(cedulaPersona) || isNaN(fkLugar))
-    return res.status(422).send({
-      status: "FAILED",
-      data: "Uno de los campos que espera valores numericos es invalido.",
-    });
 
     const nuevoPropietario = {
         cedulaPersona,
@@ -104,11 +80,6 @@ const borrarPropietario = async (req, res) => {
   } = req;
 
   try {
-    if (!propietarioId) return httpError.faltaInformacion(res);
-
-    if (isNaN(propietarioId) || propietarioId === " ")
-      return httpError.idInvalido(res, ":propietarioId");
-
     await propietarioService.borrarPropietario(propietarioId);
     res.status(200).send({
       status: "OK",

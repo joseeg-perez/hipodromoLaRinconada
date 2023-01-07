@@ -19,12 +19,6 @@ const obtenerCarreraIndividual = async (req, res) => {
     } = req;
 
     try {
-        if (!carreraId)
-            return(httpError.idVacio(res, ":carreraId"));
-
-        if (isNaN(carreraId) || carreraId === ' ')
-            return(httpError.idInvalido(res, ":carreraId"));
-            
         const carrera = await carreraService.obtenerCarreraIndividual(carreraId);
         res.status(200).send({ status: "OK", data: carrera});
     } catch (error) {
@@ -45,29 +39,8 @@ const registrarCarrera = async (req, res) => {
         premioQuinto,
         horaCarrera,
         fkEvento,
-        fkCategorioCarrera,
+        fkCategoriaCarrera,
      } = req.body;
-
-    if (!nombreCarrera ||
-        !numeroCarrera ||
-        !premioPrimero ||
-        !premioSegundo ||
-        !premioTercero ||
-        !premioCuarto ||
-        !premioQuinto ||
-        !horaCarrera ||
-        !fkEvento ||
-        !fkCategorioCarrera)
-        return (httpError.faltaInformacion(res));
-
-    if (isNaN(numeroCarrera) || 
-        isNaN(premioPrimero) || 
-        isNaN(premioSegundo) || 
-        isNaN(premioCuarto) ||
-        isNaN(premioQuinto) ||
-        isNaN(fkEvento) ||
-        isNaN(fkCategorioCarrera))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
 
     const nuevaCarrera = {
         nombreCarrera: nombreCarrera.toLowerCase(),
@@ -79,7 +52,7 @@ const registrarCarrera = async (req, res) => {
         premioQuinto,
         horaCarrera,
         fkEvento,
-        fkCategorioCarrera,
+        fkCategoriaCarrera,
     };
 
     try {
@@ -102,12 +75,6 @@ const borrarCarrera = async (req, res) => {
     } = req;
 
     try {
-        if (!carreraId)
-            return(httpError.faltaInformacion(res));
-        
-        if (isNaN(carreraId) || carreraId === ' ')
-            return(httpError.idInvalido(res, ":carreraId"));
-
         await carreraService.borrarCarrera(carreraId);
         res.status(200).send({ status: "OK", data: `La carrera con el id '${carreraId}' se ha eliminado con exito.` });
     } catch (error) {

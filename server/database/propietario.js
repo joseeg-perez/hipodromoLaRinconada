@@ -8,10 +8,10 @@ const obtenerListaDePropietarios = async () => {
 
     try {
         const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
+        /*if (rows.length === 0)
             httpError.noRegistrado("ningun propietario");
 
-        dbConnection.end;
+        dbConnection.end;*/
         return (rows);
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
@@ -110,14 +110,14 @@ const borrarPropietario = async (propietarioId) => {
 
 const obtenerIdPropietarioNuevo = async (nuevoPropietario) => {
     const { 
-        correo,
+        cedulaPersona,
      } = nuevoPropietario;
 
     const query = {
         text: `SELECT codigo_persona
         FROM persona_propietario
-        WHERE correo = $1`,
-        values: [correo]
+        WHERE cedula_persona = $1`,
+        values: [cedulaPersona],
     };
 
     try {

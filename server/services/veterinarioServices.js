@@ -1,10 +1,21 @@
 const Veterinario = require("../database/Veterinario.js");
+const { registrarVeterinarioCaballeriza } = require("./veterinarioCaballerizaServices.js");
 
 const obtenerListaDeVeterinarios = async () => {
     try {
         const listaVeterinarios = await Veterinario.obtenerListaDeVeterinarios();
 
         return(listaVeterinarios);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerListaDeCaballerizasVacias = async () => {
+    try {
+        const listaCaballerizas = await Veterinario.obtenerListaDeCaballerizasVacias();
+
+        return(listaCaballerizas);
     } catch (error) {
         throw(error);
     }
@@ -20,21 +31,32 @@ const obtenerVeterinarioIndividual = async (veterinarioId) => {
     }
 };
 
-const registrarVeterinario = async (nuevaVeterinario) => {
+const registrarVeterinario = async (nuevoVeterinario) => {
     try {
-        const veterinarioCreado = await Veterinario.registrarVeterinario(nuevaVeterinario);
-        
+        const veterinarioCreado = await Veterinario.registrarVeterinario(nuevoVeterinario);
+        const idVeterinarioCreado = await Veterinario.obtenerIdVeterinarioNuevo(nuevoVeterinario);
+
+        const veterinarioCaballeriza = {
+            fkCaballeriza: nuevoVeterinario.fkCaballeriza,
+            fkVeterinario: idVeterinarioCreado,
+        }
+
+        await registrarVeterinarioCaballeriza(veterinarioCaballeriza);
+
         return(veterinarioCreado);
     } catch (error) {
         throw(error);
     }
+
+  
+
 };
 
 const actualizarVeterinario = (veterinarioId, cambios) => {
     try {
-        const veterinarioActualizada = Veterinario.actualizarVeterinario(veterinarioId, cambios);
+        const VeterinarioActualizada = Veterinario.actualizarVeterinario(veterinarioId, cambios);
         
-        return(veterinarioActualizada);
+        return(VeterinarioActualizada);
     } catch (error) {
         throw(error);
     }
@@ -50,6 +72,7 @@ const borrarVeterinario = async (veterinarioId) => {
 
 module.exports = {
     obtenerListaDeVeterinarios,
+    obtenerListaDeCaballerizasVacias,
     obtenerVeterinarioIndividual,
     registrarVeterinario,
     actualizarVeterinario,

@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 
-export const CardLugar = (props) => {
+const CardLugar = (props) => {
   const [estado, setEstado] = useState("");
   const [estados, setEstados] = useState([]);
   const [municipio, setMunicipio] = useState("");
@@ -128,3 +128,4 @@ export const CardLugar = (props) => {
     </Container>
   );
 };
+export default CardLugar;

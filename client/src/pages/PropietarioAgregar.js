@@ -8,7 +8,7 @@ import {
   Col,
   Button,
 } from "react-bootstrap";
-import { CardLugar } from "../componentes/layout/CardLugar";
+import CardLugar from "../componentes/layout/CardLugar";
 import CardTelefono from "../componentes/layout/CardTelefono";
 import axios from "axios";
 

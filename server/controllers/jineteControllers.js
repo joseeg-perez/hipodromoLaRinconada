@@ -19,12 +19,6 @@ const obtenerJineteIndividual = async (req, res) => {
     } = req;
 
     try {
-        if (!jineteId)
-            return(httpError.idVacio(res, ":jineteId"));
-
-        if (isNaN(jineteId) || jineteId === ' ')
-            return(httpError.idInvalido(res, ":jineteId"));
-
         const jinete = await jineteService.obtenerJineteIndividual(jineteId);
         res.status(200).send({ status: "OK", data: jinete});
     } catch (error) {
@@ -46,16 +40,7 @@ const registrarJinete = async (req, res) => {
         fkRango,
         pesoJinete, 
     } = req.body;
-
-    if (!cedulaPersona ||
-        !nombre1Persona||
-        !apellido1Persona ||
-        !fechaNacimiento ||
-        !alturaJinete || 
-        !fkRango || 
-        !pesoJinete)
-        return (httpError.faltaInformacion(res));
-
+    
     const nuevoJinete = {
         cedulaPersona,
         nombre1Persona: nombre1Persona.toLowerCase(),
@@ -67,12 +52,6 @@ const registrarJinete = async (req, res) => {
         fkRango,
         pesoJinete,
     };
-
-    if (isNaN(cedulaPersona)||
-        isNaN(alturaJinete ) ||
-        isNaN(fkRango) ||
-        isNaN(pesoJinete))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }));
 
     try {
         const jineteCreado = await jineteService.registrarJinete(nuevoJinete);
@@ -95,12 +74,6 @@ const borrarJinete = async (req, res) => {
     } = req;
 
     try {
-        if (isNaN(jineteId) || jineteId === ' ')
-            return(httpError.idInvalido(res, ":jineteId"));
-
-        if (!jineteId)
-            return(httpError.faltaInformacion(res));
-
         await jineteService.borrarJinete(jineteId);
         res.status(200).send({ status: "OK", data: `El jinete con el id '${jineteId}' se ha eliminado con exito.` });
     } catch (error) {
