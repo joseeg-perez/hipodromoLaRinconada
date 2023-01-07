@@ -7,9 +7,8 @@ import axios from "axios";
 
 const InfoPropietario = (props) => {
   const handleDelete = (event) => {
-    console.log(props.codigo);
     axios
-      .delete(`http://localhost:5000/api/v1/propietarios/${props.codigo}`)
+      .delete(`http://localhost:5000/api/v1/propietarios/${props.Id}`)
       .then((res) => {
         if (res.data != null) {
           alert("Se eliminó el propietario con éxito");

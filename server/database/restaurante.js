@@ -12,7 +12,6 @@ const obtenerListaDeRestaurantes = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0) httpError.noRegistrado("ningun restaurante");
 
     dbConnection.end;
     return rows;

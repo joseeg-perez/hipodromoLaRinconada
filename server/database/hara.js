@@ -8,7 +8,6 @@ const obtenerListaDeHaras = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0) httpError.noRegistrado("ningun hara");
 
     dbConnection.end;
     return rows;

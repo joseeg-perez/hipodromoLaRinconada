@@ -12,7 +12,7 @@ const InfoStud = (props) => {
       .delete(`http://localhost:5000/api/v1/studs/${props.Id}`)
       .then((res) => {
         if (res.data != null) {
-          alert("Se borró con exito el pelaje pa");
+          alert("Se eliminó el Stud con éxito");
         }
       })
       .catch((err) => console.log(err));

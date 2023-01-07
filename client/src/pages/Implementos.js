@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import axios from "axios";
-import { CardMedImpRetiro } from "../componentes/Medicamentos,Implementos,Retiros/CardMedImpRetiro";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
+import InfoImplemento from "../componentes/implementos/InfoImplemento";
 
 const Implementos = () => {
   const [implementos, setImplementos] = useState([]);
@@ -83,10 +83,12 @@ const Implementos = () => {
       </Row>
       <Row className="row-cols-4">
         {implementos.data.map((implemento) => (
-          <CardMedImpRetiro
+          <InfoImplemento
             key={implemento.codigo_implemento}
+            codigo={implemento.codigo_implemento}
             nombre={implemento.nombre_implemento}
             descripcion={implemento.descripcion_implemento}
+            abrev={implemento.abrev_implemento}
           />
         ))}
       </Row>

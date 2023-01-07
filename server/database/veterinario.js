@@ -10,7 +10,6 @@ const obtenerListaDeVeterinarios = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0) httpError.noRegistrado("ningun veterinario");
 
     dbConnection.end;
     return rows;
