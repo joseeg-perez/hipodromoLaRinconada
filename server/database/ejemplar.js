@@ -8,7 +8,6 @@ const obtenerListaDeEjemplares = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0) httpError.noRegistrado("ningun ejemplar");
 
     dbConnection.end;
     return rows;

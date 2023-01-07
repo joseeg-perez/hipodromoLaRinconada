@@ -8,7 +8,6 @@ const obtenerListaDePuestos = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0) httpError.noRegistrado("ningun puesto");
 
     dbConnection.end;
     return rows;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import axios from "axios";
-import { CardMedImpRetiro } from "../componentes/Medicamentos,Implementos,Retiros/CardMedImpRetiro";
+import { CardMedImpRetiro } from "../componentes/Medicamentos y Retiros/CardMedImpRetiro";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
 

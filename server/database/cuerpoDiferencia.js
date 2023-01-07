@@ -8,8 +8,6 @@ const obtenerListaDeCuerpoDiferencia = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0)
-      httpError.noRegistrado("ningun cuerpo de diferencia");
 
     dbConnection.end;
     return rows;

@@ -8,8 +8,6 @@ const obtenerListaDeParticipaciones = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0)
-    //     httpError.noRegistrado("ninguna participacion");
 
     dbConnection.end;
     return rows;

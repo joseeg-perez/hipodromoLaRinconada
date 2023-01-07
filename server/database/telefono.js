@@ -8,8 +8,6 @@ const obtenerListaDeTelefonos = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0)
-    //     httpError.noRegistrado("ningun telefono");
 
     dbConnection.end;
     return rows;

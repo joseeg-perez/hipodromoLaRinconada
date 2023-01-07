@@ -8,7 +8,6 @@ const obtenerListaDePelajes = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0) httpError.noRegistrado("ningun tipo de pelaje");
 
     dbConnection.end;
     return rows;

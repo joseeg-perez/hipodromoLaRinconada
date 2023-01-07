@@ -8,9 +8,8 @@ const obtenerListaDeImplementos = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0) httpError.noRegistrado("ningun implemento");
 
-    dbConnection.end; 
+    dbConnection.end;
     return rows;
   } catch (error) {
     throw { status: error?.status || 500, message: error?.message || error };

@@ -10,13 +10,8 @@ const obtenerListaDeJinetes = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-<<<<<<< HEAD
-    // if (rows.length === 0) httpError.noRegistrado("ningun jinete");
-=======
-   /* if (rows.length === 0) httpError.noRegistrado("ningun jinete");
->>>>>>> d0a805f1d71eab8af6b3e8f087b71e2b1ac21d32
 
-    dbConnection.end;*/
+    dbConnection.end;
     return rows;
   } catch (error) {
     throw { status: error?.status || 500, message: error?.message || error };

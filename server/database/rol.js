@@ -8,7 +8,6 @@ const obtenerListaDeRoles = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0) httpError.noRegistrado("ningun rol");
 
     dbConnection.end;
     return rows;

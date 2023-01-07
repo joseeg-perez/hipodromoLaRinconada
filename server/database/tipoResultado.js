@@ -8,8 +8,6 @@ const obtenerListaDeTipoResultado = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0)
-    //     httpError.noRegistrado("ninguna categoria");
 
     dbConnection.end;
     return rows;

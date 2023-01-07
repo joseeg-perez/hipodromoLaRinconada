@@ -8,7 +8,6 @@ const obtenerListaDeStudColor = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    // if (rows.length === 0) httpError.noRegistrado("ningun color de stud");
 
     dbConnection.end;
     return rows;
