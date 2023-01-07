@@ -1,5 +1,13 @@
 import React from "react";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  FormSelect,
+  Row,
+} from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import CardEjemplarResultado from "../componentes/eventos/CardEjemplarResultado";
 
@@ -198,7 +206,7 @@ const ResultadoAgregar = (props) => {
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     console.log("entro");
-    auxiliar=1;
+    auxiliar = 1;
     ejemplares.map((x) => {
       console.log(document.getElementById(x.id).value);
       console.log(document.getElementById(`dt${auxiliar}`).value);
@@ -211,8 +219,7 @@ const ResultadoAgregar = (props) => {
       console.log(document.getElementById(`tp400${auxiliar}`).value);
       console.log(document.getElementById(`tp800${auxiliar}`).value);
       console.log(document.getElementById(`tpc${auxiliar}`).value);
-      auxiliar=auxiliar+1;
-
+      auxiliar = auxiliar + 1;
     });
     console.log(document.getElementById("txta").value);
     /*console.log(document.getElementById(12).value);
@@ -238,15 +245,18 @@ const ResultadoAgregar = (props) => {
                   {ejemplares.map((x) => (
                     <Col className="mb-3">
                       <Row className="row row-cols-2 d-flex">
-                        <Col className="col-10">
+                        <Col className="col-8">
                           <CardEjemplarResultado
                             key={x.id}
                             id={x.id}
                             nombre={x.nombre}
                           ></CardEjemplarResultado>
                         </Col>
-                        <Col className="col-2 d-flex justify-content-end">
-                          <select id={x.id}>{content}</select>
+                        <Col
+                          className="col-4
+                         d-flex justify-content-end"
+                        >
+                          <FormSelect id={x.id}>{content}</FormSelect>
                         </Col>
                       </Row>
                     </Col>
