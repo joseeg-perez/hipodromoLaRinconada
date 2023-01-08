@@ -93,6 +93,7 @@ const Pelajes = (props) => {
                   abrev={pelaje.abrev_pelaje}
                   codigo={pelaje.codigo_pelaje}
                   key={pelaje.codigo_pelaje}
+                  Id={pelaje.codigo_pelaje}
                 />
               )
           )}

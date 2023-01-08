@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 
-const CardLugar = (props) => {
+const CardLugarEdit = (props) => {
   const [estado, setEstado] = useState("");
   const [estados, setEstados] = useState([]);
   const [municipio, setMunicipio] = useState("");
@@ -22,7 +22,6 @@ const CardLugar = (props) => {
   const [toggleEstado, setToggleEstadtoggleEstado] = useState(false);
   const [toggleMunicipio, setToggleMunicipio] = useState(true);
   const [toggleParroquia, setToggleParroquia] = useState(true);
-
   const handleEstado = (event) => {
     setEstado(event.target.value);
     setToggleEstadtoggleEstado(true);
@@ -131,4 +130,4 @@ const CardLugar = (props) => {
     </Container>
   );
 };
-export default CardLugar;
+export default CardLugarEdit;

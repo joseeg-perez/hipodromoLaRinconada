@@ -3,6 +3,7 @@ import { Card, Col, Row, Button } from "react-bootstrap";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const InfoImplemento = (props) => {
   const handleDelete = (event) => {
@@ -26,9 +27,15 @@ const InfoImplemento = (props) => {
           <Card.Text className="text-center text-muted">
             ({props.abrev})
           </Card.Text>
-          <Button className="btn btn-light btn-outline-success btn-sm mx-1">
-            <img src={edit} alt="/" width={20} />
-          </Button>
+          <Link
+            size="sm"
+            to={`/implementos/${props.Id}/updateImplemento`}
+            className="text-center"
+          >
+            <Button className="btn btn-light btn-outline-success btn-sm mx-1">
+              <img src={edit} alt="/" width={20} />
+            </Button>
+          </Link>
 
           <Button
             className="btn btn-light btn-outline-danger btn-sm mx-1"

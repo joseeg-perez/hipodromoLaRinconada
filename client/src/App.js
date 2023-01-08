@@ -60,6 +60,10 @@ import Pelajes from "./pages/Pelajes";
 import PelajeAgregar from "./pages/PelajeAgregar";
 import Vestimentas from "./pages/Vestimentas";
 import EntrenadorUpdate from "./pages/EntrenadorUpdate";
+import PelajeUpdate from "./pages/PelajeUpdate";
+import ImplementoUpdate from "./pages/ImplementoUpdate";
+import MedicamentoUpdate from "./pages/MedicamentoUpdate";
+import MotivoRetiroUpdate from "./pages/MotivoRetiroUpdate";
 
 function App() {
   return (
@@ -205,6 +209,10 @@ function App() {
           <MedicamentoAgregar></MedicamentoAgregar>
         </Route>
 
+        <Route path="/medicamentos/:medicamentoId/updateMedicamento" exact>
+          <MedicamentoUpdate></MedicamentoUpdate>
+        </Route>
+
         <Route path="/implementos" exact>
           <Implementos></Implementos>
         </Route>
@@ -213,12 +221,20 @@ function App() {
           <ImplementoAgregar></ImplementoAgregar>
         </Route>
 
+        <Route path="/implementos/:implementoId/updateImplemento" exact>
+          <ImplementoUpdate></ImplementoUpdate>
+        </Route>
+
         <Route path="/motivosRet" exact>
           <MotivosRetiro></MotivosRetiro>
         </Route>
 
         <Route path="/motivosRet/agregar" exact>
           <MotivoRetiroAgregar></MotivoRetiroAgregar>
+        </Route>
+
+        <Route path="/motivosRet/:motivoId/updateMotivo" exact>
+          <MotivoRetiroUpdate></MotivoRetiroUpdate>
         </Route>
 
         <Route path="/restaurantes" exact>
@@ -285,12 +301,20 @@ function App() {
           <HaraAgregar></HaraAgregar>
         </Route>
 
+        <Route path="/haras/:haraId/updateHara" exact>
+          <HaraUpdate></HaraUpdate>
+        </Route>
+
         <Route path="/pelajes" exact>
           <Pelajes></Pelajes>
         </Route>
 
         <Route path="/pelajes/createPelaje" exact>
           <PelajeAgregar></PelajeAgregar>
+        </Route>
+
+        <Route path="/pelajes/:pelajeId/updatePelaje" exact>
+          <PelajeUpdate></PelajeUpdate>
         </Route>
 
         <Route path="/haras/updateHara" exact>
