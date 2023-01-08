@@ -3,7 +3,7 @@ import { Card, Col, Container, Row, Image, Button } from "react-bootstrap";
 import caballo1 from "../assets/caballo1.jpg";
 import caballo2 from "../assets/caballo2.jpg";
 import caballo3 from "../assets/caballo3.jpg";
-import Tabla from "../components/Tabla";
+import Tabla from "../componentes/tablas/Tabla";
 import edit from "../assets/editicon.png";
 import trash from "../assets/trashicon.png";
 import { useParams, useRouteMatch } from "react-router-dom";
@@ -50,6 +50,30 @@ export const EjemplarDetail = () => {
     },
   ];
 
+  const propietario = [
+    {
+      id: "1",
+      nombre: "Alejandro Marquez",
+      cedula: "28.308.632",
+      fecha_inicio: "8/1/2023",
+      porcentaje: 54,
+    },
+    {
+      id: "2",
+      nombre: "Jose Gimenez",
+      cedula: "6.089.356",
+      fecha_inicio: "8/1/2023",
+      porcentaje: 28,
+    },
+    {
+      id: "3",
+      nombre: "Yohander Hernandez",
+      cedula: "29.458.321",
+      fecha_inicio: "8/1/2023",
+      porcentaje: 18,
+    },
+  ];
+
   let columnas1 = (
     <tr>
       <th>Nombre</th>
@@ -59,6 +83,21 @@ export const EjemplarDetail = () => {
       <th>Stud</th>
     </tr>
   );
+
+  let columnas2 = (
+    <tr>
+      <th>Nombre</th>
+      <th>Cedula</th>
+      <th>Fecha_Inicio</th>
+      <th>Porcentaje</th>
+    </tr>
+  );
+
+  const onSeleccionPropietarioHandler = (id,propietario, event) => {
+    event.preventDefault();
+    console.log(id);
+    console.log(propietario);
+  };
 
   return (
     <div>
@@ -177,29 +216,15 @@ export const EjemplarDetail = () => {
                 <Card.Body>
                   <h3 className="mt-2 text-center">Propietarios</h3>
                   <Tabla
-                    columnas={columnas1}
-                    informacion={Ejemplares}
+                    columnas={columnas2}
+                    informacion={propietario}
+                    estilo=" table-hover"
                     funcion={(x) => (
-                      <tr>
+                      <tr onClick={(e) => onSeleccionPropietarioHandler(x.id,x, e)}>
                         <td>{`${x.nombre}`}</td>
-                        <td>{`${x.caballeriza}`}</td>
-                        <td>{`${x.puesto}`}</td>
-                        <td>{`${x.fecha_ingreso}`}</td>
-                        <td>{`${x.stud}`}</td>
-                      </tr>
-                    )}
-                  ></Tabla>
-                  <h3 className="mt-4 text-center">Propietarios</h3>
-                  <Tabla
-                    columnas={columnas1}
-                    informacion={Ejemplares}
-                    funcion={(x) => (
-                      <tr>
-                        <td>{`${x.nombre}`}</td>
-                        <td>{`${x.caballeriza}`}</td>
-                        <td>{`${x.puesto}`}</td>
-                        <td>{`${x.fecha_ingreso}`}</td>
-                        <td>{`${x.stud}`}</td>
+                        <td>{`${x.cedula}`}</td>
+                        <td>{`${x.fecha_inicio}`}</td>
+                        <td>{`${x.porcentaje}`}</td>
                       </tr>
                     )}
                   ></Tabla>

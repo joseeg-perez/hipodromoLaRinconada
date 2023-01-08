@@ -226,6 +226,12 @@ const StudDetail = () => {
     },
   ];
 
+
+  const onSeleccionPropietarioHandler = (id,propietario, event) => {
+    event.preventDefault();
+    console.log(id);
+    console.log(propietario);
+  };
   return (
     <Container>
       <Row className="text-center">
@@ -264,8 +270,9 @@ const StudDetail = () => {
                   titulo="PROPIETARIOS"
                   columnas={columnas1}
                   informacion={informacion1}
+                  estilo=" table-hover"
                   funcion={(x) => (
-                    <tr>
+                    <tr onClick={(e) => onSeleccionPropietarioHandler(x.id,x, e)}>
                       <td>{`${x.nombre}`}</td>
                       <td>{`${x.apellido}`}</td>
                       <td>{`${x.cedula}`}</td>
