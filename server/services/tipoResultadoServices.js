@@ -12,9 +12,9 @@ const obtenerListaDeTipoResultado = async () => {
 
 const obtenerTipoResultadoIndividual = async (tipoResultadoId) => {
     try {
-        const TipoResultado = await TipoResultado.obtenerTipoResultadoIndividual(tipoResultadoId);
+        const tipoResultado = await TipoResultado.obtenerTipoResultadoIndividual(tipoResultadoId);
 
-        return(TipoResultado);
+        return(tipoResultado);
     } catch (error) {
         throw(error);
     }

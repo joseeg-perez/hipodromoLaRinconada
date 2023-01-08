@@ -10,11 +10,19 @@ const { Pool } = require("pg");
 // };
 
 const config = {
+<<<<<<< HEAD
   user: "BPG_grupo3",
   port: "5432",
   host: "labs-dbservices01.ucab.edu.ve",
   password: "123456",
   database: "ProyectoGrupo3",
+=======
+    user: "BPG_grupo3",
+    port: "5432",
+    host: "labs-dbservices01.ucab.edu.ve",
+    password: "123456",
+    database: "Proyecto_Grupo3"
+>>>>>>> 1282e75b0bbf73884144a04c9e4cec0454a287d9
 };
 
 const pool = new Pool(config);

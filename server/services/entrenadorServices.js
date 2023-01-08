@@ -56,7 +56,19 @@ const registrarEntrenador = async (nuevoEntrenador) => {
   }
 };
 
+<<<<<<< HEAD
 const actualizarEntrenador = async (entrenadorId, cambios) => {};
+=======
+const actualizarEntrenador = async (entrenadorId, cambios) => {
+    try {
+        const entrenadorActualizado = Entrenador.actualizarEntrenador(entrenadorId, cambios)
+        
+        return(entrenadorActualizado);
+    } catch (error) {
+        throw(error);
+    }
+};
+>>>>>>> 1282e75b0bbf73884144a04c9e4cec0454a287d9
 
 const borrarEntrenador = async (entrenadorId) => {
   try {

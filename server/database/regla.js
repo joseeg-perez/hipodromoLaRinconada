@@ -1,15 +1,15 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
-const obtenerListaDeCarreraReglas = async () => {
+const obtenerListaDeReglas = async () => {
     const query = {
-        text: "SELECT * FROM carrera_regla",
+        text: "SELECT * FROM regla",
     };
 
     try {
         const { rows } = await dbConnection.query(query);
         if (rows.length === 0)
-            httpError.noRegistrado("ninguna regla de carrera");
+            httpError.noRegistrado("ningun tipo de regla");
 
         dbConnection.end;
         return (rows);
@@ -18,72 +18,76 @@ const obtenerListaDeCarreraReglas = async () => {
     }
 };
 
-const obtenerCarreraReglaIndividual = async (carreraReglaId) => { 
+const obtenerReglaIndividual = async (reglaId) => {
     const query = {
-        text: "SELECT * FROM carrera_regla WHERE codigo_cr=$1",
-        values: [carreraReglaId],
+        text: "SELECT * FROM regla WHERE codigo_regla=$1",
+        values: [reglaId],
     };
 
     try {
         const { rows } = await dbConnection.query(query);
         if (rows.length === 0)
-            httpError.idNoEncontrado("La regla de carrera", carreraReglaId);
+            httpError.idNoEncontrado("La regla", reglaId);
         
         dbConnection.end;
         return (rows);
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
-    }   
+    }
 };
 
-const registrarCarreraRegla = async (nuevaCategoriaRegla) => { 
+const registrarRegla = async (nuevaRegla) => {
     const { 
-        valorRegla,
-        fkCarrera,
-        fkRegla,
-     } = nuevaCategoriaRegla;
+        nombreRegla,
+        descripcionRegla,
+     } = nuevaRegla;
 
-    const text = `INSERT INTO carrera_regla(valor_regla, fk_carrera, fk_regla) VALUES($1, $2, $3)`;
+    const text = `INSERT INTO regla(nombre_regla, descripcion_regla) VALUES($1, $2)`;
         
-    const values = [valorRegla, fkCarrera, fkRegla,];
+    const values = [nombreRegla, descripcionRegla];
 
     try {
         await dbConnection.query(text, values);
     
         dbConnection.end;
-        return (valorRegla);
+        return (nombreRegla);
     } catch (error) {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `La regla de carrera con el valor '${ valorRegla }' ya ha sido registrada.`,
+                message: `La regla con el nombre '${ nombreRegla }' ya ha sido registrada.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
-    }    
+    }  
 };
 
-const borrarCarreraRegla = async (carreraReglaId) => {
+const actualizarRegla = (reglaId, cambios) => {
+    
+};
+
+const borrarRegla = async (reglaId) => {
     const query = {
-        text: "DELETE FROM carrera_regla WHERE codigo_cr=$1",
-        values: [carreraReglaId],
+        text: "DELETE FROM regla WHERE codigo_regla=$1",
+        values: [reglaId],
     };
 
     try {
         const { rowCount } = await dbConnection.query(query);        
         if (rowCount === 0)
-            httpError.idNoEncontrado("la regla de carrera ", carreraReglaId);
+            httpError.idNoEncontrado("La regla ", reglaId);
 
         dbConnection.end;
         return;
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
-    }
+    }  
 };
 
 module.exports = {
-    obtenerListaDeCarreraReglas,
-    obtenerCarreraReglaIndividual,
-    registrarCarreraRegla,
-    borrarCarreraRegla,
+    obtenerListaDeReglas,
+    obtenerReglaIndividual,
+    registrarRegla,
+    actualizarRegla,
+    borrarRegla,
 };
