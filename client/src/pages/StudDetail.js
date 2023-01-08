@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Row,
+  FormSelect,
+  Table,
+} from "react-bootstrap";
 import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
 import InfoEjemplar from "../componentes/ejemplares/InfoEjemplar";
 import TablaCard from "../componentes/layout/TablaCard";
@@ -7,39 +15,76 @@ import Tabla from "../componentes/tablas/Tabla";
 import StudUpdate from "./StudUpdate";
 import imagen from "../assets/caballo1.jpg";
 import axios from "axios";
+import { CirclePicker } from "react-color";
 import Propietarios from "./Propietarios";
 
 const StudDetail = () => {
-  const params = useParams();
-  console.log(params.studId);
-  const match = useRouteMatch();
-  const { studId } = params;
-  const [isLoading, setLoading] = useState(true);
-  const [propietarios, setPropietarios] = useState([]);
-  const [toggleListadePropietarios, setToggleListadePropietarios] =
-    useState(false);
-  const [PropietarioSeleccionado, setPropietarioSeleccionado] = useState("");
-  const [toggleSeleccion, setToggleSeleccion] = useState(false);
-  const [togglePorcentajes, setTogglePorcentajes] = useState(false);
-  var UltimosPropietarios = [];
-
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
       .then((res) => {
         console.log(res);
         setPropietarios(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:5000/api/v1/vestimentas/listado_de_vestimentas")
+      .then((res) => {
+        console.log(res);
+        setVestimentasDispo(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:5000/api/v1/colores/listado_de_colores")
+      .then((res) => {
+        console.log(res);
+        setColores(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
   }, []);
+  const [togglecolor, setToggleColor] = useState(false);
+  const [toggleboton, setToggleBoton] = useState(false);
+  const [toggleAgregarVestimenta, setToggleAgregarVestimenta] = useState(false);
+  const [vestimentasDispo, setVestimentasDispo] = useState([]);
+  const [vestimentas, setVestimentas] = useState([]);
+  const [vestimenta, setVestimenta] = useState("");
+  const [toggleVestimenta, setToggleVestimenta] = useState(false);
+  const [color, setColor] = useState("#fff");
+  const [colores, setColores] = useState("#fff");
+  const [color1stud, setColor1stud] = useState("#fff");
+  const [color2stud, setColor2stud] = useState("#fff");
+  const handleColor = (color, event) => {
+    setColor(color.hex);
+    setToggleAgregarVestimenta(true);
+  };
+  const handleColor1 = (color, event) => {
+    setColor1stud(color.hex);
+  };
+  const handleColor2 = (color, event) => {
+    setColor2stud(color.hex);
+  };
+  const handleToggleColor = (event) => {
+    setToggleColor(true);
+  };
 
-  console.log(propietarios);
-
-  if (isLoading) {
-    return <div></div>;
-  }
-
+  const handleVestimenta = (event) => {
+    setToggleBoton(true);
+    setToggleVestimenta(true);
+    setVestimenta(event.target.value);
+  };
+  const handleVestimentas = (event) => {
+    setToggleAgregarVestimenta(false);
+    setToggleColor(false);
+    setToggleBoton(false);
+    const vestimentaStud = {
+      codigo: vestimenta,
+      colorV: color,
+    };
+    setVestimentas((vestimentas) => [...vestimentas, vestimentaStud]);
+  };
   let columnas1 = (
     <tr>
       <th>Nombre</th>
@@ -118,6 +163,27 @@ const StudDetail = () => {
       cedula: "29.458.321",
       record: "30-36",
       dinero: "2.000.000 Bs",
+    },
+  ];
+
+  const informacion3 = [
+    {
+      id: "9",
+      nombre: "Alejandrito",
+      apellido: "Rodriguez",
+      cedula: "28.308.632",
+    },
+    {
+      id: "8",
+      nombre: "Karim",
+      apellido: "Benzema",
+      cedula: "6.089.356",
+    },
+    {
+      id: "7",
+      nombre: "Lukita",
+      apellido: "Doncic",
+      cedula: "29.458.321",
     },
   ];
 
@@ -253,6 +319,39 @@ const StudDetail = () => {
     },
   ];
 
+  const params = useParams();
+  console.log(params.studId);
+  const match = useRouteMatch();
+  const { studId } = params;
+  const [isLoading, setLoading] = useState(true);
+  const [propietarios, setPropietarios] = useState([]);
+  const [propietariosF, setPropietariosF] = useState([]);
+  const [toggleListadePropietarios, setToggleListadePropietarios] =
+    useState(false);
+  const [PropietarioSeleccionado, setPropietarioSeleccionado] = useState("");
+  const [toggleSeleccion, setToggleSeleccion] = useState(false);
+  const [togglePorcentajes, setTogglePorcentajes] = useState(false);
+  const [agregar, setAgregar] = useState(true);
+  const [porcentajes, setporcentajes] = useState("");
+  const [UltimosPropietarios, setUltimosPropietario] = useState(informacion1);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
+      .then((res) => {
+        console.log(res);
+        setPropietarios(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(propietarios);
+
+  if (isLoading) {
+    return <div></div>;
+  }
+
   const onSeleccionPropietarioHandler = (id, propietario, event) => {
     event.preventDefault();
     console.log(id);
@@ -263,22 +362,33 @@ const StudDetail = () => {
 
   const handleTogglePropietarios = (event) => {
     setToggleListadePropietarios(true);
+    setAgregar(false);
   };
 
   const handlePorcentajes = (event) => {
+    setToggleListadePropietarios(false);
+    setToggleListadePropietarios(false);
     let nuevoPropietario = Object.assign({}, PropietarioSeleccionado, {
       porcentaje: 0,
     });
-    setToggleListadePropietarios(false);
-    setToggleListadePropietarios(false);
-    UltimosPropietarios = propietarios;
-    UltimosPropietarios.data.push(nuevoPropietario);
+    console.log(nuevoPropietario);
+    // UltimosPropietarios = propietarios;
+    // UltimosPropietarios.data.push(nuevoPropietario);
+    setUltimosPropietario((prevEstate) => {
+      return [...prevEstate, nuevoPropietario];
+    });
     console.log(UltimosPropietarios);
     setTogglePorcentajes(true);
   };
 
   const handleData = (event) => {
+    UltimosPropietarios.map(
+      (propietario) =>
+        (propietario.porcentaje = document.getElementById(propietario.id).value)
+    );
+    console.log(UltimosPropietarios);
     setTogglePorcentajes(false);
+    setAgregar(true);
   };
 
   return (
@@ -330,7 +440,11 @@ const StudDetail = () => {
                   )}
                 ></Tabla>
               </Row>
-              <Button className="mb-2" onClick={handleTogglePropietarios}>
+              <Button
+                className="mb-2"
+                onClick={handleTogglePropietarios}
+                disabled={!agregar}
+              >
                 Agregar Propietario al Stud
               </Button>
               <Row>
@@ -338,7 +452,7 @@ const StudDetail = () => {
                   <Col>
                     <div>
                       <Tabla
-                        titulo="PROPIETARIOS"
+                        titulo="PROPIETARIOS DISPONIBLES"
                         columnas={
                           <tr>
                             <th>Nombre</th>
@@ -346,7 +460,7 @@ const StudDetail = () => {
                             <th>Cedula</th>
                           </tr>
                         }
-                        informacion={informacion1}
+                        informacion={informacion3}
                         estilo=" table-hover"
                         funcion={(x) => (
                           <tr
@@ -381,6 +495,7 @@ const StudDetail = () => {
                 )}
                 {togglePorcentajes && (
                   <Col>
+                    {console.log(UltimosPropietarios)}
                     <Tabla
                       titulo="MODIFICAR PORCENTAJES"
                       columnas={
@@ -391,17 +506,20 @@ const StudDetail = () => {
                           <th>%</th>
                         </tr>
                       }
-                      informacion={informacion1}
+                      informacion={UltimosPropietarios}
                       estilo=" table-hover"
                       funcion={(x) => (
-                        <tr
-                          onClick={(e) =>
-                            onSeleccionPropietarioHandler(x.id, x, e)
-                          }
-                        >
+                        <tr>
                           <td>{`${x.nombre}`}</td>
                           <td>{`${x.apellido}`}</td>
                           <td>{`${x.cedula}`}</td>
+                          <td>
+                            <input
+                              className="col-2 border-0"
+                              id={x.id}
+                              type="number"
+                            ></input>
+                          </td>
                         </tr>
                       )}
                     ></Tabla>
@@ -417,23 +535,79 @@ const StudDetail = () => {
           </Card>
         </Col>
       </Row>
-
-      <Row>
-        <TablaCard
-          tituloTabla="ENTRENADORES"
-          columnas={columnas2}
-          informacion={informacion2}
-          funcion={(x) => (
-            <tr>
-              <td>{`${x.nombre}`}</td>
-              <td>{`${x.apellido}`}</td>
-              <td>{`${x.cedula}`}</td>
-              <td>{`${x.record}`}</td>
-              <td>{`${x.dinero}`}</td>
-            </tr>
-          )}
-        ></TablaCard>
-      </Row>
+      <Col className="justify-content-center align-items-center mx-5 my-4">
+        <Card className="mt-3">
+          <Card.Body>
+            <Card.Title>Vestimentas del stud</Card.Title>
+            <Row>
+              <Col className="col-4">
+                <FormSelect className="mt-3" onChange={handleVestimenta}>
+                  <option key={-1} disabled={toggleVestimenta}>
+                    Vestimenta
+                  </option>
+                  {vestimentasDispo.data.map((vestimenta) => (
+                    <option
+                      value={vestimenta.codigo_vestimenta}
+                      key={vestimenta.codigo_vestimenta}
+                    >
+                      {vestimenta.nombre_vestimenta}
+                    </option>
+                  ))}
+                </FormSelect>
+                {toggleAgregarVestimenta && (
+                  <Button className="sm mt-4" onClick={handleVestimentas}>
+                    Agregar Vestimenta
+                  </Button>
+                )}
+              </Col>
+              <Col className="col-4">
+                <Button
+                  className="mt-3"
+                  onClick={handleToggleColor}
+                  disabled={!toggleboton}
+                >
+                  Color
+                </Button>
+                {togglecolor && (
+                  <CirclePicker
+                    className="mt-3"
+                    onChangeComplete={handleColor}
+                  />
+                )}
+              </Col>
+              <Col className="col-4">
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>Vestimenta</th>
+                      <th>Color</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {vestimentas.map((vestimentaS) => (
+                      <tr>
+                        <td>
+                          {
+                            vestimentasDispo.data.find(
+                              (vestimenta) =>
+                                vestimenta.codigo_vestimenta ==
+                                vestimentaS.codigo
+                            ).nombre_vestimenta
+                          }
+                        </td>
+                        <td
+                          className="col-1 rounded"
+                          style={{ backgroundColor: vestimentaS.colorV }}
+                        ></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      </Col>
 
       <Row>
         <Col>
@@ -465,7 +639,7 @@ const StudDetail = () => {
         </Col>
       </Row>
 
-      <Row className="mt-4">
+      {/* <Row className="mt-4">
         <Col>
           <Row className="text-center">
             <h3>RESULTADOS DE LOS CABALLOS</h3>
@@ -541,7 +715,7 @@ const StudDetail = () => {
             ELIMINAR STUD
           </Button>
         </Col>
-      </Row>
+      </Row> */}
     </Container>
   );
 };
