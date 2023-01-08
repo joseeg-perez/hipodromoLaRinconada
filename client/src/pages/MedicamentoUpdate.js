@@ -7,7 +7,6 @@ const MedicamentoUpdate = () => {
   const Params = useParams();
   const [nombreMedicamento, setNombreMedicamento] = useState("");
   const [descripcionMedicamento, setDescripcionMedicamento] = useState("");
-  const [abrevMedicamento, setAbrevMedicamento] = useState("");
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     console.log(Params.medicamentoId);
@@ -17,7 +16,6 @@ const MedicamentoUpdate = () => {
         console.log(res);
         setNombreMedicamento(res.data.data[0].nombre_medicamento);
         setDescripcionMedicamento(res.data.data[0].descripcion_medicamento);
-        setAbrevMedicamento(res.data.data[0].abrev_medicamento);
         setLoading(false);
       })
       .catch((err) => console.log(err));
@@ -29,28 +27,24 @@ const MedicamentoUpdate = () => {
   const handleNombreMedicamento = (event) => {
     setNombreMedicamento(event.target.value);
   };
-  const handleAbrevMedicamento = (event) => {
-    setAbrevMedicamento(event.target.value);
-  };
   const handleDescripcionMedicamento = (event) => {
     setDescripcionMedicamento(event.target.value);
   };
   const handleData = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(
-        "http://localhost:5000/api/v1/Medicamentos/registrar_Medicamento",
+      await axios.patch(
+        `http://localhost:5000/api/v1/medicamentos/${Params.medicamentoId}`,
         {
           nombreMedicamento,
-          abrevMedicamento,
+          descripcionMedicamento,
         }
       );
     } catch (error) {
       throw error;
     }
-    console.warn(nombreMedicamento, descripcionMedicamento, abrevMedicamento);
+    console.warn(nombreMedicamento, descripcionMedicamento);
     setNombreMedicamento("");
-    setAbrevMedicamento("");
     setDescripcionMedicamento("");
   };
   return (
