@@ -30,7 +30,18 @@ const registrarJinete = async (nuevoJinete) => {
   }
 };
 
-const actualizarJinete = async (jineteId, cambios) => {};
+const actualizarJinete = async (jineteId, cambios) => {
+  try {
+    const jineteActualizado = await Entrenador.actualizarEntrenador(
+      jineteId,
+      cambios
+    );
+
+    return jineteActualizado;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarJinete = async (jineteId) => {
   try {

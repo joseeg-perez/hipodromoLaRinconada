@@ -20,7 +20,15 @@ const registrarStudColor = async (nuevoStudColor) => {
   }
 };
 
-const actualizarStudColor = async (studColorId, cambios) => {};
+const actualizarStudColor = async (studColorId, cambios) => {
+  try {
+    await StudColor.actualizarStudColor(studColorId, cambios);
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarStudColor = async (studColorId) => {
   try {

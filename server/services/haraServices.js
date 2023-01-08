@@ -30,7 +30,15 @@ const registrarHara = async (nuevaHara) => {
   }
 };
 
-const actualizarHara = async (haraId, cambios) => {};
+const actualizarHara = async (haraId, cambios) => {
+  try {
+    const haraActualizada = await Hara.actualizarHara(haraId, cambios);
+
+    return haraActualizada;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarHara = async (haraId) => {
   try {

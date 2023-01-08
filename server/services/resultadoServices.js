@@ -30,14 +30,11 @@ const registrarResultado = async (nuevoResultado) => {
   }
 };
 
-const actualizarResultado = (resultadoId, cambios) => {
+const actualizarResultado = async (resultadoId, cambios) => {
   try {
-    const resultadoActualizado = Resultado.actualizarResultado(
-      resultadoId,
-      cambios
-    );
+    await Resultado.actualizarResultado(resultadoId, cambios);
 
-    return resultadoActualizado;
+    return;
   } catch (error) {
     throw error;
   }

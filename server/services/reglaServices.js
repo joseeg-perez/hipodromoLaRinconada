@@ -1,57 +1,57 @@
 const Regla = require("../database/regla.js");
 
 const obtenerListaDeReglas = async () => {
-    try {
-        const listaReglas = await Regla.obtenerListaDeReglas();
+  try {
+    const listaReglas = await Regla.obtenerListaDeReglas();
 
-        return(listaReglas);
-    } catch (error) {
-        throw(error);
-    }
+    return listaReglas;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const obtenerReglaIndividual = async (reglaId) => {
-    try {
-        const regla = await Regla.obtenerReglaIndividual(reglaId);
+  try {
+    const regla = await Regla.obtenerReglaIndividual(reglaId);
 
-        return(regla);
-    } catch (error) {
-        throw(error);
-    }
+    return regla;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const registrarRegla = async (nuevaRegla) => {
-    try {
-        const reglaCreada = await Regla.registrarRegla(nuevaRegla);
-        
-        return(reglaCreada);
-    } catch (error) {
-        throw(error);
-    }
+  try {
+    const reglaCreada = await Regla.registrarRegla(nuevaRegla);
+
+    return reglaCreada;
+  } catch (error) {
+    throw error;
+  }
 };
 
-const actualizarRegla = (reglaId, cambios) => {
-    try {
-        const reglaActualizada = Regla.actualizarRegla(reglaId, cambios);
-        
-        return(reglaActualizada);
-    } catch (error) {
-        throw(error);
-    }
+const actualizarRegla = async (reglaId, cambios) => {
+  try {
+    const reglaActualizada = await Regla.actualizarRegla(reglaId, cambios);
+
+    return reglaActualizada;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const borrarRegla = async (reglaId) => {
-    try {
-        await Regla.borrarRegla(reglaId);
-    } catch (error) {
-        throw(error);
-    }
+  try {
+    await Regla.borrarRegla(reglaId);
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = {
-    obtenerListaDeReglas,
-    obtenerReglaIndividual,
-    registrarRegla,
-    actualizarRegla,
-    borrarRegla,
+  obtenerListaDeReglas,
+  obtenerReglaIndividual,
+  registrarRegla,
+  actualizarRegla,
+  borrarRegla,
 };

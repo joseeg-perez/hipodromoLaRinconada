@@ -60,7 +60,34 @@ const registrarTelefono = async (nuevoTelefono) => {
   }
 };
 
-const actualizarTelefono = (telefonoId, cambios) => {};
+const actualizarTelefono = async (telefonoId, cambios) => {
+  const { extensionTelefono, cuerpoTelefono, fkPropietario } = cambios;
+
+  const query = {
+    text: `UPDATE telefono
+            SET extension_tlf=$1,
+            cuerpo_tlf=$2,
+            fk_propietario=$3
+            WHERE codigo_tlf=$4;`,
+    values: [extensionTelefono, cuerpoTelefono, fkPropietario, telefonoId],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0) httpError.idNoEncontrado("El telefono", telefonoId);
+
+    dbConnection.end;
+    return;
+  } catch (error) {
+    console.log(error);
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay un telefono con el codigo '${telefonoId}' registrado.`,
+      };
+    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
 
 const borrarTelefono = async (telefonoId) => {
   const query = {

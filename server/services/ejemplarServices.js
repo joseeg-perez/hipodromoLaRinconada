@@ -30,9 +30,9 @@ const registrarEjemplar = async (nuevoEjemplar) => {
   }
 };
 
-const actualizarEjemplar = (ejemplarId, cambios) => {
+const actualizarEjemplar = async (ejemplarId, cambios) => {
   try {
-    const ejemplarActualizado = Ejemplar.actualizarEjemplar(
+    const ejemplarActualizado = await Ejemplar.actualizarEjemplar(
       ejemplarId,
       cambios
     );

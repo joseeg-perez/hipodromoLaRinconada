@@ -92,7 +92,7 @@ const actualizarEntrenador = async (req, res) => {
     );
     res.send({
       status: "OK",
-      data: `Se ha actualizado la informacion del entrenador '${entrenadorActualizado} de forma satisfactoria.`,
+      data: `Se ha actualizado la informacion del entrenador '${entrenadorActualizado}' de forma satisfactoria.`,
     });
   } catch (error) {
     res

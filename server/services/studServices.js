@@ -33,7 +33,7 @@ const registrarStud = async (nuevoStud) => {
   try {
     const studCreado = await Stud.registrarStud(nuevoStud);
     const idStudCreado = await Stud.obtenerIdStudNueva(nuevoStud);
-
+    console.log(idStudCreado);
     const propietarioStud = {
       porcentajePropiedad: 100,
       fkStud: idStudCreado,
@@ -85,7 +85,15 @@ const registrarStud = async (nuevoStud) => {
   }
 };
 
-const actualizarStud = async (studId, cambios) => {};
+const actualizarStud = async (studId, cambios) => {
+  try {
+    const studActualizado = await Stud.actualizarStud(studId, cambios);
+
+    return studActualizado;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarStud = async (studId) => {
   try {

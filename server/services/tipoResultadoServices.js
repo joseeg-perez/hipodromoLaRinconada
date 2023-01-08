@@ -35,12 +35,10 @@ const registrarTipoResultado = async (nuevoTipoResultado) => {
   }
 };
 
-const actualizarTipoResultado = (tipoResultadoId, cambios) => {
+const actualizarTipoResultado = async (tipoResultadoId, cambios) => {
   try {
-    const tipoResultadoActualizado = TipoResultado.actualizarTipoResultado(
-      tipoResultadoId,
-      cambios
-    );
+    const tipoResultadoActualizado =
+      await TipoResultado.actualizarTipoResultado(tipoResultadoId, cambios);
 
     return tipoResultadoActualizado;
   } catch (error) {

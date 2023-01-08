@@ -34,9 +34,9 @@ const registrarRestaurante = async (nuevoRestaurante) => {
   }
 };
 
-const actualizarRestaurante = (restauranteId, cambios) => {
+const actualizarRestaurante = async (restauranteId, cambios) => {
   try {
-    const restauranteActualizado = Restaurante.actualizarRestaurante(
+    const restauranteActualizado = await Restaurante.actualizarRestaurante(
       restauranteId,
       cambios
     );

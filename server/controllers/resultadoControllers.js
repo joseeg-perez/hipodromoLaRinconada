@@ -3,8 +3,7 @@ const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeResultados = async (req, res) => {
   try {
-    const listaResultados =
-      await resultadoservice.obtenerListaDeResultados();
+    const listaResultados = await resultadoservice.obtenerListaDeResultados();
 
     res.status(200).send({ status: "OK", data: listaResultados });
   } catch (error) {
@@ -20,7 +19,9 @@ const obtenerResultadoIndividual = async (req, res) => {
   } = req;
 
   try {
-    const resultado = await resultadoservice.obtenerResultadoIndividual(resultadoId);
+    const resultado = await resultadoservice.obtenerResultadoIndividual(
+      resultadoId
+    );
     res.status(200).send({ status: "OK", data: resultado });
   } catch (error) {
     res
@@ -37,13 +38,13 @@ const registrarResultado = async (req, res) => {
     speedRating400m,
     speedRating800m,
     observacion,
-    gananciaEntrenador,
+    gananciaresultado,
     gananciaJinete,
     gananciaPropietario,
     tiempoTotal,
     fkTipoResultado,
     fkCuerpoDiferencia,
- } = req.body;
+  } = req.body;
 
   const nuevaresultado = {
     diferenciaTiempo,
@@ -52,7 +53,7 @@ const registrarResultado = async (req, res) => {
     speedRating400m,
     speedRating800m,
     observacion,
-    gananciaEntrenador,
+    gananciaresultado,
     gananciaJinete,
     gananciaPropietario,
     tiempoTotal,
@@ -62,12 +63,10 @@ const registrarResultado = async (req, res) => {
 
   try {
     await resultadoservice.registrarResultado(nuevaresultado);
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `Se ha registrado la resultado de forma satisfactoria.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `Se ha registrado la resultado de forma satisfactoria.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -75,7 +74,24 @@ const registrarResultado = async (req, res) => {
   }
 };
 
-const actualizarResultado = async (req, res) => {};
+const actualizarResultado = async (req, res) => {
+  const {
+    body,
+    params: { resultadoId },
+  } = req;
+
+  try {
+    await resultadoservice.actualizarResultado(resultadoId, body);
+    res.send({
+      status: "OK",
+      data: `Se ha actualizado la informacion del resultado de forma satisfactoria.`,
+    });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
 
 const borrarResultado = async (req, res) => {
   const {
@@ -84,12 +100,10 @@ const borrarResultado = async (req, res) => {
 
   try {
     await resultadoservice.borrarResultado(resultadoId);
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `El resultado con el id '${resultadoId}' se ha eliminado con exito.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `El resultado con el id '${resultadoId}' se ha eliminado con exito.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)

@@ -34,9 +34,9 @@ const registrarCategoria = async (nuevaCategoria) => {
   }
 };
 
-const actualizarCategoria = (categoriaId, cambios) => {
+const actualizarCategoria = async (categoriaId, cambios) => {
   try {
-    const categoriaActualizada = CategoriaCarrera.actualizarCategoria(
+    const categoriaActualizada = await CategoriaCarrera.actualizarCategoria(
       categoriaId,
       cambios
     );

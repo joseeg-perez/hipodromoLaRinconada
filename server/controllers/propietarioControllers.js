@@ -33,45 +33,67 @@ const obtenerPropietarioIndividual = async (req, res) => {
 };
 
 const registrarPropietario = async (req, res) => {
-    const { 
-        cedulaPersona,
-        nombre1Persona,
-        nombre2Persona,
-        apellido1Persona,
-        apellido2Persona,
-        fechaNacimiento,
-        correo,
-        fkLugar,
-        extension_tlf,
-        cuerpo_tlf,
+  const {
+    cedulaPersona,
+    nombre1Persona,
+    nombre2Persona,
+    apellido1Persona,
+    apellido2Persona,
+    fechaNacimiento,
+    correo,
+    fkLugar,
+    extension_tlf,
+    cuerpo_tlf,
+  } = req.body;
 
-     } = req.body;
+  const nuevoPropietario = {
+    cedulaPersona,
+    nombre1Persona: nombre1Persona.toLowerCase(),
+    nombre2Persona: nombre2Persona.toLowerCase(),
+    apellido1Persona: apellido1Persona.toLowerCase(),
+    apellido2Persona: apellido2Persona.toLowerCase(),
+    fechaNacimiento,
+    correo,
+    fkLugar,
+    extension_tlf,
+    cuerpo_tlf,
+  };
 
-    const nuevoPropietario = {
-        cedulaPersona,
-        nombre1Persona: nombre1Persona.toLowerCase(),
-        nombre2Persona: nombre2Persona.toLowerCase(),
-        apellido1Persona: apellido1Persona.toLowerCase(),
-        apellido2Persona: apellido2Persona.toLowerCase(),
-        fechaNacimiento,
-        correo,
-        fkLugar,
-        extension_tlf,
-        cuerpo_tlf,
-    };
-
-    try {
-        const propietarioCreado = await propietarioService.registrarPropietario(nuevoPropietario);
-        res.status(200).send({ status: "OK", data: `Se ha registrado el propietario '${propietarioCreado}' de forma satisfactoria.` });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
-    }
+  try {
+    const propietarioCreado = await propietarioService.registrarPropietario(
+      nuevoPropietario
+    );
+    res
+      .status(200)
+      .send({
+        status: "OK",
+        data: `Se ha registrado el propietario '${propietarioCreado}' de forma satisfactoria.`,
+      });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const actualizarPropietario = async (req, res) => {
-  res.send("Estamos en actualizar Propietario");
+  const {
+    body,
+    params: { propietarioId },
+  } = req;
+
+  try {
+    const propietarioActualizado =
+      await propietarioService.actualizarPropietario(propietarioId, body);
+    res.send({
+      status: "OK",
+      data: `Se ha actualizado la informacion del propietario '${propietarioActualizado}' de forma satisfactoria.`,
+    });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const borrarPropietario = async (req, res) => {

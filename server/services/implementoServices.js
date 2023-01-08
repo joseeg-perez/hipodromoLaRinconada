@@ -34,7 +34,18 @@ const registrarImplemento = async (nuevoImplemento) => {
   }
 };
 
-const actualizarImplemento = async (implementoId, cambios) => {};
+const actualizarImplemento = async (implementoId, cambios) => {
+  try {
+    const implementoActualizado = await Implemento.actualizarImplemento(
+      implementoId,
+      cambios
+    );
+
+    return implementoActualizado;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarImplemento = async (implementoId) => {
   try {

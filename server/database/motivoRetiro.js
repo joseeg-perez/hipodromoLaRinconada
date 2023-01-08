@@ -57,7 +57,33 @@ const registrarMotivoDeRetiro = async (nuevoMotivoRetiro) => {
   }
 };
 
-const actualizarMotivoDeRetiro = async (motivoRetiroId, cambios) => {};
+const actualizarMotivoDeRetiro = async (motivoRetiroId, cambios) => {
+  const { nombreMotivo, descripcionMotivo } = cambios;
+
+  const query = {
+    text: `UPDATE motivo
+            SET nombre_motivo=$1,
+            descripcion_motivo=$2
+            WHERE codigo_motivo=$3;`,
+    values: [nombreMotivo, descripcionMotivo, motivoRetiroId],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0)
+      httpError.idNoEncontrado("El motivo de retiro", motivoRetiroId);
+
+    dbConnection.end;
+    return nombreMotivo;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay un motivo de retiro con el codigo '${motivoRetiroId}' registrado.`,
+      };
+    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
 
 const borrarMotivoDeRetiro = async (motivoRetiroId) => {
   const query = {

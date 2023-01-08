@@ -15,7 +15,18 @@ const registrarColorStudVestimenta = async (nuevoColorStudVestimenta) => {
 const actualizarColorStudVestimenta = async (
   colorStudVestimentaId,
   cambios
-) => {};
+) => {
+  try {
+    await ColorStudVestimenta.actualizarColorStudVestimenta(
+      colorStudVestimentaId,
+      cambios
+    );
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarColorStudVestimenta = async (colorStudVestimentaId) => {
   try {
