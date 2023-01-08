@@ -68,12 +68,10 @@ const registrarEntrenador = async (req, res) => {
     const entrenadorCreado = await entrenadorService.registrarEntrenador(
       nuevoEntrenador
     );
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `Se ha registrado el entrenador '${entrenadorCreado}' de forma satisfactoria.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `Se ha registrado el entrenador '${entrenadorCreado}' de forma satisfactoria.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -82,23 +80,25 @@ const registrarEntrenador = async (req, res) => {
 };
 
 const actualizarEntrenador = async (req, res) => {
-<<<<<<< HEAD
-  res.send("Estamos en actualizar entrenador ROUTER");
-=======
-    const {
-        body,
-        params: { entrenadorId },
-    } = req;
+  const {
+    body,
+    params: { entrenadorId },
+  } = req;
 
-    try {
-        const entrenadorActualizado = await entrenadorService.actualizarEntrenador(entrenadorId, body);
-        res.send({ status: "OK", data: `Se ha actualizado la informacion del entrenador '${entrenadorActualizado}' de forma satisfactoria.` });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
-    }
->>>>>>> 1282e75b0bbf73884144a04c9e4cec0454a287d9
+  try {
+    const entrenadorActualizado = await entrenadorService.actualizarEntrenador(
+      entrenadorId,
+      body
+    );
+    res.send({
+      status: "OK",
+      data: `Se ha actualizado la informacion del entrenador '${entrenadorActualizado}' de forma satisfactoria.`,
+    });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const borrarEntrenador = async (req, res) => {
@@ -108,12 +108,10 @@ const borrarEntrenador = async (req, res) => {
 
   try {
     await entrenadorService.borrarEntrenador(entrenadorId);
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `El entrenador con el id '${entrenadorId}' se ha eliminado con exito.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `El entrenador con el id '${entrenadorId}' se ha eliminado con exito.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
