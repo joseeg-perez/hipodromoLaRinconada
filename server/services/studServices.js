@@ -30,15 +30,15 @@ const obtenerStudIndividual = async (studId) => {
 };
 
 const registrarStud = async (nuevoStud) => {
-    try {
-        const studCreado = await Stud.registrarStud(nuevoStud);
-        const idStudCreado = await Stud.obtenerIdStudNueva(nuevoStud); 
-        
-        const propietarioStud = {
-            porcentajePropiedad: 100,
-            fkStud: idStudCreado,
-            fkPropietario: nuevoStud.propietarioStud,
-        };
+  try {
+    const studCreado = await Stud.registrarStud(nuevoStud);
+    const idStudCreado = await Stud.obtenerIdStudNueva(nuevoStud);
+
+    const propietarioStud = {
+      porcentajePropiedad: 100,
+      fkStud: idStudCreado,
+      fkPropietario: nuevoStud.propietarioStud,
+    };
 
     const studColor1 = {
       fkColor: nuevoStud.color1,

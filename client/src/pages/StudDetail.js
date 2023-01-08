@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
 import InfoEjemplar from "../componentes/ejemplares/InfoEjemplar";
@@ -6,12 +6,39 @@ import TablaCard from "../componentes/layout/TablaCard";
 import Tabla from "../componentes/tablas/Tabla";
 import StudUpdate from "./StudUpdate";
 import imagen from "../assets/caballo1.jpg";
+import axios from "axios";
+import Propietarios from "./Propietarios";
 
 const StudDetail = () => {
   const params = useParams();
   console.log(params.studId);
   const match = useRouteMatch();
   const { studId } = params;
+  const [isLoading, setLoading] = useState(true);
+  const [propietarios, setPropietarios] = useState([]);
+  const [toggleListadePropietarios, setToggleListadePropietarios] =
+    useState(false);
+  const [PropietarioSeleccionado, setPropietarioSeleccionado] = useState("");
+  const [toggleSeleccion, setToggleSeleccion] = useState(false);
+  const [togglePorcentajes, setTogglePorcentajes] = useState(false);
+  var UltimosPropietarios = [];
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
+      .then((res) => {
+        console.log(res);
+        setPropietarios(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(propietarios);
+
+  if (isLoading) {
+    return <div></div>;
+  }
 
   let columnas1 = (
     <tr>
@@ -226,12 +253,34 @@ const StudDetail = () => {
     },
   ];
 
-
-  const onSeleccionPropietarioHandler = (id,propietario, event) => {
+  const onSeleccionPropietarioHandler = (id, propietario, event) => {
     event.preventDefault();
     console.log(id);
     console.log(propietario);
+    setPropietarioSeleccionado(propietario);
+    setToggleSeleccion(true);
   };
+
+  const handleTogglePropietarios = (event) => {
+    setToggleListadePropietarios(true);
+  };
+
+  const handlePorcentajes = (event) => {
+    let nuevoPropietario = Object.assign({}, PropietarioSeleccionado, {
+      porcentaje: 0,
+    });
+    setToggleListadePropietarios(false);
+    setToggleListadePropietarios(false);
+    UltimosPropietarios = propietarios;
+    UltimosPropietarios.data.push(nuevoPropietario);
+    console.log(UltimosPropietarios);
+    setTogglePorcentajes(true);
+  };
+
+  const handleData = (event) => {
+    setTogglePorcentajes(false);
+  };
+
   return (
     <Container>
       <Row className="text-center">
@@ -272,7 +321,7 @@ const StudDetail = () => {
                   informacion={informacion1}
                   estilo=" table-hover"
                   funcion={(x) => (
-                    <tr onClick={(e) => onSeleccionPropietarioHandler(x.id,x, e)}>
+                    <tr>
                       <td>{`${x.nombre}`}</td>
                       <td>{`${x.apellido}`}</td>
                       <td>{`${x.cedula}`}</td>
@@ -280,6 +329,89 @@ const StudDetail = () => {
                     </tr>
                   )}
                 ></Tabla>
+              </Row>
+              <Button className="mb-2" onClick={handleTogglePropietarios}>
+                Agregar Propietario al Stud
+              </Button>
+              <Row>
+                {toggleListadePropietarios && (
+                  <Col>
+                    <div>
+                      <Tabla
+                        titulo="PROPIETARIOS"
+                        columnas={
+                          <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Cedula</th>
+                          </tr>
+                        }
+                        informacion={informacion1}
+                        estilo=" table-hover"
+                        funcion={(x) => (
+                          <tr
+                            onClick={(e) =>
+                              onSeleccionPropietarioHandler(x.id, x, e)
+                            }
+                          >
+                            <td>{`${x.nombre}`}</td>
+                            <td>{`${x.apellido}`}</td>
+                            <td>{`${x.cedula}`}</td>
+                          </tr>
+                        )}
+                      ></Tabla>
+                      {toggleSeleccion && (
+                        <Button
+                          className="btn-outline-primary btn-light mb-2"
+                          onClick={handlePorcentajes}
+                        >
+                          Agregar a {PropietarioSeleccionado.nombre}{" "}
+                          {PropietarioSeleccionado.apellido} al Stud
+                        </Button>
+                      )}
+                      <Link
+                        size="sm"
+                        to={`/propietarios/createPropietario`}
+                        className="text-start"
+                      >
+                        <p>No está registrado el propietario?</p>
+                      </Link>
+                    </div>
+                  </Col>
+                )}
+                {togglePorcentajes && (
+                  <Col>
+                    <Tabla
+                      titulo="MODIFICAR PORCENTAJES"
+                      columnas={
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>Cedula</th>
+                          <th>%</th>
+                        </tr>
+                      }
+                      informacion={informacion1}
+                      estilo=" table-hover"
+                      funcion={(x) => (
+                        <tr
+                          onClick={(e) =>
+                            onSeleccionPropietarioHandler(x.id, x, e)
+                          }
+                        >
+                          <td>{`${x.nombre}`}</td>
+                          <td>{`${x.apellido}`}</td>
+                          <td>{`${x.cedula}`}</td>
+                        </tr>
+                      )}
+                    ></Tabla>
+                    <div className="text-center">
+                      <Button className="btn-success" onClick={handleData}>
+                        Confirmar cambios
+                      </Button>
+                    </div>
+                  </Col>
+                )}
               </Row>
             </Card.Body>
           </Card>
