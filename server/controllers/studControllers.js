@@ -28,6 +28,10 @@ const obtenerStudIndividual = async (req, res) => {
     }
 };
 
+const obtenerPropietarioDeStud = async (req, res) => {
+    console.log("estamos aqui")
+}
+
 const registrarStud = async (req, res) => {
     const { 
         fechaCreacion,
@@ -92,6 +96,7 @@ const borrarStud = async (req, res) => {
 module.exports = {
     obtenerListaDeStuds,
     obtenerStudIndividual,
+    obtenerPropietarioDeStud,
     registrarStud,
     actualizarStud,
     borrarStud,
