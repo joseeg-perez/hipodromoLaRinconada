@@ -76,32 +76,48 @@ const registrarEjemplarPropietario = async (nuevoEjemplarPropietario) => {
     }   
 };
 
-const actualizarEjemplarPropietario = async (ejemplarPropietarioId) => {
-     //terminar de aclarar que campos se editan
-     const query = {
-        text:"UPDATE ejemplar SET ejemplar_propietario=$1 WHERE codigo_ej_prop =$2",
-        values: [cambios, ejemplarPropietarioId],
-    }
-
-    const {
-
-    } = cambios;
-
-    console.log(cambios)
-        try {
-            const res = await dbConnection.query(query);
-            if (res.rows.length === 0)
-                httpError.idNoEncontrado("El ejemplar", ejemplarPropietarioId);
-              
-        } catch (error) {
-            throw(error);
+const actualizarEjemplarPropietario = async (ejemplarPropietarioId, cambios) => {
+    const { 
+        porcentajePropiedad,
+        fechaInicioPropiedad,
+        fechaFinPropiedad,
+        fkEjemplar,
+        fkPropStud,
+       } = cambios;
+        
+        const query = {
+            text:`UPDATE ejemplar_propietario
+            SET porcentaje_propiedad=$1,
+            fecha_inicio_propiedad=$2,
+            fecha_fin_propiedad=$3,
+            fk_ejemplar=$4,
+            fk_prop_stud=$5
+            WHERE codigo_ej_prop=$6;`,
+            values: [
+                porcentajePropiedad,
+                fechaInicioPropiedad,
+                fechaFinPropiedad,
+                fkEjemplar,
+                fkPropStud,
+                ejemplarPropietarioId
+            ],
         }
-        return;
-
-        // rows = cambios;
-        // console.log("Estas son las filas  con cambios: ", )
-
-         
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("El ejemplar asociado a un propietario", ejemplarPropietarioId);
+                
+            dbConnection.end;
+            return;
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay un ejemplar asociado a un propietario con codigo '${ejemplarPropietarioId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }        
 };
 
 const borrarEjemplarPropietario = async (ejemplarPropietarioId) => {

@@ -40,7 +40,13 @@ const registrarPropietario = async (nuevoPropietario) => {
 };
 
 const actualizarPropietario = async (propietarioId, cambios) => {
-
+    try {
+        const propietarioActualizado = await Propietario.actualizarPropietario(propietarioId, cambios);
+        
+        return(propietarioActualizado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const borrarPropietario = async (propietarioId) => {

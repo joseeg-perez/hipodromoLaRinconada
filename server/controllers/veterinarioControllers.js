@@ -78,7 +78,19 @@ const registrarVeterinario = async (req, res) => {
 };
 
 const actualizarVeterinario = async (req, res) => {
+    const {
+        body,
+        params: { veterinarioId },
+    } = req;
 
+    try {
+        const veterinarioActualizado = await veterinarioService.actualizarVeterinario(veterinarioId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del veterinario '${veterinarioActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarVeterinario = async (req, res) => {

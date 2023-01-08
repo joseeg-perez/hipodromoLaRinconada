@@ -82,7 +82,13 @@ const registrarStud = async (nuevoStud) => {
 };
 
 const actualizarStud = async (studId, cambios) => {
-
+    try {
+        const studActualizado = await Stud.actualizarStud(studId, cambios);
+        
+        return(studActualizado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const borrarStud = async (studId) => {

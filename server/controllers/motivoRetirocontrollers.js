@@ -50,8 +50,19 @@ const registrarMotivoDeRetiro = async (req, res) => {
 };
 
 const actualizarMotivoDeRetiro = async (req, res) => {
-    res.send("Estamos en actualizar motivoRetiro");
+    const {
+        body,
+        params: { motivoRetiroId },
+    } = req;
 
+    try {
+        const motivoRetiroActualizado = await motivoRetiroService.actualizarMotivoDeRetiro(motivoRetiroId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del motivo de retiro '${motivoRetiroActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarMotivoDeRetiro = async (req, res) => {

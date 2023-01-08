@@ -29,11 +29,11 @@ const registrarRetiro = async (nuevoRetiro) => {
     }
 };
 
-const actualizarRetiro = (retiroId, cambios) => {
+const actualizarRetiro = async (retiroId, cambios) => {
     try {
-        const retiroActualizado = Retiro.actualizarRetiro(retiroId, cambios);
+        await Retiro.actualizarRetiro(retiroId, cambios);
         
-        return(retiroActualizado);
+        return;
     } catch (error) {
         throw(error);
     }

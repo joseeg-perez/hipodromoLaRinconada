@@ -31,7 +31,13 @@ const registrarMedicamento = async (nuevoMedicamento) => {
 };
 
 const actualizarMedicamento = async (medicamentoId, cambios) => {
-
+    try {
+        const medicamentoActualizado = await Medicamento.actualizarMedicamento(medicamentoId, cambios);
+        
+        return(medicamentoActualizado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const borrarMedicamento = async (medicamentoId) => {

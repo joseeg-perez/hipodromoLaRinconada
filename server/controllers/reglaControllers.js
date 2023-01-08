@@ -50,7 +50,19 @@ const registrarRegla = async (req, res) => {
 };
 
 const actualizarRegla = async (req, res) => {
+    const {
+        body,
+        params: { reglaId },
+    } = req;
 
+    try {
+        const reglaActualizada = await reglaService.actualizarRegla(reglaId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion de la regla '${reglaActualizada}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarRegla = async (req, res) => {

@@ -56,7 +56,7 @@ const registrarRol = async (nuevoRol) => {
         throw { status: error?.status || 500, message: error?.message || error };
     }
 };
-//Restante
+
 const actualizarRol = async (rolId, cambios) => {
     const { nombre } = cambios;
 

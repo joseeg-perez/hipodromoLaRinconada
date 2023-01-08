@@ -1,6 +1,5 @@
 const EjemplarPropietario = require("../database/ejemplarPropietario.js");
 
-
 const obtenerListaDeEjemplarPropietarios = async () => {
     try {
         const listaEjemplarPropietarioes = await EjemplarPropietario.obtenerListaDeEjemplarPropietarios();
@@ -31,11 +30,11 @@ const registrarEjemplarPropietario = async (nuevoEjemplarPropietario) => {
     }
 };
 
-const actualizarEjemplarPropietario = async (ejemplarPropietarioId) => {
+const actualizarEjemplarPropietario = async (ejemplarPropietarioId, cambios) => {
     try {
-        const ejemplarPropietarioActualizado = EjemplarPropietario.actualizarEjemplarPropietario(ejemplarPropietarioId, cambios);
+        await EjemplarPropietario.actualizarEjemplarPropietario(ejemplarPropietarioId, cambios);
         
-        return(ejemplarPropietarioActualizado);
+        return;
     } catch (error) {
         throw(error);
     }   

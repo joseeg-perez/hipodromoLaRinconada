@@ -50,7 +50,21 @@ const registrarMedicamento = async (req, res) => {
   }
 };
 
-const actualizarMedicamento = async (req, res) => {};
+const actualizarMedicamento = async (req, res) => {
+  const {
+      body,
+      params: { medicamentoId },
+  } = req;
+
+  try {
+      const medicamentoActualizado = await medicamentoService.actualizarMedicamento(medicamentoId, body);
+      res.send({ status: "OK", data: `Se ha actualizado la informacion del medicamento '${medicamentoActualizado}' de forma satisfactoria.` });
+  } catch (error) {
+      res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
 
 const borrarMedicamento = async (req, res) => {
   const {

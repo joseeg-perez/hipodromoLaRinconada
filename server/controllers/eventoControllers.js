@@ -50,7 +50,19 @@ const registrarEvento = async (req, res) => {
 };
 
 const actualizarEvento = async (req, res) => {
+    const {
+        body,
+        params: { eventoId },
+    } = req;
 
+    try {
+        await eventoService.actualizarEvento(eventoId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del evento de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarEvento = async (req, res) => {

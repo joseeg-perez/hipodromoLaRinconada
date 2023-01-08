@@ -36,11 +36,14 @@ const obtenerImplementoIndividual = async (implementoId) => {
 };
 
 const registrarImplemento = async (nuevoImplemento) => {
-  const { nombreImplemento, descripcionImplemento } = nuevoImplemento;
+  const { 
+    nombreImplemento,
+    abreviacionImplemento,
+    descripcionImplemento } = nuevoImplemento;
 
-  const text = `INSERT INTO implemento(nombre_implemento, descripcion_implemento) VALUES($1, $2)`;
+  const text = `INSERT INTO implemento(nombre_implemento, abrev_implemento, descripcion_implemento) VALUES($1, $2, $3)`;
 
-  const values = [nombreImplemento, descripcionImplemento];
+  const values = [nombreImplemento, abreviacionImplemento, descripcionImplemento];
 
   try {
     const res = await dbConnection.query(text, values);
@@ -58,7 +61,43 @@ const registrarImplemento = async (nuevoImplemento) => {
   }
 };
 
-const actualizarImplemento = async (implementoId, cambios) => {};
+const actualizarImplemento = async (implementoId, cambios) => {
+  const { 
+    nombreImplemento,
+    abreviacionImplemento,
+    descripcionImplemento
+   } = cambios;
+
+    const query = {
+        text:`UPDATE implemento
+        SET nombre_implemento=$1,
+        abrev_implemento=$2,
+        descripcion_implemento=$3
+        WHERE codigo_implemento=$4;`,
+        values: [
+          nombreImplemento,
+          abreviacionImplemento,
+          descripcionImplemento,
+          implementoId
+        ],
+    }
+    try {
+      const { rowCount } = await dbConnection.query(query);
+      if (rowCount === 0)
+        httpError.idNoEncontrado("El implemento", implementoId);
+            
+        dbConnection.end;
+        return(nombreImplemento);
+    } catch (error) {
+        if (error.code === "23505") {
+          throw {
+            status: 409,
+            message: `Ya hay un implemento con el codigo'${implementoId}' registrado.`,
+          };
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
 
 const borrarImplemento = async (implementoId) => {
   const query = {

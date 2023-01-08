@@ -63,7 +63,38 @@ const registrarParticipacionMedicamento = async (nuevaParticipacionMedicamento) 
 };
 
 const actualizarParticipacionMedicamento = async (participacionMedicamentoId, cambios) => {
+    const { 
+        fkMedicamento,
+        fkParticipacion,
+       } = cambios;
     
+        const query = {
+            text:`UPDATE participacion_medicamento
+            SET fk_medicamento=$1,
+            fk_participacion=$2
+            WHERE codigo_pm=$3;`,
+            values: [
+                fkMedicamento,
+                fkParticipacion,
+                participacionMedicamentoId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("El medicamento asociado a una participacion", participacionMedicamentoId);
+                
+            dbConnection.end;
+            return;
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay un medicamento asociado a una participacion con el codigo'${participacionMedicamentoId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }    
 };
 
 const borrarParticipacionMedicamento = async (participacionMedicamentoId) => {

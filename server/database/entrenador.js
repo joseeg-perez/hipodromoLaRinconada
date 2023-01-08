@@ -130,22 +130,22 @@ const actualizarEntrenador = async (entrenadorId, cambios) => {
           entrenadorId
         ],
     }
-        try {
-            const { rowCount } = await dbConnection.query(query);
-            if (rowCount === 0)
-                httpError.idNoEncontrado("El entrenador", entrenadorId);
+    try {
+      const { rowCount } = await dbConnection.query(query);
+      if (rowCount === 0)
+        httpError.idNoEncontrado("El entrenador", entrenadorId);
             
-            dbConnection.end;
-            return(nombre1Persona+" "+apellido1Persona);
-        } catch (error) {
-          if (error.code === "23505") {
-            throw {
-              status: 409,
-              message: `Ya hay un entrenador con el numero de cedula '${cedulaPersona}' registrado.`,
-            };
-          }
-          throw { status: error?.status || 500, message: error?.message || error };
+        dbConnection.end;
+        return(nombre1Persona+" "+apellido1Persona);
+    } catch (error) {
+        if (error.code === "23505") {
+          throw {
+            status: 409,
+            message: `Ya hay un entrenador con el numero de cedula '${cedulaPersona}' registrado.`,
+          };
         }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
 const borrarEntrenador = async (entrenadorId) => {

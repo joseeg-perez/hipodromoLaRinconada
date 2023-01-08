@@ -27,8 +27,19 @@ const registrarVeterinarioCaballeriza = async (req, res) => {
 };
 
 const actualizarVeterinarioCaballeriza = async (req, res) => {
-    res.send("Estamos en actualizar veterinarioCaballeriza");
+    const {
+        body,
+        params: { veterinarioCaballerizaId },
+    } = req;
 
+    try {
+        await veterinarioCaballerizaService.actualizarVeterinarioCaballeriza(veterinarioCaballerizaId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del veterinario asociado a una caballeriza de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarVeterinarioCaballeriza = async (req, res) => {

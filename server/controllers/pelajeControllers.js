@@ -50,7 +50,19 @@ const registrarPelaje = async (req, res) => {
 };
 
 const actualizarPelaje = async (req, res) => {
+    const {
+        body,
+        params: { pelajeId },
+    } = req;
 
+    try {
+        const pelajeActualizado = await pelajeService.actualizarPelaje(pelajeId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del pelaje '${pelajeActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarPelaje = async (req, res) => {

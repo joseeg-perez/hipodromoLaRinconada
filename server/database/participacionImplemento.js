@@ -63,7 +63,38 @@ const registrarParticipacionImplemento = async (nuevaParticipacionImplemento) =>
 };
 
 const actualizarParticipacionImplemento = async (participacionImplementoId, cambios) => {
+    const { 
+        fkImplemento,
+        fkParticipacion,
+       } = cambios;
     
+        const query = {
+            text:`UPDATE participacion_implemento
+            SET fk_implemento=$1,
+            fk_participacion=$2
+            WHERE codigo_pi=$3;`,
+            values: [
+                fkImplemento,
+                fkParticipacion,
+                participacionImplementoId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("El implemento asociado a la participacion", participacionImplementoId);
+                
+            dbConnection.end;
+            return;
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay un implemento asociado a una participacion con el codigo '${participacionImplementoId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }
 };
 
 const borrarParticipacionImplemento = async (participacionImplementoId) => {

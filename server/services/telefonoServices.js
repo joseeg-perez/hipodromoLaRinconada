@@ -30,11 +30,11 @@ const registrarTelefono = async (nuevoTelefono) => {
     }
 };
 
-const actualizarTelefono = (telefonoId, cambios) => {
+const actualizarTelefono = async (telefonoId, cambios) => {
     try {
-        const telefonoActualizado = Telefono.actualizarTelefono(telefonoId, cambios);
+        Telefono.actualizarTelefono(telefonoId, cambios);
         
-        return(telefonoActualizado);
+        return;
     } catch (error) {
         throw(error);
     }

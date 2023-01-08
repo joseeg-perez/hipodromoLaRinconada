@@ -62,8 +62,8 @@ const actualizarEjemplarPropietario = async (req, res) => {
     } = req;
 
     try {
-        const ejemplarPropietarioActualizado = await ejemplarPropietarioService.actualizarEjemplarPropietario(ejemplarPropietarioId, body);
-        res.send({ status: "OK", data: ejemplarPropietarioActualizado });
+        await ejemplarPropietarioService.actualizarEjemplarPropietario(ejemplarPropietarioId, body);
+        res.send({ status: "OK", data: `El ejemplar asociado a un propietario fue actualizado con exito` });
     } catch (error) {
         res
         .status(error?.status || 500)

@@ -11,7 +11,13 @@ const registrarVeterinarioCaballeriza = async (nuevoVeterinarioCaballeriza) => {
 };
 
 const actualizarVeterinarioCaballeriza = async (veterinarioCaballerizaId, cambios) => {
-
+    try {
+        await VeterinarioCaballeriza.actualizarVeterinarioCaballeriza(veterinarioCaballerizaId, cambios);
+        
+        return;
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const borrarVeterinarioCaballeriza = async (veterinarioCaballerizaId) => {

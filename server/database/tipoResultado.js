@@ -62,8 +62,36 @@ const registrarTipoResultado = async (nuevoTipoResultado) => {
     }   
 };
 
-const actualizarTipoResultado = (tipoResultadoId, cambios) => {
+const actualizarTipoResultado = async (tipoResultadoId, cambios) => {
+    const { 
+        nombreTipoResultado,
+       } = cambios;
     
+        const query = {
+            text:`UPDATE tipo_resultado
+            SET nombre_tipo_resultado=$1
+            WHERE codigo_tipo_resultado=$2;`,
+            values: [
+                nombreTipoResultado,
+                tipoResultadoId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("El tipo de resultado", tipoResultadoId);
+                
+            dbConnection.end;
+            return(nombreTipoResultado);
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay un tipo de resultado con el codigo '${tipoResultadoId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }   
 };
 
 const borrarTipoResultado = async (tipoResultadoId) => {

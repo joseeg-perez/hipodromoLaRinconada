@@ -59,8 +59,19 @@ const registrarStud = async (req, res) => {
 };
 
 const actualizarStud = async (req, res) => {
-    res.send("Estamos en actualizar stud");
+    const {
+        body,
+        params: { studId },
+    } = req;
 
+    try {
+        const studActualizado = await studService.actualizarStud(studId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del stud '${studActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarStud = async (req, res) => {

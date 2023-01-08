@@ -62,8 +62,40 @@ const registrarRegla = async (nuevaRegla) => {
     }  
 };
 
-const actualizarRegla = (reglaId, cambios) => {
+const actualizarRegla = async (reglaId, cambios) => {
+    const {
+        nombreRegla,
+        descripcionRegla,
+      } = cambios;
     
+      const query = {
+        text:`UPDATE regla
+        SET nombre_regla=$1,
+        descripcion_regla=$2
+        WHERE codigo_regla=$3;`,
+        values : [
+            nombreRegla,
+            descripcionRegla,
+            reglaId
+        ],
+      }
+    
+    try {
+        const { rowCount } = await dbConnection.query(query);
+        if (rowCount === 0)
+          httpError.idNoEncontrado("La regla", reglaId);
+              
+          dbConnection.end;
+          return(nombreRegla);
+    } catch (error) {
+        if (error.code === "23505") {
+            throw {
+                status: 409,
+                message: `Ya hay una regla con el codigo '${reglaId}' registrada.`,
+            };
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
 };
 
 const borrarRegla = async (reglaId) => {

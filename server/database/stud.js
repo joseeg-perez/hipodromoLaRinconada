@@ -62,7 +62,40 @@ const registrarStud = async (nuevoStud) => {
   }
 };
 
-const actualizarStud = async (studId, cambios) => {};
+const actualizarStud = async (studId, cambios) => {
+  const { 
+    nombreStud, 
+    fechaCreacion
+   } = cambios;
+
+    const query = {
+        text:`UPDATE stud
+        SET nombre_stud=$1,
+        fecha_creacion_stud=$2
+        WHERE codigo_stud=$3;`,
+        values: [
+          nombreStud,
+          fechaCreacion,
+          studId
+        ],
+    }
+    try {
+      const { rowCount } = await dbConnection.query(query);
+      if (rowCount === 0)
+        httpError.idNoEncontrado("El stud", studId);
+            
+        dbConnection.end;
+        return(nombreStud);
+    } catch (error) {
+        if (error.code === "23505") {
+          throw {
+            status: 409,
+            message: `Ya hay un stud con el codigo '${studId}' registrado.`,
+          };
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
 
 const borrarStud = async (studId) => {
   const query = {

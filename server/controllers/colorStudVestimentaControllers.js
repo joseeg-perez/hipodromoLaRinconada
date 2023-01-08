@@ -23,8 +23,19 @@ const registrarColorStudVestimenta = async (req, res) => {
 };
 
 const actualizarColorStudVestimenta = async (req, res) => {
-    res.send("Estamos en actualizar colorStudVestimenta");
+    const {
+        body,
+        params: { colorStudVestimentaId },
+    } = req;
 
+    try {
+        await colorStudVestimentaService.actualizarColorStudVestimenta(colorStudVestimentaId, body);
+        res.send({ status: "OK", data: `Se ha actualizado el color de la vestimenta del stud de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarColorStudVestimenta = async (req, res) => {

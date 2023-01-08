@@ -30,9 +30,9 @@ const registrarRegla = async (nuevaRegla) => {
     }
 };
 
-const actualizarRegla = (reglaId, cambios) => {
+const actualizarRegla = async (reglaId, cambios) => {
     try {
-        const reglaActualizada = Regla.actualizarRegla(reglaId, cambios);
+        const reglaActualizada = await Regla.actualizarRegla(reglaId, cambios);
         
         return(reglaActualizada);
     } catch (error) {

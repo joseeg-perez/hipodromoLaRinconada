@@ -88,7 +88,61 @@ const registrarJinete = async (nuevoJinete) => {
   }
 };
 
-const actualizarJinete = async (jineteId, cambios) => {};
+const actualizarJinete = async (jineteId, cambios) => {
+  const { 
+    cedulaPersona,
+    nombre1Persona,
+    nombre2Persona,
+    apellido1Persona,
+    apellido2Persona,
+    fechaNacimiento,
+    alturaJinete,
+    fkRango,
+    pesoJinete,
+   } = cambios;
+
+    const query = {
+        text:`UPDATE persona_jinete
+        SET cedula_persona=$1,
+        nombre1_persona=$2,
+        nombre2_persona=$3,
+        apellido1_persona=$4,
+        apellido2_persona=$5,
+        fecha_nacimiento_persona=$6,
+        altura_jinete=$7,
+        fk_rango=$8
+        peso_jinete=$9
+        WHERE codigo_persona=$10;`,
+        values: [
+          cedulaPersona,
+          nombre1Persona,
+          nombre2Persona,
+          apellido1Persona,
+          apellido2Persona,
+          fechaNacimiento,
+          alturaJinete,
+          fkRango,
+          pesoJinete,
+          jineteId
+        ],
+    }
+    try {
+      const { rowCount } = await dbConnection.query(query);
+      if (rowCount === 0)
+        httpError.idNoEncontrado("El jinete", jineteId);
+            
+        dbConnection.end;
+        return(nombre1Persona+" "+apellido1Persona);
+    } catch (error) {
+        if (error.code === "23505") {
+          throw {
+            status: 409,
+            message: `Ya hay un jinete con el numero de cedula '${cedulaPersona}' registrado.`,
+          };
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
 
 const borrarJinete = async (jineteId) => {
   const query = {

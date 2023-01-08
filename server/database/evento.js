@@ -62,8 +62,39 @@ const registrarEvento = async (nuevoEvento) => {
     }   
 };
 
-const actualizarEvento = (eventoId, cambios) => {
+const actualizarEvento = async (eventoId, cambios) => {
+    const { 
+        fechaEvento,
+        horaEvento,
+       } = cambios;
     
+        const query = {
+            text:`UPDATE evento
+            SET fecha_evento=$1, 
+            hora_evento=$2
+            WHERE codigo_evento=$3;`,
+            values: [
+                fechaEvento,
+                horaEvento,
+                eventoId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("El evento", eventoId);
+                
+            dbConnection.end;
+            return;
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay un evento con el codigo '${eventoId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }
 };
 
 const borrarEvento = async (eventoId) => {

@@ -76,7 +76,47 @@ const registrarRestaurante = async (nuevoRestaurante) => {
   }
 };
 
-const actualizarRestaurante = (restauranteId, cambios) => {};
+const actualizarRestaurante = async (restauranteId, cambios) => {
+  const { 
+    nombreRestaurante,
+    descripcionRestaurante,
+    capacidadRestaurante,
+    fk_area,
+   } = cambios;
+
+    const query = {
+        text:`UPDATE restaurante
+        SET nombre_restaurante=$1,
+        descripcion_restaurante=$2,
+        capacidad_restaurante=$3,
+        fk_area=$4
+        WHERE codigo_restaurante=$5;`,
+        values: [
+          nombreRestaurante,
+          descripcionRestaurante,
+          capacidadRestaurante,
+          fk_area,
+          restauranteId
+        ],
+    }
+    try {
+      const { rowCount } = await dbConnection.query(query);
+      if (rowCount === 0)
+        httpError.idNoEncontrado("El restaurante", restauranteId);
+            
+        dbConnection.end;
+        return(nombreRestaurante);
+    } catch (error) {
+        if (error.code === "23505") {
+          throw {
+            status: 409,
+            message: `Ya hay un restaurante con el codigo '${restauranteId}' registrado.`,
+          };
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+
+};
 
 const borrarRestaurante = async (restauranteId) => {
   const query = {

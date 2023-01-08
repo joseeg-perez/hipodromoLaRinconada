@@ -77,7 +77,7 @@ const actualizarEjemplar = async (req, res) => {
 
     try {
         const ejemplarActualizado = await ejemplarService.actualizarEjemplar(ejemplarId, body);
-        res.send({ status: "OK", data: ejemplarActualizado });
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del ejemplar '${ejemplarActualizado} de forma satisfactoria.` });
     } catch (error) {
         res
         .status(error?.status || 500)

@@ -47,14 +47,11 @@ const registrarVeterinario = async (nuevoVeterinario) => {
     } catch (error) {
         throw(error);
     }
-
-  
-
 };
 
-const actualizarVeterinario = (veterinarioId, cambios) => {
+const actualizarVeterinario = async (veterinarioId, cambios) => {
     try {
-        const VeterinarioActualizada = Veterinario.actualizarVeterinario(veterinarioId, cambios);
+        const VeterinarioActualizada = await Veterinario.actualizarVeterinario(veterinarioId, cambios);
         
         return(VeterinarioActualizada);
     } catch (error) {

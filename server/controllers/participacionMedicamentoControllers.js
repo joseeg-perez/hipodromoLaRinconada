@@ -50,7 +50,19 @@ const registrarParticipacionMedicamento = async (req, res) => {
 };
 
 const actualizarParticipacionMedicamento = async (req, res) => {
+    const {
+        body,
+        params: { participacionMedicamentoId },
+    } = req;
 
+    try {
+        await participacionMedicamentoService.actualizarParticipacionMedicamento(participacionMedicamentoId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del medicamento asociada a una participacion de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarParticipacionMedicamento = async (req, res) => {

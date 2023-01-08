@@ -32,7 +32,7 @@ const registrarParticipacionMedicamento = async (nuevaParticipacionMedicamento) 
 
 const actualizarParticipacionMedicamento = async (participacionMedicamentoId, cambios) => {
     try {
-        const participacionMedicamentoActualizado = ParticipacionMedicamento.actualizarParticipacionMedicamento(participacionMedicamentoId, cambios);
+        const participacionMedicamentoActualizado = await ParticipacionMedicamento.actualizarParticipacionMedicamento(participacionMedicamentoId, cambios);
         
         return(participacionMedicamentoActualizado);
     } catch (error) {

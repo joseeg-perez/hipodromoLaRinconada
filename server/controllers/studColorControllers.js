@@ -35,7 +35,19 @@ const registrarStudColor = async (req, res) => {
 };
 
 const actualizarStudColor = async (req, res) => {
-    res.send("Estamos en actualizar studColor");
+    const {
+        body,
+        params: { studColorId },
+    } = req;
+
+    try {
+        await studColorService.actualizarStudColor(studColorId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del color del stud de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 
 };
 

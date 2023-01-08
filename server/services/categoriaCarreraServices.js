@@ -30,9 +30,9 @@ const registrarCategoria = async (nuevaCategoria) => {
     }
 };
 
-const actualizarCategoria = (categoriaId, cambios) => {
+const actualizarCategoria = async (categoriaId, cambios) => {
     try {
-        const categoriaActualizada = CategoriaCarrera.actualizarCategoria(categoriaId, cambios);
+        const categoriaActualizada = await CategoriaCarrera.actualizarCategoria(categoriaId, cambios);
         
         return(categoriaActualizada);
     } catch (error) {

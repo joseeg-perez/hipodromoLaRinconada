@@ -30,11 +30,11 @@ const registrarEvento = async (nuevoEvento) => {
     }
 };
 
-const actualizarEvento = (eventoId, cambios) => {
+const actualizarEvento = async (eventoId, cambios) => {
     try {
-        const eventoActualizado = Evento.actualizarEvento(eventoId, cambios);
+        await Evento.actualizarEvento(eventoId, cambios);
         
-        return(eventoActualizado);
+        return;
     } catch (error) {
         throw(error);
     }

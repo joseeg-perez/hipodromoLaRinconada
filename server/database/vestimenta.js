@@ -61,8 +61,36 @@ const registrarVestimenta = async (nuevaVestimenta) => {
     }
 };
 
-const actualizarVestimenta = (vestimentaId, cambios) => {
+const actualizarVestimenta = async (vestimentaId, cambios) => {
+    const { 
+        nombreVestimenta
+       } = cambios;
     
+        const query = {
+            text:`UPDATE vestimenta
+            SET nombre_vestimenta=$1
+            WHERE codigo_vestimenta=$2;`,
+            values: [
+                nombreVestimenta,
+                vestimentaId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("La vestimenta", vestimentaId);
+                
+            dbConnection.end;
+            return(nombreVestimenta);
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay una vestimenta con el codigo '${vestimentaId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }    
 };
 
 const borrarVestimenta = async (vestimentaId) => {

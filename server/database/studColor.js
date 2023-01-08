@@ -41,7 +41,40 @@ const registrarStudColor = async (nuevoStudColor) => {
   }
 };
 
-const actualizarStudColor = async (studColorId, cambios) => {};
+const actualizarStudColor = async (studColorId, cambios) => {
+  const { 
+    fkColor,
+    fkStud,
+   } = cambios;
+
+    const query = {
+        text:`UPDATE stud_color
+        SET fk_color=$1,
+        fk_stud=$2
+        WHERE codigo_sc=$3;`,
+        values: [
+          fkColor,
+          fkStud,
+          studColorId
+        ],
+    }
+    try {
+      const { rowCount } = await dbConnection.query(query);
+      if (rowCount === 0)
+        httpError.idNoEncontrado("El color del stud", studColorId);
+            
+        dbConnection.end;
+        return;
+    } catch (error) {
+        if (error.code === "23505") {
+          throw {
+            status: 409,
+            message: `Ya hay un color en este stud con el codigo '${studColorId}' registrado.`,
+          };
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
 
 const borrarStudColor = async (studColorId) => {
   const query = {

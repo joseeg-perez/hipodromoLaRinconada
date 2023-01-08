@@ -78,7 +78,7 @@ const actualizarEntrenador = async (req, res) => {
 
     try {
         const entrenadorActualizado = await entrenadorService.actualizarEntrenador(entrenadorId, body);
-        res.send({ status: "OK", data: `Se ha actualizado la informacion del entrenador '${entrenadorActualizado} de forma satisfactoria.` });
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del entrenador '${entrenadorActualizado}' de forma satisfactoria.` });
     } catch (error) {
         res
         .status(error?.status || 500)

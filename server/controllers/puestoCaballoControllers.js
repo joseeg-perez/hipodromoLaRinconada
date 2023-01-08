@@ -29,7 +29,19 @@ const obtenerPuestoCaballoIndividual = async (req, res) => {
 };
 
 const actualizarPuestoCaballo = async (req, res) => {
+    const {
+        body,
+        params: { puestoCaballoId },
+    } = req;
 
+    try {
+        await puestoCaballoService.actualizarPuestoCaballo(puestoCaballoId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del puesto de caballo de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarPuestoCaballo = async (req, res) => {

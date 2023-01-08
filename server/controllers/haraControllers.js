@@ -50,7 +50,19 @@ const registrarHara = async (req, res) => {
 };
 
 const actualizarHara = async (req, res) => {
-
+    const {
+        body,
+        params: { haraId },
+      } = req;
+    
+      try {
+          const haraActualizada = await haraService.actualizarHara(haraId, body);
+          res.send({ status: "OK", data: `Se ha actualizado la informacion del hara '${haraActualizada}' de forma satisfactoria.` });
+      } catch (error) {
+          res
+          .status(error?.status || 500)
+          .send({ status: "FAILED", data: { error: error?.message || error } });
+      }
 };
 
 const borrarHara = async (req, res) => {

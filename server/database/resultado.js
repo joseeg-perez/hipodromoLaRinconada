@@ -97,8 +97,69 @@ const registrarResultado = async (nuevoResultado) => {
     }  
 };
 
-const actualizarResultado = (resultadoId, cambios) => {
+const actualizarResultado = async (resultadoId, cambios) => {
+    const { 
+        diferenciaTiempo,
+        speedRating,
+        speedRating300m,
+        speedRating400m,
+        speedRating800m,
+        observacion,
+        gananciaEntrenador,
+        gananciaJinete,
+        gananciaPropietario,
+        tiempoTotal,
+        fkTipoResultado,
+        fkCuerpoDiferencia,
+       } = cambios;
     
+        const query = {
+            text:`UPDATE resultado
+            SET diferencia_tiempo=$1,
+            speed_rating=$2,
+            speed_rating_300m=$3,
+            speed_rating_400m=$4,
+            speed_rating_800m=$5,
+            observacion=$6,
+            ganancia_entrenador=$7,
+            ganancia_jinete=$8,
+            ganancia_propietario=$9,
+            tiempo_total=$10,
+            fk_tipo_resultado=$11,
+            fk_cuerpo_diferencia=$12
+            WHERE codigo_resultado=$13;`,
+            values: [
+                diferenciaTiempo,
+                speedRating,
+                speedRating300m,
+                speedRating400m,
+                speedRating800m,
+                observacion,
+                gananciaEntrenador,
+                gananciaJinete,
+                gananciaPropietario,
+                tiempoTotal,
+                fkTipoResultado,
+                fkCuerpoDiferencia,
+                resultadoId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("El resultado", resultadoId);
+                
+            dbConnection.end;
+            return;
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay un resultado con el codigo '${resultadoId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }   
 };
 
 const borrarResultado = async (resultadoId) => {

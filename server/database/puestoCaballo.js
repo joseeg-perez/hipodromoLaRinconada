@@ -40,7 +40,7 @@ const registrarPuestoCaballo = async (nuevoPuestoCaballo) => {
     const { 
         numeroPuesto,
         fkCaballeriza,
-     } = nuevoPuesto;
+     } = nuevoPuestoCaballo;
 
     const text = `INSERT INTO puesto(
         numero_puesto,
@@ -64,8 +64,39 @@ const registrarPuestoCaballo = async (nuevoPuestoCaballo) => {
     }   
 };
 
-const actualizarPuestoCaballo = (puestoCaballoId, cambios) => {
+const actualizarPuestoCaballo = async (puestoCaballoId, cambios) => {
+    const { 
+        numeroPuesto,
+        fkCaballeriza,
+       } = cambios;
     
+        const query = {
+            text:`UPDATE puesto_caballo
+            SET numero_puesto=$1,
+            fk_caballeriza=$2
+            WHERE codigo_pc=$3;`,
+            values: [
+                numeroPuesto,
+                fkCaballeriza,
+                puestoCaballoId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("El puesto", puestoId);
+                
+            dbConnection.end;
+            return;
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay un puesto con el codigo '${puestoCaballoId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }   
 };
 
 const borrarPuestoCaballo = async (puestoCaballoId) => {

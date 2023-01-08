@@ -66,7 +66,19 @@ const registrarCarrera = async (req, res) => {
 };
 
 const actualizarCarrera = async (req, res) => {
+    const {
+        body,
+        params: { carreraId },
+    } = req;
 
+    try {
+        const carreraActualizada = await carreraService.actualizarCarrera(carreraId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion de la carrera '${carreraActualizada} de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarCarrera = async (req, res) => {

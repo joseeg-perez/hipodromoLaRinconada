@@ -29,7 +29,19 @@ const obtenerPuestoIndividual = async (req, res) => {
 };
 
 const actualizarPuesto = async (req, res) => {
+    const {
+        body,
+        params: { puestoId },
+    } = req;
 
+    try {
+        const puestoActualizado = await puestoService.actualizarPuesto(puestoId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del puesto '${puestoActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarPuesto = async (req, res) => {

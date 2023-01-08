@@ -30,9 +30,9 @@ const registrarPelaje = async (nuevoPelaje) => {
     }
 };
 
-const actualizarPelaje = (pelajeId, cambios) => {
+const actualizarPelaje = async (pelajeId, cambios) => {
     try {
-        const pelajeActualizado = Pelaje.actualizarPelaje(pelajeId, cambios);
+        const pelajeActualizado = await Pelaje.actualizarPelaje(pelajeId, cambios);
         
         return(pelajeActualizado);
     } catch (error) {

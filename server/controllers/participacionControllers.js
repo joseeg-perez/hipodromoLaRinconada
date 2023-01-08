@@ -70,7 +70,19 @@ const registrarParticipacion = async (req, res) => {
 };
 
 const actualizarParticipacion = async (req, res) => {
-    res.send("Estamos en actualizar participacion");
+    const {
+        body,
+        params: { participacionId },
+    } = req;
+
+    try {
+        await participacionService.actualizarParticipacion(participacionId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion de la participacion de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 
 };
 

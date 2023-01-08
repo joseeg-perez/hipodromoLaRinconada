@@ -31,7 +31,13 @@ const registrarCarrera = async (nuevaCarrera) => {
 };
 
 const actualizarCarrera = async (carreraId, cambios) => {
-
+    try {
+        const carreraActualizada = await Carrera.actualizarCarrera(carreraId, cambios);
+        
+        return(carreraActualizada);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const borrarCarrera = async (carreraId) => {

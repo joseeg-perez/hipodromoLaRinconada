@@ -61,8 +61,33 @@ const registrarCategoria = async (nuevaCategoria) => {
     }
 };
 
-const actualizarCategoria = (categoriaId, cambios) => {
+const actualizarCategoria = async (categoriaId, cambios) => {
+    const { 
+        nombreCategoria
+       } = cambios;
     
+        const query = {
+            text:`UPDATE categoria_carrera
+            SET nombre_categoria=$1
+            WHERE codigo_categoria=$2;`,
+            values: [nombreCategoria, categoriaId],
+        }
+            try {
+                const { rowCount } = await dbConnection.query(query);
+                if (rowCount === 0)
+                    httpError.idNoEncontrado("La categoria", entrenadorId);
+                
+                dbConnection.end;
+                return(nombreCategoria);
+            } catch (error) {
+              if (error.code === "23505") {
+                throw {
+                  status: 409,
+                  message: `Ya hay una categoria con el nombre'${nombreCategoria}' registrado.`,
+                };
+              }
+              throw { status: error?.status || 500, message: error?.message || error };
+            }   
 };
 
 const borrarCategoria = async (categoriaId) => {

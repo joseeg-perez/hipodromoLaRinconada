@@ -32,9 +32,9 @@ const registrarParticipacionImplemento = async (nuevaParticipacionImplemento) =>
 
 const actualizarParticipacionImplemento = async (participacionImplementoId, cambios) => {
     try {
-        const participacionImplementoActualizado = articipacionImplemento.actualizarParticipacionImplemento(participacionImplementoId, cambios);
+        await ParticipacionImplemento.actualizarParticipacionImplemento(participacionImplementoId, cambios);
         
-        return(participacionImplementoActualizado);
+        return;
     } catch (error) {
         throw(error);
     }

@@ -30,11 +30,11 @@ const registrarPuestoCaballo = async (nuevoPuestoCaballo) => {
     }
 };
 
-const actualizarPuestoCaballo = (puestoCaballoId, cambios) => {
+const actualizarPuestoCaballo = async (puestoCaballoId, cambios) => {
     try {
-        const puestoCaballoActualizado = PuestoCaballo.actualizarPuestoCaballo(puestoCaballoId, cambios);
+        PuestoCaballo.actualizarPuestoCaballo(puestoCaballoId, cambios);
         
-        return(puestoCaballoActualizado);
+        return;
     } catch (error) {
         throw(error);
     }

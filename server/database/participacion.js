@@ -98,7 +98,68 @@ const registrarParticipacion = async (nuevaParticipacion) => {
 };
 
 const actualizarParticipacion = async (participacionId, cambios) => {
-
+    const { 
+        gualdrapa,
+        puestoPista,
+        pesoCaballo,
+        precioEjemplar,
+        comentario,
+        fkEjemplar,
+        fkCarrera,
+        fkJinete,
+        fkEntrenador,
+        fkRetiro,
+        fkResultado,
+        fkStud,
+       } = cambios;
+    
+        const query = {
+            text:`UPDATE participacion
+            SET gualdrapa=$1, 
+            puesto_pista=$2,
+            peso_caballo=$3,
+            precio_ejemplar=$4,
+            comentario=$5,
+            fk_ejemplar=$6,
+            fk_carrera=$7,
+            fk_jinete=$8,
+            fk_entrenador=$9,
+            fk_retiro=$10,
+            fk_resultado=$11,
+            fk_stud=$12
+            WHERE codigo_participacion=$13;`,
+            values: [
+                gualdrapa,
+                puestoPista,
+                pesoCaballo,
+                precioEjemplar,
+                comentario,
+                fkEjemplar,
+                fkCarrera,
+                fkJinete,
+                fkEntrenador,
+                fkRetiro,
+                fkResultado,
+                fkStud,
+                participacionId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("La participacion", participacionId);
+                
+            dbConnection.end;
+            return;
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay una participacion con el codigo '${participacionId}' registrada.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }
 };
 
 const borrarParticipacion = async (participacionId) => {

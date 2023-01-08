@@ -30,9 +30,9 @@ const registrarPuesto = async (nuevoPuesto) => {
     }
 };
 
-const actualizarPuesto = (puestoId, cambios) => {
+const actualizarPuesto = async (puestoId, cambios) => {
     try {
-        const puestoActualizado = Puesto.actualizarPuesto(puestoId, cambios);
+        const puestoActualizado = await Puesto.actualizarPuesto(puestoId, cambios);
         
         return(puestoActualizado);
     } catch (error) {
