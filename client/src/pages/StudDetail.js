@@ -402,6 +402,7 @@ const StudDetail = () => {
                           <td>{`${x.nombre}`}</td>
                           <td>{`${x.apellido}`}</td>
                           <td>{`${x.cedula}`}</td>
+                          <td><input className="col-3" id={x.id}></input></td>
                         </tr>
                       )}
                     ></Tabla>
