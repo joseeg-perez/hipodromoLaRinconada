@@ -1,34 +1,16 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
-const obtenerListaDeCarreraReglas = async () => {
+const obtenerListaDeEventos = async () => {
     const query = {
-        text: "SELECT * FROM carrera_regla",
+        text: "SELECT * FROM evento",
     };
 
     try {
         const { rows } = await dbConnection.query(query);
         if (rows.length === 0)
-            httpError.noRegistrado("ninguna regla de carrera");
+            httpError.noRegistrado("ningun tipo de evento");
 
-        dbConnection.end;
-        return (rows);
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
-};
-
-const obtenerCarreraReglaIndividual = async (carreraReglaId) => { 
-    const query = {
-        text: "SELECT * FROM carrera_regla WHERE codigo_cr=$1",
-        values: [carreraReglaId],
-    };
-
-    try {
-        const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.idNoEncontrado("La regla de carrera", carreraReglaId);
-        
         dbConnection.end;
         return (rows);
     } catch (error) {
@@ -36,54 +18,76 @@ const obtenerCarreraReglaIndividual = async (carreraReglaId) => {
     }   
 };
 
-const registrarCarreraRegla = async (nuevaCategoriaRegla) => { 
-    const { 
-        valorRegla,
-        fkCarrera,
-        fkRegla,
-     } = nuevaCategoriaRegla;
+const obtenerEventoIndividual = async (eventoId) => {
+    const query = {
+        text: "SELECT * FROM evento WHERE codigo_evento=$1",
+        values: [eventoId],
+    };
 
-    const text = `INSERT INTO carrera_regla(valor_regla, fk_carrera, fk_regla) VALUES($1, $2, $3)`;
+    try {
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.idNoEncontrado("El evento", eventoId);
         
-    const values = [valorRegla, fkCarrera, fkRegla,];
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }  
+};
+
+const registrarEvento = async (nuevoEvento) => {
+    const { 
+        fechaEvento,
+        horaEvento,
+     } = nuevoEvento;
+
+    const text = `INSERT INTO evento(fecha_evento, hora_evento) VALUES($1, $2)`;
+        
+    const values = [fechaEvento, horaEvento];
 
     try {
         await dbConnection.query(text, values);
     
         dbConnection.end;
-        return (valorRegla);
+        return;
     } catch (error) {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `La regla de carrera con el valor '${ valorRegla }' ya ha sido registrada.`,
+                message: `El evento ya ha sido registrado.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
-    }    
+    }   
 };
 
-const borrarCarreraRegla = async (carreraReglaId) => {
+const actualizarEvento = (eventoId, cambios) => {
+    
+};
+
+const borrarEvento = async (eventoId) => {
     const query = {
-        text: "DELETE FROM carrera_regla WHERE codigo_cr=$1",
-        values: [carreraReglaId],
+        text: "DELETE FROM evento WHERE codigo_evento=$1",
+        values: [eventoId],
     };
 
     try {
         const { rowCount } = await dbConnection.query(query);        
         if (rowCount === 0)
-            httpError.idNoEncontrado("la regla de carrera ", carreraReglaId);
+            httpError.idNoEncontrado("El evento ", eventoId);
 
         dbConnection.end;
         return;
     } catch (error) {
         throw { status: error?.status || 500, message: error?.message || error };
-    }
+    }   
 };
 
 module.exports = {
-    obtenerListaDeCarreraReglas,
-    obtenerCarreraReglaIndividual,
-    registrarCarreraRegla,
-    borrarCarreraRegla,
+    obtenerListaDeEventos,
+    obtenerEventoIndividual,
+    registrarEvento,
+    actualizarEvento,
+    borrarEvento,
 };

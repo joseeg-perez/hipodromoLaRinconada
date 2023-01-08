@@ -15,17 +15,11 @@ import { useParams } from "react-router-dom";
 const EntrenadorUpdate = (props) => {
   const Params = useParams();
   const [cedulaPersona, setCedulaPersona] = useState("");
-  // Entrenador.data.cedula_persona
   const [nombre1Persona, setnombre1Persona] = useState("");
-  // Entrenador.data.nombre1_persona
   const [nombre2Persona, setnombre2Persona] = useState("");
-  // Entrenador.data.nombre2_persona
   const [apellido1Persona, setapellido1Persona] = useState("");
-  // Entrenador.data.apellido1_persona
   const [apellido2Persona, setapellido2Persona] = useState("");
-  // Entrenador.data.apellido2_persona
   const [fechaNacimiento, setfechaNacimiento] = useState("");
-  // Entrenador.fecha_nacimiento_persona
   const [caballerizas, setfkCaballerizas] = useState("");
   const [fkCaballeriza, setfkCaballeriza] = useState("");
   const [toggleCaballeriza, setToggleCaballeriza] = useState(false);
@@ -80,8 +74,8 @@ const EntrenadorUpdate = (props) => {
   const handleData = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(
-        "http://localhost:5000/api/v1/entrenadores/registrar_entrenador",
+      await axios.patch(
+        `http://localhost:5000/api/v1/entrenadores/${Params.entrenadorId}`,
         {
           cedulaPersona,
           nombre1Persona,

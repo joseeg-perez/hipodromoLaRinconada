@@ -11,7 +11,7 @@ router.get("/:rolId", validateId, rolController.obtenerRolIndividual);
 
 router.post("/registrar_rol", validateCreate, rolController.registrarRol);
 
-router.patch("/:rolId", validateId, rolController.actualizarRol);
+router.patch("/:rolId", validateCreate, validateId, rolController.actualizarRol);
 
 router.delete("/:rolId", validateId, rolController.borrarRol);
 

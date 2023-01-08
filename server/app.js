@@ -44,9 +44,15 @@ const v1VeterinarioCaballerizaRoutes = require("./v1/routes/veterinarioCaballeri
 const v1EntrenadorCaballerizaRoutes = require("./v1/routes/entrenadorCaballerizaRoutes.js");
 const v1ColorStudVestimentaRoutes = require("./v1/routes/colorStudVestimentaRoutes.js");
 const v1ResultadoRoutes = require("./v1/routes/resultadoRoutes.js");
-const v1tipoResultadoRoutes = require("./v1/routes/tipoResultadoRoutes.js");
+const v1tipoResultadoRoutes = require("./v1/routes//tipoResultadoRoutes.js");
 const v1CuerpoDiferenciaRoutes = require("./v1/routes/cuerpoDiferenciaRoutes.js");
 const v1CarreraReglaRoutes = require("./v1/routes/carreraReglaRoutes.js");
+const v1ReglaRoutes = require("./v1/routes/reglaRoutes.js");
+const v1EventoRoutes = require("./v1/routes/eventoRoutes.js");
+const v1ParticipacionImplementoRoutes = require("./v1/routes/participacionImplementoRoutes.js");
+const v1ParticipacionMedicamentoRoutes = require("./v1/routes/participacionMedicamentoRoutes.js");
+const v1PuestoCaballoRoutes = require("./v1/routes/puestoCaballoRoutes.js");
+const v1EjemplarPropietarioRoutes = require("./v1/routes/ejemplarPropietarioRoutes.js");
 
 // Puerto
 const PORT = process.env.PORT || 5000;
@@ -96,9 +102,14 @@ app.use("/api/v1/entrenadores_de_caballerizas", v1EntrenadorCaballerizaRoutes);
 app.use("/api/v1/color_stud_vestimenta", v1ColorStudVestimentaRoutes);
 app.use("/api/v1/resultados", v1ResultadoRoutes);
 app.use("/api/v1/cuerpos_de_diferencia", v1CuerpoDiferenciaRoutes);
-// app.use("/api/v1/reglas_de_carreras", v1CarreraReglaRoutes);
-
-// app.use("/api/v1/tipo_resultados", v1tipoResultadoRoutes);
+app.use("/api/v1/reglas_de_carreras", v1CarreraReglaRoutes);
+app.use("/api/v1/reglas", v1ReglaRoutes);
+app.use("/api/v1/eventos", v1EventoRoutes);
+app.use("/api/v1/participacion_implementos", v1ParticipacionImplementoRoutes);
+app.use("/api/v1/participacion_medicamentos", v1ParticipacionMedicamentoRoutes);
+app.use("/api/v1/puesto_caballo", v1PuestoCaballoRoutes);
+app.use("/api/v1/ejemplar_propietario", v1EjemplarPropietarioRoutes);
+app.use("/api/v1/tipo_resultados", v1tipoResultadoRoutes);
 
 
 

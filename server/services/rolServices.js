@@ -21,6 +21,7 @@ const obtenerRolIndividual = async (rolId) => {
 };
 
 const registrarRol = async (nuevoRol) => {
+<<<<<<< HEAD
   try {
     const rolCreado = await Rol.registrarRol(nuevoRol);
 
@@ -38,6 +39,33 @@ const borrarRol = async (rolId) => {
   } catch (error) {
     throw error;
   }
+=======
+    try {
+        const rolCreado = await Rol.registrarRol(nuevoRol);
+        
+        return(rolCreado);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const actualizarRol = async (rolId, cambios) => {
+    try {
+        const rolActualizado = Rol.actualizarRol(rolId, cambios);
+        
+        return(rolActualizado);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const borrarRol = async (rolId) => {
+    try {
+        await Rol.borrarRol(rolId);
+    } catch (error) {
+        throw(error);
+    }
+>>>>>>> main
 };
 
 module.exports = {

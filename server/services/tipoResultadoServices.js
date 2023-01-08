@@ -12,6 +12,7 @@ const obtenerListaDeTipoResultado = async () => {
 };
 
 const obtenerTipoResultadoIndividual = async (tipoResultadoId) => {
+<<<<<<< HEAD
   try {
     const TipoResultado = await TipoResultado.obtenerTipoResultadoIndividual(
       tipoResultadoId
@@ -21,6 +22,15 @@ const obtenerTipoResultadoIndividual = async (tipoResultadoId) => {
   } catch (error) {
     throw error;
   }
+=======
+    try {
+        const tipoResultado = await TipoResultado.obtenerTipoResultadoIndividual(tipoResultadoId);
+
+        return(tipoResultado);
+    } catch (error) {
+        throw(error);
+    }
+>>>>>>> main
 };
 
 const registrarTipoResultado = async (nuevoTipoResultado) => {
