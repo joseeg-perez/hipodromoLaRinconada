@@ -33,8 +33,8 @@ const MotivoRetiroUpdate = () => {
   const handleData = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(
-        "http://localhost:5000/api/v1/Motivos/registrar_Motivo",
+      await axios.patch(
+        `http://localhost:5000/api/v1/Motivos/${Params.motivoId}`,
         {
           nombreMotivo,
           descripcionMotivo,

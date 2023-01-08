@@ -92,25 +92,25 @@ const PropietarioUpdate = (props) => {
 
   const handleData = async (event) => {
     event.preventDefault();
-    // try {
-    //   await axios.post(
-    //     "http://localhost:5000/api/v1/propietarios/registrar_propietario",
-    //     {
-    //       cedulaPersona,
-    //       nombre1Persona,
-    //       nombre2Persona,
-    //       apellido1Persona,
-    //       apellido2Persona,
-    //       fechaNacimiento,
-    //       correo,
-    //       extension,
-    //       cuerpo,
-    //       fkLugar,
-    //     }
-    //   );
-    // } catch (error) {
-    //   throw error;
-    // }
+    try {
+      await axios.patch(
+        `http://localhost:5000/api/v1/propietarios/${Params.propietarioId}`,
+        {
+          cedulaPersona,
+          nombre1Persona,
+          nombre2Persona,
+          apellido1Persona,
+          apellido2Persona,
+          fechaNacimiento,
+          correo,
+          extension,
+          cuerpo,
+          fkLugar,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
     console.warn(
       cedulaPersona,
       nombre1Persona,

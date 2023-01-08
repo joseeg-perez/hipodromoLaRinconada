@@ -83,8 +83,8 @@ const VeterinarioUpdate = () => {
   const handleData = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(
-        "http://localhost:5000/api/v1/veterinarios/registrar_veterinario",
+      await axios.patch(
+        `http://localhost:5000/api/v1/veterinarios/${Params.veterinarioId}`,
         {
           cedulaPersona,
           nombre1Persona,

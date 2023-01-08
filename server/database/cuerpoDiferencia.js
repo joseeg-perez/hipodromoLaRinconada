@@ -36,7 +36,7 @@ const borrarCuerpoDiferencia = async (cuerpoDiferenciaId) => {
 
 module.exports = {
   obtenerListaDeCuerpoDiferencia,
-  obtenerCuerpoDiferenciaIndividual,
-  registrarCuerpoDiferencia,
+  // obtenerCuerpoDiferenciaIndividual,
+  // registrarCuerpoDiferencia,
   borrarCuerpoDiferencia,
 };
