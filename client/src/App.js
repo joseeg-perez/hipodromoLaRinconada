@@ -23,7 +23,7 @@ import CarrerasEvento from "./pages/CarrerasEvento";
 import RegistrarEvento from "./pages/RegistrarEvento";
 import InscribirEjemplar from "./pages/InscribirEjemplar";
 import { EjemplarDetail } from "./pages/EjemplarDetail";
-import { EjemplarUpdate } from "./pages/EjemplarUpdate";
+import EjemplarUpdate from "./pages/EjemplarUpdate";
 import JineteDetail from "./pages/JineteDetail";
 import JineteUpdate from "./pages/JineteUpdate";
 import JineteAgregar from "./pages/JineteAgregar";
@@ -58,6 +58,8 @@ import CaballerizaAgregar from "./pages/CaballerizaAgregar";
 import RestauranteUpdate from "./pages/RestauranteUpdate";
 import Pelajes from "./pages/Pelajes";
 import PelajeAgregar from "./pages/PelajeAgregar";
+import Vestimentas from "./pages/Vestimentas";
+import EntrenadorUpdate from "./pages/EntrenadorUpdate";
 
 function App() {
   return (
@@ -101,6 +103,10 @@ function App() {
 
         <Route path="/entrenadores/createEntrenador" exact>
           <EntrenadorAgregar></EntrenadorAgregar>
+        </Route>
+
+        <Route path="/entrenadores/:entrenadorId/updateEntrenador" exact>
+          <EntrenadorUpdate></EntrenadorUpdate>
         </Route>
 
         <Route path="/veterinarios" exact>
@@ -248,11 +254,15 @@ function App() {
         </Route>
 
         <Route path="/vestimentas" exact>
+          <Vestimentas></Vestimentas>
+        </Route>
+
+        <Route path="/vestimentas/createVestimenta" exact>
           <VestimentaAgregar></VestimentaAgregar>
         </Route>
 
         <Route path="/carrera/:carreraId/update" exact>
-         <CarreraUpdate></CarreraUpdate>
+          <CarreraUpdate></CarreraUpdate>
         </Route>
 
         <Route path="/carrera/crear">
@@ -265,7 +275,7 @@ function App() {
 
         <Route path="/retiros/carrera/:carreraId" exact>
           <RetirarEjemplar></RetirarEjemplar>
-          </Route>
+        </Route>
 
         <Route path="/haras" exact>
           <Haras></Haras>

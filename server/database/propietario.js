@@ -18,9 +18,14 @@ const obtenerListaDePropietarios = async () => {
 
 const obtenerPropietarioIndividual = async (propietarioId) => {
   const query = {
-    text: "SELECT * FROM persona_propietario WHERE codigo_persona=$1",
+    text: `SELECT codigo_persona, cedula_persona, 
+    nombre1_persona, nombre2_persona, apellido1_persona, apellido2_persona,
+    to_char(fecha_nacimiento_persona :: DATE, 'yyyy-mm-dd') fecha_nacimiento_persona, correo,
+    fk_lugar, extension_tlf as extension, cuerpo_tlf as cuerpo
+     FROM persona_propietario, telefono
+     WHERE codigo_persona=$1
+     AND fk_propietario = codigo_persona`,
     values: [propietarioId],
-    rowMode: "array",
   };
 
   try {

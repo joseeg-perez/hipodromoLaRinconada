@@ -41,7 +41,10 @@ const obtenerListaDeCaballerizasVacias = async () => {
 
 const obtenerEntrenadorIndividual = async (entrenadorId) => {
   const query = {
-    text: "SELECT * FROM persona_entrenador WHERE codigo_persona=$1",
+    text: `SELECT codigo_persona, cedula_persona, 
+    nombre1_persona, nombre2_persona, apellido1_persona, apellido2_persona,
+    to_char(fecha_nacimiento_persona :: DATE, 'yyyy-mm-dd') fecha_nacimiento_persona
+     FROM persona_entrenador WHERE codigo_persona=$1`,
     values: [entrenadorId],
   };
 
