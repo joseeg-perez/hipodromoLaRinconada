@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Col, Container, Row, Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import Tabla from "../componentes/tablas/Tabla";
+import TablaCard from "../componentes/layout/TablaCard";
 
 const CaballerizaDetail = () => {
   const location = useLocation();
@@ -45,6 +46,14 @@ const CaballerizaDetail = () => {
       <th>Caballeriza</th>
       <th>Cedula</th>
       <th>Stud</th>
+    </tr>
+  );
+
+  let columnas5 = (
+    <tr>
+      <th>Nombre</th>
+      <th>Fecha_Ingreso</th>
+      <th>Fecha_Fin</th>
     </tr>
   );
 
@@ -246,6 +255,102 @@ const CaballerizaDetail = () => {
     },
   ];
 
+  const entrenadores2 = [
+    {
+      id: "1",
+      nombre: "Gabriel Mora",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "",
+    },
+    {
+      id: "2",
+      nombre: "Gabriel Mora",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+    {
+      id: "3",
+      nombre: "Gabriel Mora",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+    {
+      id: "4",
+      nombre: "Gabriel Mora",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+    {
+      id: "5",
+      nombre: "Gabriel Mora",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+    {
+      id: "6",
+      nombre: "Gabriel Mora",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+  ];
+
+  const ejemplares3 = [
+    {
+      id: "1",
+      nombre: "Appa",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "",
+    },
+    {
+      id: "2",
+      nombre: "Appa",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+    {
+      id: "3",
+      nombre: "Appa",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+    {
+      id: "4",
+      nombre: "Appa",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+    {
+      id: "5",
+      nombre: "Appa",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+    {
+      id: "6",
+      nombre: "Appa",
+      fecha_ingreso: "27/12/2022",
+      fecha_fin: "8/1/2023",
+    },
+  ];
+
+  const onSeleccionEjemplarHandler = (id, ejemplar, event) => {
+    event.preventDefault();
+    console.log(id);
+    console.log(ejemplar);
+  };
+
+  const onSeleccionEntrenadorHandler = (id, entrenador, event) => {
+    event.preventDefault();
+    console.log(id);
+    console.log(entrenador);
+  };
+
+  const onSeleccionVeterinarioHandler = (id, veterinario, event) => {
+    event.preventDefault();
+    console.log(id);
+    console.log(veterinario);
+  };
+
   return (
     <Container>
       <Row>
@@ -354,7 +459,7 @@ const CaballerizaDetail = () => {
                   </Row>
 
                   <Row className="ms-0">
-                    <input type="date"  style={{height: "30px"}}></input>
+                    <input type="date" style={{ height: "30px" }}></input>
                   </Row>
                 </Col>
               </Row>
@@ -375,8 +480,13 @@ const CaballerizaDetail = () => {
                             <Tabla
                               columnas={columnas2}
                               informacion={ejemplares2}
+                              estilo=" table-hover"
                               funcion={(x) => (
-                                <tr>
+                                <tr
+                                  onClick={(e) =>
+                                    onSeleccionEjemplarHandler(x.id, x, e)
+                                  }
+                                >
                                   <td>{`${x.nombre}`}</td>
                                   <td>{`${x.caballeriza}`}</td>
                                   <td>{`${x.puesto}`}</td>
@@ -483,7 +593,7 @@ const CaballerizaDetail = () => {
                   </Row>
 
                   <Row className="ms-0">
-                    <input type="date"  style={{height: "30px"}}></input>
+                    <input type="date" style={{ height: "30px" }}></input>
                   </Row>
                 </Col>
               </Row>
@@ -491,7 +601,7 @@ const CaballerizaDetail = () => {
               <Row className="mt-2">
                 <Row>
                   <Col className="ms-4">
-                    <h3>Buscar Ejemplar a cambiar</h3>
+                    <h3>Buscar Entrenador a cambiar</h3>
                   </Col>
                 </Row>
 
@@ -504,8 +614,13 @@ const CaballerizaDetail = () => {
                             <Tabla
                               columnas={columnas3}
                               informacion={entrenadores}
+                              estilo=" table-hover"
                               funcion={(x) => (
-                                <tr>
+                                <tr
+                                  onClick={(e) =>
+                                    onSeleccionEntrenadorHandler(x.id, x, e)
+                                  }
+                                >
                                   <td>{`${x.nombre}`}</td>
                                   <td>{`${x.caballeriza}`}</td>
                                   <td>{`${x.victorias}`}</td>
@@ -562,7 +677,9 @@ const CaballerizaDetail = () => {
 
               <Row>
                 <Col className="d-flex justify-content-center">
-                  <Button className="mt-3">CAMBIAR ENTRENADOR DE CABALLERIZA</Button>
+                  <Button className="mt-3">
+                    CAMBIAR ENTRENADOR DE CABALLERIZA
+                  </Button>
                 </Col>
               </Row>
 
@@ -590,7 +707,7 @@ const CaballerizaDetail = () => {
           </Card>
         </Col>
       </Row>
-    
+
       <Row className="mt-5 mb-5">
         <Col className="justify-content-center align-items-center mx-5">
           <Card>
@@ -612,7 +729,7 @@ const CaballerizaDetail = () => {
                   </Row>
 
                   <Row className="ms-0">
-                    <input type="date"  style={{height: "30px"}}></input>
+                    <input type="date" style={{ height: "30px" }}></input>
                   </Row>
                 </Col>
               </Row>
@@ -633,8 +750,13 @@ const CaballerizaDetail = () => {
                             <Tabla
                               columnas={columnas4}
                               informacion={veterinarios}
+                              estilo=" table-hover"
                               funcion={(x) => (
-                                <tr>
+                                <tr
+                                  onClick={(e) =>
+                                    onSeleccionVeterinarioHandler(x.id, x, e)
+                                  }
+                                >
                                   <td>{`${x.nombre}`}</td>
                                   <td>{`${x.apellido}`}</td>
                                   <td>{`${x.caballeriza}`}</td>
@@ -691,7 +813,9 @@ const CaballerizaDetail = () => {
 
               <Row>
                 <Col className="d-flex justify-content-center">
-                  <Button className="mt-3">CAMBIAR VETERINARIO DE CABALLERIZA</Button>
+                  <Button className="mt-3">
+                    CAMBIAR VETERINARIO DE CABALLERIZA
+                  </Button>
                 </Col>
               </Row>
 
@@ -720,6 +844,47 @@ const CaballerizaDetail = () => {
         </Col>
       </Row>
 
+      <Row className="mt-5 mb-5">
+        <Col className="justify-content-center align-items-center mx-5">
+          <Card>
+            <Card.Body>
+              <Row>
+                <h2>HISTORICOS</h2>
+              </Row>
+
+              <Row>
+                <Tabla
+                  titulo="ENTRENADORES"
+                  columnas={columnas5}
+                  informacion={entrenadores2}
+                  funcion={(x) => (
+                    <tr>
+                      <td>{`${x.nombre}`}</td>
+                      <td>{`${x.fecha_ingreso}`}</td>
+                      <td>{`${x.fecha_fin}`}</td>
+                    </tr>
+                  )}
+                ></Tabla>
+              </Row>
+
+              <Row className="mt-3">
+                <Tabla
+                  titulo="EJEMPLARES"
+                  columnas={columnas5}
+                  informacion={ejemplares3}
+                  funcion={(x) => (
+                    <tr>
+                      <td>{`${x.nombre}`}</td>
+                      <td>{`${x.fecha_ingreso}`}</td>
+                      <td>{`${x.fecha_fin}`}</td>
+                    </tr>
+                  )}
+                ></Tabla>
+              </Row>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </Container>
   );
 };
