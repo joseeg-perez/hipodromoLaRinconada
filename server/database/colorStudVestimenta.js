@@ -27,7 +27,37 @@ const registrarColorStudVestimenta = async (nuevoColorStudVestimenta) => {
 const actualizarColorStudVestimenta = async (
   colorStudVestimentaId,
   cambios
-) => {};
+) => {
+  const { fkStudVestimenta, fkColor } = cambios;
+
+  const query = {
+    text: `UPDATE color_stud_vestimenta
+            SET fk_stud_vestimenta=$1,
+            fk_color=$2
+            WHERE codigo_csv=$3;`,
+    values: [fkStudVestimenta, fkColor, colorStudVestimentaId],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0)
+      httpError.idNoEncontrado(
+        "El color de la vestimenta del stud",
+        entrenadorId
+      );
+
+    dbConnection.end;
+    return;
+  } catch (error) {
+    console.log(error);
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `El color de la vestimenta del stud ya ha sido registrado.`,
+      };
+    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
 
 const borrarColorStudVestimenta = async (colorStudVestimentaId) => {
   const query = {

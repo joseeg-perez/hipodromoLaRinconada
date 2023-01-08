@@ -54,7 +54,19 @@ const registrarRestaurante = async (req, res) => {
 };
 
 const actualizarRestaurante = async (req, res) => {
+    const {
+        body,
+        params: { restauranteId },
+    } = req;
 
+    try {
+        const restauranteActualizado = await restauranteService.actualizarRestaurante(restauranteId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del restaurante '${restauranteActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarRestaurante = async (req, res) => {

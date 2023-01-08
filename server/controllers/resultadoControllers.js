@@ -37,7 +37,7 @@ const registrarResultado = async (req, res) => {
     speedRating400m,
     speedRating800m,
     observacion,
-    gananciaEntrenador,
+    gananciaresultado,
     gananciaJinete,
     gananciaPropietario,
     tiempoTotal,
@@ -52,7 +52,7 @@ const registrarResultado = async (req, res) => {
     speedRating400m,
     speedRating800m,
     observacion,
-    gananciaEntrenador,
+    gananciaresultado,
     gananciaJinete,
     gananciaPropietario,
     tiempoTotal,
@@ -75,7 +75,21 @@ const registrarResultado = async (req, res) => {
   }
 };
 
-const actualizarResultado = async (req, res) => {};
+const actualizarResultado = async (req, res) => {
+  const {
+      body,
+      params: { resultadoId },
+  } = req;
+
+  try {
+      await resultadoservice.actualizarResultado(resultadoId, body);
+      res.send({ status: "OK", data: `Se ha actualizado la informacion del resultado de forma satisfactoria.` });
+  } catch (error) {
+      res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
 
 const borrarResultado = async (req, res) => {
   const {

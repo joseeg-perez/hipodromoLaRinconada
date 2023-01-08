@@ -71,7 +71,19 @@ const registrarPropietario = async (req, res) => {
 };
 
 const actualizarPropietario = async (req, res) => {
-  res.send("Estamos en actualizar Propietario");
+    const {
+      body,
+      params: { propietarioId },
+    } = req;
+
+    try {
+        const propietarioActualizado = await propietarioService.actualizarPropietario(propietarioId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del propietario '${propietarioActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarPropietario = async (req, res) => {

@@ -50,7 +50,19 @@ const registrarParticipacionImplemento = async (req, res) => {
 };
 
 const actualizarParticipacionImplemento = async (req, res) => {
+    const {
+        body,
+        params: { participacionImplementoId },
+    } = req;
 
+    try {
+        await participacionImplementoService.actualizarParticipacionImplemento(participacionImplementoId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del implemento asociado a una participacion de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarParticipacionImplemento = async (req, res) => {

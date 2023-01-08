@@ -56,7 +56,32 @@ const registrarRetiro = async (nuevoRetiro) => {
   }
 };
 
-const actualizarRetiro = (retiroId, cambios) => {};
+const actualizarRetiro = async (retiroId, cambios) => {
+  const { fechaRetiro, fkMotivo } = cambios;
+
+  const query = {
+    text: `UPDATE retiro
+            SET fecha_retiro=$1,
+            fk_motivo=$2
+            WHERE codigo_retiro=$3;`,
+    values: [fechaRetiro, fkMotivo, retiroId],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0) httpError.idNoEncontrado("El retiro", retiroId);
+
+    dbConnection.end;
+    return;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay un retiro con el codigo '${retiroId}' registrado.`,
+      };
+    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
 
 const borrarRetiro = async (retiroId) => {
   const query = {

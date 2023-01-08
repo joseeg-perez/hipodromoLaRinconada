@@ -32,10 +32,15 @@ const obtenerImplementoIndividual = async (req, res) => {
 };
 
 const registrarImplemento = async (req, res) => {
-  const { nombreImplemento, descripcionImplemento } = req.body;
+  const { 
+    nombreImplemento, 
+    abreviacionImplemento,
+    descripcionImplemento 
+  } = req.body;
 
   const nuevoImplemento = {
     nombreImplemento: nombreImplemento.toLowerCase(),
+    abreviacionImplemento: abreviacionImplemento.toLowerCase(),
     descripcionImplemento: descripcionImplemento.toLowerCase(),
   };
 
@@ -49,7 +54,21 @@ const registrarImplemento = async (req, res) => {
   }
 };
 
-const actualizarImplemento = async (req, res) => {};
+const actualizarImplemento = async (req, res) => {
+  const {
+      body,
+      params: { implementoId },
+  } = req;
+
+  try {
+      const implementoActualizado = await implementoService.actualizarImplemento(implementoId, body);
+      res.send({ status: "OK", data: `Se ha actualizado la informacion del implemento '${implementoActualizado}' de forma satisfactoria.` });
+  } catch (error) {
+      res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
 
 const borrarImplemento = async (req, res) => {
   const {

@@ -48,7 +48,19 @@ const registrarTipoResultado = async (req, res) => {
 };
 
 const actualizarTipoResultado = async (req, res) => {
+    const {
+        body,
+        params: { tipoResultadoId },
+    } = req;
 
+    try {
+        const tipoResultadoActualizado = await tipoResultadoService.actualizarTipoResultado(tipoResultadoId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del tipo de resultado '${tipoResultadoActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarTipoResultado = async (req, res) => {

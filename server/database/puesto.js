@@ -58,7 +58,32 @@ const registrarPuesto = async (nuevoPuesto) => {
   }
 };
 
-const actualizarPuesto = (puestoId, cambios) => {};
+const actualizarPuesto = async (puestoId, cambios) => {
+  const { numeroPuesto, fkCaballeriza } = cambios;
+
+  const query = {
+    text: `UPDATE puesto
+            SET numero_puesto=$1,
+            fk_caballeriza=$2
+            WHERE codigo_puesto=$3;`,
+    values: [numeroPuesto, fkCaballeriza, puestoId],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0) httpError.idNoEncontrado("El puesto", puestoId);
+
+    dbConnection.end;
+    return numeroPuesto;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay un puesto con el codigo '${puestoId}' registrado.`,
+      };
+    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
 
 const borrarPuesto = async (puestoId) => {
   const query = {

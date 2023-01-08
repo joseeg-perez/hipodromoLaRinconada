@@ -54,7 +54,19 @@ const registrarTelefono = async (req, res) => {
 };
 
 const actualizarTelefono = async (req, res) => {
+    const {
+        body,
+        params: { telefonoId },
+    } = req;
 
+    try {
+        await telefonoService.actualizarTelefono(telefonoId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del telefono de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarTelefono = async (req, res) => {

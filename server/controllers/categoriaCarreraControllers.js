@@ -48,7 +48,19 @@ const registrarCategoria = async (req, res) => {
 };
 
 const actualizarCategoria = async (req, res) => {
+    const {
+        body,
+        params: { categoriaId },
+    } = req;
 
+    try {
+        const categoriaActualizada = await categoriaCarreraService.actualizarCategoria(categoriaId, body);
+        res.send({ status: "OK", data: `Se ha actualizado el nombre de la categoria a '${categoriaActualizada} de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarCategoria = async (req, res) => {

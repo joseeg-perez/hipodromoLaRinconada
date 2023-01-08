@@ -23,8 +23,19 @@ const registrarStudVestimenta = async (req, res) => {
 };
 
 const actualizarStudVestimenta = async (req, res) => {
-    res.send("Estamos en actualizar studVestimenta");
+    const {
+        body,
+        params: { studVestimentaId },
+    } = req;
 
+    try {
+        await studVestimentaService.actualizarStudVestimenta(studVestimentaId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion de la vestimenta asociada al stud de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarStudVestimenta = async (req, res) => {

@@ -54,7 +54,19 @@ const registrarRgoJinete = async (req, res) => {
 };
 
 const actualizarRgoJinete = async (req, res) => {
+    const {
+        body,
+        params: { rgoJineteId },
+    } = req;
 
+    try {
+        const rangoJineteActualizado = await rgoJineteService.actualizarRgoJinete(rgoJineteId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del rango asociado a un jinete '${rangoJineteActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarRgoJinete = async (req, res) => {

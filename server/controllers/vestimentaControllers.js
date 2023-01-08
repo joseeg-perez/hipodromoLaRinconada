@@ -48,7 +48,19 @@ const registrarVestimenta = async (req, res) => {
 };
 
 const actualizarVestimenta = async (req, res) => {
+    const {
+        body,
+        params: { vestimentaId },
+    } = req;
 
+    try {
+        const vestimentaActualizada = await vestimentaService.actualizarVestimenta(vestimentaId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion de la vestimenta '${vestimentaActualizada}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarVestimenta = async (req, res) => {
