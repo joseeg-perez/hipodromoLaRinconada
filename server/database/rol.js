@@ -54,36 +54,31 @@ const registrarRol = async (nuevoRol) => {
   }
 };
 //Restante
-<<<<<<< HEAD
-const actualizarRol = (rolId, cambios) => {};
-=======
 const actualizarRol = async (rolId, cambios) => {
-    const { nombre } = cambios;
+  const { nombre } = cambios;
 
-    const query = {
-        text:`UPDATE rol
+  const query = {
+    text: `UPDATE rol
         SET nombre_rol=$1
         WHERE codigo_rol=$2;`,
-        values: [nombre, rolId],
+    values: [nombre, rolId],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0) httpError.idNoEncontrado("El rol", rolId);
+
+    dbConnection.end;
+    return nombre;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay un rol con el nombre '${nombre}' registrado.`,
+      };
     }
-        try {
-            const { rowCount } = await dbConnection.query(query);
-            if (rowCount === 0)
-                httpError.idNoEncontrado("El rol", rolId);
-            
-            dbConnection.end;
-            return(nombre)
-        } catch (error) {
-            if (error.code === "23505") {
-                throw {
-                  status: 409,
-                  message: `Ya hay un rol con el nombre '${nombre}' registrado.`,
-                };
-              }
-            throw { status: error?.status || 500, message: error?.message || error };
-        }      
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
->>>>>>> 1282e75b0bbf73884144a04c9e4cec0454a287d9
 
 const borrarRol = async (rolId) => {
   const query = {
