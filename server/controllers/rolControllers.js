@@ -45,8 +45,20 @@ const registrarRol = async (req, res) => {
     }
 };
 
-const actualizarRol = (req, res) => {
-    res.send("Estamos en actualizar rol");
+const actualizarRol = async (req, res) => {
+    const {
+        body,
+        params: { rolId },
+    } = req;
+
+    try {
+        const rolActualizado = await rolService.actualizarRol(rolId, body)
+        res.send({ status: "OK", data: rolActualizado });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 
 };
 

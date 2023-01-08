@@ -30,7 +30,15 @@ const registrarRol = async (nuevoRol) => {
   }
 };
 
-const actualizarRol = (rolId, cambios) => {};
+const actualizarRol = async (rolId, cambios) => {
+  try {
+    const rolActualizado = Rol.actualizarRol(rolId, cambios);
+
+    return rolActualizado;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarRol = async (rolId) => {
   try {

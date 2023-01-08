@@ -35,7 +35,18 @@ const registrarMotivoDeRetiro = async (nuevoMotivoRetiro) => {
   }
 };
 
-const actualizarMotivoDeRetiro = async (motivoRetiroId, cambios) => {};
+const actualizarMotivoDeRetiro = async (motivoRetiroId, cambios) => {
+  try {
+    const motivoRetiroActualizado = await MotivoRetiro.actualizarMotivoDeRetiro(
+      motivoRetiroId,
+      cambios
+    );
+
+    return motivoRetiroActualizado;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarMotivoDeRetiro = async (motivoRetiroId) => {
   try {

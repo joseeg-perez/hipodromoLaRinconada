@@ -30,7 +30,18 @@ const registrarRgoJinete = async (nuevoRgoJinete) => {
   }
 };
 
-const actualizarRgoJinete = async (rgoJineteId, cambios) => {};
+const actualizarRgoJinete = async (rgoJineteId, cambios) => {
+  try {
+    const rangoJineteActualizado = await RgoJinete.actualizarRgoJinete(
+      rgoJineteId,
+      cambios
+    );
+
+    return rangoJineteActualizado;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarRgoJinete = async (rgoJineteId) => {
   try {

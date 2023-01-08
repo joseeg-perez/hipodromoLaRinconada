@@ -10,7 +10,15 @@ const registrarPropietarioStud = async (nuevoPropietarioStud) => {
   }
 };
 
-const actualizarPropietarioStud = async (propietarioStudId, cambios) => {};
+const actualizarPropietarioStud = async (propietarioStudId, cambios) => {
+  try {
+    await PropietarioStud.actualizarPropietarioStud(propietarioStudId, cambios);
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarPropietarioStud = async (propietarioStudId) => {
   try {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import axios from "axios";
-import { CardMedImpRetiro } from "../componentes/Medicamentos y Retiros/CardMedImpRetiro";
 import { Link } from "react-router-dom";
 import lupa from "../assets/lupa.svg";
+import InfoMotivo from "../componentes/MotivosRetiro/InfoMotivo";
 
 const MotivosRetiro = () => {
   const [retiros, setRetiros] = useState([]);
@@ -61,7 +61,7 @@ const MotivosRetiro = () => {
 
         <div
           className="rounded-end d-flex align-items-center"
-          style={{ backgroundColor: "#AFBBF7", width: "220px", height: "40px" }}
+          style={{ backgroundColor: "#AFBBF7", width: "170px", height: "40px" }}
         >
           <Link size="sm" to={`/motivosRet/agregar`} className="text-center">
             <Button
@@ -82,8 +82,9 @@ const MotivosRetiro = () => {
       <h2 className="text-center mt-3">LISTADO DE MOTIVOS DE RETIRO</h2>
       <Row className="row-cols-4">
         {retiros.data.map((motivo) => (
-          <CardMedImpRetiro
+          <InfoMotivo
             key={motivo.codigo_motivo}
+            Id={motivo.codigo_motivo}
             nombre={motivo.nombre_motivo}
             descripcion={motivo.descripcion_motivo}
           />

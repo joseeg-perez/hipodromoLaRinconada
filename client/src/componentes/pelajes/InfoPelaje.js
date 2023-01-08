@@ -3,6 +3,7 @@ import { Card, Col, Row, Button } from "react-bootstrap";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const InfoPelaje = (props) => {
   const handleDelete = (event) => {
@@ -23,9 +24,16 @@ const InfoPelaje = (props) => {
         <Card.Title>{props.nombre}</Card.Title>
         <Col className="text-end mt-3">
           <Card.Text className="text-center">({props.abrev})</Card.Text>
-          <Button className="btn btn-light btn-outline-success btn-sm mx-1">
-            <img src={edit} alt="/" width={20} />
-          </Button>
+
+          <Link
+            size="sm"
+            to={`/pelajes/${props.Id}/updatePelaje`}
+            className="text-center"
+          >
+            <Button className="btn btn-light btn-outline-success btn-sm mx-1">
+              <img src={edit} alt="/" width={20} />
+            </Button>
+          </Link>
 
           <Button
             className="btn btn-light btn-outline-danger btn-sm mx-1"

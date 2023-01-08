@@ -58,9 +58,9 @@ const registrarVeterinario = async (nuevoVeterinario) => {
   }
 };
 
-const actualizarVeterinario = (veterinarioId, cambios) => {
+const actualizarVeterinario = async (veterinarioId, cambios) => {
   try {
-    const VeterinarioActualizada = Veterinario.actualizarVeterinario(
+    const VeterinarioActualizada = await Veterinario.actualizarVeterinario(
       veterinarioId,
       cambios
     );

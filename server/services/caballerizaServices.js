@@ -45,9 +45,9 @@ const registrarCaballeriza = async (nuevaCaballeriza) => {
   }
 };
 
-const actualizarCaballeriza = (caballerizaId, cambios) => {
+const actualizarCaballeriza = async (caballerizaId, cambios) => {
   try {
-    const caballerizaActualizada = Caballeriza.actualizarCaballeriza(
+    const caballerizaActualizada = await Caballeriza.actualizarCaballeriza(
       caballerizaId,
       cambios
     );

@@ -10,7 +10,15 @@ const registrarStudVestimenta = async (nuevoStudVestimenta) => {
   }
 };
 
-const actualizarStudVestimenta = async (studVestimentaId, cambios) => {};
+const actualizarStudVestimenta = async (studVestimentaId, cambios) => {
+  try {
+    await StudVestimenta.actualizarStudVestimenta(studVestimentaId, cambios);
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarStudVestimenta = async (studVestimentaId) => {
   try {

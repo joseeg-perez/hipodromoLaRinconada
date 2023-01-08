@@ -13,11 +13,11 @@ const obtenerListaDeTipoResultado = async () => {
 
 const obtenerTipoResultadoIndividual = async (tipoResultadoId) => {
   try {
-    const TipoResultado = await TipoResultado.obtenerTipoResultadoIndividual(
+    const tipoResultado = await TipoResultado.obtenerTipoResultadoIndividual(
       tipoResultadoId
     );
 
-    return TipoResultado;
+    return tipoResultado;
   } catch (error) {
     throw error;
   }
@@ -35,12 +35,10 @@ const registrarTipoResultado = async (nuevoTipoResultado) => {
   }
 };
 
-const actualizarTipoResultado = (tipoResultadoId, cambios) => {
+const actualizarTipoResultado = async (tipoResultadoId, cambios) => {
   try {
-    const tipoResultadoActualizado = TipoResultado.actualizarTipoResultado(
-      tipoResultadoId,
-      cambios
-    );
+    const tipoResultadoActualizado =
+      await TipoResultado.actualizarTipoResultado(tipoResultadoId, cambios);
 
     return tipoResultadoActualizado;
   } catch (error) {

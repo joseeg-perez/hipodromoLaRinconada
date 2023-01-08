@@ -3,6 +3,7 @@ import { Button, Card, Col, Container } from "react-bootstrap";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const InfoMedicamento = (props) => {
   const handleDelete = (event) => {
@@ -23,9 +24,15 @@ const InfoMedicamento = (props) => {
       <Card.Body>
         <Card.Text>{props.descripcion}</Card.Text>
         <Col className="text-end">
-          <Button className="btn btn-light btn-outline-success btn-sm mx-1">
-            <img src={edit} alt="/" width={20} />
-          </Button>
+          <Link
+            size="sm"
+            to={`/medicamentos/${props.Id}/updateMedicamento`}
+            className="text-center"
+          >
+            <Button className="btn btn-light btn-outline-success btn-sm mx-1">
+              <img src={edit} alt="/" width={20} />
+            </Button>
+          </Link>
 
           <Button
             className="btn btn-light btn-outline-danger btn-sm mx-1"

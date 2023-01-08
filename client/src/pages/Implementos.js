@@ -85,7 +85,7 @@ const Implementos = () => {
         {implementos.data.map((implemento) => (
           <InfoImplemento
             key={implemento.codigo_implemento}
-            codigo={implemento.codigo_implemento}
+            Id={implemento.codigo_implemento}
             nombre={implemento.nombre_implemento}
             descripcion={implemento.descripcion_implemento}
             abrev={implemento.abrev_implemento}

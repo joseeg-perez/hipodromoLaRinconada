@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const CarreraUpdate = () => {
   return (
     <div>
       <p>Modificar carrera</p>
     </div>
-  )
-}
+  );
+};
 
-export default CarreraUpdate
+export default CarreraUpdate;

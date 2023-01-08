@@ -35,7 +35,15 @@ const registrarParticipacion = async (nuevaParticipacion) => {
   }
 };
 
-const actualizarParticipacion = async (participacionId, cambios) => {};
+const actualizarParticipacion = async (participacionId, cambios) => {
+  try {
+    await Participacion.actualizarParticipacion(participacionId, cambios);
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const borrarParticipacion = async (participacionId) => {
   try {
