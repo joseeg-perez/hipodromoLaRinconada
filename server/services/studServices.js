@@ -83,7 +83,7 @@ const cambiarPorcentajes = async (cambios) => {
         porcentajePropiedad: propietarioPost.porcentaje,
         fechaInicioPropiedad: null,
         fechaFinPropiedad: null,
-        fkStud: propietarioPost.fkStud,
+        fkStud: cambios.fkStud,
         fkPropietario: propietarioPost.idpropietario,
     }
         await registrarPropietarioStud(nuevoPropietarioStud);
@@ -94,7 +94,7 @@ const cambiarPorcentajes = async (cambios) => {
                 porcentajePropiedad: propietariosPatch[i].porcentaje,
                 fechaInicioPropiedad: propietariosPatch[i].fecha_inicio,
                 fechaFinPropiedad: null,
-                fkStud: propietariosPatch[i].fkStud,
+                fkStud: cambios.fkStud,
                 fkPropietario: propietariosPatch[i].idpropietario,
                 propietarioStudId: propietariosPatch[i].propietariostudid,
             }
