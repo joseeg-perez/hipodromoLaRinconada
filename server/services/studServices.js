@@ -3,6 +3,7 @@ const { registrarPropietarioStud } = require("./propietarioStudServices.js");
 const { registrarStudColor } = require("./studColorServices.js");
 const { registrarStudVestimenta, buscarStudVestimentaId } = require("./studVestimentaServices.js");
 const { registrarColorStudVestimenta } = require("./colorStudVestimentaServices.js");
+const { actualizarPropietarioStud } = require("./propietarioStudServices.js");
 
 const obtenerListaDeStuds = async () => {
     try {
@@ -69,6 +70,51 @@ const obtenerPosibleCaballoStud = async (studId) => {
         const stud = await Stud.obtenerPosibleCaballoStud(studId);
 
         return(stud);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const cambiarPorcentajes = async (cambios) => {
+
+    try {
+        const propietarioPost = cambios.propietarios.pop();//Se saca el ultimo de la lista ya que es el que se va a registrar
+        const nuevoPropietarioStud = {
+        porcentajePropiedad: propietarioPost.porcentaje,
+        fechaInicioPropiedad: propietarioPost.fecha_inicio,
+        fechaFinPropiedad: null,
+        fkStud: propietarioPost.fkStud,
+        fkPropietario: propietarioPost.idpropietario,
+    }
+        await registrarPropietarioStud(nuevoPropietarioStud);
+
+        const propietariosPatch = cambios.propietarios;//lista de propietarios que se van a actualizar
+        for (let i = 0; i < propietariosPatch.length; i++) {
+            const propietarioActualizado = {
+                porcentajePropiedad: propietariosPatch[i].porcentaje,
+                fechaInicioPropiedad: propietariosPatch[i].fecha_inicio,
+                fechaFinPropiedad: null,
+                fkStud: propietariosPatch[i].fkStud,
+                fkPropietario: propietariosPatch[i].idpropietario,
+            }
+            await actualizarPropietarioStud(propietariosPatch[i].idpropietario, propietarioActualizado); 
+            //Aqui es donde esta el detalle, el primer parametro es el id de PropietarioStud y no lo tenemos :(    
+        }
+    } catch (error) {
+        throw(error); 
+    }
+};
+
+const agregarVestimentas = async (cambios) => {
+    try {
+        const listaVestimentas = cambios.vestimentas;
+        for (let i = 0; i < listaVestimentas.length; i++) {
+            const nuevaStudVestimenta = {
+                fkVestimenta: cambios.vestimentas[i].fkVestimenta,
+                fkStud: cambios.vestimentas[i].fkStud,
+            }
+            await registrarStudVestimenta(nuevaStudVestimenta);
+        }
     } catch (error) {
         throw(error);
     }
@@ -157,6 +203,8 @@ module.exports = {
     obtenerVestimentaStud,
     obtenerCaballoStud,
     obtenerPosibleCaballoStud,
+    cambiarPorcentajes,
+    agregarVestimentas,
     registrarStud,
     actualizarStud,
     borrarStud,

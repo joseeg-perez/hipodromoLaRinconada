@@ -110,7 +110,7 @@ const actualizarJinete = async (jineteId, cambios) => {
         apellido2_persona=$5,
         fecha_nacimiento_persona=$6,
         altura_jinete=$7,
-        fk_rango=$8
+        fk_rango=$8,
         peso_jinete=$9
         WHERE codigo_persona=$10;`,
         values: [

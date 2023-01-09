@@ -9,15 +9,19 @@ router.get("/listado_de_studs", studController.obtenerListaDeStuds);
 
 router.get("/:studId", validateId, studController.obtenerStudIndividual);
 
-router.get("/propietarios/:studId", validateId, studController.obtenerPropietarioDeStud);
+router.get("/propietarios/:studId", validateId, studController.obtenerPropietarioDeStud);//Propietarios del stud
 
-router.get("/propietariosNoStud/:studId", validateId, studController.obtenerPropietarioDeStudDistintos);
+router.get("/propietariosNoStud/:studId", validateId, studController.obtenerPropietarioDeStudDistintos);//Propietarios que no son del stud
 
-router.get("/vestimentaStud/:studId", validateId, studController.obtenerVestimentaStud);
+router.get("/vestimentaStud/:studId", validateId, studController.obtenerVestimentaStud);//Vestimentas de ese stud
 
-router.get("/caballosStud/:studId", validateId, studController.obtenerCaballoStud);
+router.get("/caballosStud/:studId", validateId, studController.obtenerCaballoStud);//Caballos que no son de ese stud pero pueden serlo
 
 router.get("/PosiblesCaballosStud/:studId", validateId, studController.obtenerPosibleCaballoStud);
+
+router.post("/cambiarPorcentajes", studController.cambiarPorcentajes);//Para cambiar los porcentajes de los propietarios
+
+router.post("/agregarVestimentas", studController.agregarVestimentas);
 
 router.post("/registrar_stud", validateCreate, studController.registrarStud);
 

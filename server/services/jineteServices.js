@@ -32,7 +32,7 @@ const registrarJinete = async (nuevoJinete) => {
 
 const actualizarJinete = async (jineteId, cambios) => {
     try {
-        const jineteActualizado = await Entrenador.actualizarEntrenador(jineteId, cambios);
+        const jineteActualizado = await Jinete.actualizarJinete(jineteId, cambios);
         
         return(jineteActualizado);
     } catch (error) {
