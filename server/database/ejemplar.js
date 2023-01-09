@@ -36,6 +36,60 @@ const obtenerEjemplarIndividual = async (ejemplarId) => {
     }
 };
 
+const obtenerPropietarioDelEjemplarIndividual = async (ejemplarId) => {
+    const query = {
+        text: ``,
+        values: [ejemplarId],
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.idNoEncontrado("El ejemplar", ejemplarId);
+        
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
+const obtenerNoPropietarioDelEjemplarIndividual = async (ejemplarId) => {
+    const query = {
+        text: ``,
+        values: [ejemplarId],
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.idNoEncontrado("El ejemplar", ejemplarId);
+        
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
+const obtenerPosibleStudDelEjemplarIndividual = async (ejemplarId) => {
+    const query = {
+        text: ``,
+        values: [ejemplarId],
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.idNoEncontrado("El ejemplar", ejemplarId);
+        
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
 const registrarEjemplar = async (nuevoEjemplar) => {
     const { 
         nombreEjemplar,
@@ -185,6 +239,9 @@ const borrarEjemplar = async (ejemplarId) => {
 module.exports = {
     obtenerListaDeEjemplares,
     obtenerEjemplarIndividual,
+    obtenerPropietarioDelEjemplarIndividual,
+    obtenerNoPropietarioDelEjemplarIndividual,
+    obtenerPosibleStudDelEjemplarIndividual,
     registrarEjemplar,
     actualizarEjemplar,
     borrarEjemplar,

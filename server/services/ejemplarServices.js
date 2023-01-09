@@ -20,11 +20,41 @@ const obtenerEjemplarIndividual = async (ejemplarId) => {
     }
 };
 
+const obtenerPropietarioDelEjemplarIndividual = async (nuevoEjemplar) => {
+    try {
+        const ejemplar = await Ejemplar.obtenerPropietarioDelEjemplarIndividual(nuevoEjemplar);
+        
+        return(ejemplar);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerNoPropietarioDelEjemplarIndividual = async (nuevoEjemplar) => {
+    try {
+        const ejemplar = await Ejemplar.obtenerNoPropietarioDelEjemplarIndividual(nuevoEjemplar);
+        
+        return(ejemplar);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerPosibleStudDelEjemplarIndividual = async (nuevoEjemplar) => {
+    try {
+        const ejemplar = await Ejemplar.obtenerPosibleStudDelEjemplarIndividual(nuevoEjemplar);
+        
+        return(ejemplar);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 const registrarEjemplar = async (nuevoEjemplar) => {
     try {
-        const ejemplarCreado = await Ejemplar.registrarEjemplar(nuevoEjemplar);
+        const ejemplar = await Ejemplar.registrarEjemplar(nuevoEjemplar);
         
-        return(ejemplarCreado);
+        return(ejemplar);
     } catch (error) {
         throw(error);
     }
@@ -51,6 +81,9 @@ const borrarEjemplar = async (ejemplarId) => {
 module.exports = {
     obtenerListaDeEjemplares,
     obtenerEjemplarIndividual,
+    obtenerPropietarioDelEjemplarIndividual,
+    obtenerNoPropietarioDelEjemplarIndividual,
+    obtenerPosibleStudDelEjemplarIndividual,
     registrarEjemplar,
     actualizarEjemplar,
     borrarEjemplar,

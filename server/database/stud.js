@@ -39,6 +39,107 @@ const obtenerStudIndividual = async (studId) => {
   }
 };
 
+const obtenerPropietarioDeStud = async (studId) => {
+  const query = {
+    text: `SELECT 
+              pro.codigo_persona AS IdPropietario, pro.nombre1_persona AS Nombre, pro.apellido1_persona AS Apellido, ps.porcentaje_propiedad AS Porcentaje,
+                to_char(ps.fecha_inicio_propiedad :: DATE, 'dd-mm-yyyy') AS Fecha_Inicio
+           FROM 
+              persona_propietario pro, propietario_stud ps, stud s
+           WHERE ps.fk_stud=s.codigo_stud
+              AND ps.fk_propietario=pro.codigo_persona
+              AND ps.fecha_fin_propiedad is null
+              AND s.codigo_stud=$1;`,
+    values: [studId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0) httpError.idNoEncontrado("Los propietarios", studId);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerPropietarioDeStudDistintos = async (studId) => {
+  const query = {
+    text: `SELECT 
+              pro.codigo_persona AS IdPropietario, pro.nombre1_persona AS Nombre, pro.apellido1_persona AS Apellido, ps.porcentaje_propiedad AS Porcentaje,
+              to_char(ps.fecha_inicio_propiedad :: DATE, 'dd-mm-yyyy') AS Fecha_Inicio
+           FROM 
+              persona_propietario pro, propietario_stud ps, stud s
+           WHERE ps.fk_stud=s.codigo_stud
+              AND ps.fk_propietario=pro.codigo_persona
+              AND ps.fecha_fin_propiedad IS null
+              AND s.codigo_stud!=$1;`,
+    values: [studId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0) httpError.idNoEncontrado("El propietario", studId);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerVestimentaStud = async (studId) => {
+  const query = {
+    text: ``,//aqui lanzas el query white
+    values: [studId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0) httpError.idNoEncontrado("La vestimenta", studId);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerCaballoStud = async (studId) => {
+  const query = {
+    text: ``,//aqui lanzas el query white
+    values: [studId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0) httpError.idNoEncontrado("El caballo", studId);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerPosibleCaballoStud = async (studId) => {
+  const query = {
+    text: ``,//aqui lanzas el query white
+    values: [studId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0) httpError.idNoEncontrado("El posible caballo", studId);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
 const registrarStud = async (nuevoStud) => {
   const { nombreStud, fechaCreacion } = nuevoStud;
 
@@ -137,6 +238,11 @@ const obtenerIdStudNueva = async (nuevoStud) => {
 module.exports = {
   obtenerListaDeStuds,
   obtenerStudIndividual,
+  obtenerPropietarioDeStud,
+  obtenerPropietarioDeStudDistintos,
+  obtenerVestimentaStud,
+  obtenerCaballoStud,
+  obtenerPosibleCaballoStud,
   registrarStud,
   actualizarStud,
   borrarStud,

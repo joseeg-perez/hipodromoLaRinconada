@@ -24,6 +24,56 @@ const obtenerStudIndividual = async (studId) => {
     }
 };
 
+const obtenerPropietarioDeStud = async (studId) => {
+    try {
+        const stud = await Stud.obtenerPropietarioDeStud(studId);
+
+        return(stud);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerPropietarioDeStudDistintos = async (studId) => {
+    try {
+        const stud = await Stud.obtenerPropietarioDeStudDistintos(studId);
+
+        return(stud);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerVestimentaStud = async (studId) => {
+    try {
+        const stud = await Stud.obtenerVestimentaStud(studId);
+
+        return(stud);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerCaballoStud = async (studId) => {
+    try {
+        const stud = await Stud.obtenerCaballoStud(studId);
+
+        return(stud);
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const obtenerPosibleCaballoStud = async (studId) => {
+    try {
+        const stud = await Stud.obtenerPosibleCaballoStud(studId);
+
+        return(stud);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 const registrarStud = async (nuevoStud) => {
     try {
         const studCreado = await Stud.registrarStud(nuevoStud);
@@ -102,6 +152,11 @@ const borrarStud = async (studId) => {
 module.exports = {
     obtenerListaDeStuds,
     obtenerStudIndividual,
+    obtenerPropietarioDeStud,
+    obtenerPropietarioDeStudDistintos,
+    obtenerVestimentaStud,
+    obtenerCaballoStud,
+    obtenerPosibleCaballoStud,
     registrarStud,
     actualizarStud,
     borrarStud,
