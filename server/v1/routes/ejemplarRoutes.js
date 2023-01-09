@@ -9,11 +9,11 @@ router.get("/listado_de_ejemplares", ejemplarController.obtenerListaDeEjemplares
 
 router.get("/:ejemplarId", validateId, ejemplarController.obtenerEjemplarIndividual);
 
-router.get("propietario/:ejemplarId", validateId, ejemplarController.obtenerPropietarioDelEjemplarIndividual);
+router.get("propietario/:ejemplarId", validateId, ejemplarController.obtenerPropietarioDelEjemplarIndividual);//Propietarios de ese ejemplar
 
-router.get("noPropietario/:ejemplarId", validateId, ejemplarController.obtenerNoPropietarioDelEjemplarIndividual);
+router.get("noPropietario/:ejemplarId", validateId, ejemplarController.obtenerNoPropietarioDelEjemplarIndividual);//Propietarios que no pertenecen a ese ejemplar
 
-router.get("posibleStud/:ejemplarId", validateId, ejemplarController.obtenerPosibleStudDelEjemplarIndividual);
+router.get("posibleStud/:ejemplarId", validateId, ejemplarController.obtenerPosibleStudDelEjemplarIndividual);//Studs posibles de ese ejemplar
 
 router.post("/registrar_ejemplar", validateCreate, ejemplarController.registrarEjemplar);
 
