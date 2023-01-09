@@ -31,12 +31,10 @@ const obtenerEventoIndividual = async (req, res) => {
 const registrarEvento = async (req, res) => { 
     const {
         fechaEvento,
-        horaEvento,
      } =  req.body;
 
     const nuevoEvento = {
         fechaEvento,
-        horaEvento,
     };
 
     try {

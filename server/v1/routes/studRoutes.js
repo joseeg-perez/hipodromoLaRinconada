@@ -21,7 +21,7 @@ router.get("/PosiblesCaballosStud/:studId", validateId, studController.obtenerPo
 
 router.post("/cambiarPorcentajes", studController.cambiarPorcentajes);//Para cambiar los porcentajes de los propietarios
 
-router.post("/agregarVestimentas", studController.agregarVestimentas);
+router.post("/agregarVestimentas", studController.agregarVestimentas);//Para agregar mas vestimentas ademas de las existentes
 
 router.post("/registrar_stud", validateCreate, studController.registrarStud);
 

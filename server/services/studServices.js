@@ -81,7 +81,7 @@ const cambiarPorcentajes = async (cambios) => {
         const propietarioPost = cambios.propietarios.pop();//Se saca el ultimo de la lista ya que es el que se va a registrar
         const nuevoPropietarioStud = {
         porcentajePropiedad: propietarioPost.porcentaje,
-        fechaInicioPropiedad: propietarioPost.fecha_inicio,
+        fechaInicioPropiedad: null,
         fechaFinPropiedad: null,
         fkStud: propietarioPost.fkStud,
         fkPropietario: propietarioPost.idpropietario,
@@ -90,15 +90,15 @@ const cambiarPorcentajes = async (cambios) => {
 
         const propietariosPatch = cambios.propietarios;//lista de propietarios que se van a actualizar
         for (let i = 0; i < propietariosPatch.length; i++) {
-            const propietarioActualizado = {
+            const propietarioActualizado = { //Propietario al cual se le modifican los porcentajes de propiedad
                 porcentajePropiedad: propietariosPatch[i].porcentaje,
                 fechaInicioPropiedad: propietariosPatch[i].fecha_inicio,
                 fechaFinPropiedad: null,
                 fkStud: propietariosPatch[i].fkStud,
                 fkPropietario: propietariosPatch[i].idpropietario,
+                propietarioStudId: propietariosPatch[i].propietariostudid,
             }
-            await actualizarPropietarioStud(propietariosPatch[i].idpropietario, propietarioActualizado); 
-            //Aqui es donde esta el detalle, el primer parametro es el id de PropietarioStud y no lo tenemos :(    
+            await actualizarPropietarioStud(propietarioActualizado.propietarioStudId, propietarioActualizado); 
         }
     } catch (error) {
         throw(error); 
@@ -110,8 +110,8 @@ const agregarVestimentas = async (cambios) => {
         const listaVestimentas = cambios.vestimentas;
         for (let i = 0; i < listaVestimentas.length; i++) {
             const nuevaStudVestimenta = {
-                fkVestimenta: cambios.vestimentas[i].fkVestimenta,
-                fkStud: cambios.vestimentas[i].fkStud,
+                fkVestimenta: listaVestimentas[i].fkVestimenta,
+                fkStud: listaVestimentas[i].fkStud,
             }
             await registrarStudVestimenta(nuevaStudVestimenta);
         }
