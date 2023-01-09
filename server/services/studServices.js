@@ -195,19 +195,6 @@ const borrarStud = async (studId) => {
 };
 
 module.exports = {
-<<<<<<< HEAD
-  obtenerListaDeStuds,
-  obtenerStudIndividual,
-  obtenerPropietarioDeStud,
-  obtenerPropietarioDeStudDistintos,
-  obtenerVestimentaStud,
-  obtenerCaballoStud,
-  obtenerPosibleCaballoStud,
-  registrarStud,
-  actualizarStud,
-  borrarStud,
-};
-=======
     obtenerListaDeStuds,
     obtenerStudIndividual,
     obtenerPropietarioDeStud,
@@ -221,4 +208,3 @@ module.exports = {
     actualizarStud,
     borrarStud,
 };
->>>>>>> main

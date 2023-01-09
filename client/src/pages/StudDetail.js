@@ -439,14 +439,15 @@ const StudDetail = () => {
           propietario.idpropietario
         ).value)
     );
+    UltimosPropietarios.map((propietario) => (Object.assign({}, propietario, {Stud: Params.studId})))
     console.log(fkStud);
-    // try {
-    //   await axios.post("http://localhost:3001/api/v1/studs/cambiarPorcentajes", {
-    //     UltimosPropietarios
-    //   });
-    // } catch (error) {
-    //   throw error;
-    // }
+    try {
+      await axios.post("http://localhost:3001/api/v1/studs/cambiarPorcentajes", {
+        UltimosPropietarios
+      });
+    } catch (error) {
+      throw error;
+    }
     //AQUI SE LLAMA AL BACK PARA HACER LO DE LOS PORCENTAJES
     console.log(UltimosPropietarios);
     setTogglePorcentajes(false);
