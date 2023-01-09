@@ -99,9 +99,31 @@ const EjemplarAgregar = () => {
   if (isLoading) {
     return <div>Cargando</div>;
   }
-  const handleData = (event) => {
+  const handleData = async (event) => {
     console.log(imagenEjemplar);
     event.preventDefault();
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/ejemplares/registrar_ejemplar",
+        {
+          nombreEjemplar,
+          numeroEjemplar,
+          tatlabialEjemplar,
+          precioEjemplar,
+          fecha_nacEjemplar,
+          pesoEjemplar,
+          padreEjemplar,
+          madreEjemplar,
+          imagenEjemplar,
+          propietarioEjemplar,
+          haraEjemplar,
+          generoEjemplar,
+          pelajeEjemplar,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
     console.warn(
       "all data",
       nombreEjemplar,

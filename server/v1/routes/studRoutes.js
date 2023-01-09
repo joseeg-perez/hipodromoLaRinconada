@@ -9,6 +9,16 @@ router.get("/listado_de_studs", studController.obtenerListaDeStuds);
 
 router.get("/:studId", validateId, studController.obtenerStudIndividual);
 
+router.get("/propietarios/:studId", validateId, studController.obtenerPropietarioDeStud);
+
+router.get("/propietariosNoStud/:studId", validateId, studController.obtenerPropietarioDeStudDistintos);
+
+router.get("/vestimentaStud/:studId", validateId, studController.obtenerVestimentaStud);
+
+router.get("/caballosStud/:studId", validateId, studController.obtenerCaballoStud);
+
+router.get("/PosiblesCaballosStud/:studId", validateId, studController.obtenerPosibleCaballoStud);
+
 router.post("/registrar_stud", validateCreate, studController.registrarStud);
 
 router.patch("/:studId", validateId, studController.actualizarStud);

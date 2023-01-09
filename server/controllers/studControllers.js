@@ -28,6 +28,81 @@ const obtenerStudIndividual = async (req, res) => {
   }
 };
 
+const obtenerPropietarioDeStud = async (req, res) => {
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerPropietarioDeStud(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerPropietarioDeStudDistintos = async (req, res) => {
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerPropietarioDeStudDistintos(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerVestimentaStud = async (req, res) => {
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerVestimentaStud(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerCaballoStud = async (req, res) => {
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerCaballoStud(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerPosibleCaballoStud = async (req, res) => {
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerPosibleCaballoStud(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const registrarStud = async (req, res) => {
   const {
     fechaCreacion,
@@ -49,12 +124,10 @@ const registrarStud = async (req, res) => {
 
   try {
     const studCreado = await studService.registrarStud(nuevoStud);
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `Se ha creado el stud '${studCreado}' de forma satisfactoria.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `Se ha creado el stud '${studCreado}' de forma satisfactoria.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -88,12 +161,10 @@ const borrarStud = async (req, res) => {
 
   try {
     await studService.borrarStud(studId);
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `El stud con el id '${studId}' se ha eliminado con exito.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `El stud con el id '${studId}' se ha eliminado con exito.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -104,6 +175,11 @@ const borrarStud = async (req, res) => {
 module.exports = {
   obtenerListaDeStuds,
   obtenerStudIndividual,
+  obtenerPropietarioDeStud,
+  obtenerPropietarioDeStudDistintos,
+  obtenerVestimentaStud,
+  obtenerCaballoStud,
+  obtenerPosibleCaballoStud,
   registrarStud,
   actualizarStud,
   borrarStud,

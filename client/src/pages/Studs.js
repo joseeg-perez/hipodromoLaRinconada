@@ -113,7 +113,7 @@ const Studs = () => {
             return (
               <InfoStud
                 key={stud.codigo_stud}
-                Id={stud.codigo_stud}
+                id={stud.codigo_stud}
                 nombre={stud.nombre_stud}
                 propietario={stud.nombre}
                 fecha={stud.fecha}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row, Image, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import caballo1 from "../assets/caballo1.jpg";
@@ -6,6 +6,7 @@ import caballo2 from "../assets/caballo2.jpg";
 import caballo3 from "../assets/caballo3.jpg";
 import lupa from "../assets/lupa.svg";
 import InfoEjemplar from "../componentes/ejemplares/InfoEjemplar";
+import axios from "axios";
 
 const Ejemplares = (props) => {
   const Ejemplares = [
@@ -46,6 +47,26 @@ const Ejemplares = (props) => {
       Id: 3,
     },
   ];
+
+  const [isLoading, setLoading] = useState(true);
+  const [ejemplares, setEjemplares] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/ejemplares/listado_de_ejemplares")
+      .then((res) => {
+        console.log(res);
+        setEjemplares(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(ejemplares);
+
+  if (isLoading) {
+    return <div></div>;
+  }
 
   return (
     <Container>
@@ -110,23 +131,17 @@ const Ejemplares = (props) => {
         </div>
       </Row>
       <Row className="row-cols-2 mx-5">
-        {Ejemplares.map((ejemplar) => (
+        {ejemplares.data.map((ejemplar) => (
           <InfoEjemplar
-            key={ejemplar.nombre}
-            imagen={ejemplar.imagen}
-            nombre={ejemplar.nombre}
-            numero={ejemplar.numero}
-            pelaje={ejemplar.pelaje}
-            sexo={ejemplar.sexo}
-            padre={ejemplar.padre}
-            madre={ejemplar.madre}
-            stud={ejemplar.stud}
-            fecha_nac={ejemplar.fecha_nac}
+            key={ejemplar.codigo_ejemplar}
+            Id={ejemplar.codigo_ejemplar}
+            imagen={ejemplar.imagen_ejemplar}
+            nombre={ejemplar.nombre_ejemplar}
+            stud={ejemplar.nombre_stud}
+            fecha_nacimiento={ejemplar.fechanac}
             entrenador={ejemplar.entrenador}
-            mejorPos={ejemplar.mejorPos}
-            cantidad2do={ejemplar.cantidad2do}
-            ganancia={ejemplar.ganancia}
-            Id={ejemplar.Id}
+            caballeriza={ejemplar.caballeriza}
+            hara={ejemplar.nombre_hara}
           />
         ))}
       </Row>
