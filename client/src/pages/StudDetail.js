@@ -283,6 +283,7 @@ const StudDetail = () => {
   const [porcentajes, setporcentajes] = useState("");
   const [EjemplaresStud, setEjemplaresStud] = useState("");
   const [UltimosPropietarios, setUltimosPropietario] = useState(informacion1);
+  const [toggleAgregarAlStud, setToggleAgregarAlStud] = useState(false)
 
   useEffect(() => {
     axios
@@ -369,6 +370,7 @@ const StudDetail = () => {
     setToggleAgregarVestimenta(false);
     setToggleColor(false);
     setToggleBoton(false);
+    setToggleAgregarAlStud(true)
     const vestimentaStud = {
       codigo: vestimenta,
       colorV: color,
@@ -379,10 +381,13 @@ const StudDetail = () => {
   const SubmitNuevasVestimentas = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/v1/vestimentas_studs", {});
+      await axios.post("http://localhost:3001/api/v1/studs/agregarVestimentas", {
+        nuevasVestimentas
+      });
     } catch (error) {
       throw error;
     }
+    setToggleAgregarAlStud(false)
   };
 
   console.log(propietarios);
@@ -427,7 +432,7 @@ const StudDetail = () => {
   //     .catch((err) => console.log(err));
   // };
 
-  const handleDataCambiosPropietario = (event) => {
+  const handleDataCambiosPropietario = async (event) => {
     UltimosPropietarios.map(
       (propietario) =>
         (propietario.porcentaje = document.getElementById(
@@ -435,6 +440,13 @@ const StudDetail = () => {
         ).value)
     );
     console.log(fkStud);
+    // try {
+    //   await axios.post("http://localhost:3001/api/v1/studs/cambiarPorcentajes", {
+    //     UltimosPropietarios
+    //   });
+    // } catch (error) {
+    //   throw error;
+    // }
     //AQUI SE LLAMA AL BACK PARA HACER LO DE LOS PORCENTAJES
     console.log(UltimosPropietarios);
     setTogglePorcentajes(false);
@@ -645,6 +657,11 @@ const StudDetail = () => {
                     className="mt-3"
                     onChangeComplete={handleColor}
                   />
+                )}
+                {toggleAgregarAlStud && (
+                  <Button className="sm mt-4" onClick={SubmitNuevasVestimentas}>
+                    Agregar Vestimenta
+                  </Button>
                 )}
               </Col>
               <Col className="col-4">

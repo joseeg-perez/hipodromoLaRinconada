@@ -50,7 +50,7 @@ const obtenerStudIndividual = async (studId) => {
 const obtenerPropietarioDeStud = async (studId) => {
   const query = {
     text: `SELECT 
-              pro.codigo_persona AS IdPropietario, pro.nombre1_persona AS Nombre,
+              pro.codigo_persona AS IdPropietario, ps.codigo_prop_stud as propietarioStudId,pro.nombre1_persona AS Nombre,
               pro.apellido1_persona AS Apellido, ps.porcentaje_propiedad AS Porcentaje,
                 to_char(ps.fecha_inicio_propiedad :: DATE, 'dd-mm-yyyy') AS Fecha_Inicio,
                 pro.cedula_persona as cedula

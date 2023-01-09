@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Card, Col, Button, Form } from "react-bootstrap";
 import InfoEventos from "../componentes/eventos/InfoEventos";
 import fotico from "../assets/registrarEvento.jpg";
+import axios from "axios";
 
 const Eventos = () => {
   let usuario1 = "crear";
   let usuario2 = "ver";
   let usuario3 = "inscribir";
-  let usuario = usuario3;
+  let usuario = usuario1;
+  const [fechaEvento, setFechaEvento] = useState('')
+
+  const handleFechaEvento = (event) => {
+    setFechaEvento(event.target.value)
+  }
+  const handleData = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/eventos/registrar_evento",
+        {
+          fechaEvento
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+
   let cardAgregarCarrera = (
     <Card className="w-75 mb-2">
       <Card.Body>
@@ -24,10 +44,10 @@ const Eventos = () => {
                 </Row>
 
                 <Row className="ms-4 mt-1">
-                  <input type="date" className="col-5"></input>
+                  <input type="date" className="col-5" onChange={handleFechaEvento}></input>
                 </Row>
                 <Row className="mt-2 d-flex justify-content-center">
-                  <Button className="col-3">Guardar</Button>
+                  <Button className="col-3" onClick={handleData}>Guardar</Button>
                 </Row>
               </Form>
             </Row>
