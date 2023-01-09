@@ -36,6 +36,10 @@ const InfoEjemplar = (props) => {
             <div className="flex-grow-1 ms-3">
               <Card.Text className="fw-bold">
                 <div className="mt-4">
+                  Hara de procedencia:{" "}
+                  <span className="text-muted">{props.hara}</span>
+                </div>
+                <div className="mt-4">
                   Stud: <span className="text-muted">{props.stud}</span>
                 </div>
                 <div className="mt-2">
@@ -48,19 +52,15 @@ const InfoEjemplar = (props) => {
                   style={{ backgroundColor: "#efefef" }}
                 >
                   <div>
-                    <p className="small mb-1 fw-bold">Mejor posicion</p>
+                    <p className="small mb-1 fw-bold">Caballeriza</p>
                     <p className="mb-0 text-center text-muted">
-                      {props.mejorPos} ({props.cantidad2do})
+                      Nro: {props.caballeriza}
                     </p>
                   </div>
                   <div className="px-3">
-                    <p className="small fw-bold mb-1">Edad</p>
-                    <p className="mb-0 text-center text-muted">8</p>
-                  </div>
-                  <div>
-                    <p className="small fw-bold mb-1">Ganancia</p>
+                    <p className="small fw-bold mb-1">Fecha de nacimiento</p>
                     <p className="mb-0 text-center text-muted">
-                      {props.ganancia}
+                      {props.fecha_nacimiento}
                     </p>
                   </div>
                 </div>

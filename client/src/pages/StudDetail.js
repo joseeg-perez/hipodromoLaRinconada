@@ -19,7 +19,15 @@ import { CirclePicker } from "react-color";
 import Propietarios from "./Propietarios";
 
 const StudDetail = () => {
+  const Params = useParams();
   useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/v1/studs/${Params.studId}`)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
     axios
       .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
       .then((res) => {

@@ -3,7 +3,26 @@ const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeEjemplares = async () => {
   const query = {
-    text: "SELECT * FROM ejemplar",
+    text: `select distinct codigo_ejemplar, nombre_ejemplar, 
+    to_char(fecha_nacimiento_ejemplar :: DATE, 'dd/mm/yyyy') as fechaNac,
+    imagen_ejemplar, nombre_hara, 
+    nombre_stud, 
+    concat(e.nombre1_persona, ' ', e.apellido1_persona) as entrenador,
+    codigo_caballeriza as caballeriza
+    from ejemplar,
+    persona_entrenador e, entrenador_caballeriza ec, puesto_caballo pc, stud,
+    ejemplar_propietario ep, propietario_stud ps, caballeriza,
+    puesto p, hara, propietario_stud
+    where fk_hara = codigo_hara
+    and pc.fk_ejemplar = codigo_ejemplar
+    and pc.fk_puesto = codigo_puesto
+    and p.fk_caballeriza = codigo_caballeriza
+    and ec.fk_caballeriza = codigo_caballeriza
+    and ec.fk_entrenador = e.codigo_persona
+    and ec.fecha_fin IS NULL
+    and ep.fk_ejemplar = codigo_ejemplar
+    and ep.fk_prop_stud = ps.codigo_prop_stud
+    and ps.fk_stud = codigo_stud`,
   };
 
   try {

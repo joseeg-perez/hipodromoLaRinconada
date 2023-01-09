@@ -65,12 +65,10 @@ const registrarEjemplar = async (req, res) => {
     const ejemplarCreado = await ejemplarService.registrarEjemplar(
       nuevoEjemplar
     );
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `Se ha creado el ejemplar '${ejemplarCreado}' de forma satisfactoria.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `Se ha creado el ejemplar '${ejemplarCreado}' de forma satisfactoria.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -107,12 +105,10 @@ const borrarEjemplar = async (req, res) => {
 
   try {
     await ejemplarService.borrarEjemplar(ejemplarId);
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `El ejemplar con el id '${ejemplarId}' se ha eliminado con exito.`,
-      });
+    res.status(200).send({
+      status: "OK",
+      data: `El ejemplar con el id '${ejemplarId}' se ha eliminado con exito.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
