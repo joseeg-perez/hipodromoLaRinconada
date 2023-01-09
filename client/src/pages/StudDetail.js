@@ -19,80 +19,6 @@ import { CirclePicker } from "react-color";
 import Propietarios from "./Propietarios";
 
 const StudDetail = () => {
-  const Params = useParams();
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/v1/studs/${Params.studId}`)
-      .then((res) => {
-        console.log(res);
-        setLoading(false);
-      })
-      .catch((err) => console.log(err));
-    axios
-      .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
-      .then((res) => {
-        console.log(res);
-        setPropietarios(res.data);
-      })
-      .catch((err) => console.log(err));
-
-    axios
-      .get("http://localhost:5000/api/v1/vestimentas/listado_de_vestimentas")
-      .then((res) => {
-        console.log(res);
-        setVestimentasDispo(res.data);
-      })
-      .catch((err) => console.log(err));
-
-    axios
-      .get("http://localhost:5000/api/v1/colores/listado_de_colores")
-      .then((res) => {
-        console.log(res);
-        setColores(res.data);
-        setLoading(false);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-  const [togglecolor, setToggleColor] = useState(false);
-  const [toggleboton, setToggleBoton] = useState(false);
-  const [toggleAgregarVestimenta, setToggleAgregarVestimenta] = useState(false);
-  const [vestimentasDispo, setVestimentasDispo] = useState([]);
-  const [vestimentas, setVestimentas] = useState([]);
-  const [vestimenta, setVestimenta] = useState("");
-  const [toggleVestimenta, setToggleVestimenta] = useState(false);
-  const [color, setColor] = useState("#fff");
-  const [colores, setColores] = useState("#fff");
-  const [color1stud, setColor1stud] = useState("#fff");
-  const [color2stud, setColor2stud] = useState("#fff");
-  const handleColor = (color, event) => {
-    setColor(color.hex);
-    setToggleAgregarVestimenta(true);
-  };
-  const handleColor1 = (color, event) => {
-    setColor1stud(color.hex);
-  };
-  const handleColor2 = (color, event) => {
-    setColor2stud(color.hex);
-  };
-  const handleToggleColor = (event) => {
-    setToggleColor(true);
-  };
-
-  const handleVestimenta = (event) => {
-    setToggleBoton(true);
-    setToggleVestimenta(true);
-    setVestimenta(event.target.value);
-  };
-  const handleVestimentas = (event) => {
-    setToggleAgregarVestimenta(false);
-    setToggleColor(false);
-    setToggleBoton(false);
-    const vestimentaStud = {
-      codigo: vestimenta,
-      colorV: color,
-    };
-    setVestimentas((vestimentas) => [...vestimentas, vestimentaStud]);
-  };
   let columnas1 = (
     <tr>
       <th>Nombre</th>
@@ -327,13 +253,27 @@ const StudDetail = () => {
     },
   ];
 
+  const Params = useParams();
   const params = useParams();
-  console.log(params.studId);
+  const [togglecolor, setToggleColor] = useState(false);
+  const [toggleboton, setToggleBoton] = useState(false);
+  const [toggleAgregarVestimenta, setToggleAgregarVestimenta] = useState(false);
+  const [vestimentasDispo, setVestimentasDispo] = useState([]);
+  const [vestimentas, setVestimentas] = useState([]);
+  const [nuevasVestimentas, setNuevasVestimentas] = useState([]);
+  const [vestimenta, setVestimenta] = useState("");
+  const [toggleVestimenta, setToggleVestimenta] = useState(false);
+  const [color, setColor] = useState("#fff");
+  const [colores, setColores] = useState("#fff");
+  const [color1stud, setColor1stud] = useState("#fff");
+  const [color2stud, setColor2stud] = useState("#fff");
+  const [stud, setStud] = useState();
+  const fkStud = params.studId;
   const match = useRouteMatch();
   const { studId } = params;
   const [isLoading, setLoading] = useState(true);
   const [propietarios, setPropietarios] = useState([]);
-  const [propietariosF, setPropietariosF] = useState([]);
+  const [propietariosDisponibles, setPropietariosDisponibles] = useState([]);
   const [toggleListadePropietarios, setToggleListadePropietarios] =
     useState(false);
   const [PropietarioSeleccionado, setPropietarioSeleccionado] = useState("");
@@ -341,14 +281,64 @@ const StudDetail = () => {
   const [togglePorcentajes, setTogglePorcentajes] = useState(false);
   const [agregar, setAgregar] = useState(true);
   const [porcentajes, setporcentajes] = useState("");
+  const [EjemplaresStud, setEjemplaresStud] = useState("");
   const [UltimosPropietarios, setUltimosPropietario] = useState(informacion1);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
+      .get(`http://localhost:5000/api/v1/studs/${Params.studId}`)
       .then((res) => {
         console.log(res);
-        setPropietarios(res.data);
+        setStud(res.data);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(`http://localhost:5000/api/v1/studs/propietarios/${Params.studId}`)
+      .then((res) => {
+        console.log(res);
+        setPropietarios(res.data.data);
+        setUltimosPropietario(res.data.data);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(`http://localhost:5000/api/v1/studs/caballosStud/${Params.studId}`)
+      .then((res) => {
+        console.log(res);
+        setEjemplaresStud(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:5000/api/v1/vestimentas/listado_de_vestimentas")
+      .then((res) => {
+        console.log(res.data);
+        setVestimentasDispo(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get(
+        `http://localhost:5000/api/v1/studs/propietariosNoStud/${Params.studId}`
+      )
+      .then((res) => {
+        console.log(res);
+        setPropietariosDisponibles(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:5000/api/v1/colores/listado_de_colores")
+      .then((res) => {
+        console.log(res);
+        setColores(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get(`http://localhost:5000/api/v1/studs/vestimentaStud/${Params.studId}`)
+      .then((res) => {
+        console.log(res.data);
+        setVestimentas(res.data.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
@@ -356,9 +346,46 @@ const StudDetail = () => {
 
   console.log(propietarios);
 
-  if (isLoading) {
-    return <div></div>;
-  }
+  const handleColor = (color, event) => {
+    setColor(color.hex);
+    setToggleAgregarVestimenta(true);
+  };
+  const handleColor1 = (color, event) => {
+    setColor1stud(color.hex);
+  };
+  const handleColor2 = (color, event) => {
+    setColor2stud(color.hex);
+  };
+  const handleToggleColor = (event) => {
+    setToggleColor(true);
+  };
+
+  const handleVestimenta = (event) => {
+    setToggleBoton(true);
+    setToggleVestimenta(true);
+    setVestimenta(event.target.value);
+  };
+  const handleNuevasVestimentas = (event) => {
+    setToggleAgregarVestimenta(false);
+    setToggleColor(false);
+    setToggleBoton(false);
+    const vestimentaStud = {
+      codigo: vestimenta,
+      colorV: color,
+    };
+    setNuevasVestimentas((vestimentas) => [...vestimentas, vestimentaStud]);
+  };
+
+  const SubmitNuevasVestimentas = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/api/v1/vestimentas_studs", {});
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  console.log(propietarios);
 
   const onSeleccionPropietarioHandler = (id, propietario, event) => {
     event.preventDefault();
@@ -389,20 +416,43 @@ const StudDetail = () => {
     setTogglePorcentajes(true);
   };
 
-  const handleData = (event) => {
+  // const handleDelete = (event) => {
+  //   axios
+  //     .delete(`http://localhost:5000/api/v1/haras/${props.Id}`)
+  //     .then((res) => {
+  //       if (res.data != null) {
+  //         alert("Se eliminó el hara con éxito");
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
+  const handleDataCambiosPropietario = (event) => {
     UltimosPropietarios.map(
       (propietario) =>
-        (propietario.porcentaje = document.getElementById(propietario.id).value)
+        (propietario.porcentaje = document.getElementById(
+          propietario.idpropietario
+        ).value)
     );
+    console.log(fkStud);
+    //AQUI SE LLAMA AL BACK PARA HACER LO DE LOS PORCENTAJES
     console.log(UltimosPropietarios);
     setTogglePorcentajes(false);
     setAgregar(true);
   };
 
+  console.log(vestimentasDispo);
+  console.log(vestimentas);
+  console.log(EjemplaresStud);
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+
   return (
     <Container>
       <Row className="text-center">
-        <h1>PAPA PEDRO</h1>
+        <h1>{stud.data[0].nombre_stud}</h1>
       </Row>
       <Row>
         <Col className="justify-content-center align-items-center mx-5">
@@ -416,17 +466,21 @@ const StudDetail = () => {
                     </Col>
                     <Col
                       className="offset-3 col-2"
-                      style={{ backgroundColor: "#DEC618" }}
+                      style={{
+                        backgroundColor: `${stud.data[0].codigo_del_color}`,
+                      }}
                     ></Col>
                     <Col
                       className="col-2"
-                      style={{ backgroundColor: "#9900FF" }}
+                      style={{
+                        backgroundColor: `${stud.data[1].codigo_del_color}`,
+                      }}
                     ></Col>
                   </Row>
                 </Col>
 
                 <Col className="d-flex justify-content-end">
-                  <h6>FECHA CREACION: 5/12/2006</h6>
+                  <h6>FECHA CREACION: {stud.data[0].fecha}</h6>
                 </Col>
               </Row>
             </Card.Header>
@@ -435,14 +489,21 @@ const StudDetail = () => {
               <Row>
                 <Tabla
                   titulo="PROPIETARIOS"
-                  columnas={columnas1}
-                  informacion={informacion1}
+                  columnas={
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Fecha inicio</th>
+                      <th>%</th>
+                    </tr>
+                  }
+                  informacion={propietarios}
                   estilo=" table-hover"
                   funcion={(x) => (
                     <tr>
                       <td>{`${x.nombre}`}</td>
                       <td>{`${x.apellido}`}</td>
-                      <td>{`${x.cedula}`}</td>
+                      <td>{`${x.fecha_inicio}`}</td>
                       <td>{`${x.porcentaje}`}</td>
                     </tr>
                   )}
@@ -468,7 +529,7 @@ const StudDetail = () => {
                             <th>Cedula</th>
                           </tr>
                         }
-                        informacion={informacion3}
+                        informacion={propietariosDisponibles.data}
                         estilo=" table-hover"
                         funcion={(x) => (
                           <tr
@@ -524,7 +585,7 @@ const StudDetail = () => {
                           <td>
                             <input
                               className="col-2 border-0"
-                              id={x.id}
+                              id={x.idpropietario}
                               type="number"
                             ></input>
                           </td>
@@ -532,7 +593,10 @@ const StudDetail = () => {
                       )}
                     ></Tabla>
                     <div className="text-center">
-                      <Button className="btn-success" onClick={handleData}>
+                      <Button
+                        className="btn-success"
+                        onClick={handleDataCambiosPropietario}
+                      >
                         Confirmar cambios
                       </Button>
                     </div>
@@ -563,7 +627,7 @@ const StudDetail = () => {
                   ))}
                 </FormSelect>
                 {toggleAgregarVestimenta && (
-                  <Button className="sm mt-4" onClick={handleVestimentas}>
+                  <Button className="sm mt-4" onClick={handleNuevasVestimentas}>
                     Agregar Vestimenta
                   </Button>
                 )}
@@ -584,7 +648,7 @@ const StudDetail = () => {
                 )}
               </Col>
               <Col className="col-4">
-                <Table>
+                <Table className="mx-auto">
                   <thead>
                     <tr>
                       <th>Vestimenta</th>
@@ -593,6 +657,27 @@ const StudDetail = () => {
                   </thead>
                   <tbody>
                     {vestimentas.map((vestimentaS) => (
+                      <tr>
+                        <td>
+                          {
+                            vestimentasDispo.data.find(
+                              (vestimenta) =>
+                                vestimenta.codigo_vestimenta ==
+                                vestimentaS.fk_vestimenta
+                            ).nombre_vestimenta
+                          }
+                        </td>
+                        <td
+                          className="col-1 rounded"
+                          style={{
+                            backgroundColor: vestimentaS.codigo_del_color,
+                          }}
+                        ></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tbody>
+                    {nuevasVestimentas.map((vestimentaS) => (
                       <tr>
                         <td>
                           {
@@ -627,17 +712,15 @@ const StudDetail = () => {
             <Card>
               <Card.Body>
                 <Row className="row row-cols-2 my-2 d-flex justify-content-center">
-                  {ejemplares.map((x) => (
+                  {EjemplaresStud.data.map((x) => (
                     <InfoEjemplar
-                      imagen={x.imagen}
-                      key={x.id}
-                      id={x.id}
+                      imagen={x.imagen_ejemplar}
+                      key={x.idejemplar}
+                      id={x.idejemplar}
                       nombre={x.nombre}
                       entrenador={x.entrenador}
-                      jinete={x.jinete}
-                      pelaje={x.pelaje}
-                      edad={x.edad}
-                      stud={x.stud}
+                      fecha_nacimiento={x.fechanac}
+                      stud={stud.data[0].nombre_stud}
                     ></InfoEjemplar>
                   ))}
                 </Row>

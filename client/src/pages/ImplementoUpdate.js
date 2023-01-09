@@ -7,7 +7,7 @@ const ImplementoUpdate = () => {
   const Params = useParams();
   const [nombreImplemento, setNombreImplemento] = useState("");
   const [descripcionImplemento, setDescripcionImplemento] = useState("");
-  const [abrevImplemento, setAbrevImplemento] = useState("");
+  const [abreviacionImplemento, setAbreviacionImplemento] = useState("");
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     console.log(Params.implementoId);
@@ -17,7 +17,7 @@ const ImplementoUpdate = () => {
         console.log(res);
         setNombreImplemento(res.data.data[0].nombre_implemento);
         setDescripcionImplemento(res.data.data[0].descripcion_implemento);
-        setAbrevImplemento(res.data.data[0].abrev_implemento);
+        setAbreviacionImplemento(res.data.data[0].abrev_implemento);
         setLoading(false);
       })
       .catch((err) => console.log(err));
@@ -29,8 +29,8 @@ const ImplementoUpdate = () => {
   const handleNombreImplemento = (event) => {
     setNombreImplemento(event.target.value);
   };
-  const handleAbrevImplemento = (event) => {
-    setAbrevImplemento(event.target.value);
+  const handleAbreviacionImplemento = (event) => {
+    setAbreviacionImplemento(event.target.value);
   };
   const handleDescripcionImplemento = (event) => {
     setDescripcionImplemento(event.target.value);
@@ -43,15 +43,19 @@ const ImplementoUpdate = () => {
         {
           nombreImplemento,
           descripcionImplemento,
-          abrevImplemento,
+          abreviacionImplemento,
         }
       );
     } catch (error) {
       throw error;
     }
-    console.warn(nombreImplemento, descripcionImplemento, abrevImplemento);
+    console.warn(
+      nombreImplemento,
+      descripcionImplemento,
+      abreviacionImplemento
+    );
     setNombreImplemento("");
-    setAbrevImplemento("");
+    setAbreviacionImplemento("");
     setDescripcionImplemento("");
   };
   return (
@@ -81,14 +85,14 @@ const ImplementoUpdate = () => {
                 ></textarea>
               </div>
               <div className="mt-3">
-                <FormLabel>Abreviatura del Implemento</FormLabel>
+                <FormLabel>Abreviacioniatura del Implemento</FormLabel>
                 <div>
                   <input
                     type="text"
                     className="form-control bg-transparent"
-                    value={abrevImplemento}
+                    value={abreviacionImplemento}
                     maxLength={3}
-                    onChange={handleAbrevImplemento}
+                    onChange={handleAbreviacionImplemento}
                   ></input>
                 </div>
               </div>
