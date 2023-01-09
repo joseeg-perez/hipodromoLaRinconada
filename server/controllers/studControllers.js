@@ -29,7 +29,78 @@ const obtenerStudIndividual = async (req, res) => {
 };
 
 const obtenerPropietarioDeStud = async (req, res) => {
-  console.log("estamos aqui");
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerPropietarioDeStud(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerPropietarioDeStudDistintos = async (req, res) => {
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerPropietarioDeStudDistintos(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerVestimentaStud = async (req, res) => {
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerVestimentaStud(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerCaballoStud = async (req, res) => {
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerCaballoStud(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerPosibleCaballoStud = async (req, res) => {
+  const {
+    params: { studId },
+  } = req;
+
+  try {
+    const stud = await studService.obtenerPosibleCaballoStud(studId);
+    res.status(200).send({ status: "OK", data: stud });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const registrarStud = async (req, res) => {
@@ -105,6 +176,10 @@ module.exports = {
   obtenerListaDeStuds,
   obtenerStudIndividual,
   obtenerPropietarioDeStud,
+  obtenerPropietarioDeStudDistintos,
+  obtenerVestimentaStud,
+  obtenerCaballoStud,
+  obtenerPosibleCaballoStud,
   registrarStud,
   actualizarStud,
   borrarStud,

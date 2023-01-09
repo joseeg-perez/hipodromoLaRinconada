@@ -30,6 +30,56 @@ const obtenerEjemplarIndividual = async (req, res) => {
   }
 };
 
+const obtenerPropietarioDelEjemplarIndividual = async (req, res) => {
+  const {
+    params: { ejemplarId },
+  } = req;
+
+  try {
+    const ejemplar =
+      await ejemplarService.obtenerPropietarioDelEjemplarIndividual(ejemplarId);
+    res.status(200).send({ status: "OK", data: ejemplar });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerNoPropietarioDelEjemplarIndividual = async (req, res) => {
+  const {
+    params: { ejemplarId },
+  } = req;
+
+  try {
+    const ejemplar =
+      await ejemplarService.obtenerNoPropietarioDelEjemplarIndividual(
+        ejemplarId
+      );
+    res.status(200).send({ status: "OK", data: ejemplar });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerPosibleStudDelEjemplarIndividual = async (req, res) => {
+  const {
+    params: { ejemplarId },
+  } = req;
+
+  try {
+    const ejemplar =
+      await ejemplarService.obtenerPosibleStudDelEjemplarIndividual(ejemplarId);
+    res.status(200).send({ status: "OK", data: ejemplar });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const registrarEjemplar = async (req, res) => {
   const {
     nombreEjemplar,
@@ -119,6 +169,9 @@ const borrarEjemplar = async (req, res) => {
 module.exports = {
   obtenerListaDeEjemplares,
   obtenerEjemplarIndividual,
+  obtenerPropietarioDelEjemplarIndividual,
+  obtenerNoPropietarioDelEjemplarIndividual,
+  obtenerPosibleStudDelEjemplarIndividual,
   registrarEjemplar,
   actualizarEjemplar,
   borrarEjemplar,
