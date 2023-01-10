@@ -283,7 +283,7 @@ const StudDetail = () => {
   const [porcentajes, setporcentajes] = useState("");
   const [EjemplaresStud, setEjemplaresStud] = useState("");
   const [UltimosPropietarios, setUltimosPropietario] = useState(informacion1);
-  const [toggleAgregarAlStud, setToggleAgregarAlStud] = useState(false)
+  const [toggleAgregarAlStud, setToggleAgregarAlStud] = useState(false);
 
   useEffect(() => {
     axios
@@ -370,7 +370,7 @@ const StudDetail = () => {
     setToggleAgregarVestimenta(false);
     setToggleColor(false);
     setToggleBoton(false);
-    setToggleAgregarAlStud(true)
+    setToggleAgregarAlStud(true);
     const vestimentaStud = {
       codigo: vestimenta,
       colorV: color,
@@ -381,13 +381,16 @@ const StudDetail = () => {
   const SubmitNuevasVestimentas = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:3001/api/v1/studs/agregarVestimentas", {
-        nuevasVestimentas
-      });
+      await axios.post(
+        "http://localhost:3001/api/v1/studs/agregarVestimentas",
+        {
+          nuevasVestimentas,
+        }
+      );
     } catch (error) {
       throw error;
     }
-    setToggleAgregarAlStud(false)
+    setToggleAgregarAlStud(false);
   };
 
   console.log(propietarios);
@@ -439,12 +442,18 @@ const StudDetail = () => {
           propietario.idpropietario
         ).value)
     );
-    UltimosPropietarios.map((propietario) => (Object.assign({}, propietario, {Stud: Params.studId})))
+    UltimosPropietarios.map((propietario) =>
+      Object.assign({}, propietario, { Stud: Params.studId })
+    );
     console.log(fkStud);
     try {
-      await axios.post("http://localhost:3001/api/v1/studs/cambiarPorcentajes", {
-        UltimosPropietarios
-      });
+      await axios.post(
+        "http://localhost:3001/api/v1/studs/cambiarPorcentajes",
+        {
+          UltimosPropietarios,
+          fkStud,
+        }
+      );
     } catch (error) {
       throw error;
     }
