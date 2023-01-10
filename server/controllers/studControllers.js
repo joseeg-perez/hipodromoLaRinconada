@@ -112,6 +112,8 @@ const cambiarPorcentajes = async (req, res) => {
         await studService.cambiarPorcentajes(body);
         res.status(202).send({ status: "OK", data: `Se han modificado los porcentajes de forma satisfactoria.` });
     } catch (error) {
+      console.log(error)
+
         res
         .status(error?.status || 500)
         .send({ status: "FAILED", data: { error: error?.message || error } });

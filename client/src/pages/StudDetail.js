@@ -284,6 +284,7 @@ const StudDetail = () => {
   const [EjemplaresStud, setEjemplaresStud] = useState("");
   const [UltimosPropietarios, setUltimosPropietario] = useState(informacion1);
   const [toggleAgregarAlStud, setToggleAgregarAlStud] = useState(false)
+  const [toggleAgregarVestimentasNuevas, setToggleAgregarVestimentasNuevas] = useState(false)
 
   useEffect(() => {
     axios
@@ -371,6 +372,7 @@ const StudDetail = () => {
     setToggleColor(false);
     setToggleBoton(false);
     setToggleAgregarAlStud(true)
+    setToggleAgregarVestimentasNuevas(true)
     const vestimentaStud = {
       codigo: vestimenta,
       colorV: color,
@@ -378,16 +380,17 @@ const StudDetail = () => {
     setNuevasVestimentas((vestimentas) => [...vestimentas, vestimentaStud]);
   };
 
-  const SubmitNuevasVestimentas = async (event) => {
+  const HandleAgregarVestimentasNuevas = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:3001/api/v1/studs/agregarVestimentas", {
+      await axios.post("http://localhost:5000/api/v1/studs/agregarVestimentas", {
         nuevasVestimentas
       });
     } catch (error) {
       throw error;
     }
-    setToggleAgregarAlStud(false)
+    setToggleAgregarAlStud(false) 
+    setToggleAgregarVestimentasNuevas(false)
   };
 
   console.log(propietarios);
@@ -440,10 +443,11 @@ const StudDetail = () => {
         ).value)
     );
     UltimosPropietarios.map((propietario) => (Object.assign({}, propietario, {Stud: Params.studId})))
-    console.log(fkStud);
+    console.log("Este es el fkStud: "+fkStud);
     try {
-      await axios.post("http://localhost:3001/api/v1/studs/cambiarPorcentajes", {
-        UltimosPropietarios
+      await axios.post("http://localhost:5000/api/v1/studs/cambiarPorcentajes", {
+        UltimosPropietarios,
+        fkStud
       });
     } catch (error) {
       throw error;
@@ -644,6 +648,11 @@ const StudDetail = () => {
                     Agregar Vestimenta
                   </Button>
                 )}
+                {toggleAgregarVestimentasNuevas && (
+                  <Button className="sm mt-4 btn-success" onClick={HandleAgregarVestimentasNuevas}>
+                    Agregar Vestimentas nuevas
+                  </Button>
+                )}
               </Col>
               <Col className="col-4">
                 <Button
@@ -658,11 +667,6 @@ const StudDetail = () => {
                     className="mt-3"
                     onChangeComplete={handleColor}
                   />
-                )}
-                {toggleAgregarAlStud && (
-                  <Button className="sm mt-4" onClick={SubmitNuevasVestimentas}>
-                    Agregar Vestimenta
-                  </Button>
                 )}
               </Col>
               <Col className="col-4">

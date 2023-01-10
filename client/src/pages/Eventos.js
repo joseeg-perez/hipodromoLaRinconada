@@ -26,6 +26,7 @@ const Eventos = () => {
     } catch (error) {
       throw error;
     }
+    setFechaEvento('')
   }
 
   let cardAgregarCarrera = (

@@ -76,25 +76,24 @@ const obtenerPosibleCaballoStud = async (studId) => {
 };
 
 const cambiarPorcentajes = async (cambios) => {
-
     try {
-        const propietarioPost = cambios.propietarios.pop();//Se saca el ultimo de la lista ya que es el que se va a registrar
+        const propietarioPost = cambios.UltimosPropietarios.pop();//Se saca el ultimo de la lista ya que es el que se va a registrar
         const nuevoPropietarioStud = {
         porcentajePropiedad: propietarioPost.porcentaje,
         fechaInicioPropiedad: null,
         fechaFinPropiedad: null,
-        fkStud: propietarioPost.fkStud,
+        fkStud: cambios.fkStud,
         fkPropietario: propietarioPost.idpropietario,
     }
         await registrarPropietarioStud(nuevoPropietarioStud);
 
-        const propietariosPatch = cambios.propietarios;//lista de propietarios que se van a actualizar
+        const propietariosPatch = cambios.UltimosPropietarios;//lista de propietarios que se van a actualizar
         for (let i = 0; i < propietariosPatch.length; i++) {
             const propietarioActualizado = { //Propietario al cual se le modifican los porcentajes de propiedad
                 porcentajePropiedad: propietariosPatch[i].porcentaje,
                 fechaInicioPropiedad: propietariosPatch[i].fecha_inicio,
                 fechaFinPropiedad: null,
-                fkStud: propietariosPatch[i].fkStud,
+                fkStud: cambios.fkStud,
                 fkPropietario: propietariosPatch[i].idpropietario,
                 propietarioStudId: propietariosPatch[i].propietariostudid,
             }
