@@ -1,85 +1,157 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Card, Col, Button, Form } from "react-bootstrap";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const CarreraUpdate = () => {
+  const Params = useParams();
+  const [carreraAux, setCarreraAux] = useState("");
   const [isLoading, setLoading] = useState(true);
+  const [isLoading2, setLoading2] = useState(true);
   const [categorias, setCategorias] = useState([]);
-
+  const [nombreCarrera, setNombreCarrera] = useState("");
+  const [fkCategoriaCarrera, setFkCategoria] = useState("");
+  const [horaCarrera, setHora] = useState("");
+  const [premioPrimero, setpremioPrimero] = useState("");
+  const [premioSegundo, setpremioSegundo] = useState("");
+  const [premioTercero, setpremioTercero] = useState("");
+  const [premioCuarto, setpremioCuarto] = useState("");
+  const [premioQuinto, setpremioQuinto] = useState("");
+  const [fkEvento, setFkEvento] = useState("");
+  const [numeroCarrera, setNumeroCarrera] = useState("");
+  // let evento;
+  // let numCarrera;
+  //console.log(Params.carreraId)
   useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/v1/carreras/${Params.carreraId}`)
+      .then((res) => {
+        console.log(res);
+        setNombreCarrera(res.data.data[0].nombre_carrera);
+        setFkCategoria(res.data.data[0].fk_categoria_carrera);
+        setHora(res.data.data[0].hora_carrera);
+        setpremioPrimero(res.data.data[0].premio_primero);
+        setpremioSegundo(res.data.data[0].premio_segundo);
+        setpremioTercero(res.data.data[0].premio_tercero);
+        setpremioCuarto(res.data.data[0].premio_cuarto);
+        setpremioQuinto(res.data.data[0].premio_quinto);
+        setFkEvento(res.data.data[0].fk_evento);
+        setNumeroCarrera(res.data.data[0].numero_carrera);
+        setCarreraAux(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
     axios
       .get("http://localhost:5000/api/v1/categorias/listado_de_categorias")
       .then((res) => {
         console.log(res);
         setCategorias(res.data);
-        setLoading(false);
+        setLoading2(false);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  if (isLoading) return <div>Cargando</div>;
+  //console.log(categorias);
+  // console.log(fkevento);
+  // console.log(numeroCarrera);
 
+  if (isLoading || isLoading2) return <div>Cargando</div>;
+
+  const handlerNombre = (event) => {
+    setNombreCarrera(event.target.value);
+  };
+
+  const handlerCategoria = (event) => {
+    setFkCategoria(event.target.value);
+    console.log(event.target.value);
+  };
+
+  const handlerHora = (event) => {
+    setHora(event.target.value);
+  };
+
+  const handlerpremioPrimero = (event) => {
+    setpremioPrimero(event.target.value);
+  };
+
+  const handlerpremioSegundo = (event) => {
+    setpremioSegundo(event.target.value);
+  };
+
+  const handlerpremioTercero = (event) => {
+    setpremioTercero(event.target.value);
+  };
+
+  const handlerpremioCuarto = (event) => {
+    setpremioCuarto(event.target.value);
+  };
+
+  const handlerpremioQuinto = (event) => {
+    setpremioQuinto(event.target.value);
+  };
   const formSubmissionHandler = async (event) => {
     event.preventDefault();
-    let nombreCarrera = document.getElementById("nombre").value;
-    //let numeroCarrera = evento.numeroSigCarrera;
-    let premioPrimero = document.getElementById("premio1").value;
-    let premioSegundo = document.getElementById("premio2").value;
-    let premioTercero = document.getElementById("premio3").value;
-    let premioCuarto = document.getElementById("premio4").value;
-    let premioQuinto = document.getElementById("premio5").value;
-    let horaCarrera = document.getElementById("hora").value;
-    let fkCategoriaCarrera = document.getElementById("categoria").value;
-    //let fkEvento = evento.id;
-   
+    try {
+      await axios.patch(
+        `http://localhost:5000/api/v1/carreras/${Params.carreraId}`,
+        {
+          nombreCarrera,
+          numeroCarrera,
+          premioPrimero,
+          premioSegundo,
+          premioTercero,
+          premioCuarto,
+          premioQuinto,
+          horaCarrera,
+          fkEvento,
+          fkCategoriaCarrera,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
     console.warn(
-      "all data",
       nombreCarrera,
-      //numeroCarrera,
+      numeroCarrera,
       premioPrimero,
       premioSegundo,
       premioTercero,
       premioCuarto,
       premioQuinto,
       horaCarrera,
-      //fkEvento,
-      fkCategoriaCarrera,
+      fkEvento,
+      fkCategoriaCarrera
     );
-    // try {
-    //   await axios.post(
-    //     "http://localhost:5000/api/v1/carreras/registrar_carrera",
-    //     {
-    //       nombreCarrera,
-    //       numeroCarrera,
-    //       premioPrimero,
-    //       premioSegundo,
-    //       premioTercero,
-    //       premioCuarto,
-    //       premioQuinto,
-    //       horaCarrera,
-    //       fkEvento,
-    //       fkCategoriaCarrera,
-    //       carreraRegla,
-    //     }
-    //   );
-    // } catch (error) {
-    //   throw error;
-    // }
-    // console.log("entro");
-    // console.log(document.getElementById("nombre").value);
-    // console.log(document.getElementById("hora").value);
-    // console.log(document.getElementById("cantidad").value);
-    // console.log(document.getElementById("categoria").value);
-    // reglas.data.map((x) =>
-    //   console.log(document.getElementById(x.nombre_regla).value)
-    // );
-    // console.log(document.getElementById("premio1").value);
-    // console.log(document.getElementById("premio2").value);
-    // console.log(document.getElementById("premio3").value);
-    // console.log(document.getElementById("premio4").value);
-    // console.log(document.getElementById("premio5").value);
+    // setNombreCarrera("");
+    // setNumeroCarrera("");
+    // setpremioPrimero("");
+    // setpre("");
+    // setapellido2Persona("");
+    // setFechaNacimiento("");
+    // setfkRango("");
+    // setAlturaJinete("");
+    // setPesoJinete("");
+    // setToggleRango(false);
+    // setLoading(true);
+    // setRangos([]);
   };
 
+  const handleDelete = (event) => {
+    
+    axios
+      .delete(`http://localhost:5000/api/v1/carreras/${Params.carreraId}`)
+      .then((res) => {
+        if (res.data != null) {
+          alert("Se eliminó la carrera con éxito");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const categoriaActual = categorias.data.find(
+    (categoria) => fkCategoriaCarrera == categoria.codigo_categoria
+  ).codigo_categoria;
+  console.log(categoriaActual);
   return (
     <Container>
       <Form>
@@ -103,7 +175,12 @@ const CarreraUpdate = () => {
                           <h5>NOMBRE DE LA CARRERA</h5>
                         </Col>
                         <Col>
-                          <input className="" id="nombre"></input>
+                          <input
+                            className=""
+                            id="nombre"
+                            value={nombreCarrera}
+                            onChange={handlerNombre}
+                          ></input>
                         </Col>
                       </Row>
 
@@ -117,6 +194,8 @@ const CarreraUpdate = () => {
                             id="hora"
                             min="12:00"
                             max="20:00"
+                            value={horaCarrera}
+                            onChange={handlerHora}
                           ></input>
                         </Col>
                       </Row>
@@ -131,12 +210,27 @@ const CarreraUpdate = () => {
                             className=""
                             style={{ width: "188.8px" }}
                             id="categoria"
+                            onChange={handlerCategoria}
                           >
-                            {categorias.data.map((x) => (
-                              <option value={x.codigo_categoria}>
-                                {x.nombre_categoria}
-                              </option>
-                            ))}
+                            <option value={categoriaActual}>
+                              {
+                                categorias.data.find(
+                                  (categoria) =>
+                                    fkCategoriaCarrera ==
+                                    categoria.codigo_categoria
+                                ).nombre_categoria
+                              }
+                            </option>
+
+                            {categorias.data.map((x) =>
+                              x.codigo_categoria != categoriaActual ? (
+                                <option value={x.codigo_categoria}>
+                                  {x.nombre_categoria}
+                                </option>
+                              ) : (
+                                console.log("no")
+                              )
+                            )}
                           </select>
                         </Col>
                       </Row>
@@ -157,7 +251,6 @@ const CarreraUpdate = () => {
             <Col className="justify-content-center align-items-center mx-5">
               <Card>
                 <Card.Body>
-                 
                   <Row className="mt-3 d-flex justify-content-center">
                     <Row className="text-center">
                       <h3>PREMIOS</h3>
@@ -173,7 +266,12 @@ const CarreraUpdate = () => {
                             <Card style={{ width: "145px", height: "70px" }}>
                               <Card.Body className="d-flex align-items-center">
                                 <Row>
-                                  <input id="premio1" type="number"></input>
+                                  <input
+                                    id="premioPrimero"
+                                    type="number"
+                                    value={premioPrimero}
+                                    onChange={handlerpremioPrimero}
+                                  ></input>
                                 </Row>
                               </Card.Body>
                             </Card>
@@ -190,7 +288,12 @@ const CarreraUpdate = () => {
                             <Card style={{ width: "145px", height: "70px" }}>
                               <Card.Body className="d-flex align-items-center">
                                 <Row>
-                                  <input id="premio2" type="number"></input>
+                                  <input
+                                    id="premioSegundo"
+                                    type="number"
+                                    value={premioSegundo}
+                                    onChange={handlerpremioSegundo}
+                                  ></input>
                                 </Row>
                               </Card.Body>
                             </Card>
@@ -207,7 +310,12 @@ const CarreraUpdate = () => {
                             <Card style={{ width: "145px", height: "70px" }}>
                               <Card.Body className="d-flex align-items-center">
                                 <Row className="d-flex justify-content-center align-items-center">
-                                  <input id="premio3" type="number"></input>
+                                  <input
+                                    id="premioTercero"
+                                    type="number"
+                                    value={premioTercero}
+                                    onChange={handlerpremioTercero}
+                                  ></input>
                                 </Row>
                               </Card.Body>
                             </Card>
@@ -224,7 +332,12 @@ const CarreraUpdate = () => {
                             <Card style={{ width: "145px", height: "70px" }}>
                               <Card.Body className="d-flex align-items-center">
                                 <Row>
-                                  <input id="premio4" type="number"></input>
+                                  <input
+                                    id="premioCuarto"
+                                    type="number"
+                                    value={premioCuarto}
+                                    onChange={handlerpremioCuarto}
+                                  ></input>
                                 </Row>
                               </Card.Body>
                             </Card>
@@ -241,7 +354,12 @@ const CarreraUpdate = () => {
                             <Card style={{ width: "145px", height: "70px" }}>
                               <Card.Body className="d-flex align-items-center">
                                 <Row>
-                                  <input id="premio5" type="number"></input>
+                                  <input
+                                    id="premioQuinto"
+                                    type="number"
+                                    value={premioQuinto}
+                                    onChange={handlerpremioQuinto}
+                                  ></input>
                                 </Row>
                               </Card.Body>
                             </Card>
@@ -260,10 +378,24 @@ const CarreraUpdate = () => {
 
         <Row className="mt-3 d-flex justify-content-center">
           <Col className="col-auto d-flex justify-content-center">
-            <Button onClick={formSubmissionHandler} size="xl">
+            <Button className="fw-bold" onClick={formSubmissionHandler} size="xl" style={{color: "black"}}>
               GUARDAR
             </Button>
           </Col>
+
+          <Col className="col-auto me-5">
+          <Button
+            className="fw-bold"
+            style={{
+              backgroundColor: "#FA6660",
+              color: "black",
+              border: "black",
+            }}
+            onClick={handleDelete}
+          >
+            ELIMINAR CARRERA
+          </Button>
+        </Col>
         </Row>
       </Form>
     </Container>

@@ -43,8 +43,7 @@ const registrarEvento = async (nuevoEvento) => {
         
     const values = [fechaEvento];
 
-  const values = [fechaEvento, horaEvento];
-
+ 
   try {
     await dbConnection.query(text, values);
 

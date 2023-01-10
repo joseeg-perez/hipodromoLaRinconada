@@ -40,7 +40,7 @@ const RegistrarCarrera = () => {
 
   const reglas2 = [];
   reglas.data.map((x) => {
-    if (x.nombre_regla != "Distancia" && x.nombre_regla != "Genero") {
+    if (x.nombre_regla != "Distancia" && x.nombre_regla != "Genero" && x.nombre_regla != "Participantes") {
       reglas2.push(x);
     }
   });
@@ -80,26 +80,26 @@ const RegistrarCarrera = () => {
       fkCategoriaCarrera,
       carreraRegla
     );
-    // try {
-    //   await axios.post(
-    //     "http://localhost:5000/api/v1/carreras/registrar_carrera",
-    //     {
-    //       nombreCarrera,
-    //       numeroCarrera,
-    //       premioPrimero,
-    //       premioSegundo,
-    //       premioTercero,
-    //       premioCuarto,
-    //       premioQuinto,
-    //       horaCarrera,
-    //       fkEvento,
-    //       fkCategoriaCarrera,
-    //       carreraRegla,
-    //     }
-    //   );
-    // } catch (error) {
-    //   throw error;
-    // }
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/carreras/registrar_carrera",
+        {
+          nombreCarrera,
+          numeroCarrera,
+          premioPrimero,
+          premioSegundo,
+          premioTercero,
+          premioCuarto,
+          premioQuinto,
+          horaCarrera,
+          fkEvento,
+          fkCategoriaCarrera,
+          carreraRegla,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
     // console.log("entro");
     // console.log(document.getElementById("nombre").value);
     // console.log(document.getElementById("hora").value);
@@ -150,8 +150,9 @@ const RegistrarCarrera = () => {
                           <input
                             type="time"
                             id="hora"
-                            min="12:00"
-                            max="20:00"
+                            min="12:30"
+                            max="24:00"
+                            
                           ></input>
                         </Col>
                       </Row>
@@ -166,7 +167,7 @@ const RegistrarCarrera = () => {
                             className=""
                             type="number"
                             min={8}
-                            id="cantidad"
+                            id="Participantes"
                           ></input>
                         </Col>
                       </Row>
