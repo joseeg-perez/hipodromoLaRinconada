@@ -102,15 +102,7 @@ const borrarVeterinario = async (req, res) => {
     params: { veterinarioId },
   } = req;
 
-<<<<<<< HEAD
-  try {
-    if (!veterinarioId) return httpError.idVacio(res, "veterinarioId");
-
-    if (isNaN(veterinarioId) || veterinarioId === " ")
-      return httpError.idInvalido(res, ":veterinarioId");
-=======
     try {
->>>>>>> main
 
     await veterinarioService.borrarVeterinario(veterinarioId);
     res.status(200).send({

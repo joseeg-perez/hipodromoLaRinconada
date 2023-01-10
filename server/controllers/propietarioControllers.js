@@ -44,19 +44,6 @@ const registrarPropietario = async (req, res) => {
     cuerpo_tlf,
   } = req.body;
 
-  const nuevoPropietario = {
-    cedulaPersona,
-    nombre1Persona: nombre1Persona.toLowerCase(),
-    nombre2Persona: nombre2Persona.toLowerCase(),
-    apellido1Persona: apellido1Persona.toLowerCase(),
-    apellido2Persona: apellido2Persona.toLowerCase(),
-    fechaNacimiento,
-    correo,
-    fkLugar,
-    extension_tlf,
-    cuerpo_tlf,
-  };
-
     const nuevoPropietario = {
         cedulaPersona,
         nombre1Persona: nombre1Persona.toLowerCase(),

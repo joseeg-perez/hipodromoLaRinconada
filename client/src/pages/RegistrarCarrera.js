@@ -100,6 +100,7 @@ const RegistrarCarrera = () => {
     } catch (error) {
       throw error;
     }
+    alert("Se creo la carrera con éxito");
     // console.log("entro");
     // console.log(document.getElementById("nombre").value);
     // console.log(document.getElementById("hora").value);

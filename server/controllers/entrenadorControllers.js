@@ -98,23 +98,6 @@ const actualizarEntrenador = async (req, res) => {
 };
 
 const borrarEntrenador = async (req, res) => {
-<<<<<<< HEAD
-  const {
-    params: { entrenadorId },
-  } = req;
-
-  try {
-    await entrenadorService.borrarEntrenador(entrenadorId);
-    res.status(200).send({
-      status: "OK",
-      data: `El entrenador con el id '${entrenadorId}' se ha eliminado con exito.`,
-    });
-  } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
-  }
-=======
     const {
         params: { entrenadorId },
     } = req;
@@ -127,7 +110,6 @@ const borrarEntrenador = async (req, res) => {
         .status(error?.status || 500)
         .send({ status: "FAILED", data: {error: error?.message || error} });
     }
->>>>>>> main
 };
 
 module.exports = {

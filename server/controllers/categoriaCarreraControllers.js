@@ -2,6 +2,7 @@ const categoriaCarreraService = require("../services/categoriaCarreraServices.js
 
 const obtenerListaDeCategorias = async (req, res) => {
   try {
+    console.log("entro")
     const listaCategorias =
       await categoriaCarreraService.obtenerListaDeCategorias();
 

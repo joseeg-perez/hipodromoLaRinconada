@@ -48,9 +48,6 @@ const obtenerCarreraXEvento = async (carreraId) => {
 
     try {
         const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.idNoEncontrado("La carrera perteneciente al evento", carreraId);
-
         dbConnection.end;
         return (rows);
     } catch (error) {
@@ -82,7 +79,7 @@ const registrarCarrera = async (nuevaCarrera) => {
         premio_quinto,
         hora_carrera,
         fk_evento,
-        fk_categoria_carrera) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`;
+        fk_categoria_carrera) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
 
   const values = [
     nombreCarrera,
@@ -97,6 +94,7 @@ const registrarCarrera = async (nuevaCarrera) => {
     fkCategoriaCarrera,
   ];
 
+  console.log(values)
   try {
     await dbConnection.query(text, values);
 
@@ -104,7 +102,6 @@ const registrarCarrera = async (nuevaCarrera) => {
     return nombreCarrera;
   } catch (error) {
     if (error.code === "23505") {
-      console.log(error);
       throw {
         status: 409,
         message: `la carrera '${nombreCarrera}' ya ha sido registrada.`,

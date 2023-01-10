@@ -47,6 +47,7 @@ const registrarCarrera = async (nuevaCarrera) => {
         }
         return(carreraCreada);
     } catch (error) {
+      console.log(error)
         throw(error);
     }
 };
