@@ -1,5 +1,4 @@
 const veterinarioService = require("../services/veterinarioServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeVeterinarios = async (req, res) => {
     try {
@@ -31,12 +30,6 @@ const obtenerVeterinarioIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!veterinarioId)
-            return(httpError.idVacio(res, ":veterinarioId"));
-
-        if (isNaN(veterinarioId) || veterinarioId === ' ')
-            return(httpError.idInvalido(res, ":veterinarioId"));
-
         const veterinario = await veterinarioService.obtenerVeterinarioIndividual(veterinarioId);
         res.status(200).send({ status: "OK", data: veterinario});
     } catch (error) {
@@ -99,11 +92,6 @@ const borrarVeterinario = async (req, res) => {
     } = req;
 
     try {
-        if (!veterinarioId)
-            return(httpError.idVacio(res, "veterinarioId"));
-
-        if (isNaN(veterinarioId) || veterinarioId === ' ')
-            return(httpError.idInvalido(res, ":veterinarioId"));
 
         await veterinarioService.borrarVeterinario(veterinarioId);
         res.status(200).send({ status: "OK", data: `El veterinario con el id '${veterinarioId}' se ha eliminado con exito.` });

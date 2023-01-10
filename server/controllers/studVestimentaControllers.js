@@ -1,5 +1,4 @@
 const studVestimentaService = require("../services/studVestimentaServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const registrarStudVestimenta = async (req, res) => {
     const { 

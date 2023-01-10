@@ -1,6 +1,4 @@
 const propietarioService = require("../services/propietarioServices.js");
-const validator = require("email-validator");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePropietarios = async (req, res) => {
   try {
@@ -54,7 +52,7 @@ const registrarPropietario = async (req, res) => {
         apellido1Persona: apellido1Persona.toLowerCase(),
         apellido2Persona: apellido2Persona.toLowerCase(),
         fechaNacimiento,
-        correo,
+        correo: correo.toLowerCase(),
         fkLugar,
         extension_tlf,
         cuerpo_tlf,

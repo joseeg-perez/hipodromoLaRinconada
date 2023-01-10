@@ -1,5 +1,4 @@
 const carreraReglaService = require("../services/carreraReglaServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeCarreraReglas = async (req, res) => {
     try {

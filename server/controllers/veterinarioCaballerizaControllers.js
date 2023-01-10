@@ -1,5 +1,4 @@
 const veterinarioCaballerizaService = require("../services/veterinarioCaballerizaServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const registrarVeterinarioCaballeriza = async (req, res) => {
     const { 

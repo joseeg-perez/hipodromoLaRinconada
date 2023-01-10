@@ -1,5 +1,4 @@
 const participacionMedicamentoService = require("../services/participacionMedicamentoServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeParticipacionMedicamentos = async (req, res) => {
     try {

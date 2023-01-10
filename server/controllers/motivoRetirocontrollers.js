@@ -1,5 +1,4 @@
 const motivoRetiroService = require("../services/motivoRetiroServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeMotivosDeRetiro = async (req, res) => {
     try {

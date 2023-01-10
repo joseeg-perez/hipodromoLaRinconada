@@ -1,5 +1,4 @@
 const puestoCaballoService = require("../services/puestoCaballoServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePuestoCaballos = async (req, res) => {
     try {

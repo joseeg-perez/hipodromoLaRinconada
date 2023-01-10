@@ -1,6 +1,4 @@
 const authService = require("../services/authServices.js");
-const validator = require("email-validator");
-const httpError = require("../helpers/httpMessages.js");
 const { generarToken } = require("../helpers/jwt.js")
 
 const registrarse = async (req, res) => {
@@ -13,7 +11,7 @@ const registrarse = async (req, res) => {
     } = req.body;
 
     const nuevoUsuario = {
-        username,
+        username: username.toLowerCase(),
         password,
         fkCliente,
         fkRol,

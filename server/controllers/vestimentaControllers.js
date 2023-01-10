@@ -1,5 +1,4 @@
 const vestimentaService = require("../services/vestimentaServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeVestimentas = async (req, res) => {
     try {

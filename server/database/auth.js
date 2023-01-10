@@ -1,5 +1,4 @@
 const {encriptarClave, compararClave} = require("../helpers/bcrypt.js");
-const jwt = require("jsonwebtoken");
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js")
 
@@ -13,8 +12,8 @@ const registrarse = async (usuarioAInsertar) => {
 
     const hash = await encriptarClave(password);
 
-    const text = `INSERT INTO usuario(correo_usuario, contrasena_usuario, fk_cliente, fk_rol) VALUES($1, $2, $3, $4)`;
-    const values = [username, hash, fkCliente, fkRol]; //Valores que se pasan en el query para insertar en la base de datos, el hash es la clave encriptada
+    const text = `INSERT INTO usuario(correo_usuario, contrasena_usuario, fk_rol) VALUES($1, $2, $3)`;
+    const values = [username, hash, fkRol]; //Valores que se pasan en el query para insertar en la base de datos, el hash es la clave encriptada
 
     try{
         await dbConnection.query(text, values);//Se hace el query a la base de datos

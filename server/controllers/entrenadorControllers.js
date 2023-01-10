@@ -1,5 +1,4 @@
 const entrenadorService = require("../services/entrenadorServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeEntrenadores = async (req, res) => {
     try {
@@ -101,7 +100,6 @@ const borrarEntrenador = async (req, res) => {
         .status(error?.status || 500)
         .send({ status: "FAILED", data: {error: error?.message || error} });
     }
-
 };
 
 module.exports = {

@@ -1,5 +1,4 @@
 const resultadoservice = require("../services/resultadoservices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeResultados = async (req, res) => {
   try {

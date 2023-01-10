@@ -1,5 +1,4 @@
 const eventoService = require("../services/eventoServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeEventos = async (req, res) => {
     try {

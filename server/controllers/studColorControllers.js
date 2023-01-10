@@ -1,5 +1,4 @@
 const studColorService = require("../services/studColorServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeStudColor = async (req, res) => {
     try {
@@ -48,7 +47,6 @@ const actualizarStudColor = async (req, res) => {
         .status(error?.status || 500)
         .send({ status: "FAILED", data: { error: error?.message || error } });
     }
-
 };
 
 const borrarStudColor = async (req, res) => {

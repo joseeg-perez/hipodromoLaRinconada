@@ -1,5 +1,4 @@
 const restauranteService = require("../services/restauranteServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeRestaurantes = async (req, res) => {
     try {

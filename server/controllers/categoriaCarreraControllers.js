@@ -1,5 +1,4 @@
 const categoriaCarreraService = require("../services/categoriaCarreraServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeCategorias = async (req, res) => {
     try {
@@ -69,12 +68,6 @@ const borrarCategoria = async (req, res) => {
     } = req;
 
     try {
-        if (!categoriaId)
-            return(httpError.idVacio(res, "categoriaId"));
-
-        if (isNaN(categoriaId) || categoriaId === ' ')
-            return(httpError.idInvalido(res, ":categoriaId"));
-
         await categoriaCarreraService.borrarCategoria(categoriaId);
         res.status(200).send({ status: "OK", data: `La categoria con el id '${categoriaId}' se ha eliminado con exito.` });
     } catch (error) {

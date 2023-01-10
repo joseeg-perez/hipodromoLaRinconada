@@ -1,5 +1,4 @@
 const entrenadorCaballerizaService = require("../services/entrenadorCaballerizaServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const registrarEntrenadorCaballeriza = async (req, res) => {
     const { 
