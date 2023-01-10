@@ -168,6 +168,9 @@ const RegistrarEvento = () => {
     },
   ];
 
+  let numeroSigCarrera=carreras.length+1;
+  //console.log(numeroSigCarrera);
+
   return (
     <Container>
       <Row>
@@ -192,7 +195,10 @@ const RegistrarEvento = () => {
                       className="btn btn-primary d-flex align-items-center"
                       size="xxl"
                       style={{ width: "200px", height: "100px" }}
-                      to="/carrera/crear"
+                      to={{
+                        pathname: "/carrera/crear",
+                        state: { id, numeroSigCarrera },
+                      }}
                     >
                       <h3>AGREGAR CARRERA</h3>
                     </NavLink>

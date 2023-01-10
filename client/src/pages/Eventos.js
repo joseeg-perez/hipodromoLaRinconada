@@ -7,7 +7,7 @@ const Eventos = () => {
   let usuario1 = "crear";
   let usuario2 = "ver";
   let usuario3 = "inscribir";
-  let usuario = usuario3;
+  let usuario = usuario1;
   let cardAgregarCarrera = (
     <Card className="w-75 mb-2">
       <Card.Body>
