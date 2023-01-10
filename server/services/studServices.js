@@ -1,13 +1,9 @@
 const Stud = require("../database/stud.js");
 const { registrarPropietarioStud } = require("./propietarioStudServices.js");
 const { registrarStudColor } = require("./studColorServices.js");
-const {
-  registrarStudVestimenta,
-  buscarStudVestimentaId,
-} = require("./studVestimentaServices.js");
-const {
-  registrarColorStudVestimenta,
-} = require("./colorStudVestimentaServices.js");
+const { registrarStudVestimenta, buscarStudVestimentaId } = require("./studVestimentaServices.js");
+const { registrarColorStudVestimenta } = require("./colorStudVestimentaServices.js");
+const { actualizarPropietarioStud } = require("./propietarioStudServices.js");
 
 const obtenerListaDeStuds = async () => {
   try {
@@ -77,6 +73,51 @@ const obtenerPosibleCaballoStud = async (studId) => {
   } catch (error) {
     throw error;
   }
+};
+
+const cambiarPorcentajes = async (cambios) => {
+
+    try {
+        const propietarioPost = cambios.propietarios.pop();//Se saca el ultimo de la lista ya que es el que se va a registrar
+        const nuevoPropietarioStud = {
+        porcentajePropiedad: propietarioPost.porcentaje,
+        fechaInicioPropiedad: null,
+        fechaFinPropiedad: null,
+        fkStud: cambios.fkStud,
+        fkPropietario: propietarioPost.idpropietario,
+    }
+        await registrarPropietarioStud(nuevoPropietarioStud);
+
+        const propietariosPatch = cambios.propietarios;//lista de propietarios que se van a actualizar
+        for (let i = 0; i < propietariosPatch.length; i++) {
+            const propietarioActualizado = { //Propietario al cual se le modifican los porcentajes de propiedad
+                porcentajePropiedad: propietariosPatch[i].porcentaje,
+                fechaInicioPropiedad: propietariosPatch[i].fecha_inicio,
+                fechaFinPropiedad: null,
+                fkStud: cambios.fkStud,
+                fkPropietario: propietariosPatch[i].idpropietario,
+                propietarioStudId: propietariosPatch[i].propietariostudid,
+            }
+            await actualizarPropietarioStud(propietarioActualizado.propietarioStudId, propietarioActualizado); 
+        }
+    } catch (error) {
+        throw(error); 
+    }
+};
+
+const agregarVestimentas = async (cambios) => {
+    try {
+        const listaVestimentas = cambios.vestimentas;
+        for (let i = 0; i < listaVestimentas.length; i++) {
+            const nuevaStudVestimenta = {
+                fkVestimenta: listaVestimentas[i].fkVestimenta,
+                fkStud: listaVestimentas[i].fkStud,
+            }
+            await registrarStudVestimenta(nuevaStudVestimenta);
+        }
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const registrarStud = async (nuevoStud) => {
@@ -154,14 +195,16 @@ const borrarStud = async (studId) => {
 };
 
 module.exports = {
-  obtenerListaDeStuds,
-  obtenerStudIndividual,
-  obtenerPropietarioDeStud,
-  obtenerPropietarioDeStudDistintos,
-  obtenerVestimentaStud,
-  obtenerCaballoStud,
-  obtenerPosibleCaballoStud,
-  registrarStud,
-  actualizarStud,
-  borrarStud,
+    obtenerListaDeStuds,
+    obtenerStudIndividual,
+    obtenerPropietarioDeStud,
+    obtenerPropietarioDeStudDistintos,
+    obtenerVestimentaStud,
+    obtenerCaballoStud,
+    obtenerPosibleCaballoStud,
+    cambiarPorcentajes,
+    agregarVestimentas,
+    registrarStud,
+    actualizarStud,
+    borrarStud,
 };

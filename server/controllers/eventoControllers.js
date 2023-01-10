@@ -28,13 +28,14 @@ const obtenerEventoIndividual = async (req, res) => {
   }
 };
 
-const registrarEvento = async (req, res) => {
-  const { fechaEvento, horaEvento } = req.body;
+const registrarEvento = async (req, res) => { 
+    const {
+        fechaEvento,
+     } =  req.body;
 
-  const nuevoEvento = {
-    fechaEvento,
-    horaEvento,
-  };
+    const nuevoEvento = {
+        fechaEvento,
+    };
 
   try {
     await eventoService.registrarEvento(nuevoEvento);

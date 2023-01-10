@@ -29,31 +29,33 @@ const obtenerCarreraIndividual = async (req, res) => {
 };
 
 const registrarCarrera = async (req, res) => {
-  const {
-    nombreCarrera,
-    numeroCarrera,
-    premioPrimero,
-    premioSegundo,
-    premioTercero,
-    premioCuarto,
-    premioQuinto,
-    horaCarrera,
-    fkEvento,
-    fkCategoriaCarrera,
-  } = req.body;
+    const {
+        nombreCarrera,
+        numeroCarrera,
+        premioPrimero,
+        premioSegundo,
+        premioTercero,
+        premioCuarto,
+        premioQuinto,
+        horaCarrera,
+        fkEvento,
+        fkCategoriaCarrera,
+        carreraRegla,
+     } = req.body;
 
-  const nuevaCarrera = {
-    nombreCarrera: nombreCarrera.toLowerCase(),
-    numeroCarrera,
-    premioPrimero,
-    premioSegundo,
-    premioTercero,
-    premioCuarto,
-    premioQuinto,
-    horaCarrera,
-    fkEvento,
-    fkCategoriaCarrera,
-  };
+    const nuevaCarrera = {
+        nombreCarrera: nombreCarrera.toLowerCase(),
+        numeroCarrera,
+        premioPrimero,
+        premioSegundo,
+        premioTercero,
+        premioCuarto,
+        premioQuinto,
+        horaCarrera,
+        fkEvento,
+        fkCategoriaCarrera,
+        carreraRegla,
+    };
 
   try {
     const carreraCreada = await carreraService.registrarCarrera(nuevaCarrera);

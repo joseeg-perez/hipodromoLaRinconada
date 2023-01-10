@@ -35,9 +35,13 @@ const obtenerEventoIndividual = async (eventoId) => {
 };
 
 const registrarEvento = async (nuevoEvento) => {
-  const { fechaEvento, horaEvento } = nuevoEvento;
+    const { 
+        fechaEvento,
+     } = nuevoEvento;
 
-  const text = `INSERT INTO evento(fecha_evento, hora_evento) VALUES($1, $2)`;
+    const text = `INSERT INTO evento(fecha_evento) VALUES($1)`;
+        
+    const values = [fechaEvento];
 
   const values = [fechaEvento, horaEvento];
 
