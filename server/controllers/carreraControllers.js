@@ -40,6 +40,7 @@ const registrarCarrera = async (req, res) => {
         horaCarrera,
         fkEvento,
         fkCategoriaCarrera,
+        carreraRegla,
      } = req.body;
 
     const nuevaCarrera = {
@@ -53,6 +54,7 @@ const registrarCarrera = async (req, res) => {
         horaCarrera,
         fkEvento,
         fkCategoriaCarrera,
+        carreraRegla,
     };
 
     try {
