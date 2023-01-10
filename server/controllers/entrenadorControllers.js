@@ -1,5 +1,4 @@
 const entrenadorService = require("../services/entrenadorServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeEntrenadores = async (req, res) => {
   try {
@@ -45,38 +44,35 @@ const obtenerEntrenadorIndividual = async (req, res) => {
 };
 
 const registrarEntrenador = async (req, res) => {
-  const {
-    cedulaPersona,
-    nombre1Persona,
-    nombre2Persona,
-    apellido1Persona,
-    apellido2Persona,
-    fechaNacimiento,
-    fkCaballeriza,
-  } = req.body;
+    const { 
+        codigoPersona,
+        cedulaPersona,
+        nombre1Persona,
+        nombre2Persona,
+        apellido1Persona,
+        apellido2Persona,
+        fechaNacimiento, 
+        fkCaballeriza,
+    } = req.body;
 
-  const nuevoEntrenador = {
-    cedulaPersona,
-    nombre1Persona: nombre1Persona.toLowerCase(),
-    nombre2Persona: nombre2Persona.toLowerCase(),
-    apellido1Persona: apellido1Persona.toLowerCase(),
-    apellido2Persona: apellido2Persona.toLowerCase(),
-    fechaNacimiento,
-    fkCaballeriza,
-  };
-  try {
-    const entrenadorCreado = await entrenadorService.registrarEntrenador(
-      nuevoEntrenador
-    );
-    res.status(200).send({
-      status: "OK",
-      data: `Se ha registrado el entrenador '${entrenadorCreado}' de forma satisfactoria.`,
-    });
-  } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
-  }
+    const nuevoEntrenador = {
+        codigoPersona, //aqui me quede
+        cedulaPersona,
+        nombre1Persona: nombre1Persona.toLowerCase(),
+        nombre2Persona: nombre2Persona.toLowerCase(),
+        apellido1Persona: apellido1Persona.toLowerCase(),
+        apellido2Persona: apellido2Persona.toLowerCase(),
+        fechaNacimiento,
+        fkCaballeriza,
+    };
+    try {
+        const entrenadorCreado = await entrenadorService.registrarEntrenador(nuevoEntrenador);
+        res.status(200).send({ status: "OK", data: `Se ha registrado el entrenador '${entrenadorCreado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const actualizarEntrenador = async (req, res) => {
@@ -102,6 +98,7 @@ const actualizarEntrenador = async (req, res) => {
 };
 
 const borrarEntrenador = async (req, res) => {
+<<<<<<< HEAD
   const {
     params: { entrenadorId },
   } = req;
@@ -117,6 +114,20 @@ const borrarEntrenador = async (req, res) => {
       .status(error?.status || 500)
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
+=======
+    const {
+        params: { entrenadorId },
+    } = req;
+
+    try {
+        await entrenadorService.borrarEntrenador(entrenadorId);
+        res.status(200).send({ status: "OK", data: `El entrenador con el id '${entrenadorId}' se ha eliminado con exito.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: {error: error?.message || error} });
+    }
+>>>>>>> main
 };
 
 module.exports = {

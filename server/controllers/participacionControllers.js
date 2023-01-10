@@ -1,5 +1,4 @@
 const participacionService = require("../services/participacionServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeParticipaciones = async (req, res) => {
   try {

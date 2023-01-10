@@ -33,6 +33,31 @@ const obtenerCarreraIndividual = async (carreraId) => {
   }
 };
 
+const obtenerCarreraXEvento = async (carreraId) => {
+    const query = {
+        text: `SELECT 
+                codigo_carrera, nombre_carrera , nombre_categoria, numero_carrera, premio_primero, premio_segundo, premio_tercero, premio_cuarto, premio_quinto, hora_carrera
+               FROM 
+                carrera
+               INNER JOIN 
+                categoria_carrera ON fk_categoria_carrera = codigo_categoria
+               WHERE 
+                fk_evento = $1;`,
+        values: [carreraId],
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        if (rows.length === 0)
+            httpError.idNoEncontrado("La carrera perteneciente al evento", carreraId);
+
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
 const registrarCarrera = async (nuevaCarrera) => {
   const {
     nombreCarrera,
@@ -57,7 +82,7 @@ const registrarCarrera = async (nuevaCarrera) => {
         premio_quinto,
         hora_carrera,
         fk_evento,
-        fk_categoria_carrera) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
+        fk_categoria_carrera) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`;
 
   const values = [
     nombreCarrera,
@@ -165,9 +190,10 @@ const borrarCarrera = async (carreraId) => {
 };
 
 module.exports = {
-  obtenerListaDeCarreras,
-  obtenerCarreraIndividual,
-  registrarCarrera,
-  actualizarCarrera,
-  borrarCarrera,
+    obtenerListaDeCarreras,
+    obtenerCarreraIndividual,
+    obtenerCarreraXEvento,
+    registrarCarrera,
+    actualizarCarrera,
+    borrarCarrera,
 };

@@ -1,5 +1,4 @@
 const retiroService = require("../services/retiroServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeRetiros = async (req, res) => {
   try {

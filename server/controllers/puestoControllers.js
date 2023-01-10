@@ -1,5 +1,4 @@
 const puestoService = require("../services/puestoServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePuestos = async (req, res) => {
   try {

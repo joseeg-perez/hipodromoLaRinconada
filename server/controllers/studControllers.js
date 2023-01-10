@@ -1,5 +1,4 @@
 const studService = require("../services/studServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeStuds = async (req, res) => {
   try {

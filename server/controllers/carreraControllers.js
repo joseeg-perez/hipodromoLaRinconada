@@ -1,5 +1,4 @@
 const carreraService = require("../services/carreraServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeCarreras = async (req, res) => {
   try {
@@ -28,8 +27,24 @@ const obtenerCarreraIndividual = async (req, res) => {
   }
 };
 
+const obtenerCarreraXEvento = async (req, res) => {
+    const {
+        params: { carreraId },
+    } = req;
+
+    try {
+        const carrera = await carreraService.obtenerCarreraXEvento(carreraId);
+        res.status(200).send({ status: "OK", data: carrera});
+    } catch (error) {
+        res 
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error }});        
+    }
+};
+
 const registrarCarrera = async (req, res) => {
     const {
+        codigoCarrera,
         nombreCarrera,
         numeroCarrera,
         premioPrimero,
@@ -44,6 +59,7 @@ const registrarCarrera = async (req, res) => {
      } = req.body;
 
     const nuevaCarrera = {
+        codigoCarrera,
         nombreCarrera: nombreCarrera.toLowerCase(),
         numeroCarrera,
         premioPrimero,
@@ -115,9 +131,10 @@ const borrarCarrera = async (req, res) => {
 };
 
 module.exports = {
-  obtenerListaDeCarreras,
-  obtenerCarreraIndividual,
-  registrarCarrera,
-  actualizarCarrera,
-  borrarCarrera,
+    obtenerListaDeCarreras,
+    obtenerCarreraIndividual,
+    obtenerCarreraXEvento,
+    registrarCarrera,
+    actualizarCarrera,
+    borrarCarrera,
 };

@@ -1,5 +1,4 @@
 const pelajeService = require("../services/pelajeServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePelajes = async (req, res) => {
   try {

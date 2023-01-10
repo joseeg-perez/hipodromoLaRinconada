@@ -1,5 +1,4 @@
 const telefonoService = require("../services/telefonoServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeTelefonos = async (req, res) => {
   try {

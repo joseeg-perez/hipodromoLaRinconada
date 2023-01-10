@@ -1,6 +1,4 @@
 const propietarioService = require("../services/propietarioServices.js");
-const validator = require("email-validator");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePropietarios = async (req, res) => {
   try {
@@ -59,21 +57,27 @@ const registrarPropietario = async (req, res) => {
     cuerpo_tlf,
   };
 
-  try {
-    const propietarioCreado = await propietarioService.registrarPropietario(
-      nuevoPropietario
-    );
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `Se ha registrado el propietario '${propietarioCreado}' de forma satisfactoria.`,
-      });
-  } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
-  }
+    const nuevoPropietario = {
+        cedulaPersona,
+        nombre1Persona: nombre1Persona.toLowerCase(),
+        nombre2Persona: nombre2Persona.toLowerCase(),
+        apellido1Persona: apellido1Persona.toLowerCase(),
+        apellido2Persona: apellido2Persona.toLowerCase(),
+        fechaNacimiento,
+        correo: correo.toLowerCase(),
+        fkLugar,
+        extension_tlf,
+        cuerpo_tlf,
+    };
+
+    try {
+        const propietarioCreado = await propietarioService.registrarPropietario(nuevoPropietario);
+        res.status(200).send({ status: "OK", data: `Se ha registrado el propietario '${propietarioCreado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const actualizarPropietario = async (req, res) => {

@@ -1,5 +1,4 @@
 const studColorService = require("../services/studColorServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeStudColor = async (req, res) => {
   try {
@@ -35,22 +34,19 @@ const registrarStudColor = async (req, res) => {
 };
 
 const actualizarStudColor = async (req, res) => {
-  const {
-    body,
-    params: { studColorId },
-  } = req;
+    const {
+        body,
+        params: { studColorId },
+    } = req;
 
-  try {
-    await studColorService.actualizarStudColor(studColorId, body);
-    res.send({
-      status: "OK",
-      data: `Se ha actualizado la informacion del color del stud de forma satisfactoria.`,
-    });
-  } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
-  }
+    try {
+        await studColorService.actualizarStudColor(studColorId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del color del stud de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarStudColor = async (req, res) => {

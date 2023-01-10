@@ -1,5 +1,4 @@
 const jineteService = require("../services/jineteServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeJinetes = async (req, res) => {
   try {

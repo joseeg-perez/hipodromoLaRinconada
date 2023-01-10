@@ -1,5 +1,4 @@
 const rgoJineteService = require("../services/rgoJineteServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeRgoJinetes = async (req, res) => {
   try {

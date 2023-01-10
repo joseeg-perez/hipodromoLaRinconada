@@ -1,5 +1,4 @@
 const veterinarioService = require("../services/veterinarioServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeVeterinarios = async (req, res) => {
   try {
@@ -27,26 +26,19 @@ const obtenerListaDeCaballerizasVacias = async (req, res) => {
   }
 };
 
-const obtenerVeterinarioIndividual = async (req, res) => {
-  const {
-    params: { veterinarioId },
-  } = req;
-
-  try {
-    if (!veterinarioId) return httpError.idVacio(res, ":veterinarioId");
-
-    if (isNaN(veterinarioId) || veterinarioId === " ")
-      return httpError.idInvalido(res, ":veterinarioId");
-
-    const veterinario = await veterinarioService.obtenerVeterinarioIndividual(
-      veterinarioId
-    );
-    res.status(200).send({ status: "OK", data: veterinario });
-  } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
-  }
+const obtenerVeterinarioIndividual = async (req, res) => { 
+    const {
+        params: { veterinarioId },
+    } = req;
+    
+    try {
+        const veterinario = await veterinarioService.obtenerVeterinarioIndividual(veterinarioId);
+        res.status(200).send({ status: "OK", data: veterinario});
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: {error: error?.message || error} });       
+    }
 };
 
 const registrarVeterinario = async (req, res) => {
@@ -110,11 +102,15 @@ const borrarVeterinario = async (req, res) => {
     params: { veterinarioId },
   } = req;
 
+<<<<<<< HEAD
   try {
     if (!veterinarioId) return httpError.idVacio(res, "veterinarioId");
 
     if (isNaN(veterinarioId) || veterinarioId === " ")
       return httpError.idInvalido(res, ":veterinarioId");
+=======
+    try {
+>>>>>>> main
 
     await veterinarioService.borrarVeterinario(veterinarioId);
     res.status(200).send({

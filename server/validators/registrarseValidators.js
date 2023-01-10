@@ -11,7 +11,7 @@ const validateCreate = [
         .trim()
         .exists()
         .notEmpty(),
-    check(["fkCliente", "fkRol"])
+    check("fkRol") //hay que agregar el fkCliente
         .exists()
         .isNumeric()
         .trim()   

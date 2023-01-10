@@ -9,6 +9,8 @@ router.get("/listado_de_carreras", carreraController.obtenerListaDeCarreras);
 
 router.get("/:carreraId", validateId, carreraController.obtenerCarreraIndividual);
 
+router.get("/listadoDeCarreraXEvento/:carreraId", validateId, carreraController.obtenerCarreraXEvento);
+
 router.post("/registrar_carrera", validateCreate, carreraController.registrarCarrera);
 
 router.patch("/:carreraId", validateId, carreraController.actualizarCarrera);

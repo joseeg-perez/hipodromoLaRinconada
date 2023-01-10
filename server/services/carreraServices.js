@@ -21,6 +21,16 @@ const obtenerCarreraIndividual = async (carreraId) => {
   }
 };
 
+const obtenerCarreraXEvento = async (carreraId) => {
+    try {
+        const carrera = await Carrera.obtenerCarreraXEvento(carreraId);
+
+        return(carrera);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 const registrarCarrera = async (nuevaCarrera) => {
     try {
         const carreraCreada = await Carrera.registrarCarrera(nuevaCarrera);
@@ -63,9 +73,10 @@ const borrarCarrera = async (carreraId) => {
 };
 
 module.exports = {
-  obtenerListaDeCarreras,
-  obtenerCarreraIndividual,
-  registrarCarrera,
-  actualizarCarrera,
-  borrarCarrera,
+    obtenerListaDeCarreras,
+    obtenerCarreraIndividual,
+    obtenerCarreraXEvento,
+    registrarCarrera,
+    actualizarCarrera,
+    borrarCarrera,
 };

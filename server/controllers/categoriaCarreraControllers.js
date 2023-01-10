@@ -1,5 +1,4 @@
 const categoriaCarreraService = require("../services/categoriaCarreraServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeCategorias = async (req, res) => {
   try {
@@ -80,24 +79,14 @@ const borrarCategoria = async (req, res) => {
     params: { categoriaId },
   } = req;
 
-  try {
-    if (!categoriaId) return httpError.idVacio(res, "categoriaId");
-
-    if (isNaN(categoriaId) || categoriaId === " ")
-      return httpError.idInvalido(res, ":categoriaId");
-
-    await categoriaCarreraService.borrarCategoria(categoriaId);
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `La categoria con el id '${categoriaId}' se ha eliminado con exito.`,
-      });
-  } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
-  }
+    try {
+        await categoriaCarreraService.borrarCategoria(categoriaId);
+        res.status(200).send({ status: "OK", data: `La categoria con el id '${categoriaId}' se ha eliminado con exito.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: {error: error?.message || error} });
+    }
 };
 
 module.exports = {

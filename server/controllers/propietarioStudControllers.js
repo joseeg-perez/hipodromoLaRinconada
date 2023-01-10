@@ -1,5 +1,4 @@
 const propietarioStudService = require("../services/propietarioStudServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const registrarPropietarioStud = async (req, res) => {
   const {

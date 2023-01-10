@@ -1,5 +1,4 @@
 const ejemplarService = require("../services/ejemplarServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeEjemplares = async (req, res) => {
   try {
@@ -80,36 +79,38 @@ const obtenerPosibleStudDelEjemplarIndividual = async (req, res) => {
   }
 };
 
-const registrarEjemplar = async (req, res) => {
-  const {
-    nombreEjemplar,
-    numeroEjemplar,
-    tatlabialEjemplar,
-    precioEjemplar,
-    fecha_nacEjemplar,
-    pesoEjemplar,
-    padreEjemplar,
-    madreEjemplar,
-    imagenEjemplar,
-    haraEjemplar,
-    pelajeEjemplar,
-    generoEjemplar,
-  } = req.body;
+const registrarEjemplar = async (req, res) => { 
+    const { 
+        codigoEjemplar,
+        nombreEjemplar,
+        numeroEjemplar,
+        tatlabialEjemplar,
+        precioEjemplar,
+        fecha_nacEjemplar,
+        pesoEjemplar,
+        padreEjemplar,
+        madreEjemplar,
+        imagenEjemplar,
+        haraEjemplar,
+        pelajeEjemplar,
+        generoEjemplar,
+     } =  req.body;
 
-  const nuevoEjemplar = {
-    nombreEjemplar: nombreEjemplar.toLowerCase(),
-    numeroEjemplar,
-    tatlabialEjemplar,
-    precioEjemplar,
-    fecha_nacEjemplar,
-    pesoEjemplar,
-    padreEjemplar,
-    madreEjemplar,
-    imagenEjemplar,
-    haraEjemplar,
-    pelajeEjemplar,
-    generoEjemplar: generoEjemplar.toLowerCase(),
-  };
+    const nuevoEjemplar = {
+        codigoEjemplar,
+        nombreEjemplar: nombreEjemplar.toLowerCase(),
+        numeroEjemplar,
+        tatlabialEjemplar,
+        precioEjemplar,
+        fecha_nacEjemplar,
+        pesoEjemplar,
+        padreEjemplar,
+        madreEjemplar,
+        imagenEjemplar,
+        haraEjemplar,
+        pelajeEjemplar,
+        generoEjemplar: generoEjemplar.toLowerCase(),
+    };
 
   try {
     const ejemplarCreado = await ejemplarService.registrarEjemplar(
