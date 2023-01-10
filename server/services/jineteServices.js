@@ -1,6 +1,5 @@
 const Jinete = require("../database/jinete.js");
 
-
 const obtenerListaDeJinetes = async () => {
     try {
         const listaJinetes = await Jinete.obtenerListaDeJinetes();
@@ -32,7 +31,13 @@ const registrarJinete = async (nuevoJinete) => {
 };
 
 const actualizarJinete = async (jineteId, cambios) => {
-
+    try {
+        const jineteActualizado = await Jinete.actualizarJinete(jineteId, cambios);
+        
+        return(jineteActualizado);
+    } catch (error) {
+        throw(error);
+    }
 };
 
 const borrarJinete = async (jineteId) => {

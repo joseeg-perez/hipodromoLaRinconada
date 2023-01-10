@@ -20,11 +20,6 @@ const obtenerImplementoIndividual = async (req, res) => {
   } = req;
 
   try {
-    if (!implementoId) return httpError.idVacio(res, ":implementoId");
-
-    if (isNaN(implementoId) || implementoId === " ")
-      return httpError.idInvalido(res, ":implementoId");
-
     const implemento = await implementoService.obtenerImplementoIndividual(
       implementoId
     );
@@ -37,24 +32,21 @@ const obtenerImplementoIndividual = async (req, res) => {
 };
 
 const registrarImplemento = async (req, res) => {
-  const { nombreImplemento, descripcionImplemento } = req.body;
-
-  if (!nombreImplemento || !descripcionImplemento)
-    return httpError.faltaInformacion(res);
+  const { 
+    nombreImplemento, 
+    abreviacionImplemento,
+    descripcionImplemento 
+  } = req.body;
 
   const nuevoImplemento = {
     nombreImplemento: nombreImplemento.toLowerCase(),
-    descripcionImplemento,
+    abreviacionImplemento: abreviacionImplemento.toLowerCase(),
+    descripcionImplemento: descripcionImplemento.toLowerCase(),
   };
 
   try {
-    const implementoCreado = await implementoService.registrarImplemento(
-      nuevoImplemento
-    );
-    res.status(200).send({
-      status: "OK",
-      data: `Se ha registrado el implemento '${implementoCreado}' de forma satisfactoria.`,
-    });
+    const implementoCreado = await implementoService.registrarImplemento(nuevoImplemento);
+    res.status(200).send({ status: "OK", data: `Se ha registrado el implemento '${implementoCreado}' de forma satisfactoria.` });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -62,7 +54,21 @@ const registrarImplemento = async (req, res) => {
   }
 };
 
-const actualizarImplemento = async (req, res) => {};
+const actualizarImplemento = async (req, res) => {
+  const {
+      body,
+      params: { implementoId },
+  } = req;
+
+  try {
+      const implementoActualizado = await implementoService.actualizarImplemento(implementoId, body);
+      res.send({ status: "OK", data: `Se ha actualizado la informacion del implemento '${implementoActualizado}' de forma satisfactoria.` });
+  } catch (error) {
+      res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
 
 const borrarImplemento = async (req, res) => {
   const {
@@ -70,16 +76,8 @@ const borrarImplemento = async (req, res) => {
   } = req;
 
   try {
-    if (!implementoId) return httpError.idVacio(res, "implementoId");
-
-    if (isNaN(implementoId) || implementoId === " ")
-      return httpError.idInvalido(res, ":implementoId");
-
     await implementoService.borrarImplemento(implementoId);
-    res.status(200).send({
-      status: "OK",
-      data: `El implemento con el id '${implementoId}' se ha eliminado con exito.`,
-    });
+    res.status(200).send({ status: "OK", data: `El implemento con el id '${implementoId}' se ha eliminado con exito.` });
   } catch (error) {
     res
       .status(error?.status || 500)

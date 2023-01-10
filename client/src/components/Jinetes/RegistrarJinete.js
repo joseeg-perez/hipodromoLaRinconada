@@ -13,16 +13,17 @@ import {
 import axios from "axios";
 
 export const RegistrarJinete = () => {
-  const [cedulaJinete, setCedulaJinete] = useState("");
-  const [pnombreJinete, setPnombreJinete] = useState("");
-  const [snombreJinete, setSnombreJinete] = useState("");
-  const [papellidoJinete, setPapellidoJinete] = useState("");
-  const [sapellidoJinete, setSapellidoJinete] = useState("");
-  const [fecha_nacJinete, setFecha_nacJinete] = useState("");
-  const [rangoJinete, setRangoJinete] = useState("");
+  const [cedulaPersona, setCedulaPersona] = useState("");
+  const [nombre1Persona, setnombre1Persona] = useState("");
+  const [nombre2Persona, setnombre2Persona] = useState("");
+  const [apellido1Persona, setapellido1Persona] = useState("");
+  const [apellido2Persona, setapellido2Persona] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [fkRango, setfkRango] = useState("");
   const [alturaJinete, setAlturaJinete] = useState("");
   const [pesoJinete, setPesoJinete] = useState("");
   const [togglePeso, setTogglePeso] = useState(false);
+  const [toggleRango, setToggleRango] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [rangos, setRangos] = useState([]);
 
@@ -37,33 +38,34 @@ export const RegistrarJinete = () => {
     //   .catch((err) => console.log(err));
   }, []);
 
-  console.log(rangos);
+  console.log(fkRango);
 
   if (isLoading) {
     return <div></div>;
   }
 
   const handleCedula = (event) => {
-    setCedulaJinete(event.target.value);
+    setCedulaPersona(event.target.value);
   };
   const handlePnombre = (event) => {
-    setPnombreJinete(event.target.value);
+    setnombre1Persona(event.target.value);
   };
   const handleSnombre = (event) => {
-    setSnombreJinete(event.target.value);
+    setnombre2Persona(event.target.value);
   };
   const handlePapellido = (event) => {
-    setPapellidoJinete(event.target.value);
+    setapellido1Persona(event.target.value);
   };
   const handleSapellido = (event) => {
-    setSapellidoJinete(event.target.value);
+    setapellido2Persona(event.target.value);
   };
   const handleFecha_nac = (event) => {
-    setFecha_nacJinete(event.target.value);
+    setFechaNacimiento(event.target.value);
   };
   const handleRango = (event) => {
-    setRangoJinete(event.target.value);
+    setfkRango(event.target.value);
     setTogglePeso(true);
+    setToggleRango(true);
   };
   const handleAltura = (event) => {
     setAlturaJinete(event.target.value);
@@ -72,28 +74,50 @@ export const RegistrarJinete = () => {
     setPesoJinete(event.target.value);
   };
 
-  const handleData = (event) => {
+  const handleData = async (event) => {
     event.preventDefault();
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/jinetes/registrar_jinete",
+        {
+          cedulaPersona,
+          nombre1Persona,
+          nombre2Persona,
+          apellido1Persona,
+          apellido2Persona,
+          fechaNacimiento,
+          fkRango,
+          alturaJinete,
+          pesoJinete,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
     console.warn(
-      cedulaJinete,
-      pnombreJinete,
-      snombreJinete,
-      papellidoJinete,
-      sapellidoJinete,
-      fecha_nacJinete,
-      rangoJinete,
+      cedulaPersona,
+      nombre1Persona,
+      nombre2Persona,
+      apellido1Persona,
+      apellido2Persona,
+      fechaNacimiento,
+      fkRango,
       alturaJinete,
       pesoJinete
     );
-    setCedulaJinete("");
-    setPnombreJinete("");
-    setSnombreJinete("");
-    setPapellidoJinete("");
-    setSapellidoJinete("");
-    setFecha_nacJinete("");
-    setRangoJinete("");
+    setCedulaPersona("");
+    setnombre1Persona("");
+    setnombre2Persona("");
+    setapellido1Persona("");
+    setapellido2Persona("");
+    setFechaNacimiento("");
+    setfkRango("");
     setAlturaJinete("");
     setPesoJinete("");
+    setToggleRango(false);
+    setTogglePeso(false);
+    setLoading(true);
+    setRangos([]);
   };
 
   if (isLoading) {
@@ -112,7 +136,7 @@ export const RegistrarJinete = () => {
                 <Col>
                   <div className="mb-3 form-floating">
                     <input
-                      value={cedulaJinete}
+                      value={cedulaPersona}
                       type="number"
                       className="form-control"
                       placeholder="First name"
@@ -127,7 +151,7 @@ export const RegistrarJinete = () => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={pnombreJinete}
+                      value={nombre1Persona}
                       type="text"
                       className="form-control"
                       placeholder="First name"
@@ -140,7 +164,7 @@ export const RegistrarJinete = () => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={snombreJinete}
+                      value={nombre2Persona}
                       type="text"
                       className="form-control"
                       placeholder="First name"
@@ -154,7 +178,7 @@ export const RegistrarJinete = () => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={papellidoJinete}
+                      value={apellido1Persona}
                       type="text"
                       className="form-control"
                       placeholder="First name"
@@ -167,7 +191,7 @@ export const RegistrarJinete = () => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={sapellidoJinete}
+                      value={apellido2Persona}
                       type="text"
                       className="form-control"
                       placeholder="First name"
@@ -181,7 +205,7 @@ export const RegistrarJinete = () => {
                 <Col md="6">
                   <div className="mb-3 form-floating">
                     <input
-                      value={fecha_nacJinete}
+                      value={fechaNacimiento}
                       type="date"
                       className="form-control"
                       placeholder="First name"
@@ -191,15 +215,17 @@ export const RegistrarJinete = () => {
                   </div>
                 </Col>
                 <Col md="6" className="mb-3">
-                  <div
-                    className="form-floating"
-                    value={rangoJinete}
-                    onChange={handleRango}
-                  >
-                    <FormSelect>
-                      {rangos.map((rango) => (
-                        <option value={rango} key={rango.key}>
-                          {rango.nombre}
+                  <div className="form-floating">
+                    <FormSelect onChange={handleRango}>
+                      <option value={-1} disabled={toggleRango}>
+                        rango
+                      </option>
+                      {rangos.data.map((rango) => (
+                        <option
+                          value={rango.codigo_rango}
+                          key={rango.codigo_rango}
+                        >
+                          {rango.nombre_rango}
                         </option>
                       ))}
                     </FormSelect>
@@ -234,7 +260,18 @@ export const RegistrarJinete = () => {
                     <FormLabel>
                       {togglePeso ? (
                         <span>
-                          {rangoJinete.peso_min} kg - {rangoJinete.peso_max} kg
+                          {
+                            rangos.data.find(
+                              (rango) => rango.codigo_rango == fkRango
+                            ).peso_min
+                          }{" "}
+                          kg -{" "}
+                          {
+                            rangos.data.find(
+                              (rango) => rango.codigo_rango == fkRango
+                            ).peso_max
+                          }{" "}
+                          kg
                         </span>
                       ) : (
                         <span> Peso (kg)</span>

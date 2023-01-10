@@ -22,19 +22,18 @@ const obtenerRetiroIndividual = async (retiroId) => {
 
 const registrarRetiro = async (nuevoRetiro) => {
     try {
-        const retiroCreado = await Retiro.registrarRetiro(nuevoRetiro);
+        await Retiro.registrarRetiro(nuevoRetiro);
         
-        return(retiroCreado);
     } catch (error) {
         throw(error);
     }
 };
 
-const actualizarRetiro = (retiroId, cambios) => {
+const actualizarRetiro = async (retiroId, cambios) => {
     try {
-        const retiroActualizado = Retiro.actualizarRetiro(retiroId, cambios);
+        await Retiro.actualizarRetiro(retiroId, cambios);
         
-        return(retiroActualizado);
+        return;
     } catch (error) {
         throw(error);
     }

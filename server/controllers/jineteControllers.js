@@ -19,12 +19,6 @@ const obtenerJineteIndividual = async (req, res) => {
     } = req;
 
     try {
-        if (!jineteId)
-            return(httpError.idVacio(res, ":jineteId"));
-
-        if (isNaN(jineteId) || jineteId === ' ')
-            return(httpError.idInvalido(res, ":jineteId"));
-
         const jinete = await jineteService.obtenerJineteIndividual(jineteId);
         res.status(200).send({ status: "OK", data: jinete});
     } catch (error) {
@@ -46,16 +40,7 @@ const registrarJinete = async (req, res) => {
         fkRango,
         pesoJinete, 
     } = req.body;
-
-    if (!cedulaPersona ||
-        !nombre1Persona||
-        !apellido1Persona ||
-        !fechaNacimiento ||
-        !alturaJinete || 
-        !fkRango || 
-        !pesoJinete)
-        return (httpError.faltaInformacion(res));
-
+    
     const nuevoJinete = {
         cedulaPersona,
         nombre1Persona: nombre1Persona.toLowerCase(),
@@ -79,7 +64,19 @@ const registrarJinete = async (req, res) => {
 };
 
 const actualizarJinete = async (req, res) => {
-    res.send("Estamos en actualizar jinete");
+    const {
+        body,
+        params: { jineteId },
+    } = req;
+
+    try {
+        const jineteActualizado = await jineteService.actualizarJinete(jineteId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del jinete '${jineteActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 
 };
 
@@ -89,12 +86,6 @@ const borrarJinete = async (req, res) => {
     } = req;
 
     try {
-        if (isNaN(jineteId) || jineteId === ' ')
-            return(httpError.idInvalido(res, ":jineteId"));
-
-        if (!jineteId)
-            return(httpError.faltaInformacion(res));
-
         await jineteService.borrarJinete(jineteId);
         res.status(200).send({ status: "OK", data: `El jinete con el id '${jineteId}' se ha eliminado con exito.` });
     } catch (error) {

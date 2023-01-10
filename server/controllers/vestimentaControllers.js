@@ -19,12 +19,6 @@ const obtenerVestimentaIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!vestimentaId)
-            return(httpError.idVacio(res, ":vestimentaId"));
-
-        if (isNaN(vestimentaId) || vestimentaId === ' ')
-            return(httpError.idInvalido(res, ":vestimentaId"));
-
         const vestimenta = await vestimentaService.obtenerVestimentaIndividual(vestimentaId);
         res.status(200).send({ status: "OK", data: vestimenta});
     } catch (error) {
@@ -36,18 +30,10 @@ const obtenerVestimentaIndividual = async (req, res) => {
 
 const registrarVestimenta = async (req, res) => { 
     const {
-        codigoVestimenta, 
         nombreVestimenta,
      } =  req.body;
 
-    if (!codigoVestimenta || !nombreVestimenta)
-        return (httpError.faltaInformacion(res));
-    
-    if (isNaN(codigoVestimenta) || codigoVestimenta === ' ')
-        return(httpError.idInvalido(res, "codigo Vestimenta"));
-   
     const nuevaVestimenta = {
-        codigoVestimenta,
         nombreVestimenta: nombreVestimenta.toLowerCase(),
     };
 
@@ -62,7 +48,19 @@ const registrarVestimenta = async (req, res) => {
 };
 
 const actualizarVestimenta = async (req, res) => {
+    const {
+        body,
+        params: { vestimentaId },
+    } = req;
 
+    try {
+        const vestimentaActualizada = await vestimentaService.actualizarVestimenta(vestimentaId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion de la vestimenta '${vestimentaActualizada}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarVestimenta = async (req, res) => {
@@ -71,12 +69,6 @@ const borrarVestimenta = async (req, res) => {
     } = req;
 
     try {
-        if (!vestimentaId)
-            return(httpError.idVacio(res, "vestimentaId"));
-
-        if (isNaN(vestimentaId) || vestimentaId === ' ')
-            return(httpError.idInvalido(res, ":vestimentaId"));
-
         await vestimentaService.borrarVestimenta(vestimentaId);
         res.status(200).send({ status: "OK", data: `La vestimenta con el id '${vestimentaId}' se ha eliminado con exito.` });
     } catch (error) {

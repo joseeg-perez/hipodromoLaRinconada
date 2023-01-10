@@ -19,12 +19,6 @@ const obtenerCategoriaIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!categoriaId)
-            return(httpError.idVacio(res, ":categoriaId"));
-
-        if (isNaN(categoriaId) || categoriaId === ' ')
-            return(httpError.idInvalido(res, ":categoriaId"));
-
         const categoria = await categoriaCarreraService.obtenerCategoriaIndividual(categoriaId);
         res.status(200).send({ status: "OK", data: categoria});
     } catch (error) {
@@ -36,18 +30,10 @@ const obtenerCategoriaIndividual = async (req, res) => {
 
 const registrarCategoria = async (req, res) => { 
     const {
-        codigoCategoria, 
         nombreCategoria,
      } =  req.body;
 
-    if (!codigoCategoria || !nombreCategoria)
-        return (httpError.faltaInformacion(res));
-    
-    if (isNaN(codigoCategoria) || codigoCategoria === ' ')
-        return(httpError.idInvalido(res, "codigo categoria"));
-   
     const nuevaCategoria = {
-        codigoCategoria,
         nombreCategoria: nombreCategoria.toLowerCase(),
     };
 
@@ -62,7 +48,19 @@ const registrarCategoria = async (req, res) => {
 };
 
 const actualizarCategoria = async (req, res) => {
+    const {
+        body,
+        params: { categoriaId },
+    } = req;
 
+    try {
+        const categoriaActualizada = await categoriaCarreraService.actualizarCategoria(categoriaId, body);
+        res.send({ status: "OK", data: `Se ha actualizado el nombre de la categoria a '${categoriaActualizada} de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarCategoria = async (req, res) => {

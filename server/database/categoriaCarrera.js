@@ -38,13 +38,12 @@ const obtenerCategoriaIndividual = async (categoriaId) => {
 
 const registrarCategoria = async (nuevaCategoria) => {
     const { 
-        codigoCategoria, 
         nombreCategoria,
      } = nuevaCategoria;
 
-    const text = `INSERT INTO categoria_carrera(codigo_categoria, nombre_categoria) VALUES($1, $2)`;
+    const text = `INSERT INTO categoria_carrera(nombre_categoria) VALUES($1)`;
         
-    const values = [codigoCategoria, nombreCategoria];
+    const values = [nombreCategoria];
 
     try {
         await dbConnection.query(text, values);
@@ -55,15 +54,40 @@ const registrarCategoria = async (nuevaCategoria) => {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `La categoria con el codigo '${codigoCategoria}' ya ha sido registrada.`,
+                message: `La categoria con el nombre '${nombreCategoria}' ya ha sido registrada.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
     }
 };
 
-const actualizarCategoria = (categoriaId, cambios) => {
+const actualizarCategoria = async (categoriaId, cambios) => {
+    const { 
+        nombreCategoria
+       } = cambios;
     
+        const query = {
+            text:`UPDATE categoria_carrera
+            SET nombre_categoria=$1
+            WHERE codigo_categoria=$2;`,
+            values: [nombreCategoria, categoriaId],
+        }
+            try {
+                const { rowCount } = await dbConnection.query(query);
+                if (rowCount === 0)
+                    httpError.idNoEncontrado("La categoria", entrenadorId);
+                
+                dbConnection.end;
+                return(nombreCategoria);
+            } catch (error) {
+              if (error.code === "23505") {
+                throw {
+                  status: 409,
+                  message: `Ya hay una categoria con el nombre'${nombreCategoria}' registrado.`,
+                };
+              }
+              throw { status: error?.status || 500, message: error?.message || error };
+            }   
 };
 
 const borrarCategoria = async (categoriaId) => {

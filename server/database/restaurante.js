@@ -2,106 +2,144 @@ const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeRestaurantes = async () => {
-    const query = {
-        text: "SELECT * FROM restaurante",
-    };
+  const query = {
+    text: `SELECT codigo_restaurante, nombre_restaurante, 
+        descripcion_restaurante, capacidad_restaurante,
+        nombre_area 
+        from restaurante, area
+        where restaurante.fk_area = codigo_area`,
+  };
 
-    try {
-        const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.noRegistrado("ningun restaurante");
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0) httpError.noRegistrado("ningun restaurante");
 
-        dbConnection.end;
-        return (rows);
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    } 
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const obtenerRestauranteIndividual = async (restauranteId) => {
-    const query = {
-        text: "SELECT * FROM restaurante WHERE codigo_restaurante=$1",
-        values: [restauranteId],
-    };
+  const query = {
+    text: "SELECT * FROM restaurante WHERE codigo_restaurante=$1",
+    values: [restauranteId],
+  };
 
-    try {
-        const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.idNoEncontrado("El restaurante", restauranteId);
-        
-        dbConnection.end;
-        return (rows);
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    } 
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0)
+      httpError.idNoEncontrado("El restaurante", restauranteId);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const registrarRestaurante = async (nuevoRestaurante) => {
-    const { 
-        codigoRestaurante, 
-        nombreRestaurante,
-        descripcionRestaurante,
-        capacidadRestaurante,
-        fk_area,
-     } = nuevoRestaurante;
+  const {
+    nombreRestaurante,
+    descripcionRestaurante,
+    capacidadRestaurante,
+    fk_area,
+  } = nuevoRestaurante;
 
-    const text = `INSERT INTO restaurante(
-        codigo_restaurante, 
+  const text = `INSERT INTO restaurante( 
         nombre_restaurante,
         descripcion_restaurante,
         capacidad_restaurante,
-        fk_area) VALUES($1, $2, $3, $4, $5)`;
-        
-    const values = [
-        codigoRestaurante, 
-        nombreRestaurante,
-        descripcionRestaurante,
-        capacidadRestaurante,
-        fk_area
-    ];
+        fk_area) VALUES($1, $2, $3, $4)`;
 
-    try {
-        await dbConnection.query(text, values);
-    
-        dbConnection.end;
-        return (nombreRestaurante);
-    } catch (error) {
-        if (error.code === '23505') {
-            throw {
-                status: 409,
-                message: `El restaurante con el codigo '${codigoRestaurante}' ya ha sido registrado.`,
-            }
-        }
-        throw { status: error?.status || 500, message: error?.message || error };
-    }   
+  const values = [
+    nombreRestaurante,
+    descripcionRestaurante,
+    capacidadRestaurante,
+    fk_area,
+  ];
+
+  try {
+    await dbConnection.query(text, values);
+
+    dbConnection.end;
+    return nombreRestaurante;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `El restaurante con el nombre '${nombreRestaurante}' ya ha sido registrado.`,
+      };
+    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
-const actualizarRestaurante = (restauranteId, cambios) => {
-    
+const actualizarRestaurante = async (restauranteId, cambios) => {
+  const { 
+    nombreRestaurante,
+    descripcionRestaurante,
+    capacidadRestaurante,
+    fk_area,
+   } = cambios;
+
+    const query = {
+        text:`UPDATE restaurante
+        SET nombre_restaurante=$1,
+        descripcion_restaurante=$2,
+        capacidad_restaurante=$3,
+        fk_area=$4
+        WHERE codigo_restaurante=$5;`,
+        values: [
+          nombreRestaurante,
+          descripcionRestaurante,
+          capacidadRestaurante,
+          fk_area,
+          restauranteId
+        ],
+    }
+    try {
+      const { rowCount } = await dbConnection.query(query);
+      if (rowCount === 0)
+        httpError.idNoEncontrado("El restaurante", restauranteId);
+            
+        dbConnection.end;
+        return(nombreRestaurante);
+    } catch (error) {
+        if (error.code === "23505") {
+          throw {
+            status: 409,
+            message: `Ya hay un restaurante con el codigo '${restauranteId}' registrado.`,
+          };
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+
 };
 
 const borrarRestaurante = async (restauranteId) => {
-    const query = {
-        text: "DELETE FROM restaurante WHERE codigo_restaurante=$1",
-        values: [restauranteId],
-    };
+  const query = {
+    text: "DELETE FROM restaurante WHERE codigo_restaurante=$1",
+    values: [restauranteId],
+  };
 
-    try {
-        const { rowCount } = await dbConnection.query(query);        
-        if (rowCount === 0)
-            httpError.idNoEncontrado("El restaurante", restauranteId);
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0)
+      httpError.idNoEncontrado("El restaurante", restauranteId);
 
-        dbConnection.end;
-        return;
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }   
+    dbConnection.end;
+    return;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 module.exports = {
-    obtenerListaDeRestaurantes,
-    obtenerRestauranteIndividual,
-    registrarRestaurante,
-    actualizarRestaurante,
-    borrarRestaurante,
+  obtenerListaDeRestaurantes,
+  obtenerRestauranteIndividual,
+  registrarRestaurante,
+  actualizarRestaurante,
+  borrarRestaurante,
 };

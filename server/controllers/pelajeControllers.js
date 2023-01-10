@@ -19,12 +19,6 @@ const obtenerPelajeIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!pelajeId)
-            return(httpError.idVacio(res, ":pelajeId"));
-
-        if (isNaN(pelajeId) || pelajeId === ' ')
-            return(httpError.idInvalido(res, ":pelajeId"));
-
         const pelaje = await pelajeService.obtenerPelajeIndividual(pelajeId);
         res.status(200).send({ status: "OK", data: pelaje});
     } catch (error) {
@@ -36,21 +30,13 @@ const obtenerPelajeIndividual = async (req, res) => {
 
 const registrarPelaje = async (req, res) => { 
     const {
-        codigoPelaje, 
         nombrePelaje,
         abrevPelaje,
      } =  req.body;
 
-    if (!codigoPelaje || !nombrePelaje || !abrevPelaje)
-        return (httpError.faltaInformacion(res));
-    
-    if (isNaN(codigoPelaje) || codigoPelaje === ' ')
-        return(httpError.idInvalido(res, "codigo Pelaje"));
-   
     const nuevoPelaje = {
-        codigoPelaje,
         nombrePelaje: nombrePelaje.toLowerCase(),
-        abrevPelaje,
+        abrevPelaje: abrevPelaje.toLowerCase(),
     };
 
     try {
@@ -64,7 +50,19 @@ const registrarPelaje = async (req, res) => {
 };
 
 const actualizarPelaje = async (req, res) => {
+    const {
+        body,
+        params: { pelajeId },
+    } = req;
 
+    try {
+        const pelajeActualizado = await pelajeService.actualizarPelaje(pelajeId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del pelaje '${pelajeActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarPelaje = async (req, res) => {
@@ -73,12 +71,6 @@ const borrarPelaje = async (req, res) => {
     } = req;
 
     try {
-        if (!pelajeId)
-            return(httpError.idVacio(res, "pelajeId"));
-
-        if (isNaN(pelajeId) || pelajeId === ' ')
-            return(httpError.idInvalido(res, ":pelajeId"));
-
         await pelajeService.borrarPelaje(pelajeId);
         res.status(200).send({ status: "OK", data: `El pelaje con el id '${pelajeId}' se ha eliminado con exito.` });
     } catch (error) {

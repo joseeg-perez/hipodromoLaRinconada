@@ -13,18 +13,24 @@ const obtenerListaDeEntrenadores = async (req, res) => {
     }
 };
 
+const obtenerListaDeCaballerizasVacias = async (req, res) => {
+    try {
+        const listaCaballerizas =  await entrenadorService.obtenerListaDeCaballerizasVacias();
+
+        res.status(200).send({ status: "OK", data: listaCaballerizas });
+    } catch (error) {
+        res 
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error }});
+    }
+};
+
 const obtenerEntrenadorIndividual = async (req, res) => {
     const {
         params: { entrenadorId },
     } = req;
     
-    try {
-        if (!entrenadorId)
-            return(httpError.idVacio(res, ":entrenadorId"));
-
-        if (isNaN(entrenadorId) || entrenadorId === ' ')
-            return(httpError.idInvalido(res, ":entrenadorId"));
-            
+    try {        
         const entrenador = await entrenadorService.obtenerEntrenadorIndividual(entrenadorId);
         res.status(200).send({ status: "OK", data: entrenador});
     } catch (error) {
@@ -43,14 +49,8 @@ const registrarEntrenador = async (req, res) => {
         apellido1Persona,
         apellido2Persona,
         fechaNacimiento, 
+        fkCaballeriza,
     } = req.body;
-
-    if (!codigoPersona || 
-        !cedulaPersona ||
-        !nombre1Persona||
-        !apellido1Persona ||
-        !fechaNacimiento)
-        return (httpError.faltaInformacion(res));
 
     const nuevoEntrenador = {
         codigoPersona, //aqui me quede
@@ -60,8 +60,8 @@ const registrarEntrenador = async (req, res) => {
         apellido1Persona: apellido1Persona.toLowerCase(),
         apellido2Persona: apellido2Persona.toLowerCase(),
         fechaNacimiento,
+        fkCaballeriza,
     };
-
     try {
         const entrenadorCreado = await entrenadorService.registrarEntrenador(nuevoEntrenador);
         res.status(200).send({ status: "OK", data: `Se ha registrado el entrenador '${entrenadorCreado}' de forma satisfactoria.` });
@@ -70,12 +70,22 @@ const registrarEntrenador = async (req, res) => {
         .status(error?.status || 500)
         .send({ status: "FAILED", data: { error: error?.message || error } });
     }
-
 };
 
 const actualizarEntrenador = async (req, res) => {
-    res.send("Estamos en actualizar entrenador ROUTER");
+    const {
+        body,
+        params: { entrenadorId },
+    } = req;
 
+    try {
+        const entrenadorActualizado = await entrenadorService.actualizarEntrenador(entrenadorId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del entrenador '${entrenadorActualizado}' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const borrarEntrenador = async (req, res) => {
@@ -84,12 +94,6 @@ const borrarEntrenador = async (req, res) => {
     } = req;
 
     try {
-        if (!entrenadorId)
-            return(httpError.faltaInformacion(res));
-
-        if (isNaN(entrenadorId) || entrenadorId === ' ')
-            return(httpError.idInvalido(res, ":entrenadorId"));
-
         await entrenadorService.borrarEntrenador(entrenadorId);
         res.status(200).send({ status: "OK", data: `El entrenador con el id '${entrenadorId}' se ha eliminado con exito.` });
     } catch (error) {
@@ -102,6 +106,7 @@ const borrarEntrenador = async (req, res) => {
 
 module.exports = {
     obtenerListaDeEntrenadores,
+    obtenerListaDeCaballerizasVacias,
     obtenerEntrenadorIndividual,
     registrarEntrenador,
     actualizarEntrenador,

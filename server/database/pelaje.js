@@ -38,14 +38,13 @@ const obtenerPelajeIndividual = async (pelajeId) => {
 
 const registrarPelaje = async (nuevoPelaje) => {
     const { 
-        codigoPelaje, 
         nombrePelaje,
         abrevPelaje,
      } = nuevoPelaje;
 
-    const text = `INSERT INTO pelaje(codigo_pelaje, nombre_pelaje, abrev_pelaje) VALUES($1, $2, $3)`;
+    const text = `INSERT INTO pelaje(nombre_pelaje, abrev_pelaje) VALUES($1, $2)`;
         
-    const values = [codigoPelaje, nombrePelaje, abrevPelaje];
+    const values = [nombrePelaje, abrevPelaje];
 
     try {
         await dbConnection.query(text, values);
@@ -56,15 +55,46 @@ const registrarPelaje = async (nuevoPelaje) => {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `El tipo de pelaje con el codigo '${codigoPelaje}' ya ha sido registrado.`,
+                message: `El tipo de pelaje con el nombre '${ nombrePelaje }' ya ha sido registrado.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
     }
 };
 
-const actualizarPelaje = (pelajeId, cambios) => {
+const actualizarPelaje = async (pelajeId, cambios) => {
+    const { 
+        nombrePelaje,
+        abrevPelaje,
+       } = cambios;
     
+        const query = {
+            text:`UPDATE pelaje
+            SET nombre_pelaje=$1,
+            abrev_pelaje=$2
+            WHERE codigo_pelaje=$3;`,
+            values: [
+                nombrePelaje,
+                abrevPelaje,
+                pelajeId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("El pelaje", pelajeId);
+                
+            dbConnection.end;
+            return(nombrePelaje);
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay un pelaje con el codigo '${pelajeId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }
 };
 
 const borrarPelaje = async (pelajeId) => {

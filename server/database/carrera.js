@@ -48,7 +48,7 @@ const registrarCarrera = async (nuevaCarrera) => {
         premioQuinto,
         horaCarrera,
         fkEvento,
-        fkCategorioCarrera,
+        fkCategoriaCarrera,
      } = nuevaCarrera;
 
     const text = `INSERT INTO carrera(
@@ -75,7 +75,7 @@ const registrarCarrera = async (nuevaCarrera) => {
         premioQuinto,
         horaCarrera,
         fkEvento,
-        fkCategorioCarrera
+        fkCategoriaCarrera
     ];
 
     try {
@@ -95,7 +95,62 @@ const registrarCarrera = async (nuevaCarrera) => {
 };
 
 const actualizarCarrera = async (carreraId, cambios) => {
-
+    const { 
+        nombreCarrera,
+        numeroCarrera,
+        premioPrimero,
+        premioSegundo,
+        premioTercero,
+        premioCuarto,
+        premioQuinto,
+        horaCarrera,
+        fkEvento,
+        fkCategoriaCarrera,
+       } = cambios;
+    
+    const query = {
+        text:`UPDATE carrera
+        SET nombre_carrera=$1,
+        numero_carrera=$2,
+        premio_primero=$3,
+        premio_segundo=$4,
+        premio_tercero=$5,
+        premio_cuarto=$6,
+        premio_quinto=$7,
+        hora_carrera=$8,
+        fk_evento=$9,
+        fk_categoria_carrera=$10
+        WHERE codigo_carrera=$11;`,
+        values: [
+            nombreCarrera,
+            numeroCarrera,
+            premioPrimero,
+            premioSegundo,
+            premioTercero,
+            premioCuarto,
+            premioQuinto,
+            horaCarrera,
+            fkEvento,
+            fkCategoriaCarrera,
+            carreraId
+        ],
+    }
+        try {
+            const { rowCount } = await dbConnection.query(query);
+            if (rowCount === 0)
+                httpError.idNoEncontrado("La carrera", carreraId);
+                
+            dbConnection.end;
+            return(nombreCarrera);
+        } catch (error) {
+            if (error.code === "23505") {
+                throw {
+                    status: 409,
+                    message: `Ya hay una carrera con el id '${carreraId}' registrada.`,
+                };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }
 };
 
 const borrarCarrera = async (carreraId) => {

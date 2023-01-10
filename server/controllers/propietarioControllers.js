@@ -3,36 +3,33 @@ const validator = require("email-validator");
 const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePropietarios = async (req, res) => {
-    try {
-        const listaPropietarios = await propietarioService.obtenerListaDePropietarios();
+  try {
+    const listaPropietarios =
+      await propietarioService.obtenerListaDePropietarios();
 
-        res.status(200).send({ status: "OK", data: listaPropietarios });
-    } catch (error) {
-        res 
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error }});
-    };
+    res.status(200).send({ status: "OK", data: listaPropietarios });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const obtenerPropietarioIndividual = async (req, res) => {
-    const {
-        params: { propietarioId },
-    } = req;
-    
-    try {
-        if (!propietarioId)
-            return(httpError.idVacio(res, ":propietarioId"));
+  const {
+    params: { propietarioId },
+  } = req;
 
-        if (isNaN(propietarioId) || propietarioId === ' ')
-            return(httpError.idInvalido(res, ":propietarioId"));
-
-        const propietario = await propietarioService.obtenerPropietarioIndividual(propietarioId);
-        res.status(200).send({ status: "OK", data: propietario});
-    } catch (error) {
-        res 
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error }});        
-    }
+  try {
+    const propietario = await propietarioService.obtenerPropietarioIndividual(
+      propietarioId
+    );
+    res.status(200).send({ status: "OK", data: propietario });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const registrarPropietario = async (req, res) => {
@@ -45,19 +42,10 @@ const registrarPropietario = async (req, res) => {
         fechaNacimiento,
         correo,
         fkLugar,
+        extension_tlf,
+        cuerpo_tlf,
+
      } = req.body;
-
-     if (!cedulaPersona ||
-        !nombre1Persona||
-        !apellido1Persona ||
-        !fechaNacimiento ||
-        !correo)
-        return (httpError.faltaInformacion(res));
-
-    const emailValido = validator.validate(correo);
-
-    if (!emailValido)
-        return(httpError.campoInvalido(res, "correo"));
 
     const nuevoPropietario = {
         cedulaPersona,
@@ -68,6 +56,8 @@ const registrarPropietario = async (req, res) => {
         fechaNacimiento,
         correo,
         fkLugar,
+        extension_tlf,
+        cuerpo_tlf,
     };
 
     try {
@@ -81,35 +71,43 @@ const registrarPropietario = async (req, res) => {
 };
 
 const actualizarPropietario = async (req, res) => {
-    res.send("Estamos en actualizar Propietario");
-
-};
-
-const borrarPropietario = async (req, res) => {
     const {
-        params: { propietarioId },
+      body,
+      params: { propietarioId },
     } = req;
 
     try {
-        if (!propietarioId)
-            return(httpError.faltaInformacion(res));
-
-        if (isNaN(propietarioId) || propietarioId === ' ')
-            return(httpError.idInvalido(res, ":propietarioId"));
-
-        await propietarioService.borrarPropietario(propietarioId);
-        res.status(200).send({ status: "OK", data: `El propietario con el id '${propietarioId}' se ha eliminado con exito.` });
+        const propietarioActualizado = await propietarioService.actualizarPropietario(propietarioId, body);
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del propietario '${propietarioActualizado}' de forma satisfactoria.` });
     } catch (error) {
         res
         .status(error?.status || 500)
-        .send({ status: "FAILED", data: {error: error?.message || error} });
+        .send({ status: "FAILED", data: { error: error?.message || error } });
     }
 };
 
+const borrarPropietario = async (req, res) => {
+  const {
+    params: { propietarioId },
+  } = req;
+
+  try {
+    await propietarioService.borrarPropietario(propietarioId);
+    res.status(200).send({
+      status: "OK",
+      data: `El propietario con el id '${propietarioId}' se ha eliminado con exito.`,
+    });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 module.exports = {
-    obtenerListaDePropietarios,
-    obtenerPropietarioIndividual,
-    registrarPropietario,
-    actualizarPropietario,
-    borrarPropietario,
+  obtenerListaDePropietarios,
+  obtenerPropietarioIndividual,
+  registrarPropietario,
+  actualizarPropietario,
+  borrarPropietario,
 };

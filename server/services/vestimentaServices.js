@@ -30,9 +30,9 @@ const registrarVestimenta = async (nuevaVestimenta) => {
     }
 };
 
-const actualizarVestimenta = (vestimentaId, cambios) => {
+const actualizarVestimenta = async (vestimentaId, cambios) => {
     try {
-        const vestimentaActualizada = Vestimenta.actualizarVestimenta(vestimentaId, cambios);
+        const vestimentaActualizada = await Vestimenta.actualizarVestimenta(vestimentaId, cambios);
         
         return(vestimentaActualizada);
     } catch (error) {

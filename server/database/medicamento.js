@@ -57,7 +57,41 @@ const registrarMedicamento = async (nuevoMedicamento) => {
   }
 };
 
-const actualizarMedicamento = async (medicamentoId, cambios) => {};
+const actualizarMedicamento = async (medicamentoId, cambios) => {
+  const { 
+    nombreMedicamento, 
+    descripcionMedicamento 
+  } = cambios;
+
+
+  const query = {
+        text:`UPDATE medicamento
+        SET nombre_medicamento=$1,
+        descripcion_medicamento=$2
+        WHERE codigo_medicamento=$3;`,
+        values: [
+          nombreMedicamento, 
+          descripcionMedicamento,
+          medicamentoId
+        ],
+  }
+  try {
+      const { rowCount } = await dbConnection.query(query);
+      if (rowCount === 0)
+        httpError.idNoEncontrado("El medicamento", medicamentoId);
+            
+        dbConnection.end;
+        return(nombreMedicamento);
+  } catch (error) {
+        if (error.code === "23505") {
+          throw {
+            status: 409,
+            message: `Ya hay un medicamento con el codigo '${medicamentoId}' registrado.`,
+          };
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
 
 const borrarMedicamento = async (medicamentoId) => {
   const query = {

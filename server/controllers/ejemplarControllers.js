@@ -19,13 +19,52 @@ const obtenerEjemplarIndividual = async (req, res) => {
     } = req;
     
     try {
-        if (!ejemplarId)
-            return(httpError.idVacio(res, ":ejemplarId"));
-
-        if (isNaN(ejemplarId) || ejemplarId === ' ')
-            return(httpError.idInvalido(res, ":ejemplarId"));
-
         const ejemplar = await ejemplarService.obtenerEjemplarIndividual(ejemplarId);
+        res.status(200).send({ status: "OK", data: ejemplar});
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: {error: error?.message || error} });       
+    }
+};
+
+const obtenerPropietarioDelEjemplarIndividual = async (req, res) => { 
+    const {
+        params: { ejemplarId },
+    } = req;
+    
+    try {
+        const ejemplar = await ejemplarService.obtenerPropietarioDelEjemplarIndividual(ejemplarId);
+        res.status(200).send({ status: "OK", data: ejemplar});
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: {error: error?.message || error} });       
+    }
+};
+
+const obtenerNoPropietarioDelEjemplarIndividual = async (req, res) => { 
+    const {
+        params: { ejemplarId },
+    } = req;
+    
+    try {
+        const ejemplar = await ejemplarService.obtenerNoPropietarioDelEjemplarIndividual(ejemplarId);
+        res.status(200).send({ status: "OK", data: ejemplar});
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: {error: error?.message || error} });       
+    }
+};
+
+const obtenerPosibleStudDelEjemplarIndividual = async (req, res) => { 
+    const {
+        params: { ejemplarId },
+    } = req;
+    
+    try {
+        const ejemplar = await ejemplarService.obtenerPosibleStudDelEjemplarIndividual(ejemplarId);
         res.status(200).send({ status: "OK", data: ejemplar});
     } catch (error) {
         res
@@ -46,31 +85,11 @@ const registrarEjemplar = async (req, res) => {
         padreEjemplar,
         madreEjemplar,
         imagenEjemplar,
-        propietarioEjemplar,
         haraEjemplar,
         pelajeEjemplar,
         generoEjemplar,
      } =  req.body;
 
-    if (!codigoEjemplar ||
-        !nombreEjemplar ||
-        !numeroEjemplar ||
-        !tatlabialEjemplar ||
-        !precioEjemplar ||
-        !fecha_nacEjemplar ||
-        !pesoEjemplar ||
-        !padreEjemplar ||
-        !madreEjemplar ||
-        !imagenEjemplar ||
-        !propietarioEjemplar ||
-        !haraEjemplar ||
-        !pelajeEjemplar ||
-        !generoEjemplar)
-        return (httpError.faltaInformacion(res));
-    
-    if (isNaN(numeroEjemplar) || isNaN(tatlabialEjemplar) || isNaN(pesoEjemplar) || isNaN(precioEjemplar))
-        return(res.status(422).send({ status:"FAILED", data: "Uno de los campos que espera valores numericos es invalido." }))
-   
     const nuevoEjemplar = {
         codigoEjemplar,
         nombreEjemplar: nombreEjemplar.toLowerCase(),
@@ -82,10 +101,9 @@ const registrarEjemplar = async (req, res) => {
         padreEjemplar,
         madreEjemplar,
         imagenEjemplar,
-        propietarioEjemplar,
         haraEjemplar,
         pelajeEjemplar,
-        generoEjemplar,
+        generoEjemplar: generoEjemplar.toLowerCase(),
     };
 
     try {
@@ -104,20 +122,14 @@ const actualizarEjemplar = async (req, res) => {
         params: { ejemplarId },
     } = req;
 
-    console.log(ejemplarId)
-
-    if (!ejemplarId)
-        httpError.idVacio(res, "ejemplarId");
-
     try {
         const ejemplarActualizado = await ejemplarService.actualizarEjemplar(ejemplarId, body);
-        res.send({ status: "OK", data: ejemplarActualizado });
+        res.send({ status: "OK", data: `Se ha actualizado la informacion del ejemplar '${ejemplarActualizado} de forma satisfactoria.` });
     } catch (error) {
         res
         .status(error?.status || 500)
         .send({ status: "FAILED", data: { error: error?.message || error } });
     }
-
 };
 
 const borrarEjemplar = async (req, res) => {
@@ -126,12 +138,6 @@ const borrarEjemplar = async (req, res) => {
     } = req;
 
     try {
-        if (!ejemplarId)
-            return(httpError.idVacio(res, "ejemplarId"));
-
-        if (isNaN(ejemplarId) || ejemplarId === ' ')
-            return(httpError.idInvalido(res, ":ejemplarId"));
-
         await ejemplarService.borrarEjemplar(ejemplarId);
         res.status(200).send({ status: "OK", data: `El ejemplar con el id '${ejemplarId}' se ha eliminado con exito.` });
     } catch (error) {
@@ -144,6 +150,9 @@ const borrarEjemplar = async (req, res) => {
 module.exports = {
     obtenerListaDeEjemplares,
     obtenerEjemplarIndividual,
+    obtenerPropietarioDelEjemplarIndividual,
+    obtenerNoPropietarioDelEjemplarIndividual,
+    obtenerPosibleStudDelEjemplarIndividual,
     registrarEjemplar,
     actualizarEjemplar,
     borrarEjemplar,

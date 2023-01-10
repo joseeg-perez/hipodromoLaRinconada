@@ -38,33 +38,63 @@ const obtenerRetiroIndividual = async (retiroId) => {
 
 const registrarRetiro = async (nuevoRetiro) => {
     const { 
-        codigoRetiro, 
         fechaRetiro,
         fkMotivo,
      } = nuevoRetiro;
 
-    const text = `INSERT INTO retiro(codigo_retiro, fecha_retiro, fk_motivo) VALUES($1, $2, $3)`;
+    const text = `INSERT INTO retiro(fecha_retiro, fk_motivo) VALUES($1, $2)`;
         
-    const values = [codigoRetiro, fechaRetiro, fkMotivo];
+    const values = [fechaRetiro, fkMotivo];
 
     try {
         await dbConnection.query(text, values);
     
         dbConnection.end;
-        return (codigoRetiro);
+        return;
     } catch (error) {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `El retiro con el codigo '${codigoRetiro}' ya ha sido registrado.`,
+                message: `El retiro ya ha sido registrado con anterioridad.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
     }
 };
 
-const actualizarRetiro = (retiroId, cambios) => {
- 
+const actualizarRetiro = async (retiroId, cambios) => {
+    const { 
+        fechaRetiro,
+        fkMotivo,
+       } = cambios;
+    
+        const query = {
+            text:`UPDATE retiro
+            SET fecha_retiro=$1,
+            fk_motivo=$2
+            WHERE codigo_retiro=$3;`,
+            values: [
+                fechaRetiro,
+                fkMotivo,
+                retiroId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("El retiro", retiroId);
+                
+            dbConnection.end;
+            return;
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay un retiro con el codigo '${retiroId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }
 };
 
 const borrarRetiro = async (retiroId) => {

@@ -38,13 +38,12 @@ const obtenerVestimentaIndividual = async (vestimentaId) => {
 
 const registrarVestimenta = async (nuevaVestimenta) => {
     const { 
-        codigoVestimenta, 
         nombreVestimenta,
      } = nuevaVestimenta;
 
-    const text = `INSERT INTO vestimenta(codigo_vestimenta, nombre_vestimenta) VALUES($1, $2)`;
+    const text = `INSERT INTO vestimenta(nombre_vestimenta) VALUES($1)`;
         
-    const values = [codigoVestimenta, nombreVestimenta];
+    const values = [nombreVestimenta];
 
     try {
         await dbConnection.query(text, values);
@@ -55,15 +54,43 @@ const registrarVestimenta = async (nuevaVestimenta) => {
         if (error.code === '23505') {
             throw {
                 status: 409,
-                message: `La vestimenta con el codigo '${codigoVestimenta}' ya ha sido registrada.`,
+                message: `La vestimenta con el nombre '${nombreVestimenta}' ya ha sido registrada.`,
             }
         }
         throw { status: error?.status || 500, message: error?.message || error };
     }
 };
 
-const actualizarVestimenta = (vestimentaId, cambios) => {
+const actualizarVestimenta = async (vestimentaId, cambios) => {
+    const { 
+        nombreVestimenta
+       } = cambios;
     
+        const query = {
+            text:`UPDATE vestimenta
+            SET nombre_vestimenta=$1
+            WHERE codigo_vestimenta=$2;`,
+            values: [
+                nombreVestimenta,
+                vestimentaId
+            ],
+        }
+        try {
+          const { rowCount } = await dbConnection.query(query);
+          if (rowCount === 0)
+            httpError.idNoEncontrado("La vestimenta", vestimentaId);
+                
+            dbConnection.end;
+            return(nombreVestimenta);
+        } catch (error) {
+            if (error.code === "23505") {
+              throw {
+                status: 409,
+                message: `Ya hay una vestimenta con el codigo '${vestimentaId}' registrado.`,
+              };
+            }
+            throw { status: error?.status || 500, message: error?.message || error };
+        }    
 };
 
 const borrarVestimenta = async (vestimentaId) => {
