@@ -1,14 +1,14 @@
-const {encriptarClave, compararClave} = require("../helpers/bcrypt.js");
+const { encriptarClave, compararClave } = require("../helpers/bcrypt.js");
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
 const registrarse = async (usuarioAInsertar) => {
-  const { username, password, fkCliente, fkRol } = usuarioAInsertar;
+  const { username, password } = usuarioAInsertar;
 
   const hash = await encriptarClave(password);
 
-    const text = `INSERT INTO usuario(correo_usuario, contrasena_usuario, fk_rol) VALUES($1, $2, $3)`;
-    const values = [username, hash, fkRol]; //Valores que se pasan en el query para insertar en la base de datos, el hash es la clave encriptada
+  const text = `INSERT INTO usuario(correo_usuario, contrasena_usuario) VALUES($1, $2)`;
+  const values = [username, hash]; //Valores que se pasan en el query para insertar en la base de datos, el hash es la clave encriptada
 
   try {
     await dbConnection.query(text, values); //Se hace el query a la base de datos
@@ -49,15 +49,15 @@ const iniciarSesion = async (nuevoInicioSesion) => {
 const buscarUsuario = async (usuarioSolicitado) => {
   const { username } = usuarioSolicitado;
 
-    const query = {
-        text:"SELECT * FROM usuario WHERE correo_usuario=$1",
-        values: [username],
-    };
+  const query = {
+    text: "SELECT * FROM usuario WHERE correo_usuario=$1",
+    values: [username],
+  };
 
-    try {
-        const { rows } = await dbConnection.query(query);
-        const usuario = rows[0];
-        dbConnection.end;
+  try {
+    const { rows } = await dbConnection.query(query);
+    const usuario = rows[0];
+    dbConnection.end;
 
     return usuario;
   } catch (error) {

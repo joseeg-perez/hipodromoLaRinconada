@@ -66,6 +66,7 @@ import MedicamentoUpdate from "./pages/MedicamentoUpdate";
 import MotivoRetiroUpdate from "./pages/MotivoRetiroUpdate";
 import Login from "./pages/Login";
 import RegisterCard from "./pages/RegisterCard";
+import EntrenadorDetail from "./pages/EntrenadorDetail";
 
 function App() {
   return (
@@ -111,12 +112,12 @@ function App() {
           <Entrenadores></Entrenadores>
         </Route>
 
-        <Route path="/entrenadores/:entrenadorId" exact>
-          <EntrenadorDetail></EntrenadorDetail>
-        </Route>
-
         <Route path="/entrenadores/createEntrenador" exact>
           <EntrenadorAgregar></EntrenadorAgregar>
+        </Route>
+
+        <Route path="/entrenadores/:entrenadorId" exact>
+          <EntrenadorDetail></EntrenadorDetail>
         </Route>
 
         <Route path="/entrenadores/:entrenadorId/updateEntrenador" exact>
