@@ -81,11 +81,6 @@ const obtenerPosibleCaballoStud = async (studId) => {
 };
 
 const cambiarPorcentajes = async (cambios) => {
-<<<<<<< HEAD
-    try {
-        const propietarioPost = cambios.UltimosPropietarios.pop();//Se saca el ultimo de la lista ya que es el que se va a registrar
-        const nuevoPropietarioStud = {
-=======
   try {
     const propietarioPost = cambios.UltimosPropietarios.pop(); //Se saca el ultimo de la lista ya que es el que se va a registrar
     const nuevoPropietarioStud = {
@@ -100,7 +95,6 @@ const cambiarPorcentajes = async (cambios) => {
     try {
       const propietarioPost = cambios.UltimosPropietarios.pop(); //Se saca el ultimo de la lista ya que es el que se va a registrar
       const nuevoPropietarioStud = {
->>>>>>> c209d11b75fd4abe84732439537cc5f62f7b03e4
         porcentajePropiedad: propietarioPost.porcentaje,
         fechaInicioPropiedad: null,
         fechaFinPropiedad: null,
@@ -108,21 +102,7 @@ const cambiarPorcentajes = async (cambios) => {
         fkPropietario: propietarioPost.idpropietario,
       };
       await registrarPropietarioStud(nuevoPropietarioStud);
-
-<<<<<<< HEAD
-        const propietariosPatch = cambios.UltimosPropietarios;//lista de propietarios que se van a actualizar
-        for (let i = 0; i < propietariosPatch.length; i++) {
-            const propietarioActualizado = { //Propietario al cual se le modifican los porcentajes de propiedad
-                porcentajePropiedad: propietariosPatch[i].porcentaje,
-                fechaInicioPropiedad: propietariosPatch[i].fecha_inicio,
-                fechaFinPropiedad: null,
-                fkStud: cambios.fkStud,
-                fkPropietario: propietariosPatch[i].idpropietario,
-                propietarioStudId: propietariosPatch[i].propietariostudid,
-            }
-            await actualizarPropietarioStud(propietarioActualizado.propietarioStudId, propietarioActualizado); 
-        }
-=======
+      
       const propietariosPatch = cambios.UltimosPropietarios; //lista de propietarios que se van a actualizar
       for (let i = 0; i < propietariosPatch.length; i++) {
         const propietarioActualizado = {
@@ -139,7 +119,6 @@ const cambiarPorcentajes = async (cambios) => {
           propietarioActualizado
         );
       }
->>>>>>> c209d11b75fd4abe84732439537cc5f62f7b03e4
     } catch (error) {
       throw error;
     }

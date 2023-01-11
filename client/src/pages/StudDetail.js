@@ -286,7 +286,7 @@ const StudDetail = () => {
   const [PropietarioSeleccionado, setPropietarioSeleccionado] = useState("");
   const [toggleSeleccion, setToggleSeleccion] = useState(false);
   const [togglePorcentajes, setTogglePorcentajes] = useState(false);
-  const [agregar, setAgregsar] = useState(true);
+  const [agregar, setAgregar] = useState(true);
   const [porcentajes, setporcentajes] = useState("");
   const [EjemplaresStud, setEjemplaresStud] = useState("");
   const [UltimosPropietarios, setUltimosPropietario] = useState(informacion1);
