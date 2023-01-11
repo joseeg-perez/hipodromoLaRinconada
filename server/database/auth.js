@@ -35,7 +35,7 @@ const iniciarSesion = async (nuevoInicioSesion) => {
 
     const match = await compararClave(
       nuevoInicioSesion.password,
-      usuarioEncontrado[2]
+      usuarioEncontrado.contrasena_usuario
     ); //Pasa la clave del usuario y su hash para hacer la comparacion
 
     if (!match) httpError.contrasenaIncorrecta();
