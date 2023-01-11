@@ -16,7 +16,172 @@ const obtenerListaDeParticipaciones = async () => {
   }
 };
 
+const obtenerListaDeJinetesDisponibles = async (participacionId) => {
+  const query = {
+    text: `SELECT 
+              j.codigo_persona, j.nombre1_persona, j.apellido1_persona
+           FROM 
+              persona_jinete j
+           WHERE 
+                 j.codigo_persona NOT IN (SELECT 
+                                            fk_jinete
+                                          FROM 
+                                            participacion
+                                          WHERE 
+                                            fk_carrera = $1)`,
+    values:[participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerListaDeEjemplaresDisponibles = async (sexoEjemplar) => {
+  const query = {
+    text: `SELECT codigo_ejemplar, nombre_ejemplar
+    FROM ejemplar
+    WHERE sexo_ejemplar = $1`,
+    values:[sexoEjemplar],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerParticipacionParaRetiro = async (participacionId) => {
+  const query = {
+    text: `SELECT p.codigo_participacion, ej.nombre_ejemplar as nombre_ejemplar, 
+    concat(j.nombre1_persona, ' ', j.apellido1_persona) as nombre_jinete, 
+    concat(e.nombre1_persona, ' ', e.apellido1_persona) as nombre_entrenador,
+    p.gualdrapa as gualdrapa
+    FROM participacion p, persona_jinete j, 
+    persona_entrenador e, ejemplar ej
+    WHERE p.fk_carrera = $1
+    AND p.fk_retiro IS NULL
+    AND p.fk_entrenador = e.codigo_persona
+    AND p.fk_jinete = j.codigo_persona
+    AND p.fk_ejemplar = ej.codigo_ejemplar`,
+    values:[participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerPuestosOcupados = async (participacionId) => {
+  const query = {
+    text: `SELECT puesto_pista
+    FROM participacion
+    WHERE fk_carrera = $1
+    AND fk_retiro IS NULL`,
+    values:[participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const listaDeEjemplaresPorParticipacion = async (participacionId) => {
+  const query = {
+    text: `SELECT cr.valor_regla
+    FROM carrera_regla cr
+    WHERE cr.fk_carrera = $1
+    AND cr.fk_regla = 8`,
+    values:[participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const participantesInscritos = async (participacionId) => {
+  const query = {
+    text: `SELECT cr.valor_regla
+    FROM carrera_regla cr
+    WHERE cr.fk_carrera = $1
+    AND cr.fk_regla = 8`,
+    values:[participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const cantidadEjemplaresPorParticipacion = async (participacionId) => {
+  const query = {
+    text: `SELECT COUNT(*)
+    FROM participacion
+    WHERE fk_carrera = $1
+    AND fk_retiro IS NULL`,
+    values:[participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+
 const obtenerParticipacionIndividual = async (participacionId) => {
+  const query = {
+    text: "SELECT * FROM participacion WHERE codigo_participacion=$1",
+    values: [participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0)
+      httpError.idNoEncontrado("La participacion", participacionId);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerParticipacionesEnCarrera = async (participacionId) => {
   const query = {
     text: "SELECT * FROM participacion WHERE codigo_participacion=$1",
     values: [participacionId],
@@ -168,7 +333,15 @@ const borrarParticipacion = async (participacionId) => {
 
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerListaDeJinetesDisponibles,
   obtenerParticipacionIndividual,
+  obtenerParticipacionesEnCarrera,
+  obtenerListaDeEjemplaresDisponibles,
+  obtenerParticipacionParaRetiro,
+  listaDeEjemplaresPorParticipacion,
+  cantidadEjemplaresPorParticipacion,
+  obtenerPuestosOcupados,
+  participantesInscritos,
   registrarParticipacion,
   actualizarParticipacion,
   borrarParticipacion,
