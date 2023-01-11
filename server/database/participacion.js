@@ -162,6 +162,24 @@ const cantidadEjemplaresPorParticipacion = async (participacionId) => {
   }
 };
 
+const obtenerSexoCarrera = async (participacionId) => {
+  const query = {
+    text: `select cr.valor_regla
+    from carrera_regla cr
+    where cr.fk_carrera = $1
+    and cr.fk_regla = 2`,
+    values:[participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
 
 const obtenerParticipacionIndividual = async (participacionId) => {
   const query = {
@@ -342,6 +360,7 @@ module.exports = {
   cantidadEjemplaresPorParticipacion,
   obtenerPuestosOcupados,
   participantesInscritos,
+  obtenerSexoCarrera,
   registrarParticipacion,
   actualizarParticipacion,
   borrarParticipacion,
