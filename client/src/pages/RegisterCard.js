@@ -1,25 +1,39 @@
 import React from "react";
 import { Button, Card, Container, Form, FormLabel } from "react-bootstrap";
-import fotito from "../assets/gear.svg"
+import { NavLink } from "react-router-dom";
 
-const Login = () => {
+const RegisterCard = () => {
   return (
     <Container>
       <Card className="mt-5 mx-5">
         <Card.Header>
-          <h3>Login</h3>
+          <h3>Registrarse</h3>
         </Card.Header>
         <Card.Body>
           <Form className="form-floating m-3">
+            <div className="mb-3 form-floating">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="First name"
+              />
+              <FormLabel>Nombre</FormLabel>
+            </div>
+            <div className="mb-3 form-floating">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Last name"
+              />
+              <FormLabel>Apellido</FormLabel>
+            </div>
             <div className="mb-3 form-floating">
               <input
                 type="email"
                 className="form-control"
                 placeholder="Enter email"
               />
-              <FormLabel>Email
-              <img src={fotito} alt='/'/>
-              </FormLabel>
+              <FormLabel>Email</FormLabel>
             </div>
             <div className="mb-3 form-floating">
               <input
@@ -31,17 +45,17 @@ const Login = () => {
             </div>
             <div className="d-grid">
               <Button type="submit" className="btn btn-primary">
-                Login
+                Registrarse
               </Button>
             </div>
             <p className="forgot-password text-right">
-              No tienes una cuenta, <a href="/register">registrate</a>
+              Ya estas registrado? <NavLink href="/sign-in" to="/perfil">Iniciar sesion</NavLink>
             </p>
           </Form>
         </Card.Body>
       </Card>
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default RegisterCard;

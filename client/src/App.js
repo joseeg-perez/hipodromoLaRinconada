@@ -64,6 +64,8 @@ import PelajeUpdate from "./pages/PelajeUpdate";
 import ImplementoUpdate from "./pages/ImplementoUpdate";
 import MedicamentoUpdate from "./pages/MedicamentoUpdate";
 import MotivoRetiroUpdate from "./pages/MotivoRetiroUpdate";
+import Login from "./pages/Login";
+import RegisterCard from "./pages/RegisterCard";
 
 function App() {
   return (
@@ -87,6 +89,10 @@ function App() {
 
         <Route path="/ejemplares" exact>
           <Ejemplares></Ejemplares>
+        </Route>
+
+        <Route path="/registrar">
+          <RegisterCard></RegisterCard>
         </Route>
 
         <Route path="/ejemplares/createEjemplar" exact>
@@ -150,7 +156,7 @@ function App() {
         </Route>
 
         <Route path="/perfil">
-          <Perfil></Perfil>
+          <Login></Login>
         </Route>
 
         <Route path="/propietarios" exact>
@@ -319,6 +325,10 @@ function App() {
 
         <Route path="/haras/updateHara" exact>
           <HaraUpdate></HaraUpdate>
+        </Route>
+
+        <Route path="/login">
+          <Login></Login>
         </Route>
       </Switch>
     </Layout>
