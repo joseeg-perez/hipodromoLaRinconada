@@ -8,7 +8,68 @@ const obtenerListaDeParticipaciones = async () => {
     const listaParticipaciones =
       await Participacion.obtenerListaDeParticipaciones();
 
-    return listaParticipaciones;
+    return (listaParticipaciones);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerListaDeJinetesDisponibles = async (participacionId) => {
+  try {
+    const listaParticipaciones =
+      await Participacion.obtenerListaDeJinetesDisponibles(participacionId);
+
+    return (listaParticipaciones);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerListaDeEjemplaresDisponibles = async (sexoEjemplar) => {
+  try {
+    const listaEjemplares = await Participacion.obtenerListaDeEjemplaresDisponibles(sexoEjemplar);
+
+    return (listaEjemplares);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerParticipacionParaRetiro = async (participacionId) => {
+  try {
+    const listaDeParticipacionesParaRetiro = await Participacion.obtenerParticipacionParaRetiro(participacionId);
+
+    return (listaDeParticipacionesParaRetiro);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerPuestosOcupados = async (participacionId) => {
+  try {
+    const listaDePuestosOcupados = await Participacion.obtenerPuestosOcupados(participacionId);
+
+    return (listaDePuestosOcupados);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const cantidadEjemplaresPorParticipacion = async (participacionId) => {
+  try {
+    const listaDeEjemplaresPorParticipacion = await Participacion.cantidadEjemplaresPorParticipacion(participacionId);
+
+    return (listaDeEjemplaresPorParticipacion);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const participantesInscritos = async (participacionId) => {
+  try {
+    const listaDeEjemplaresPorParticipacion = await Participacion.participantesInscritos(participacionId);
+
+    return (listaDeEjemplaresPorParticipacion);
   } catch (error) {
     throw error;
   }
@@ -20,7 +81,17 @@ const obtenerParticipacionIndividual = async (participacionId) => {
       participacionId
     );
 
-    return participacion;
+    return (participacion);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerParticipacionesEnCarrera = async (participacionId) => {
+  try {
+    const participacionEnCarrera = await Participacion.obtenerParticipacionesEnCarrera(participacionId);
+
+    return (participacionEnCarrera);
   } catch (error) {
     throw error;
   }
@@ -89,8 +160,15 @@ const borrarParticipacion = async (participacionId) => {
 
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerListaDeJinetesDisponibles,
   obtenerParticipacionIndividual,
+  obtenerParticipacionesEnCarrera,
+  obtenerListaDeEjemplaresDisponibles,
+  obtenerParticipacionParaRetiro,
+  obtenerPuestosOcupados,
   registrarParticipacion,
+  participantesInscritos,
+  cantidadEjemplaresPorParticipacion,
   actualizarParticipacion,
   borrarParticipacion,
 };

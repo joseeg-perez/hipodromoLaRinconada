@@ -13,6 +13,102 @@ const obtenerListaDeParticipaciones = async (req, res) => {
   }
 };
 
+const obtenerListaDeJinetesDisponibles = async (req, res) => {
+  const {
+    params: { participacionId },
+  } = req;
+
+  try {
+    const listaDeJinetes = await participacionService.obtenerListaDeJinetesDisponibles(participacionId);
+
+    res.status(200).send({ status: "OK", data: listaDeJinetes });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerListaDeEjemplaresDisponibles = async (req, res) => {
+  const {
+    sexoEjemplar
+  } = req.body;
+
+  try {
+    const listaDeEjemplares = await participacionService.obtenerListaDeEjemplaresDisponibles(sexoEjemplar);
+
+    res.status(200).send({ status: "OK", data: listaDeEjemplares });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerParticipacionParaRetiro = async (req, res) => {
+  const {
+    params: { participacionId },
+  } = req;
+
+  try {
+    const listaDeEjemplares = await participacionService.obtenerParticipacionParaRetiro(participacionId);
+
+    res.status(200).send({ status: "OK", data: listaDeEjemplares });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerPuestosOcupados = async (req, res) => {
+  const {
+    params: { participacionId },
+  } = req;
+
+  try {
+    const listaDePuestosOcupados = await participacionService.obtenerPuestosOcupados(participacionId);
+
+    res.status(200).send({ status: "OK", data: listaDePuestosOcupados });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const cantidadEjemplaresPorParticipacion = async (req, res) => {
+  const {
+    params: { participacionId },
+  } = req;
+
+  try {
+    const listaDeEjemplaresPorParticipacion = await participacionService.cantidadEjemplaresPorParticipacion(participacionId);
+
+    res.status(200).send({ status: "OK", data: listaDeEjemplaresPorParticipacion });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const participantesInscritos = async (req, res) => {
+  const {
+    params: { participacionId },
+  } = req;
+  
+  try {
+    const listaDeEjemplaresPorParticipacion = await participacionService.participantesInscritos(participacionId);
+
+    res.status(200).send({ status: "OK", data: listaDeEjemplaresPorParticipacion });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const obtenerParticipacionIndividual = async (req, res) => {
   const {
     params: { participacionId },
@@ -24,6 +120,21 @@ const obtenerParticipacionIndividual = async (req, res) => {
         participacionId
       );
     res.status(200).send({ status: "OK", data: participacion });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerParticipacionesEnCarrera = async (req, res) => {
+  const {
+    params: { participacionId },
+  } = req;
+
+  try {
+    const participacionEnCarrera = await participacionService.obtenerParticipacionesEnCarrera(participacionId);
+    res.status(200).send({ status: "OK", data: participacionEnCarrera });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -112,7 +223,14 @@ const borrarParticipacion = async (req, res) => {
 
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerListaDeJinetesDisponibles,
   obtenerParticipacionIndividual,
+  obtenerParticipacionesEnCarrera,
+  obtenerListaDeEjemplaresDisponibles,
+  obtenerParticipacionParaRetiro,
+  participantesInscritos,
+  cantidadEjemplaresPorParticipacion,
+  obtenerPuestosOcupados,
   registrarParticipacion,
   actualizarParticipacion,
   borrarParticipacion,
