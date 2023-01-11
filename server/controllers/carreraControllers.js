@@ -44,7 +44,6 @@ const obtenerCarreraXEvento = async (req, res) => {
 
 const registrarCarrera = async (req, res) => {
     const {
-        codigoCarrera,
         nombreCarrera,
         numeroCarrera,
         premioPrimero,
@@ -59,7 +58,6 @@ const registrarCarrera = async (req, res) => {
      } = req.body;
 
     const nuevaCarrera = {
-        codigoCarrera,
         nombreCarrera: nombreCarrera.toLowerCase(),
         numeroCarrera,
         premioPrimero,

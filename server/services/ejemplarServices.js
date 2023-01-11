@@ -66,6 +66,16 @@ const registrarEjemplar = async (nuevoEjemplar) => {
   }
 };
 
+const studYEntrenadorEjemplar = async (fkEjmplar) => {
+    try {
+        const studEntrenador = await Ejemplar.studYEntrenadorEjemplar(fkEjmplar);
+        
+        return(studEntrenador);
+    } catch (error) {
+        throw(error);
+    }
+};
+
 const actualizarEjemplar = async (ejemplarId, cambios) => {
   try {
     const ejemplarActualizado = await Ejemplar.actualizarEjemplar(
@@ -88,12 +98,13 @@ const borrarEjemplar = async (ejemplarId) => {
 };
 
 module.exports = {
-  obtenerListaDeEjemplares,
-  obtenerEjemplarIndividual,
-  obtenerPropietarioDelEjemplarIndividual,
-  obtenerNoPropietarioDelEjemplarIndividual,
-  obtenerPosibleStudDelEjemplarIndividual,
-  registrarEjemplar,
-  actualizarEjemplar,
-  borrarEjemplar,
+    obtenerListaDeEjemplares,
+    obtenerEjemplarIndividual,
+    obtenerPropietarioDelEjemplarIndividual,
+    obtenerNoPropietarioDelEjemplarIndividual,
+    obtenerPosibleStudDelEjemplarIndividual,
+    registrarEjemplar,
+    studYEntrenadorEjemplar,
+    actualizarEjemplar,
+    borrarEjemplar,
 };
