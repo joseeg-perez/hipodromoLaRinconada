@@ -5,7 +5,7 @@ const obtenerListaDeEjemplares = async () => {
   const query = {
     text: `select distinct codigo_ejemplar, nombre_ejemplar, 
     to_char(fecha_nacimiento_ejemplar :: DATE, 'dd/mm/yyyy') as fechaNac,
-    imagen_ejemplar, nombre_hara, 
+    imagen_ejemplar, nombre_hara, sexo_ejemplar,
     nombre_stud, 
     concat(e.nombre1_persona, ' ', e.apellido1_persona) as entrenador,
     codigo_caballeriza as caballeriza
@@ -21,6 +21,7 @@ const obtenerListaDeEjemplares = async () => {
     and ec.fk_entrenador = e.codigo_persona
     and ec.fecha_fin IS NULL
     and ep.fk_ejemplar = codigo_ejemplar
+	  and ep.fecha_fin_propiedad is null
     and ep.fk_prop_stud = ps.codigo_prop_stud
     and ps.fk_stud = codigo_stud`,
   };
@@ -37,7 +38,29 @@ const obtenerListaDeEjemplares = async () => {
 
 const obtenerEjemplarIndividual = async (ejemplarId) => {
   const query = {
-    text: "SELECT * FROM ejemplar WHERE codigo_ejemplar=$1",
+    text: `select distinct codigo_ejemplar, nombre_ejemplar, numero_ejemplar, numero_tatuaje_labial,
+    precio_ejemplar,
+    to_char(fecha_nacimiento_ejemplar :: DATE, 'dd/mm/yyyy') as fechaNac,
+    imagen_ejemplar, nombre_hara, sexo_ejemplar,
+    nombre_stud, peso_ejemplar, 
+    fk_madre_ejemplar, fk_padre_ejemplar, imagen_ejemplar, fk_hara, 
+    fk_pelaje, sexo_ejemplar, codigo_caballeriza,
+    concat(e.nombre1_persona, ' ', e.apellido1_persona) as entrenador
+    from ejemplar,
+    persona_entrenador e, entrenador_caballeriza ec, puesto_caballo pc, stud,
+    ejemplar_propietario ep, propietario_stud ps, caballeriza,
+    puesto p, hara, propietario_stud
+    where fk_hara = codigo_hara
+    and pc.fk_ejemplar = codigo_ejemplar
+    and pc.fk_puesto = codigo_puesto
+    and p.fk_caballeriza = codigo_caballeriza
+    and ec.fk_caballeriza = codigo_caballeriza
+    and ec.fk_entrenador = e.codigo_persona
+    and ec.fecha_fin IS NULL
+    and ep.fk_ejemplar = codigo_ejemplar
+    and ep.fk_prop_stud = ps.codigo_prop_stud
+    and ps.fk_stud = codigo_stud
+	and codigo_ejemplar = $1`,
     values: [ejemplarId],
   };
 
@@ -165,6 +188,45 @@ const registrarEjemplar = async (nuevoEjemplar) => {
   }
 };
 
+const studYEntrenadorEjemplar = async (fkEjemplar) => {
+
+    const text = `select distinct ps.fk_stud, ec.fk_entrenador
+    from ejemplar,
+    persona_entrenador e, entrenador_caballeriza ec, puesto_caballo pc, stud,
+    ejemplar_propietario ep, propietario_stud ps, caballeriza,
+    puesto p
+    where pc.fk_ejemplar = codigo_ejemplar
+    and pc.fk_puesto = codigo_puesto
+    and p.fk_caballeriza = codigo_caballeriza
+    and ec.fk_caballeriza = codigo_caballeriza
+    and ec.fk_entrenador = e.codigo_persona
+    and ec.fecha_fin IS NULL
+	and ps.fecha_fin_propiedad IS NULL
+    and ep.fk_ejemplar = codigo_ejemplar
+    and ep.fk_prop_stud = ps.codigo_prop_stud
+    and ps.fk_stud = codigo_stud
+	and codigo_ejemplar =$1`;
+        
+    const values = [
+        fkEjemplar
+    ];
+
+    try {
+        const res = await dbConnection.query(text, values);
+        dbConnection.end;
+
+        return (res.rows);
+    } catch (error) {
+        if (error.code === '23505') {
+            throw {
+                status: 409,
+                message: `El ejemplar con tatuaje labial'${tatlabialEjemplar}' ya ha sido registrado.`,
+            }
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
 const actualizarEjemplar = async (ejemplarId, cambios) => {
   const {
     nombreEjemplar,
@@ -248,12 +310,13 @@ const borrarEjemplar = async (ejemplarId) => {
 };
 
 module.exports = {
-  obtenerListaDeEjemplares,
-  obtenerEjemplarIndividual,
-  obtenerPropietarioDelEjemplarIndividual,
-  obtenerNoPropietarioDelEjemplarIndividual,
-  obtenerPosibleStudDelEjemplarIndividual,
-  registrarEjemplar,
-  actualizarEjemplar,
-  borrarEjemplar,
+    obtenerListaDeEjemplares,
+    obtenerEjemplarIndividual,
+    obtenerPropietarioDelEjemplarIndividual,
+    obtenerNoPropietarioDelEjemplarIndividual,
+    obtenerPosibleStudDelEjemplarIndividual,
+    registrarEjemplar,
+    studYEntrenadorEjemplar,
+    actualizarEjemplar,
+    borrarEjemplar,
 };

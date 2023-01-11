@@ -1,5 +1,4 @@
 const cuerpoDiferenciaService = require("../services/cuerpoDiferenciaServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeCuerpoDiferencia = async (req, res) => {
     try {

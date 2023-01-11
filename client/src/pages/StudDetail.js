@@ -17,6 +17,7 @@ import imagen from "../assets/caballo1.jpg";
 import axios from "axios";
 import { CirclePicker } from "react-color";
 import Propietarios from "./Propietarios";
+import trash from "../assets/trashicon.png";
 
 const StudDetail = () => {
   let columnas1 = (
@@ -272,6 +273,12 @@ const StudDetail = () => {
   const match = useRouteMatch();
   const { studId } = params;
   const [isLoading, setLoading] = useState(true);
+  const [isLoading1, setLoading1] = useState(true);
+  const [isLoading2, setLoading2] = useState(true);
+  const [isLoading3, setLoading3] = useState(true);
+  const [isLoading4, setLoading4] = useState(true);
+  const [isLoading5, setLoading5] = useState(true);
+  const [isLoading6, setLoading6] = useState(true);
   const [propietarios, setPropietarios] = useState([]);
   const [propietariosDisponibles, setPropietariosDisponibles] = useState([]);
   const [toggleListadePropietarios, setToggleListadePropietarios] =
@@ -279,7 +286,7 @@ const StudDetail = () => {
   const [PropietarioSeleccionado, setPropietarioSeleccionado] = useState("");
   const [toggleSeleccion, setToggleSeleccion] = useState(false);
   const [togglePorcentajes, setTogglePorcentajes] = useState(false);
-  const [agregar, setAgregar] = useState(true);
+  const [agregar, setAgregsar] = useState(true);
   const [porcentajes, setporcentajes] = useState("");
   const [EjemplaresStud, setEjemplaresStud] = useState("");
   const [UltimosPropietarios, setUltimosPropietario] = useState(informacion1);
@@ -292,6 +299,7 @@ const StudDetail = () => {
       .then((res) => {
         console.log(res);
         setStud(res.data);
+        setLoading6(false);
       })
       .catch((err) => console.log(err));
     axios
@@ -300,21 +308,24 @@ const StudDetail = () => {
         console.log(res);
         setPropietarios(res.data.data);
         setUltimosPropietario(res.data.data);
+        setLoading5(false);
       })
       .catch((err) => console.log(err));
-    axios
-      .get(`http://localhost:5000/api/v1/studs/caballosStud/${Params.studId}`)
-      .then((res) => {
-        console.log(res);
-        setEjemplaresStud(res.data);
-      })
-      .catch((err) => console.log(err));
+    // axios
+    //   .get(`http://localhost:5000/api/v1/studs/caballosStud/${Params.studId}`)
+    //   .then((res) => {
+    //     console.log(res);
+    //     setEjemplaresStud(res.data);
+    //     setLoading4(false);
+    //   })
+    //   .catch((err) => console.log(err));
 
     axios
       .get("http://localhost:5000/api/v1/vestimentas/listado_de_vestimentas")
       .then((res) => {
         console.log(res.data);
         setVestimentasDispo(res.data);
+        setLoading3(false);
       })
       .catch((err) => console.log(err));
 
@@ -325,6 +336,7 @@ const StudDetail = () => {
       .then((res) => {
         console.log(res);
         setPropietariosDisponibles(res.data);
+        setLoading2(false);
       })
       .catch((err) => console.log(err));
 
@@ -333,6 +345,7 @@ const StudDetail = () => {
       .then((res) => {
         console.log(res);
         setColores(res.data);
+        setLoading1(false);
       })
       .catch((err) => console.log(err));
 
@@ -360,6 +373,19 @@ const StudDetail = () => {
   };
   const handleToggleColor = (event) => {
     setToggleColor(true);
+  };
+
+  const handleDelete = (studvestimenta, event) => {
+    axios
+      .delete(
+        `http://localhost:5000/api/v1/studvestimenta/${studvestimenta.Id}`
+      )
+      .then((res) => {
+        if (res.data != null) {
+          alert("Se eliminó la vestimenta del stud con éxtio");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleVestimenta = (event) => {
@@ -462,7 +488,14 @@ const StudDetail = () => {
   console.log(vestimentas);
   console.log(EjemplaresStud);
 
-  if (isLoading) {
+  if (
+    isLoading ||
+    isLoading1 ||
+    isLoading2 ||
+    isLoading3 ||
+    isLoading5 ||
+    isLoading6
+  ) {
     return <div>Loading</div>;
   }
 
@@ -695,6 +728,14 @@ const StudDetail = () => {
                             backgroundColor: vestimentaS.codigo_del_color,
                           }}
                         ></td>
+                        <td>
+                          <Button
+                            className="btn btn-light btn-outline-danger btn-sm mx-1"
+                            onClick={handleDelete(vestimenta)}
+                          >
+                            <img src={trash} alt="/" width={20} />
+                          </Button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -724,7 +765,7 @@ const StudDetail = () => {
         </Card>
       </Col>
 
-      <Row>
+      {/* <Row>
         <Col>
           <Row className="text-center">
             <h3>CABALLOS DEL STUD</h3>
@@ -750,7 +791,7 @@ const StudDetail = () => {
             </Card>
           </Row>
         </Col>
-      </Row>
+      </Row> */}
 
       {/* <Row className="mt-4">
         <Col>

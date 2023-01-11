@@ -3,7 +3,11 @@ const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePropietarios = async () => {
   const query = {
-    text: "SELECT * FROM persona_propietario",
+    text: `SELECT codigo_persona, nombre1_persona, apellido1_persona, correo, 
+    concat(extension_tlf, cuerpo_tlf) as telefono, nombre_lugar
+    from lugar, persona_propietario p LEFT OUTER JOIN telefono
+    ON fk_propietario = codigo_persona
+    WHERE p.fk_lugar = id_lugar`,
   };
 
   try {
@@ -18,13 +22,13 @@ const obtenerListaDePropietarios = async () => {
 
 const obtenerPropietarioIndividual = async (propietarioId) => {
   const query = {
-    text: `SELECT codigo_persona, cedula_persona, 
-    nombre1_persona, nombre2_persona, apellido1_persona, apellido2_persona,
-    to_char(fecha_nacimiento_persona :: DATE, 'yyyy-mm-dd') fecha_nacimiento_persona, correo,
-    fk_lugar, extension_tlf as extension, cuerpo_tlf as cuerpo
-     FROM persona_propietario, telefono
-     WHERE codigo_persona=$1
-     AND fk_propietario = codigo_persona`,
+    text: `SELECT codigo_persona, cedula_persona, nombre1_persona, nombre2_persona, apellido1_persona,
+      apellido2_persona, correo, to_char(fecha_nacimiento_persona :: DATE, 'yyyy-mm-dd') fecha_nacimiento_persona, 
+      extension_tlf as extension, cuerpo_tlf as cuerpo, nombre_lugar, p.fk_lugar
+      from lugar, persona_propietario p LEFT OUTER JOIN telefono
+      ON fk_propietario = codigo_persona
+      WHERE p.fk_lugar = id_lugar
+      AND codigo_persona = $1`,
     values: [propietarioId],
   };
 

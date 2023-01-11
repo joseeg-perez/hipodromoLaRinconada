@@ -1,5 +1,4 @@
 const tipoResultadoService = require("../services/tipoResultadoServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeTipoResultado = async (req, res) => {
   try {
@@ -32,12 +31,14 @@ const obtenerTipoResultadoIndividual = async (req, res) => {
   }
 };
 
-const registrarTipoResultado = async (req, res) => {
-  const { nombreTipoResultado } = req.body;
-  console.log(nombreTipoResultado);
-  const nuevoTipoResultado = {
-    nombreTipoResultado: nombreTipoResultado.toLowerCase(),
-  };
+const registrarTipoResultado = async (req, res) => { 
+    const {
+        nombreTipoResultado,
+     } =  req.body;
+
+     const nuevoTipoResultado = {
+        nombreTipoResultado: nombreTipoResultado.toLowerCase(),
+    };
 
   try {
     await tipoResultadoService.registrarTipoResultado(nuevoTipoResultado);

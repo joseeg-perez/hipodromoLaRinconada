@@ -1,5 +1,4 @@
 const reglaService = require("../services/reglaServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeReglas = async (req, res) => {
   try {

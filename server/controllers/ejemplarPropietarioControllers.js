@@ -1,5 +1,4 @@
 const ejemplarPropietarioService = require("../services/ejemplarPropietarioServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeEjemplarPropietarios = async (req, res) => {
   try {

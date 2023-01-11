@@ -33,10 +33,6 @@ const InfoJinete = (props) => {
                 <div className="mt-4">
                   Rango: <span className="text-muted">{props.rango}</span>
                 </div>
-                <div className="mt-2">
-                  Ultimo ejemplar montando:{" "}
-                  <span className="text-muted">{props.ejemplar}</span>
-                </div>
 
                 <div
                   className="d-flex justify-content-center rounded-3 p-2 mt-3"
@@ -52,16 +48,6 @@ const InfoJinete = (props) => {
                     <p className="small mb-1 fw-bold">Peso</p>
                     <p className="mb-0 text-center text-muted">
                       {props.peso} kg
-                    </p>
-                  </div>
-                  <div className="mx-3">
-                    <p className="small fw-bold mb-1">Edad</p>
-                    <p className="mb-0 text-center text-muted">8</p>
-                  </div>
-                  <div className="mx-3">
-                    <p className="small fw-bold mb-1">Ganancia</p>
-                    <p className="mb-0 text-center text-muted">
-                      {props.ganancia}
                     </p>
                   </div>
                 </div>
