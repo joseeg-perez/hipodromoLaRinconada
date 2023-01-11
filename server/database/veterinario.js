@@ -44,8 +44,8 @@ const obtenerVeterinarioIndividual = async (veterinarioId) => {
   const query = {
     text: `SELECT codigo_persona, nombre1_persona, apellido1_persona, 
     nombre2_persona, apellido2_persona, cedula_persona, 
-    to_char(fecha_nacimiento_persona :: DATE, 'dd/mm/yyyy') as fecha_nacimiento_persona,
-    to_char(fecha_inicio :: DATE, 'dd/mm/yyyy') as fecha_inicio, 
+    to_char(fecha_nacimiento_persona :: DATE, 'yyyy-mm-dd') as fecha_nacimiento_persona,
+    to_char(fecha_inicio :: DATE, 'yyyy-mm-dd') as fecha_inicio, 
     codigo_caballeriza, cantidad_puestos 
             FROM persona_veterinario, veterinario_caballeriza, caballeriza 
             WHERE fk_veterinario = codigo_persona and fk_caballeriza = codigo_caballeriza and fecha_fin IS NULL
@@ -160,9 +160,9 @@ const borrarVeterinario = async (veterinarioId) => {
     text: "DELETE FROM persona_veterinario WHERE codigo_persona=$1",
     values: [veterinarioId],
   };
-
   try {
     const { rowCount } = await dbConnection.query(query);
+    console.log(rowCount)
     if (rowCount === 0)
       httpError.idNoEncontrado("El veterinario", veterinarioId);
 

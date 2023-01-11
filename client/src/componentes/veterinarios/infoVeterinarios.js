@@ -12,7 +12,7 @@ const InfoVeterinarios = (props) => {
       .delete(`http://localhost:5000/api/v1/veterinarios/${props.Id}`)
       .then((res) => {
         if (res.data != null) {
-          alert("Se borró con exito el pelaje pa");
+          alert("Se elimino con exito el veterinario");
         }
       })
       .catch((err) => console.log(err));
@@ -57,7 +57,10 @@ const InfoVeterinarios = (props) => {
               </Button>
             </Link>
 
-            <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
+            <Button
+              className="btn btn-light btn-outline-danger btn-sm mx-1"
+              onClick={handleDelete}
+            >
               <img src={trash} alt="/" width={20} />
             </Button>
           </Col>

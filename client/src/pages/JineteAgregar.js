@@ -77,6 +77,17 @@ const JineteAgregar = () => {
   const handleData = async (event) => {
     event.preventDefault();
     try {
+      console.warn(
+        cedulaPersona,
+        nombre1Persona,
+        nombre2Persona,
+        apellido1Persona,
+        apellido2Persona,
+        fechaNacimiento,
+        fkRango,
+        alturaJinete,
+        pesoJinete
+      );
       await axios.post(
         "http://localhost:5000/api/v1/jinetes/registrar_jinete",
         {
