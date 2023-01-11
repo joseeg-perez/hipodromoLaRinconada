@@ -215,7 +215,7 @@ const InscribirEjemplar = () => {
     )
   );
 
-  const formSubmissionHandler = (event) => {
+  const formSubmissionHandler = async (event) => {
     event.preventDefault();
     console.log("entro");
     console.log(document.getElementById("numero").value);
@@ -244,10 +244,30 @@ const InscribirEjemplar = () => {
     let pesoJinete = document.getElementById("pesoJinete").value;
     let fkEjemplar = document.getElementById("ejemplar").value;
     let fkJinete = document.getElementById("jinete").value;
-    let puestoPista = document.getElementById("puesto").value;
+    //let puestoPista = document.getElementById("puesto").value;
+    let puestoPista=5;
 
     console.log(medicamentoUsados);
     console.log(implementoUsados);
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/participaciones/registrar_participacion",
+        {
+          gualdrapa,
+          fkCarrera,
+          pesoCaballo,
+          pesoJinete,
+          fkEjemplar,
+          fkJinete,
+          puestoPista,
+          implementoUsados,
+          medicamentoUsados,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+    alert("Se ha inscrito el ejemplar con éxito");
   };
 
   return (
