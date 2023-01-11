@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Button, Col, Card } from "react-bootstrap";
+import { Container, Row, Button, Col, Card, Form } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import TablaCard from "../componentes/layout/TablaCard";
 import Tabla from "../componentes/tablas/Tabla";
@@ -30,7 +30,9 @@ const RetirarEjemplar = () => {
       })
       .catch((err) => console.log(err));
     axios
-      .get(`http://localhost:5000/api/v1/participaciones/participaciones_para_retiro/${id}`)
+      .get(
+        `http://localhost:5000/api/v1/participaciones/participaciones_para_retiro/${id}`
+      )
       .then((res) => {
         console.log(res);
         setEjemplares(res.data);
@@ -48,7 +50,7 @@ const RetirarEjemplar = () => {
   let an = hoy.getFullYear();
   if (dia < 10) dia = `0${dia}`;
   if (mes < 10) mes = `0${mes}`;
-  let fecha = `${an}-${mes}-${dia}`;
+  let fechaRetiro = `${an}-${mes}-${dia}`;
 
   let columnas = (
     <tr>
@@ -138,11 +140,26 @@ const RetirarEjemplar = () => {
     setToggleMotivo(true);
   };
 
-  const formSubmissionHandler = (event) => {
+  const formSubmissionHandler = async (event) => {
     event.preventDefault();
     console.log(motivoEscogido.codigo_motivo);
-    console.log(ejemplarEscogido.id);
-    console.log(fecha);
+    console.log(ejemplarEscogido.codigo_participacion);
+    console.log(fechaRetiro);
+    let fkMotivo=motivoEscogido.codigo_motivo;
+    let codigoParticipacion=ejemplarEscogido.codigo_participacion;
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/retiros/registrar_retiro",
+        {
+          fechaRetiro,
+          fkMotivo,
+          codigoParticipacion,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+    alert("Se retiro el ejemplar con éxito");
   };
   return (
     <Container>
@@ -150,78 +167,81 @@ const RetirarEjemplar = () => {
         <h1>RETIRAR EJEMPLAR DE LA CARRERA</h1>
       </Row>
 
-      <Row>
-        <Col className="justify-content-center align-items-center mx-5">
-          <Card>
-            <Card.Body>
-              <Row>
-                <Tabla
-                  titulo="SELECCIONAR EJEMPLAR"
-                  columnas={columnas}
-                  informacion={ejemplares.data}
-                  tituloTabla="Ejemplares"
-                  estilo=" table-hover"
-                  funcion={(x) => (
-                    <tr onClick={(e) => onSeleccionEjemplarHandler(x, e)}>
-                      <td>{`${x.gualdrapa}`}</td>
-                      <td>{`${x.nombre_ejemplar}`}</td>
-                      <td>{`${x.nombre_jinete}`}</td>
-                      <td>{`${x.nombre_entrenador}`}</td>
-                    </tr>
-                  )}
-                ></Tabla>
-              </Row>
-              {toggleEjemplar && (
-                <Row className="text-center">
-                  <h5 className="fw-bold">
-                    Ejemplar escogido para retirar es: {ejemplarEscogido.nombre}
-                  </h5>
+      <Form>
+        <Row>
+          <Col className="justify-content-center align-items-center mx-5">
+            <Card>
+              <Card.Body>
+                <Row>
+                  <Tabla
+                    titulo="SELECCIONAR EJEMPLAR"
+                    columnas={columnas}
+                    informacion={ejemplares.data}
+                    tituloTabla="Ejemplares"
+                    estilo=" table-hover"
+                    funcion={(x) => (
+                      <tr onClick={(e) => onSeleccionEjemplarHandler(x, e)}>
+                        <td>{`${x.gualdrapa}`}</td>
+                        <td>{`${x.nombre_ejemplar}`}</td>
+                        <td>{`${x.nombre_jinete}`}</td>
+                        <td>{`${x.nombre_entrenador}`}</td>
+                      </tr>
+                    )}
+                  ></Tabla>
                 </Row>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+                {toggleEjemplar && (
+                  <Row className="text-center">
+                    <h5 className="fw-bold">
+                      Ejemplar escogido para retirar es:{" "}
+                      {ejemplarEscogido.nombre_ejemplar}
+                    </h5>
+                  </Row>
+                )}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
 
-      <Row className="mt-5">
-        <Col className="justify-content-center align-items-center mx-5">
-          <Card>
-            <Card.Body>
-              <Row>
-                <Tabla
-                  titulo="SELECCIONAR MOTIVO"
-                  columnas={columnas2}
-                  informacion={motivos.data}
-                  tituloTabla="Motivos"
-                  estilo=" table-hover"
-                  funcion={(x) => (
-                    <tr onClick={(e) => onSeleccionMotivoHandler(x, e)}>
-                      <td>{`${x.nombre_motivo}`}</td>
-                      <td>{`${x.descripcion_motivo}`}</td>
-                    </tr>
-                  )}
-                ></Tabla>
-              </Row>
-
-              {toggleMotivo && (
-                <Row className="text-center">
-                  <h5 className="fw-bold">
-                    Motivo del retiro es: {motivoEscogido.nombre_motivo}
-                  </h5>
+        <Row className="mt-5">
+          <Col className="justify-content-center align-items-center mx-5">
+            <Card>
+              <Card.Body>
+                <Row>
+                  <Tabla
+                    titulo="SELECCIONAR MOTIVO"
+                    columnas={columnas2}
+                    informacion={motivos.data}
+                    tituloTabla="Motivos"
+                    estilo=" table-hover"
+                    funcion={(x) => (
+                      <tr onClick={(e) => onSeleccionMotivoHandler(x, e)}>
+                        <td>{`${x.nombre_motivo}`}</td>
+                        <td>{`${x.descripcion_motivo}`}</td>
+                      </tr>
+                    )}
+                  ></Tabla>
                 </Row>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
 
-      <Row className="mt-3 d-flex justify-content-center">
-        <Col className="col-auto d-flex justify-content-center">
-          <Button onClick={formSubmissionHandler} size="xl">
-            GUARDAR
-          </Button>
-        </Col>
-      </Row>
+                {toggleMotivo && (
+                  <Row className="text-center">
+                    <h5 className="fw-bold">
+                      Motivo del retiro es: {motivoEscogido.nombre_motivo}
+                    </h5>
+                  </Row>
+                )}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row className="mt-3 d-flex justify-content-center">
+          <Col className="col-auto d-flex justify-content-center">
+            <Button onClick={formSubmissionHandler} size="xl">
+              GUARDAR
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </Container>
   );
 };
