@@ -155,6 +155,45 @@ const registrarEjemplar = async (nuevoEjemplar) => {
     }
 };
 
+const studYEntrenadorEjemplar = async (fkEjemplar) => {
+
+    const text = `select distinct ps.fk_stud, ec.fk_entrenador
+    from ejemplar,
+    persona_entrenador e, entrenador_caballeriza ec, puesto_caballo pc, stud,
+    ejemplar_propietario ep, propietario_stud ps, caballeriza,
+    puesto p
+    where pc.fk_ejemplar = codigo_ejemplar
+    and pc.fk_puesto = codigo_puesto
+    and p.fk_caballeriza = codigo_caballeriza
+    and ec.fk_caballeriza = codigo_caballeriza
+    and ec.fk_entrenador = e.codigo_persona
+    and ec.fecha_fin IS NULL
+	and ps.fecha_fin_propiedad IS NULL
+    and ep.fk_ejemplar = codigo_ejemplar
+    and ep.fk_prop_stud = ps.codigo_prop_stud
+    and ps.fk_stud = codigo_stud
+	and codigo_ejemplar =$1`;
+        
+    const values = [
+        fkEjemplar
+    ];
+
+    try {
+        const res = await dbConnection.query(text, values);
+        dbConnection.end;
+
+        return (res.rows);
+    } catch (error) {
+        if (error.code === '23505') {
+            throw {
+                status: 409,
+                message: `El ejemplar con tatuaje labial'${tatlabialEjemplar}' ya ha sido registrado.`,
+            }
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
 const actualizarEjemplar = async (ejemplarId, cambios) => {
     const { 
         nombreEjemplar,
@@ -246,6 +285,7 @@ module.exports = {
     obtenerNoPropietarioDelEjemplarIndividual,
     obtenerPosibleStudDelEjemplarIndividual,
     registrarEjemplar,
+    studYEntrenadorEjemplar,
     actualizarEjemplar,
     borrarEjemplar,
 };

@@ -42,6 +42,8 @@ const registrarParticipacionImplemento = async (nuevaParticipacionImplemento) =>
         fkParticipacion,
      } = nuevaParticipacionImplemento;
 
+     console.log(nuevaParticipacionImplemento)
+
     const text = `INSERT INTO participacion_implemento(fk_implemento, fk_participacion) VALUES($1, $2)`;
         
     const values = [fkImplemento, fkParticipacion];

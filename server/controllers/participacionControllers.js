@@ -32,30 +32,23 @@ const registrarParticipacion = async (req, res) => {
         gualdrapa,
         puestoPista,
         pesoCaballo,
-        precioEjemplar,
-        comentario,
+        pesoJinete,
         fkEjemplar,
         fkCarrera,
         fkJinete,
-        fkEntrenador,
-        fkRetiro,
-        fkResultado,
-        fkStud,
+        implementoUsados,
+        medicamentoUsados,
     } = req.body;
 
     const nuevaParticipacion = {
         gualdrapa,
         puestoPista,
         pesoCaballo,
-        precioEjemplar,
-        comentario: comentario.toLowerCase(),
         fkEjemplar,
         fkCarrera,
         fkJinete,
-        fkEntrenador,
-        fkRetiro,
-        fkResultado,
-        fkStud,
+        implementoUsados,
+        medicamentoUsados,
     };
 
     try {
