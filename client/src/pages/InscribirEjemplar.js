@@ -22,10 +22,16 @@ const InscribirEjemplar = () => {
   const [isLoading2, setLoading2] = useState(true);
   const [isLoading3, setLoading3] = useState(true);
   const [isLoading4, setLoading4] = useState(true);
+  const [isLoading5, setLoading5] = useState(true);
+  const [isLoading6, setLoading6] = useState(true);
+  const [isLoading7, setLoading7] = useState(true);
   const [medicamentos, setMedicamentos] = useState([]);
   const [implementos, setImplementos] = useState([]);
   const [ejemplares, setEjemplares] = useState([]);
   const [jinetes, setJinetes] = useState([]);
+  const [puestosOcupados, setPuestosOcupados] = useState([]);
+  const [maxParticipantes, setMaxParticipantes] = useState([]);
+  const [inscritos, setInscritos] = useState([]);
 
   useEffect(() => {
     axios
@@ -53,16 +59,62 @@ const InscribirEjemplar = () => {
       })
       .catch((err) => console.log(err));
     axios
-      .get("http://localhost:5000/api/v1/jinetes/listado_de_jinetes")
+      .get(
+        `http://localhost:5000/api/v1/participaciones/listado_jinetes_disponibles/${id}`
+      )
       .then((res) => {
         console.log(res);
         setJinetes(res.data);
         setLoading4(false);
       })
       .catch((err) => console.log(err));
+    axios
+      .get(
+        `http://localhost:5000/api/v1/participaciones/puestos_ocupados/${id}`
+      )
+      .then((res) => {
+        console.log(res);
+        setPuestosOcupados(res.data);
+        setLoading5(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(
+        `http://localhost:5000/api/v1/participaciones/cantidad_participantes_inscritos/${id}`
+      )
+      .then((res) => {
+        console.log(res);
+        setMaxParticipantes(res.data);
+        setLoading6(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(
+        `http://localhost:5000/api/v1/participaciones/cantidad_ejemplares_carrera/${id}`
+      )
+      .then((res) => {
+        console.log(res);
+        setInscritos(res.data);
+        setLoading7(false);
+      })
+      .catch((err) => console.log(err));
   }, []);
-  if (isLoading || isLoading2 || isLoading3 || isLoading4) return <div>Cargando</div>;
-  console.log(implementos);
+  if (
+    isLoading ||
+    isLoading2 ||
+    isLoading3 ||
+    isLoading4 ||
+    isLoading5 ||
+    isLoading6 ||
+    isLoading7
+  )
+    return <div>Cargando</div>;
+    console.log(maxParticipantes.data[0].valor_regla);
+    console.log(inscritos.data[0].count);
+    if (maxParticipantes.data[0].valor_regla == inscritos.data[0].count)
+    return alert("No se pueden inscribir mas ejemplares");
+
+  
 
   // const ejemplares = [
   //   {
@@ -179,10 +231,13 @@ const InscribirEjemplar = () => {
   //     nombre: "Jerry Mina",
   //   },
   // ];
-
+  console.log(puestosOcupados.data.find((puesto) => 6 == puesto.puesto_pista));
   let content = [];
-  for (let index = 0; index < cantidad; index++) {
-    content.push(<option value={index + 1}>{index + 1}</option>);
+  for (let index = 0; index < 16; index++) {
+    if (
+      !puestosOcupados.data.find((puesto) => index + 1 == puesto.puesto_pista)
+    )
+      content.push(<option value={index + 1}>{index + 1}</option>);
   }
 
   let contenidoMedicamentos = [];
@@ -245,7 +300,7 @@ const InscribirEjemplar = () => {
     let fkEjemplar = document.getElementById("ejemplar").value;
     let fkJinete = document.getElementById("jinete").value;
     //let puestoPista = document.getElementById("puesto").value;
-    let puestoPista=5;
+    let puestoPista = 5;
 
     console.log(medicamentoUsados);
     console.log(implementoUsados);
@@ -311,7 +366,9 @@ const InscribirEjemplar = () => {
                         style={{ height: "38px", width: "220px" }}
                       >
                         {ejemplares.data.map((x) => (
-                          <option value={x.codigo_ejemplar}>{x.nombre_ejemplar}</option>
+                          <option value={x.codigo_ejemplar}>
+                            {x.nombre_ejemplar}
+                          </option>
                         ))}
                       </FormSelect>
                     </Row>
@@ -362,7 +419,9 @@ const InscribirEjemplar = () => {
                         style={{ height: "38px", width: "220px" }}
                       >
                         {jinetes.data.map((x) => (
-                          <option value={x.codigo_persona}>{`${x.nombre1_persona} ${x.apellido1_persona}`}</option>
+                          <option
+                            value={x.codigo_persona}
+                          >{`${x.nombre1_persona} ${x.apellido1_persona}`}</option>
                         ))}
                       </FormSelect>
                     </Row>
