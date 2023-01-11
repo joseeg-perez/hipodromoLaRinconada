@@ -39,14 +39,10 @@ const registrarParticipacion = async (nuevaParticipacion) => {
     gualdrapa,
     puestoPista,
     pesoCaballo,
-    precioEjemplar,
-    comentario,
     fkEjemplar,
     fkCarrera,
     fkJinete,
     fkEntrenador,
-    fkRetiro,
-    fkResultado,
     fkStud,
   } = nuevaParticipacion;
 
@@ -54,46 +50,38 @@ const registrarParticipacion = async (nuevaParticipacion) => {
         gualdrapa, 
         puesto_pista,
         peso_caballo,
-        precio_ejemplar,
-        comentario,
         fk_ejemplar,
         fk_carrera,
         fk_jinete,
         fk_entrenador,
-        fk_retiro,
-        fk_resultado,
-        fk_stud) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
+        fk_stud) VALUES($1, $2, $3, $4, $5, $6, $7, $8)`;
+        
+    let values = [
+        gualdrapa,
+        puestoPista,
+        pesoCaballo,
+        fkEjemplar,
+        fkCarrera,
+        fkJinete,
+        fkEntrenador,
+        fkStud,
+    ];
 
-  const values = [
-    gualdrapa,
-    puestoPista,
-    pesoCaballo,
-    precioEjemplar,
-    comentario,
-    fkEjemplar,
-    fkCarrera,
-    fkJinete,
-    fkEntrenador,
-    fkRetiro,
-    fkResultado,
-    fkStud,
-  ];
-
-  try {
-    await dbConnection.query(text, values);
-
-    dbConnection.end;
-    return puestoPista;
-  } catch (error) {
-    if (error.code === "23505") {
-      throw {
-        status: 409,
-        message: `La participacion ya ha sido registrada.`,
-      };
+    try {
+        await dbConnection.query(text, values);
+    
+        dbConnection.end;
+        return (puestoPista);
+    } catch (error) {
+        if (error.code === '23505') {
+            throw {
+                status: 409,
+                message: `La participacion ya ha sido registrada.`,
+            }
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
     }
-    throw { status: error?.status || 500, message: error?.message || error };
-  }
-};
+  };
 
 const actualizarParticipacion = async (participacionId, cambios) => {
   const {

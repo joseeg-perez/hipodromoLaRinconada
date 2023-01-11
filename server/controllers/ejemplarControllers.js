@@ -81,7 +81,6 @@ const obtenerPosibleStudDelEjemplarIndividual = async (req, res) => {
 
 const registrarEjemplar = async (req, res) => { 
     const { 
-        codigoEjemplar,
         nombreEjemplar,
         numeroEjemplar,
         tatlabialEjemplar,
@@ -97,7 +96,6 @@ const registrarEjemplar = async (req, res) => {
      } =  req.body;
 
     const nuevoEjemplar = {
-        codigoEjemplar,
         nombreEjemplar: nombreEjemplar.toLowerCase(),
         numeroEjemplar,
         tatlabialEjemplar,

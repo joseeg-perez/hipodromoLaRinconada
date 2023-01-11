@@ -32,35 +32,28 @@ const obtenerParticipacionIndividual = async (req, res) => {
 };
 
 const registrarParticipacion = async (req, res) => {
-  const {
-    gualdrapa,
-    puestoPista,
-    pesoCaballo,
-    precioEjemplar,
-    comentario,
-    fkEjemplar,
-    fkCarrera,
-    fkJinete,
-    fkEntrenador,
-    fkRetiro,
-    fkResultado,
-    fkStud,
-  } = req.body;
+    const { 
+        gualdrapa,
+        puestoPista,
+        pesoCaballo,
+        pesoJinete,
+        fkEjemplar,
+        fkCarrera,
+        fkJinete,
+        implementoUsados,
+        medicamentoUsados,
+    } = req.body;
 
-  const nuevaParticipacion = {
-    gualdrapa,
-    puestoPista,
-    pesoCaballo,
-    precioEjemplar,
-    comentario: comentario.toLowerCase(),
-    fkEjemplar,
-    fkCarrera,
-    fkJinete,
-    fkEntrenador,
-    fkRetiro,
-    fkResultado,
-    fkStud,
-  };
+    const nuevaParticipacion = {
+        gualdrapa,
+        puestoPista,
+        pesoCaballo,
+        fkEjemplar,
+        fkCarrera,
+        fkJinete,
+        implementoUsados,
+        medicamentoUsados,
+    };
 
   try {
     const participacionCreada =
