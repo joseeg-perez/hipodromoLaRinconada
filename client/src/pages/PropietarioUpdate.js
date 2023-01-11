@@ -235,6 +235,7 @@ const PropietarioUpdate = (props) => {
                   </div>
                 </Col>
               </Row>
+              {console.log(fkLugar)}
               <CardLugarEdit onSaveLugar={handleLugar} lugar={fk_lugar} />
               <Card className="mx-5 mt-3">
                 <Card.Body>

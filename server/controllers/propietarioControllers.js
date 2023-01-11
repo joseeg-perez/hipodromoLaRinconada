@@ -14,6 +14,7 @@ const obtenerListaDePropietarios = async (req, res) => {
 };
 
 const obtenerPropietarioIndividual = async (req, res) => {
+  console.log('Controler de PROPIETARIO INDIVIDUAL')
   const {
     params: { propietarioId },
   } = req;
@@ -22,6 +23,7 @@ const obtenerPropietarioIndividual = async (req, res) => {
     const propietario = await propietarioService.obtenerPropietarioIndividual(
       propietarioId
     );
+    console.log(propietario)
     res.status(200).send({ status: "OK", data: propietario });
   } catch (error) {
     res
@@ -51,12 +53,12 @@ const registrarPropietario = async (req, res) => {
         apellido1Persona: apellido1Persona.toLowerCase(),
         apellido2Persona: apellido2Persona.toLowerCase(),
         fechaNacimiento,
-        correo: correo.toLowerCase(),
+        correo: correo,
         fkLugar,
         extension_tlf,
         cuerpo_tlf,
     };
-
+    console.log(nuevoPropietario, 'CONTROLER')
     try {
         const propietarioCreado = await propietarioService.registrarPropietario(nuevoPropietario);
         res.status(200).send({ status: "OK", data: `Se ha registrado el propietario '${propietarioCreado}' de forma satisfactoria.` });

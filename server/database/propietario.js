@@ -80,6 +80,7 @@ const registrarPropietario = async (nuevoPropietario) => {
     return nombre1Persona + " " + apellido1Persona;
   } catch (error) {
     if (error.code === "23505") {
+      console.log(error)
       throw {
         status: 409,
         message: `El propietario con cedula '${cedulaPersona}' ya ha sido registrado.`,

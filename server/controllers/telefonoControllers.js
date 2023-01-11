@@ -30,14 +30,13 @@ const obtenerTelefonoIndividual = async (req, res) => {
 };
 
 const registrarTelefono = async (req, res) => {
-  const { extensionTelefono, cuerpoTelefono, fkPropietario, fkCliente } =
+  const { extensionTelefono, cuerpoTelefono, fkPropietario } =
     req.body;
 
   const nuevoTelefono = {
     extensionTelefono,
     cuerpoTelefono,
     fkPropietario,
-    fkCliente,
   };
 
   try {
