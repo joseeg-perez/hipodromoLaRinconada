@@ -6,10 +6,11 @@ import trash from "../../assets/trashicon.png";
 import axios from "axios";
 
 const InfoStud = (props) => {
+  console.log(props.id)
   const handleDelete = (event) => {
-    console.log(props.codigo);
+    console.log(props.id);
     axios
-      .delete(`http://localhost:5000/api/v1/studs/${props.Id}`)
+      .delete(`http://localhost:5000/api/v1/studs/${props.id}`)
       .then((res) => {
         if (res.data != null) {
           alert("Se eliminó el Stud con éxito");

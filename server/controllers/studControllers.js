@@ -156,6 +156,7 @@ const registrarStud = async (req, res) => {
         color2,
         vestimentas,
     };
+    console.log(nuevoStud)
 
     try {
         const studCreado = await studService.registrarStud(nuevoStud);

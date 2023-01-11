@@ -195,6 +195,7 @@ const registrarStud = async (nuevoStud) => {
 
     return studCreado;
   } catch (error) {
+    console.log(error)
     throw error;
   }
 };

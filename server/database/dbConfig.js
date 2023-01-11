@@ -21,8 +21,8 @@ const config = {
   user: "postgres",
   port: "5432",
   host: "localhost",
-  password: "090697",
-  database: "PruebasProyecto",
+  password: "123",
+  database: "postgres",
 };
 
 const pool = new Pool(config);

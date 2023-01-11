@@ -27,7 +27,7 @@ router.post("/cambiarPorcentajes", studController.cambiarPorcentajes);//Para cam
 
 router.post("/agregarVestimentas", studController.agregarVestimentas);//Para agregar mas vestimentas ademas de las existentes
 
-router.post("/registrar_stud",validarPermiso, validarRol([1]), validateCreate, studController.registrarStud);
+router.post("/registrar_stud", validateCreate, studController.registrarStud);
 
 router.patch("/:studId", validateId, studController.actualizarStud);
 
