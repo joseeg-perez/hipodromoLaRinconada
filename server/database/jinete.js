@@ -20,7 +20,11 @@ const obtenerListaDeJinetes = async () => {
 
 const obtenerJineteIndividual = async (jineteId) => {
   const query = {
-    text: "SELECT * FROM persona_jinete WHERE codigo_persona=$1",
+    text: `SELECT codigo_persona, cedula_persona, nombre1_persona, nombre2_persona, apellido1_persona,
+    apellido2_persona, fk_rango, altura_jinete, peso_jinete,
+    to_char(fecha_nacimiento_persona :: DATE, 'dd/mm/yyyy') as fecha_nacimiento_persona
+    FROM persona_jinete
+    WHERE codigo_persona =$1`,
     values: [jineteId],
   };
 

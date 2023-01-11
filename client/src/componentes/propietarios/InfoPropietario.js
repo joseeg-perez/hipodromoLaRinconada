@@ -32,36 +32,11 @@ const InfoPropietario = (props) => {
                   Correo: <span className="text-muted">{props.correo}</span>
                 </div>
                 <div className="mt-2">
-                  Ultimo ejemplar montando:{" "}
-                  <span className="text-muted">{props.ejemplar}</span>
+                  Telefono de contacto:{" "}
+                  <span className="text-muted">{props.telefono}</span>
                 </div>
-
-                <div
-                  className="d-flex justify-content-center rounded-3 p-2 mt-3"
-                  style={{ backgroundColor: "#efefef" }}
-                >
-                  <div className="mx-3">
-                    <p className="small mb-1 fw-bold">Altura</p>
-                    <p className="mb-0 text-center text-muted">
-                      {props.altura} cm
-                    </p>
-                  </div>
-                  <div className="mx-3">
-                    <p className="small mb-1 fw-bold">Peso</p>
-                    <p className="mb-0 text-center text-muted">
-                      {props.peso} kg
-                    </p>
-                  </div>
-                  <div className="mx-3">
-                    <p className="small fw-bold mb-1">Edad</p>
-                    <p className="mb-0 text-center text-muted">8</p>
-                  </div>
-                  <div className="mx-3">
-                    <p className="small fw-bold mb-1">Ganancia</p>
-                    <p className="mb-0 text-center text-muted">
-                      {props.ganancia}
-                    </p>
-                  </div>
+                <div className="mt-2">
+                  Direccion: <span className="text-muted">{props.lugar}</span>
                 </div>
               </Card.Text>
               <div className="d-flex pt-1 justify-content-end mt-4">

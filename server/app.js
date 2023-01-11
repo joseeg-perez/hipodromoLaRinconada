@@ -1,10 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
 //const apicache = require("apicache");
-
 
 dotenv.config(); //Para usar las variables de entorno
 
@@ -111,9 +110,4 @@ app.use("/api/v1/puesto_caballo", v1PuestoCaballoRoutes);
 app.use("/api/v1/ejemplar_propietario", v1EjemplarPropietarioRoutes);
 app.use("/api/v1/tipo_resultados", v1tipoResultadoRoutes);
 
-
-
-
-
-
-module.exports = {app, PORT};
+module.exports = { app, PORT };

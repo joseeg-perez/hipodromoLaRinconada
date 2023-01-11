@@ -29,6 +29,11 @@ const EjemplarAgregar = () => {
   const [pelajeEjemplar, setPelajeEjemplar] = useState("");
   const [generoEjemplar, setGeneroEjemplar] = useState("");
   const [isLoading, setLoading] = useState(true);
+  const [isLoading1, setLoading1] = useState(true);
+  const [isLoading2, setLoading2] = useState(true);
+  const [isLoading3, setLoading3] = useState(true);
+  const [isLoading4, setLoading4] = useState(true);
+  const [isLoading5, setLoading5] = useState(true);
   const [pelajes, setPelajes] = useState([]);
   const [haras, setHaras] = useState([]);
   const [propietarios, setPropietarios] = useState([]);
@@ -51,6 +56,7 @@ const EjemplarAgregar = () => {
       .then((res) => {
         console.log(res);
         setPelajes(res.data);
+        setLoading5(false);
       })
       .catch((err) => console.log(err));
     axios
@@ -58,6 +64,7 @@ const EjemplarAgregar = () => {
       .then((res) => {
         console.log(res);
         setEjemplares(res.data);
+        setLoading4(false);
       })
       .catch((err) => console.log(err));
     axios
@@ -65,6 +72,7 @@ const EjemplarAgregar = () => {
       .then((res) => {
         console.log(res);
         setHaras(res.data);
+        setLoading3(false);
       })
       .catch((err) => console.log(err));
     axios
@@ -72,6 +80,7 @@ const EjemplarAgregar = () => {
       .then((res) => {
         console.log(res);
         setCaballerizas(res.data);
+        setLoading2(false);
       })
       .catch((err) => console.log(err));
     axios
@@ -79,6 +88,7 @@ const EjemplarAgregar = () => {
       .then((res) => {
         console.log(res);
         setPuestos(res.data);
+        setLoading1(false);
       })
       .catch((err) => console.log(err));
     axios
@@ -96,7 +106,14 @@ const EjemplarAgregar = () => {
   // console.log(ejemplares);
   // console.log(caballerizas);
   // console.log(puestos);
-  if (isLoading) {
+  if (
+    isLoading ||
+    isLoading1 ||
+    isLoading2 ||
+    isLoading3 ||
+    isLoading4 ||
+    isLoading5
+  ) {
     return <div>Cargando</div>;
   }
   const handleData = async (event) => {

@@ -162,11 +162,16 @@ export const EjemplarDetail = () => {
     </tr>
   );
 
+  const Params = useParams();
   const params = useParams();
   const match = useRouteMatch();
   console.log(params.studId);
   const { studId } = params;
   const [isLoading, setLoading] = useState(true);
+  const [isLoading1, setLoading1] = useState(true);
+  const [isLoading2, setLoading2] = useState(true);
+  const [isLoading3, setLoading3] = useState(true);
+  const [isLoading4, setLoading4] = useState(true);
   const [propietarios, setPropietarios] = useState([]);
   const [propietariosF, setPropietariosF] = useState([]);
   const [toggleListadePropietarios, setToggleListadePropietarios] =
@@ -177,21 +182,89 @@ export const EjemplarDetail = () => {
   const [agregar, setAgregar] = useState(true);
   const [porcentajes, setporcentajes] = useState("");
   const [UltimosPropietarios, setUltimosPropietario] = useState(informacion1);
+  const [nombreEjemplar, setNombreEjemplar] = useState("");
+  const [numeroEjemplar, setNumeroEjemplar] = useState("");
+  const [tatlabialEjemplar, setTatlabialEjemplar] = useState(0);
+  const [precioEjemplar, setPrecioEjemplar] = useState(0);
+  const [fecha_nacEjemplar, setFecha_nacEjemplar] = useState(0);
+  const [caballeriza, setcaballeriza] = useState("");
+  const [nombre_stud, setnombre_stud] = useState("");
+  const [entrenador, setentrenador] = useState("");
+  const [pesoEjemplar, setPesoEjemplar] = useState("");
+  const [padreEjemplar, setPadreEjemplar] = useState("");
+  const [madreEjemplar, setMadreEjemplar] = useState("");
+  const [imagenEjemplar, setImagenEjemplar] = useState("");
+  const [propietarioEjemplar, setPropietarioEjemplar] = useState("");
+  const [haraEjemplar, setHaraEjemplar] = useState("");
+  const [pelajeEjemplar, setPelajeEjemplar] = useState("");
+  const [generoEjemplar, setGeneroEjemplar] = useState("");
+  const [ejemplares, setEjemplares] = useState("");
+  const [haras, setHaras] = useState([]);
+  const [pelajes, setPelajes] = useState([]);
 
   useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/v1/ejemplares/${Params.ejemplarId}`)
+      .then((res) => {
+        console.log(res);
+        setNombreEjemplar(res.data.data[0].nombre_ejemplar);
+        setNumeroEjemplar(res.data.data[0].numero_ejemplar);
+        setTatlabialEjemplar(res.data.data[0].numero_tatuaje_labial);
+        setPrecioEjemplar(res.data.data[0].precio_ejemplar);
+        setFecha_nacEjemplar(res.data.data[0].fechanac);
+        setPesoEjemplar(res.data.data[0].peso_ejemplar);
+        setPadreEjemplar(res.data.data[0].fk_padre_ejemplar);
+        setMadreEjemplar(res.data.data[0].fk_madre_ejemplar);
+        setImagenEjemplar(res.data.data[0].imagen_ejemplar);
+        setHaraEjemplar(res.data.data[0].fk_hara);
+        setPelajeEjemplar(res.data.data[0].fk_pelaje);
+        setnombre_stud(res.data.data[0].nombre_stud);
+        setGeneroEjemplar(res.data.data[0].sexo_ejemplar);
+        setcaballeriza(res.data.data[0].codigo_caballeriza);
+        setentrenador(res.data.data[0].entrenador);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:5000/api/v1/ejemplares/listado_de_ejemplares")
+      .then((res) => {
+        console.log(res);
+        setEjemplares(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:5000/api/v1/haras/listado_de_haras")
+      .then((res) => {
+        console.log(res);
+        setHaras(res.data);
+        setLoading1(false);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:5000/api/v1/pelajes/listado_de_pelajes")
+      .then((res) => {
+        console.log(res);
+        setPelajes(res.data);
+        setLoading2(false);
+      })
+      .catch((err) => console.log(err));
+
     axios
       .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
       .then((res) => {
         console.log(res);
         setPropietarios(res.data);
-        setLoading(false);
+        setLoading3(false);
       })
       .catch((err) => console.log(err));
   }, []);
 
   console.log(propietarios);
 
-  if (isLoading) {
+  if (isLoading || isLoading1 || isLoading2 || isLoading3) {
     return <div></div>;
   }
 
@@ -242,13 +315,13 @@ export const EjemplarDetail = () => {
           <Col>
             <Card className="mx-5">
               <Card.Header>
-                <h2>{Ejemplares[0].nombre}</h2>
+                <h2>{nombreEjemplar}</h2>
               </Card.Header>
               <Card.Body>
                 <Row className="align-items-center">
                   <Col className="col-3">
                     <Image
-                      src={Ejemplares[0].imagen}
+                      src={imagenEjemplar}
                       width={200}
                       rounded={20}
                       alt="/"
@@ -262,37 +335,46 @@ export const EjemplarDetail = () => {
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Entrenador:
                             </span>{" "}
-                            <span>{Ejemplares[0].entrenador}</span>
+                            <span>{entrenador}</span>
                           </li>
                           <li class="mb-2 mb-xl-3 display-28">
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Stud:
                             </span>{" "}
-                            {Ejemplares[0].stud}
+                            {nombre_stud}
                           </li>
                           <li class="mb-2 mb-xl-3 display-28">
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Fecha de nacimiento:
                             </span>{" "}
-                            {Ejemplares[0].fecha_nac}
+                            {fecha_nacEjemplar}
                           </li>
                           <li class="mb-2 mb-xl-3 display-28">
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Numero:
                             </span>{" "}
-                            {Ejemplares[0].numero}
+                            {numeroEjemplar}
                           </li>
                           <li class="mb-2 mb-xl-3 display-28">
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Hara de procedencia:
                             </span>{" "}
-                            {Ejemplares[0].hara}
+                            {
+                              haras.data.find(
+                                (hara) => (hara.codigo_hara = hara)
+                              ).nombre_hara
+                            }
                           </li>
                           <li class="display-28">
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Pelaje:
                             </span>{" "}
-                            {Ejemplares[0].pelaje}
+                            {
+                              pelajes.data.find(
+                                (pelaje) =>
+                                  (pelaje.codigo_pelaje = pelajeEjemplar)
+                              ).nombre_pelaje
+                            }
                           </li>
                         </ul>
                       </Col>
@@ -302,41 +384,75 @@ export const EjemplarDetail = () => {
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Padre:
                             </span>{" "}
-                            <span>{Ejemplares[0].padre}</span>
+                            {padreEjemplar != null ? (
+                              <span>
+                                {
+                                  ejemplares.data.find(
+                                    (ejemplar) =>
+                                      (ejemplar.codigo_ejemplar = padreEjemplar)
+                                  ).nombre_ejemplar
+                                }
+                              </span>
+                            ) : (
+                              <span>No tiene un padre registrado</span>
+                            )}
                           </li>
                           <li class="mb-2 mb-xl-3 display-28">
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Madre:
                             </span>{" "}
-                            {Ejemplares[0].madre}
+                            {madreEjemplar != null ? (
+                              <span>
+                                {
+                                  ejemplares.data.find(
+                                    (ejemplar) =>
+                                      (ejemplar.codigo_ejemplar = madreEjemplar)
+                                  ).nombre_ejemplar
+                                }
+                              </span>
+                            ) : (
+                              <span>No tiene una madre registrada</span>
+                            )}
                           </li>
                           <li class="mb-2 mb-xl-3 display-28">
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Precio:
                             </span>{" "}
-                            {Ejemplares[0].precio}$
+                            {precioEjemplar != null ? (
+                              <span>{precioEjemplar}$</span>
+                            ) : (
+                              <span>No tiene precio registrado</span>
+                            )}
                           </li>
                           <li class="mb-2 mb-xl-3 display-28">
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Peso:
                             </span>{" "}
-                            {Ejemplares[0].peso} Kg
+                            {pesoEjemplar} Kg
                           </li>
                           <li class="mb-2 mb-xl-3 display-28">
                             <span class="display-26 fw-bold me-2 font-weight-600">
                               Sexo:
                             </span>{" "}
-                            {Ejemplares[0].sexo}
+                            {generoEjemplar}
+                          </li>
+                          <li class="mb-2 mb-xl-3 display-28">
+                            <span class="display-26 fw-bold me-2 font-weight-600">
+                              Caballeriza:
+                            </span>
+                            Nro. {caballeriza}
                           </li>
                           <li>
                             <div className="d-flex pt-1 justify-content-end mt-4">
-                              <Button className="btn btn-light btn-outline-success btn-sm mx-1">
-                                <img src={edit} alt="/" width={20} />
-                              </Button>
-
-                              <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
-                                <img src={trash} alt="/" width={20} />
-                              </Button>
+                              <Link
+                                size="sm"
+                                to={`/ejemplares/${Params.ejemplarId}/updateEjemplar`}
+                                className="text-center"
+                              >
+                                <Button className="btn btn-light btn-outline-success btn-sm mx-1">
+                                  <img src={edit} alt="/" width={20} />
+                                </Button>
+                              </Link>
                             </div>
                           </li>
                         </ul>

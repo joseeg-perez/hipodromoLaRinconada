@@ -95,9 +95,8 @@ const Propietarios = () => {
             key={propietario.codigo_persona}
             nombre={propietario.nombre1_persona}
             apellido={propietario.apellido1_persona}
-            peso={propietario.peso_propietario}
-            altura={propietario.altura_propietario}
-            rango={propietario.nombre_rango}
+            telefono={propietario.telefono}
+            lugar={propietario.nombre_lugar}
             correo={propietario.correo}
           />
         ))}

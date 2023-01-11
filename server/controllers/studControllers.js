@@ -103,32 +103,39 @@ const obtenerPosibleCaballoStud = async (req, res) => {
 };
 
 const cambiarPorcentajes = async (req, res) => {
-    const {
-        body,
-    } = req
+  console.log("entro a controller");
+  const { body } = req;
 
-    try {
-        await studService.cambiarPorcentajes(body);
-        res.status(202).send({ status: "OK", data: `Se han modificado los porcentajes de forma satisfactoria.` });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
-    }
+  try {
+    await studService.cambiarPorcentajes(body);
+    res
+      .status(202)
+      .send({
+        status: "OK",
+        data: `Se han modificado los porcentajes de forma satisfactoria.`,
+      });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const agregarVestimentas = async (req, res) => {
-    const {
-        body,
-    } = req
-    try {
-        await studService.agregarVestimentas(body);
-        res.status(202).send({ status: "OK", data: `Se han agregado las nuevas vestimentas de forma satisfactoria.` });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
-    }
+  const { body } = req;
+  try {
+    await studService.agregarVestimentas(body);
+    res
+      .status(202)
+      .send({
+        status: "OK",
+        data: `Se han agregado las nuevas vestimentas de forma satisfactoria.`,
+      });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const registrarStud = async (req, res) => {
