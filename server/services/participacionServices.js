@@ -146,6 +146,7 @@ const registrarParticipacion = async (nuevaParticipacion) => {
         
         return(participacionCreada);
     } catch (error) {
+        
         throw(error);
     }
 };

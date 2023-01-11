@@ -39,11 +39,13 @@ const InscribirEjemplar = () => {
   const obtenerEjemplares=async()=>{
     console.log("entro");
     let data;
+    let fkCarrera=id;
     try {
       let res=await axios.post(
         "http://localhost:5000/api/v1/participaciones/listado_de_ejemplares",
         {
           sexoEjemplar,
+          fkCarrera,
         }
       );
         data=res.data;
@@ -354,7 +356,7 @@ const InscribirEjemplar = () => {
     let fkEjemplar = document.getElementById("ejemplar").value;
     let fkJinete = document.getElementById("jinete").value;
     //let puestoPista = document.getElementById("puesto").value;
-    let puestoPista = 5;
+    let puestoPista = document.getElementById("puesto").value;
 
     console.log(medicamentoUsados);
     console.log(implementoUsados);

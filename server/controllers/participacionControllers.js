@@ -181,6 +181,7 @@ const registrarParticipacion = async (req, res) => {
         implementoUsados,
         medicamentoUsados,
     };
+   
 
   try {
     const participacionCreada =

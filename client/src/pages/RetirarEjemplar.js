@@ -13,6 +13,8 @@ const RetirarEjemplar = () => {
   } = location.state;
   console.log(id);
   const [isLoading, setLoading] = useState(true);
+  const [isLoading2, setLoading2] = useState(true);
+  const [ejemplares, setEjemplares] = useState([]);
   const [motivos, setMotivos] = useState([]);
   const [ejemplarEscogido, setEjemplarEscogido] = useState("");
   const [motivoEscogido, setMotivoEscogido] = useState("");
@@ -27,9 +29,18 @@ const RetirarEjemplar = () => {
         setLoading(false);
       })
       .catch((err) => console.log(err));
+    axios
+      .get(`http://localhost:5000/api/v1/participaciones/participaciones_para_retiro/${id}`)
+      .then((res) => {
+        console.log(res);
+        setEjemplares(res.data);
+        setLoading2(false);
+      })
+      .catch((err) => console.log(err));
   }, []);
-  if (isLoading) return <div>Cargando</div>;
+  if (isLoading || isLoading2) return <div>Cargando</div>;
   console.log(motivos);
+  console.log(ejemplares);
 
   let hoy = new Date();
   let dia = hoy.getDate();
@@ -37,15 +48,14 @@ const RetirarEjemplar = () => {
   let an = hoy.getFullYear();
   if (dia < 10) dia = `0${dia}`;
   if (mes < 10) mes = `0${mes}`;
-  let fecha=`${an}-${mes}-${dia}`
+  let fecha = `${an}-${mes}-${dia}`;
 
   let columnas = (
     <tr>
-      <th>Pos</th>
+      <th>Gualdrapa</th>
       <th>Nombre</th>
-      <th>Num</th>
       <th>Jinete</th>
-      <th>Stud</th>
+      <th>Entrenador</th>
     </tr>
   );
 
@@ -116,7 +126,7 @@ const RetirarEjemplar = () => {
 
   const onSeleccionEjemplarHandler = (ejemplar, event) => {
     event.preventDefault();
-    console.log(ejemplar.id);
+    console.log(ejemplar.codigo_participacion);
     setEjemplarEscogido(ejemplar);
     setToggleEjemplar(true);
   };
@@ -148,16 +158,15 @@ const RetirarEjemplar = () => {
                 <Tabla
                   titulo="SELECCIONAR EJEMPLAR"
                   columnas={columnas}
-                  informacion={informacion}
+                  informacion={ejemplares.data}
                   tituloTabla="Ejemplares"
                   estilo=" table-hover"
                   funcion={(x) => (
                     <tr onClick={(e) => onSeleccionEjemplarHandler(x, e)}>
-                      <td>{`${x.pos}`}</td>
-                      <td>{`${x.nombre}`}</td>
-                      <td>{`${x.num}`}</td>
-                      <td>{`${x.jinete}`}</td>
-                      <td>{`${x.stud}`}</td>
+                      <td>{`${x.gualdrapa}`}</td>
+                      <td>{`${x.nombre_ejemplar}`}</td>
+                      <td>{`${x.nombre_jinete}`}</td>
+                      <td>{`${x.nombre_entrenador}`}</td>
                     </tr>
                   )}
                 ></Tabla>
