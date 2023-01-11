@@ -75,6 +75,16 @@ const participantesInscritos = async (participacionId) => {
   }
 };
 
+const obtenerSexoCarrera = async (participacionId) => {
+  try {
+    const listaDeSexoPorCarrera = await Participacion.obtenerSexoCarrera(participacionId);
+
+    return (listaDeSexoPorCarrera);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const obtenerParticipacionIndividual = async (participacionId) => {
   try {
     const participacion = await Participacion.obtenerParticipacionIndividual(
@@ -166,6 +176,7 @@ module.exports = {
   obtenerListaDeEjemplaresDisponibles,
   obtenerParticipacionParaRetiro,
   obtenerPuestosOcupados,
+  obtenerSexoCarrera,
   registrarParticipacion,
   participantesInscritos,
   cantidadEjemplaresPorParticipacion,

@@ -21,6 +21,8 @@ router.get("/:participacionId", validateId, participacionController.obtenerParti
 
 router.get("/participaciones_en_carrera/:participacionId", validateId, participacionController.obtenerParticipacionesEnCarrera); //aqui sigo, yo
 
+router.get("/obtener_sexo_carrera/:participacionId", validateId, participacionController.obtenerSexoCarrera);
+
 router.post("/listado_de_ejemplares", participacionController.obtenerListaDeEjemplaresDisponibles);
 
 router.post("/registrar_participacion", validateCreate ,participacionController.registrarParticipacion);

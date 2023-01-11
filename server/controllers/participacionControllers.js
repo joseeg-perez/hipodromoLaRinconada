@@ -61,6 +61,22 @@ const obtenerParticipacionParaRetiro = async (req, res) => {
   }
 };
 
+const obtenerSexoCarrera = async (req, res) => {
+  const {
+    params: { participacionId },
+  } = req;
+
+  try {
+    const listaDeEjemplares = await participacionService.obtenerSexoCarrera(participacionId);
+
+    res.status(200).send({ status: "OK", data: listaDeEjemplares });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const obtenerPuestosOcupados = async (req, res) => {
   const {
     params: { participacionId },
@@ -230,6 +246,7 @@ module.exports = {
   obtenerParticipacionParaRetiro,
   participantesInscritos,
   cantidadEjemplaresPorParticipacion,
+  obtenerSexoCarrera,
   obtenerPuestosOcupados,
   registrarParticipacion,
   actualizarParticipacion,
