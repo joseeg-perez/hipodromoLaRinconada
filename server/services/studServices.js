@@ -102,7 +102,7 @@ const cambiarPorcentajes = async (cambios) => {
         fkPropietario: propietarioPost.idpropietario,
       };
       await registrarPropietarioStud(nuevoPropietarioStud);
-
+      
       const propietariosPatch = cambios.UltimosPropietarios; //lista de propietarios que se van a actualizar
       for (let i = 0; i < propietariosPatch.length; i++) {
         const propietarioActualizado = {
@@ -195,6 +195,7 @@ const registrarStud = async (nuevoStud) => {
 
     return studCreado;
   } catch (error) {
+    console.log(error)
     throw error;
   }
 };

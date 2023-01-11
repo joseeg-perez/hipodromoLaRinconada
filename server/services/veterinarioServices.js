@@ -75,6 +75,7 @@ const borrarVeterinario = async (veterinarioId) => {
   try {
     await Veterinario.borrarVeterinario(veterinarioId);
   } catch (error) {
+    console.log(error)
     throw error;
   }
 };

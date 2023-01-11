@@ -20,7 +20,7 @@ const JineteDetail = () => {
   const [toggleRango, setToggleRango] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [rangos, setRangos] = useState([]);
-
+  // console.log(Params.jineteId)
   useEffect(() => {
     axios
       .get(`http://localhost:5000/api/v1/jinetes/${Params.jineteId}`)
@@ -73,8 +73,8 @@ const JineteDetail = () => {
                   <ul class="list-unstyled mb-1-9">
                     <li class="mb-2 mb-xl-3 display-28">
                       <span class="display-26 fw-bold me-2 font-weight-600 text-muted">
-                        Nombre completo: {nombre1Persona} {apellido1Persona}{" "}
-                        {nombre2Persona} {apellido2Persona}
+                        Nombre completo: {nombre1Persona} {nombre2Persona}{" "}
+                        {apellido1Persona}  {apellido2Persona}
                       </span>
                     </li>
                     <li class="mb-2 mb-xl-3 display-28">

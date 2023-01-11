@@ -9,12 +9,20 @@ const { Pool } = require("pg");
 //     database: "Hipodromo_la_rinconada"
 // };
 
+// const config = {
+//   user: "BPG_grupo3",
+//   port: "5432",
+//   host: "labs-dbservices01.ucab.edu.ve",
+//   password: "123456",
+//   database: "Proyecto_Grupo3",
+// };
+
 const config = {
-  user: "BPG_grupo3",
+  user: "postgres",
   port: "5432",
-  host: "labs-dbservices01.ucab.edu.ve",
-  password: "123456",
-  database: "Proyecto_Grupo3",
+  host: "localhost",
+  password: "123",
+  database: "postgres",
 };
 
 const pool = new Pool(config);

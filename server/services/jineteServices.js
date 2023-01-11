@@ -36,6 +36,7 @@ const actualizarJinete = async (jineteId, cambios) => {
         
         return(jineteActualizado);
     } catch (error) {
+      console.log(error)
         throw(error);
     }
 };
