@@ -6,15 +6,11 @@ const registrarse = async (req, res) => {
     const { 
         username, 
         password, 
-        fkCliente, 
-        fkRol, 
     } = req.body;
 
     const nuevoUsuario = {
         username: username.toLowerCase(),
         password,
-        fkCliente,
-        fkRol,
     };
     
     try{

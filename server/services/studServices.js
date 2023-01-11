@@ -106,13 +106,15 @@ const cambiarPorcentajes = async (cambios) => {
 };
 
 const agregarVestimentas = async (cambios) => {
+  console.log(cambios.nuevasVestimentas[0])
     try {
-        const listaVestimentas = cambios.vestimentas;
+        const listaVestimentas = cambios.nuevasVestimentas;
         for (let i = 0; i < listaVestimentas.length; i++) {
             const nuevaStudVestimenta = {
-                fkVestimenta: listaVestimentas[i].fkVestimenta,
-                fkStud: listaVestimentas[i].fkStud,
+                fkVestimenta: listaVestimentas[i].fk_vestimenta,
+                fkStud: listaVestimentas[i].fk_stud,
             }
+            console.log(nuevaStudVestimenta)
             await registrarStudVestimenta(nuevaStudVestimenta);
         }
     } catch (error) {
