@@ -2,7 +2,6 @@ const authService = require("../services/authServices.js");
 const { generarToken } = require("../helpers/jwt.js");
 
 const registrarse = async (req, res) => {
-<<<<<<< HEAD
   const { username, password } = req.body;
 
   const nuevoUsuario = {
@@ -12,38 +11,15 @@ const registrarse = async (req, res) => {
 
   try {
     const usuarioCreado = await authService.registrarse(nuevoUsuario);
-    res
-      .status(201)
-      .send({
-        status: "OK",
-        data: `Se ha registrado el usuario '${username}' de forma satisfactoria.`,
-      });
+    res.status(201).send({
+      status: "OK",
+      data: `Se ha registrado el usuario '${username}' de forma satisfactoria.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
       .send({ status: "FALLO", data: { error: error?.message || error } });
   }
-=======
-        
-    const { 
-        username, 
-        password, 
-    } = req.body;
-
-    const nuevoUsuario = {
-        username: username.toLowerCase(),
-        password,
-    };
-    
-    try{
-         const usuarioCreado = await authService.registrarse(nuevoUsuario);
-         res.status(201).send({ status: "OK" , data: `Se ha registrado el usuario '${username}' de forma satisfactoria.` });
-    }catch(error){
-        res
-        .status(error?.status || 500)
-        .send({ status: "FALLO", data: { error: error?.message || error }});    
-    }
->>>>>>> main
 };
 
 const iniciarSesion = async (req, res) => {
@@ -53,7 +29,7 @@ const iniciarSesion = async (req, res) => {
     username: username.toLowerCase(),
     password,
   };
-
+  console.log(nuevoinicioSesion);
   try {
     const inicioSesionCreado = await authService.iniciarSesion(
       nuevoinicioSesion

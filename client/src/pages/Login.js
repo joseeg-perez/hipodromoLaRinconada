@@ -5,30 +5,30 @@ import fotito from "../assets/gear.svg";
 import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [contrasena, setContrasena] = useState("");
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
 
-  const handleEmail = (event) => {
+  const handleusername = (event) => {
     event.preventDefault();
-    setEmail(event.target.value);
+    setusername(event.target.value);
   };
-  const handleContrasena = (event) => {
+  const handlepassword = (event) => {
     event.preventDefault();
-    setContrasena(event.target.value);
+    setpassword(event.target.value);
   };
   const handleData = async (event) => {
     event.preventDefault();
     try {
       await axios.post("http://localhost:5000/api/v1/auth/iniciar_sesion", {
-        email,
-        contrasena,
+        username,
+        password,
       });
     } catch (error) {
       throw error;
     }
-    console.warn(email, contrasena);
-    setEmail("");
-    setContrasena("");
+    console.warn(username, password);
+    setusername("");
+    setpassword("");
   };
   return (
     <Container>
@@ -40,23 +40,23 @@ const Login = () => {
           <Form className="form-floating m-3">
             <div className="mb-3 form-floating">
               <input
-                value={email}
-                type="email"
+                value={username}
+                type="username"
                 className="form-control"
-                placeholder="Enter email"
-                onChange={handleEmail}
+                placeholder="Enter username"
+                onChange={handleusername}
               />
-              <FormLabel>Email</FormLabel>
+              <FormLabel>username</FormLabel>
             </div>
             <div className="mb-3 form-floating">
               <input
-                value={contrasena}
+                value={password}
                 type="password"
                 className="form-control"
                 placeholder="Password"
-                onChange={handleContrasena}
+                onChange={handlepassword}
               />
-              <FormLabel>Contrasena</FormLabel>
+              <FormLabel>password</FormLabel>
             </div>
             <div className="d-grid">
               <Button

@@ -39,7 +39,6 @@ const iniciarSesion = async (nuevoInicioSesion) => {
     ); //Pasa la clave del usuario y su hash para hacer la comparacion
 
     if (!match) httpError.contrasenaIncorrecta();
-
     return usuarioEncontrado;
   } catch (error) {
     throw { status: error?.status || 500, message: error?.message || error };
