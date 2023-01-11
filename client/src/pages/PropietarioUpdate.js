@@ -50,6 +50,7 @@ const PropietarioUpdate = (props) => {
         setFk_lugar(res.data.data[0].fk_lugar);
         setExtension(res.data.data[0].extension);
         setCuerpo(res.data.data[0].cuerpo);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -130,6 +131,11 @@ const PropietarioUpdate = (props) => {
     setapellido2Persona("");
     setFechaNacimiento("");
   };
+  if (extension == null || cuerpo == null) {
+    setExtension(0);
+    setCuerpo(0);
+  }
+  if (isLoading) return <div>Cargando</div>;
 
   return (
     <Container>

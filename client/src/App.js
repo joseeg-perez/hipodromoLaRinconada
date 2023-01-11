@@ -64,6 +64,7 @@ import PelajeUpdate from "./pages/PelajeUpdate";
 import ImplementoUpdate from "./pages/ImplementoUpdate";
 import MedicamentoUpdate from "./pages/MedicamentoUpdate";
 import MotivoRetiroUpdate from "./pages/MotivoRetiroUpdate";
+import EntrenadorDetail from "./pages/EntrenadorDetail";
 
 function App() {
   return (
@@ -103,6 +104,10 @@ function App() {
 
         <Route path="/entrenadores" exact>
           <Entrenadores></Entrenadores>
+        </Route>
+
+        <Route path="/entrenadores/:entrenadorId" exact>
+          <EntrenadorDetail></EntrenadorDetail>
         </Route>
 
         <Route path="/entrenadores/createEntrenador" exact>

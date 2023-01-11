@@ -13,8 +13,10 @@ import {
   FormControl,
 } from "react-bootstrap";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const EjemplarUpdate = () => {
+  const Params = useParams();
   const [nombreEjemplar, setNombreEjemplar] = useState("");
   const [numeroEjemplar, setNumeroEjemplar] = useState("");
   const [tatlabialEjemplar, setTatlabialEjemplar] = useState(0);
@@ -34,6 +36,7 @@ const EjemplarUpdate = () => {
   const [isLoading3, setLoading3] = useState(true);
   const [isLoading4, setLoading4] = useState(true);
   const [isLoading5, setLoading5] = useState(true);
+  const [isLoading6, setLoading6] = useState(true);
   const [pelajes, setPelajes] = useState([]);
   const [haras, setHaras] = useState([]);
   const [propietarios, setPropietarios] = useState([]);
@@ -57,6 +60,25 @@ const EjemplarUpdate = () => {
         console.log(res);
         setPelajes(res.data);
         setLoading5(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(`http://localhost:5000/api/v1/ejemplares/${Params.ejemplarId}`)
+      .then((res) => {
+        console.log(res);
+        setNombreEjemplar(res.data.data[0].nombre_ejemplar);
+        setNumeroEjemplar(res.data.data[0].numero_ejemplar);
+        setTatlabialEjemplar(res.data.data[0].numero_tatuaje_labial);
+        setPrecioEjemplar(res.data.data[0].precio_ejemplar);
+        setFecha_nacEjemplar(res.data.data[0].fechanac);
+        setPesoEjemplar(res.data.data[0].peso_ejemplar);
+        setPadreEjemplar(res.data.data[0].fk_padre_ejemplar);
+        setMadreEjemplar(res.data.data[0].fk_madre_ejemplar);
+        setImagenEjemplar(res.data.data[0].imagen_ejemplar);
+        setHaraEjemplar(res.data.data[0].fk_hara);
+        setPelajeEjemplar(res.data.data[0].fk_pelaje);
+        setGeneroEjemplar(res.data.data[0].sexo_ejemplar);
+        setLoading6(false);
       })
       .catch((err) => console.log(err));
     axios
@@ -120,8 +142,8 @@ const EjemplarUpdate = () => {
     console.log(imagenEjemplar);
     event.preventDefault();
     try {
-      await axios.post(
-        "http://localhost:5000/api/v1/ejemplares/registrar_ejemplar",
+      await axios.patch(
+        `http://localhost:5000/api/v1/ejemplares/${Params.ejemplarId}`,
         {
           nombreEjemplar,
           numeroEjemplar,
@@ -200,10 +222,6 @@ const EjemplarUpdate = () => {
   const handleImagen = (event) => {
     setImagenEjemplar(event.target.value);
   };
-  const handlePropietario = (event) => {
-    setPropietarioEjemplar(event.target.value);
-    settogglePropietarios(true);
-  };
   const handleHara = (event) => {
     setHaraEjemplar(event.target.value);
     settoggleHaras(true);
@@ -215,14 +233,6 @@ const EjemplarUpdate = () => {
   const handleGenero = (event) => {
     setGeneroEjemplar(event.target.value);
   };
-  const handleCaballerizas = (event) => {
-    setCaballeriza(event.target.value);
-    settoggleCaballerizas(true);
-    settogglePuestos(true);
-  };
-  const handlePuesto = (event) => {
-    setPuestoEjemplar(event.target.value);
-  };
 
   return (
     <Container>
@@ -231,7 +241,7 @@ const EjemplarUpdate = () => {
           <Card.Body className="px-4">
             <Form onSubmit={handleData}>
               <h3 className="fw-bold mb-4 pb-2 pb-md-0 mb-md-5">
-                Registro de Ejemplar
+                Editar Ejemplar
               </h3>
 
               <Row className="align-items-center">
@@ -366,34 +376,11 @@ const EjemplarUpdate = () => {
                 <Col>
                   <FormLabel>Imagen</FormLabel>
                   <input
-                    value={imagenEjemplar}
                     className="form-control"
                     type="file"
                     id="formFile"
                     onChange={handleImagen}
                   />
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <FormLabel>Propietario</FormLabel>
-                    <FormSelect
-                      onChange={handlePropietario}
-                      value={propietarioEjemplar}
-                    >
-                      <option key={1} disabled={togglePropietarios}>
-                        Propietario
-                      </option>
-                      {propietarios.data.map((propietario) => (
-                        <option
-                          key={propietario.codigo_persona}
-                          value={propietario.codigo_persona}
-                        >
-                          {propietario.nombre1_persona}{" "}
-                          {propietario.apellido1_persona}
-                        </option>
-                      ))}
-                    </FormSelect>
-                  </FormGroup>
                 </Col>
               </Row>
 
@@ -433,57 +420,7 @@ const EjemplarUpdate = () => {
                 </Col>
               </Row>
 
-              <Row className="mt-2 align-content-center align-items-center">
-                <Col className="col-6">
-                  <FormGroup>
-                    <FormLabel>Caballeriza</FormLabel>
-                    <FormSelect
-                      onChange={handleCaballerizas}
-                      value={caballeriza}
-                    >
-                      <option key={1} disabled={toggleCaballerizas}>
-                        Caballeriza
-                      </option>
-                      {caballerizas.data.map((caballeriza) => (
-                        <option
-                          key={caballeriza.codigo_caballeriza}
-                          value={caballeriza.codigo_caballeriza}
-                        >
-                          {caballeriza.codigo_caballeriza}
-                        </option>
-                      ))}
-                    </FormSelect>
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <FormLabel>Puesto</FormLabel>
-                    <FormSelect
-                      onChange={handlePuesto}
-                      value={puestoEjemplar}
-                      disabled={!togglePuestos}
-                    >
-                      <option key={1} disabled={togglePuestos}>
-                        Puesto
-                      </option>
-                      {puestos.data.map(
-                        (puesto) =>
-                          puesto.fk_caballeriza == caballeriza && (
-                            <option
-                              key={puesto.codigo_puesto}
-                              value={puesto.codigo_puesto}
-                            >
-                              {puesto.numero_puesto}
-                            </option>
-                          )
-                      )}
-                    </FormSelect>
-                  </FormGroup>
-                </Col>
-              </Row>
-
               <Row>
-                <Col></Col>
                 <Col>
                   <h6 className="fw-bold mt-2" itemType="radio">
                     Genero:
@@ -512,12 +449,12 @@ const EjemplarUpdate = () => {
                 </Col>
               </Row>
               <Button
-                className="mb-4 mt-4 align"
+                className="mb-4 mt-4 align btn-success"
                 size="lg"
                 type="submit"
                 onClick={handleData}
               >
-                Registrar
+                Confirmar cambios
               </Button>
             </Form>
           </Card.Body>

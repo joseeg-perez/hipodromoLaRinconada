@@ -42,7 +42,14 @@ const obtenerListaDeCaballerizasVacias = async () => {
 
 const obtenerVeterinarioIndividual = async (veterinarioId) => {
   const query = {
-    text: "SELECT * FROM persona_veterinario WHERE codigo_persona=$1",
+    text: `SELECT codigo_persona, nombre1_persona, apellido1_persona, 
+    nombre2_persona, apellido2_persona, cedula_persona, 
+    to_char(fecha_nacimiento_persona :: DATE, 'dd/mm/yyyy') as fecha_nacimiento_persona,
+    to_char(fecha_inicio :: DATE, 'dd/mm/yyyy') as fecha_inicio, 
+    codigo_caballeriza, cantidad_puestos 
+            FROM persona_veterinario, veterinario_caballeriza, caballeriza 
+            WHERE fk_veterinario = codigo_persona and fk_caballeriza = codigo_caballeriza and fecha_fin IS NULL
+        AND codigo_persona = $1`,
     values: [veterinarioId],
   };
 
