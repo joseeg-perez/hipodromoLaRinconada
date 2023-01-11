@@ -25,9 +25,9 @@ const obtenerListaDeJinetesDisponibles = async (participacionId) => {
   }
 };
 
-const obtenerListaDeEjemplaresDisponibles = async (sexoEjemplar) => {
+const obtenerListaDeEjemplaresDisponibles = async (cambios) => {
   try {
-    const listaEjemplares = await Participacion.obtenerListaDeEjemplaresDisponibles(sexoEjemplar);
+    const listaEjemplares = await Participacion.obtenerListaDeEjemplaresDisponibles(cambios);
 
     return (listaEjemplares);
   } catch (error) {

@@ -28,11 +28,12 @@ const obtenerRetiroIndividual = async (req, res) => {
 };
 
 const registrarRetiro = async (req, res) => {
-  const { fechaRetiro, fkMotivo } = req.body;
+  const { fechaRetiro, fkMotivo, codigoParticipacion } = req.body; //codigo participacion es para hacer el update en la tabla participacion
 
   const nuevoRetiro = {
     fechaRetiro,
     fkMotivo,
+    codigoParticipacion,
   };
 
   try {

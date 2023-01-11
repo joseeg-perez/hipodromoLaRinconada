@@ -30,12 +30,12 @@ const obtenerListaDeJinetesDisponibles = async (req, res) => {
 };
 
 const obtenerListaDeEjemplaresDisponibles = async (req, res) => {
-  const {
-    sexoEjemplar
-  } = req.body;
+  const  {
+    body
+  } = req;
 
   try {
-    const listaDeEjemplares = await participacionService.obtenerListaDeEjemplaresDisponibles(sexoEjemplar);
+    const listaDeEjemplares = await participacionService.obtenerListaDeEjemplaresDisponibles(body);
 
     res.status(200).send({ status: "OK", data: listaDeEjemplares });
   } catch (error) {

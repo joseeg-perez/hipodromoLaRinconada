@@ -42,12 +42,22 @@ const obtenerListaDeJinetesDisponibles = async (participacionId) => {
   }
 };
 
-const obtenerListaDeEjemplaresDisponibles = async (sexoEjemplar) => {
+const obtenerListaDeEjemplaresDisponibles = async (cambios) => {
+  const  {
+    sexoEjemplar,
+    fkCarrera,
+  } = cambios
+  
   const query = {
     text: `SELECT codigo_ejemplar, nombre_ejemplar
     FROM ejemplar
-    WHERE sexo_ejemplar = $1`,
-    values:[sexoEjemplar],
+    WHERE codigo_ejemplar NOT IN (SELECT fk_ejemplar
+                  FROM participacion, ejemplar
+                  WHERE fk_carrera = $2
+                  AND fk_ejemplar = codigo_ejemplar
+                  AND fk_retiro IS NULL)
+    AND sexo_ejemplar =$1`,
+    values:[sexoEjemplar, fkCarrera],
   };
 
   try {
@@ -201,7 +211,22 @@ const obtenerParticipacionIndividual = async (participacionId) => {
 
 const obtenerParticipacionesEnCarrera = async (participacionId) => {
   const query = {
-    text: "SELECT * FROM participacion WHERE codigo_participacion=$1",
+    text: `select distinct ps.fk_stud, ec.fk_entrenador
+    from ejemplar,
+    persona_entrenador e, entrenador_caballeriza ec, puesto_caballo pc, stud,
+    ejemplar_propietario ep, propietario_stud ps, caballeriza,
+    puesto p
+    where pc.fk_ejemplar = codigo_ejemplar
+    and pc.fk_puesto = codigo_puesto
+    and p.fk_caballeriza = codigo_caballeriza
+    and ec.fk_caballeriza = codigo_caballeriza
+    and ec.fk_entrenador = e.codigo_persona
+    and ec.fecha_fin IS NULL
+	and ps.fecha_fin_propiedad IS NULL
+    and ep.fk_ejemplar = codigo_ejemplar
+    and ep.fk_prop_stud = ps.codigo_prop_stud
+    and ps.fk_stud = codigo_stud
+	and codigo_ejemplar = $1`,
     values: [participacionId],
   };
 
@@ -268,48 +293,15 @@ const registrarParticipacion = async (nuevaParticipacion) => {
 
 const actualizarParticipacion = async (participacionId, cambios) => {
   const {
-    gualdrapa,
-    puestoPista,
-    pesoCaballo,
-    precioEjemplar,
-    comentario,
-    fkEjemplar,
-    fkCarrera,
-    fkJinete,
-    fkEntrenador,
     fkRetiro,
-    fkResultado,
-    fkStud,
   } = cambios;
 
   const query = {
     text: `UPDATE participacion
-            SET gualdrapa=$1, 
-            puesto_pista=$2,
-            peso_caballo=$3,
-            precio_ejemplar=$4,
-            comentario=$5,
-            fk_ejemplar=$6,
-            fk_carrera=$7,
-            fk_jinete=$8,
-            fk_entrenador=$9,
-            fk_retiro=$10,
-            fk_resultado=$11,
-            fk_stud=$12
-            WHERE codigo_participacion=$13;`,
+            SET fk_retiro=$1
+            WHERE codigo_participacion=$2;`,
     values: [
-      gualdrapa,
-      puestoPista,
-      pesoCaballo,
-      precioEjemplar,
-      comentario,
-      fkEjemplar,
-      fkCarrera,
-      fkJinete,
-      fkEntrenador,
       fkRetiro,
-      fkResultado,
-      fkStud,
       participacionId,
     ],
   };
