@@ -25,6 +25,7 @@ const InscribirEjemplar = () => {
   const [isLoading5, setLoading5] = useState(true);
   const [isLoading6, setLoading6] = useState(true);
   const [isLoading7, setLoading7] = useState(true);
+  const [isLoading8, setLoading8] = useState(true);
   const [medicamentos, setMedicamentos] = useState([]);
   const [implementos, setImplementos] = useState([]);
   const [ejemplares, setEjemplares] = useState([]);
@@ -32,8 +33,30 @@ const InscribirEjemplar = () => {
   const [puestosOcupados, setPuestosOcupados] = useState([]);
   const [maxParticipantes, setMaxParticipantes] = useState([]);
   const [inscritos, setInscritos] = useState([]);
+  const [generoCarrera, setGeneroCarrera] = useState([]);
+  let sexoEjemplar;
 
+  const obtenerEjemplares=async()=>{
+    console.log("entro");
+    let data;
+    try {
+      let res=await axios.post(
+        "http://localhost:5000/api/v1/participaciones/listado_de_ejemplares",
+        {
+          sexoEjemplar,
+        }
+      );
+        data=res.data;
+    } catch (error) {
+      throw error;
+    }
+      
+    setEjemplares(data);
+    setLoading3(false);
+  }
+  
   useEffect(() => {
+    console.log("sisa");
     axios
       .get("http://localhost:5000/api/v1/medicamentos/listado_de_medicamentos")
       .then((res) => {
@@ -48,14 +71,6 @@ const InscribirEjemplar = () => {
         console.log(res);
         setImplementos(res.data);
         setLoading2(false);
-      })
-      .catch((err) => console.log(err));
-    axios
-      .get("http://localhost:5000/api/v1/ejemplares/listado_de_ejemplares")
-      .then((res) => {
-        console.log(res);
-        setEjemplares(res.data);
-        setLoading3(false);
       })
       .catch((err) => console.log(err));
     axios
@@ -98,23 +113,62 @@ const InscribirEjemplar = () => {
         setLoading7(false);
       })
       .catch((err) => console.log(err));
+    axios
+      .get(
+        `http://localhost:5000/api/v1/participaciones/obtener_sexo_carrera/${id}`
+      )
+      .then((res) => {
+        console.log(res);
+        setGeneroCarrera(res.data);
+        setLoading8(false);
+        // sexoEjemplar=generoCarrera.data[0].valor_regla==1 ? "m" : "f";
+        // obtenerEjemplares();
+      })
+      .catch((err) => console.log(err));
+
+    // if (isLoading8) {
+    //   axios
+    //     .get(
+    //       `http://localhost:5000/api/v1/participaciones/listado_de_ejemplares`
+    //     )
+    //     .then((res) => {
+    //       console.log(res);
+    //       setEjemplares(res.data);
+    //       setLoading3(false);
+    //     })
+    //     .catch((err) => console.log(err));
+    // }
   }, []);
+  
+  // if(!isLoading8){
+  //   sexoEjemplar=generoCarrera.data[0].valor_regla==1 ? "m" : "f";
+  //   obtenerEjemplares();
+  // }
+  
   if (
     isLoading ||
     isLoading2 ||
-    isLoading3 ||
+    
     isLoading4 ||
     isLoading5 ||
     isLoading6 ||
-    isLoading7
+    isLoading7 ||
+    isLoading8
   )
     return <div>Cargando</div>;
-    console.log(maxParticipantes.data[0].valor_regla);
-    console.log(inscritos.data[0].count);
-    if (maxParticipantes.data[0].valor_regla == inscritos.data[0].count)
-    return alert("No se pueden inscribir mas ejemplares");
 
-  
+    if(isLoading3){
+      sexoEjemplar=generoCarrera.data[0].valor_regla==1 ? "m" : "f";
+      obtenerEjemplares();
+      return <div>Cargando</div>;
+    }
+
+  //console.log(maxParticipantes.data[0].valor_regla);
+  //console.log(inscritos.data[0].count);
+  console.log(generoCarrera.data[0].valor_regla);
+  console.log(ejemplares);
+  if (maxParticipantes.data[0].valor_regla == inscritos.data[0].count)
+    return alert("No se pueden inscribir mas ejemplares");
 
   // const ejemplares = [
   //   {
