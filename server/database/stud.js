@@ -188,6 +188,7 @@ const registrarStud = async (nuevoStud) => {
 
     return nombreStud;
   } catch (error) {
+    console.log(error)  
     if (error.code === "23505") {
       throw {
         status: 409,
