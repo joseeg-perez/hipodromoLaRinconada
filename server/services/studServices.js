@@ -106,7 +106,6 @@ const cambiarPorcentajes = async (cambios) => {
 };
 
 const agregarVestimentas = async (cambios) => {
-  console.log(cambios.nuevasVestimentas[0])
     try {
         const listaVestimentas = cambios.nuevasVestimentas;
         for (let i = 0; i < listaVestimentas.length; i++) {
