@@ -8,8 +8,6 @@ const obtenerListaDeRgoJinetes = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0)
-      httpError.noRegistrado("ningun rango asociado a un jinete");
 
     dbConnection.end;
     return rows;
@@ -64,44 +62,32 @@ const registrarRgoJinete = async (nuevoRgoJinete) => {
 };
 
 const actualizarRgoJinete = async (rgoJineteId, cambios) => {
-  const { 
-    nombreRango,
-    descripcionRango,
-    pesoMin,
-    pesoMax,
-   } = cambios;
+  const { nombreRango, descripcionRango, pesoMin, pesoMax } = cambios;
 
-    const query = {
-        text:`UPDATE rango_jinete
+  const query = {
+    text: `UPDATE rango_jinete
         SET nombre_rango=$1,
         descripcion_rango=$2,
         peso_min=$3,
         peso_max=$4
         WHERE codigo_rango=$5;`,
-        values: [
-          nombreRango,
-          descripcionRango,
-          pesoMin,
-          pesoMax,
-          rgoJineteId,
-        ],
+    values: [nombreRango, descripcionRango, pesoMin, pesoMax, rgoJineteId],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0) httpError.idNoEncontrado("El rango", rangoId);
+
+    dbConnection.end;
+    return nombreRango;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay un rango con el codigo '${rgoJineteId}' registrado.`,
+      };
     }
-    try {
-      const { rowCount } = await dbConnection.query(query);
-      if (rowCount === 0)
-        httpError.idNoEncontrado("El rango", rangoId);
-            
-        dbConnection.end;
-        return(nombreRango);
-    } catch (error) {
-        if (error.code === "23505") {
-          throw {
-            status: 409,
-            message: `Ya hay un rango con el codigo '${rgoJineteId}' registrado.`,
-          };
-        }
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const borrarRgoJinete = async (rgoJineteId) => {

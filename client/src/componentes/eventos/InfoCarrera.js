@@ -20,29 +20,26 @@ const InfoCarrera = (props) => {
                   <h5>{`NOMBRE: ${props.nombre}`}</h5>
                 </Row>
                 <Row>
-                  <h5>{`HORA: ${props.hora}`}</h5>
+                    <h5>{`CATEGORIA: ${props.cat}`}</h5>
                 </Row>
                 <Row>
-                  <h5>{`DISTANCIA: ${props.distancia}`}</h5>
+                  <h5>{`PREMIO 1: ${props.p1}`}</h5>
                 </Row>
                 <Row>
-                  <h5>{`CANTIDAD: ${props.cantidad}`}</h5>
+                  <h5>{`PREMIO 2: ${props.p2}`}</h5>
                 </Row>
                 <Row>
-                  <h5>{`EDAD: ${props.edad}`}</h5>
+                  <h5>{`PREMIO 3: ${props.p3}`}</h5>
                 </Row>
                 <Row>
-                  <h5>{`PESO: ${props.peso}`}</h5>
+                  <h5>{`PREMIO 4: ${props.p4}`}</h5>
                 </Row>
                 <Row>
-                  <h5>{`GENERO: ${props.genero}`}</h5>
-                </Row>
-                <Row>
-                  <h5>{`CAMPEONES: ${props.camp}`}</h5>
+                  <h5>{`PREMIO 5: ${props.p5}`}</h5>
                 </Row>
                 <Row className="row row-cols-2">
                   <Col className="col-8">
-                    <h5>{`VICTORIAS: ${props.vic}`}</h5>
+                  <h5>{`HORA: ${props.hora}`}</h5>
                   </Col>
 
                   <Col className="col-4">
@@ -60,11 +57,31 @@ const InfoCarrera = (props) => {
                       <NavLink
                         className="btn btn-primary"
                         to={{
-                          pathname: "/inscribir/ejemplar",
+                          pathname: `/inscribir/ejemplar/${props.id}`,
                           state: { props },
                         }}
                       >
                         Inscribir
+                      </NavLink>
+                    ) : props.tipo == "editar" ? (
+                      <NavLink
+                        className="ms-5"
+                        to={{
+                          pathname: `/carrera/${props.id}/update`,
+                          state: { props },
+                        }}
+                      >
+                        <img src={lapiz} width={40} height={40}></img>
+                      </NavLink>
+                    ) : props.tipo == "retirar" ? (
+                      <NavLink
+                        className="btn btn-primary"
+                        to={{
+                          pathname: `/retiros/carrera/${props.id}`,
+                          state: { props },
+                        }}
+                      >
+                        Retirar
                       </NavLink>
                     ) : (
                       <p></p>

@@ -3,8 +3,19 @@ import { Card, Col, Row, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import edit from "../../assets/editicon.png";
 import trash from "../../assets/trashicon.png";
+import axios from "axios";
 
 const InfoPropietario = (props) => {
+  const handleDelete = (event) => {
+    axios
+      .delete(`http://localhost:5000/api/v1/propietarios/${props.Id}`)
+      .then((res) => {
+        if (res.data != null) {
+          alert("Se eliminó el propietario con éxito");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <Col>
       <Card className="mt-5">
@@ -75,7 +86,10 @@ const InfoPropietario = (props) => {
                   </Button>
                 </Link>
 
-                <Button className="btn btn-light btn-outline-danger btn-sm mx-1">
+                <Button
+                  className="btn btn-light btn-outline-danger btn-sm mx-1"
+                  onClick={handleDelete}
+                >
                   <img src={trash} alt="/" width={20} />
                 </Button>
               </div>

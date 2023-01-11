@@ -2,57 +2,51 @@ const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeParticipaciones = async () => {
-    const query = {
-        text: "SELECT * FROM participacion",
-    };
+  const query = {
+    text: "SELECT * FROM participacion",
+  };
 
-    try {
-        const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.noRegistrado("ninguna participacion");
+  try {
+    const { rows } = await dbConnection.query(query);
 
-        dbConnection.end;
-        return (rows);
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const obtenerParticipacionIndividual = async (participacionId) => {
-    const query = {
-        text: "SELECT * FROM participacion WHERE codigo_participacion=$1",
-        values: [participacionId],
-    };
+  const query = {
+    text: "SELECT * FROM participacion WHERE codigo_participacion=$1",
+    values: [participacionId],
+  };
 
-    try {
-        const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.idNoEncontrado("La participacion", participacionId);
-        
-        dbConnection.end;
-        return (rows);
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
+  try {
+    const { rows } = await dbConnection.query(query);
+    if (rows.length === 0)
+      httpError.idNoEncontrado("La participacion", participacionId);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const registrarParticipacion = async (nuevaParticipacion) => {
-    const { 
-        gualdrapa,
-        puestoPista,
-        pesoCaballo,
-        precioEjemplar,
-        comentario,
-        fkEjemplar,
-        fkCarrera,
-        fkJinete,
-        fkEntrenador,
-        fkRetiro,
-        fkResultado,
-        fkStud,
-     } = nuevaParticipacion;
+  const {
+    gualdrapa,
+    puestoPista,
+    pesoCaballo,
+    fkEjemplar,
+    fkCarrera,
+    fkJinete,
+    fkEntrenador,
+    fkStud,
+  } = nuevaParticipacion;
 
-    const text = `INSERT INTO participacion(
+  const text = `INSERT INTO participacion(
         gualdrapa, 
         puesto_pista,
         peso_caballo,
@@ -87,26 +81,26 @@ const registrarParticipacion = async (nuevaParticipacion) => {
         }
         throw { status: error?.status || 500, message: error?.message || error };
     }
-};
+  };
 
 const actualizarParticipacion = async (participacionId, cambios) => {
-    const { 
-        gualdrapa,
-        puestoPista,
-        pesoCaballo,
-        precioEjemplar,
-        comentario,
-        fkEjemplar,
-        fkCarrera,
-        fkJinete,
-        fkEntrenador,
-        fkRetiro,
-        fkResultado,
-        fkStud,
-       } = cambios;
-    
-        const query = {
-            text:`UPDATE participacion
+  const {
+    gualdrapa,
+    puestoPista,
+    pesoCaballo,
+    precioEjemplar,
+    comentario,
+    fkEjemplar,
+    fkCarrera,
+    fkJinete,
+    fkEntrenador,
+    fkRetiro,
+    fkResultado,
+    fkStud,
+  } = cambios;
+
+  const query = {
+    text: `UPDATE participacion
             SET gualdrapa=$1, 
             puesto_pista=$2,
             peso_caballo=$3,
@@ -120,62 +114,62 @@ const actualizarParticipacion = async (participacionId, cambios) => {
             fk_resultado=$11,
             fk_stud=$12
             WHERE codigo_participacion=$13;`,
-            values: [
-                gualdrapa,
-                puestoPista,
-                pesoCaballo,
-                precioEjemplar,
-                comentario,
-                fkEjemplar,
-                fkCarrera,
-                fkJinete,
-                fkEntrenador,
-                fkRetiro,
-                fkResultado,
-                fkStud,
-                participacionId
-            ],
-        }
-        try {
-          const { rowCount } = await dbConnection.query(query);
-          if (rowCount === 0)
-            httpError.idNoEncontrado("La participacion", participacionId);
-                
-            dbConnection.end;
-            return;
-        } catch (error) {
-            if (error.code === "23505") {
-              throw {
-                status: 409,
-                message: `Ya hay una participacion con el codigo '${participacionId}' registrada.`,
-              };
-            }
-            throw { status: error?.status || 500, message: error?.message || error };
-        }
+    values: [
+      gualdrapa,
+      puestoPista,
+      pesoCaballo,
+      precioEjemplar,
+      comentario,
+      fkEjemplar,
+      fkCarrera,
+      fkJinete,
+      fkEntrenador,
+      fkRetiro,
+      fkResultado,
+      fkStud,
+      participacionId,
+    ],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0)
+      httpError.idNoEncontrado("La participacion", participacionId);
+
+    dbConnection.end;
+    return;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay una participacion con el codigo '${participacionId}' registrada.`,
+      };
+    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const borrarParticipacion = async (participacionId) => {
-    const query = {
-        text: "DELETE FROM participacion WHERE codigo_participacion=$1",
-        values: [participacionId],
-    };
+  const query = {
+    text: "DELETE FROM participacion WHERE codigo_participacion=$1",
+    values: [participacionId],
+  };
 
-    try {
-        const { rowCount } = await dbConnection.query(query);        
-        if (rowCount === 0)
-            httpError.idNoEncontrado("La participacion ", participacionId);
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0)
+      httpError.idNoEncontrado("La participacion ", participacionId);
 
-        dbConnection.end;
-        return;
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
+    dbConnection.end;
+    return;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 module.exports = {
-    obtenerListaDeParticipaciones,
-    obtenerParticipacionIndividual,
-    registrarParticipacion,
-    actualizarParticipacion,
-    borrarParticipacion,
+  obtenerListaDeParticipaciones,
+  obtenerParticipacionIndividual,
+  registrarParticipacion,
+  actualizarParticipacion,
+  borrarParticipacion,
 };

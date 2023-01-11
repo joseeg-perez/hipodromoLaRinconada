@@ -23,7 +23,7 @@ import CarrerasEvento from "./pages/CarrerasEvento";
 import RegistrarEvento from "./pages/RegistrarEvento";
 import InscribirEjemplar from "./pages/InscribirEjemplar";
 import { EjemplarDetail } from "./pages/EjemplarDetail";
-import { EjemplarUpdate } from "./pages/EjemplarUpdate";
+import EjemplarUpdate from "./pages/EjemplarUpdate";
 import JineteDetail from "./pages/JineteDetail";
 import JineteUpdate from "./pages/JineteUpdate";
 import JineteAgregar from "./pages/JineteAgregar";
@@ -37,6 +37,10 @@ import MotivoRetiroAgregar from "./pages/MotivoRetiroAgregar";
 import PropietariosAgregar from "./pages/PropietarioAgregar";
 import PropietarioAgregar from "./pages/PropietarioAgregar";
 import VestimentaAgregar from "./pages/VestimentaAgregar";
+import CarreraUpdate from "./pages/CarreraUpdate";
+import RegistrarCarrera from "./pages/RegistrarCarrera";
+import EventosRetirar from "./pages/EventosRetirar";
+import RetirarEjemplar from "./pages/RetirarEjemplar";
 import PropietarioUpdate from "./pages/PropietarioUpdate";
 import PropietarioDetail from "./pages/PropietarioDetail";
 import EntrenadorAgregar from "./pages/EntrenadorAgregar";
@@ -52,6 +56,14 @@ import HaraAgregar from "./pages/HaraAgregar";
 import HaraUpdate from "./pages/HaraUpdate";
 import CaballerizaAgregar from "./pages/CaballerizaAgregar";
 import RestauranteUpdate from "./pages/RestauranteUpdate";
+import Pelajes from "./pages/Pelajes";
+import PelajeAgregar from "./pages/PelajeAgregar";
+import Vestimentas from "./pages/Vestimentas";
+import EntrenadorUpdate from "./pages/EntrenadorUpdate";
+import PelajeUpdate from "./pages/PelajeUpdate";
+import ImplementoUpdate from "./pages/ImplementoUpdate";
+import MedicamentoUpdate from "./pages/MedicamentoUpdate";
+import MotivoRetiroUpdate from "./pages/MotivoRetiroUpdate";
 
 function App() {
   return (
@@ -95,6 +107,10 @@ function App() {
 
         <Route path="/entrenadores/createEntrenador" exact>
           <EntrenadorAgregar></EntrenadorAgregar>
+        </Route>
+
+        <Route path="/entrenadores/:entrenadorId/updateEntrenador" exact>
+          <EntrenadorUpdate></EntrenadorUpdate>
         </Route>
 
         <Route path="/veterinarios" exact>
@@ -193,6 +209,10 @@ function App() {
           <MedicamentoAgregar></MedicamentoAgregar>
         </Route>
 
+        <Route path="/medicamentos/:medicamentoId/updateMedicamento" exact>
+          <MedicamentoUpdate></MedicamentoUpdate>
+        </Route>
+
         <Route path="/implementos" exact>
           <Implementos></Implementos>
         </Route>
@@ -201,12 +221,20 @@ function App() {
           <ImplementoAgregar></ImplementoAgregar>
         </Route>
 
+        <Route path="/implementos/:implementoId/updateImplemento" exact>
+          <ImplementoUpdate></ImplementoUpdate>
+        </Route>
+
         <Route path="/motivosRet" exact>
           <MotivosRetiro></MotivosRetiro>
         </Route>
 
         <Route path="/motivosRet/agregar" exact>
           <MotivoRetiroAgregar></MotivoRetiroAgregar>
+        </Route>
+
+        <Route path="/motivosRet/:motivoId/updateMotivo" exact>
+          <MotivoRetiroUpdate></MotivoRetiroUpdate>
         </Route>
 
         <Route path="/restaurantes" exact>
@@ -225,7 +253,7 @@ function App() {
           <ResultadoEvento></ResultadoEvento>
         </Route>
 
-        <Route path="/carreras/:eventoId">
+        <Route path="/carreras/:eventoId" exact>
           <CarrerasEvento></CarrerasEvento>
         </Route>
 
@@ -237,12 +265,32 @@ function App() {
           <RegistrarEvento></RegistrarEvento>
         </Route>
 
-        <Route path="/inscribir/ejemplar">
+        <Route path="/inscribir/ejemplar/:carreraId">
           <InscribirEjemplar></InscribirEjemplar>
         </Route>
 
         <Route path="/vestimentas" exact>
+          <Vestimentas></Vestimentas>
+        </Route>
+
+        <Route path="/vestimentas/createVestimenta" exact>
           <VestimentaAgregar></VestimentaAgregar>
+        </Route>
+
+        <Route path="/carrera/:carreraId/update" exact>
+          <CarreraUpdate></CarreraUpdate>
+        </Route>
+
+        <Route path="/carrera/crear">
+          <RegistrarCarrera></RegistrarCarrera>
+        </Route>
+
+        <Route path="/retiros/eventos" exact>
+          <EventosRetirar></EventosRetirar>
+        </Route>
+
+        <Route path="/retiros/carrera/:carreraId" exact>
+          <RetirarEjemplar></RetirarEjemplar>
         </Route>
 
         <Route path="/haras" exact>
@@ -251,6 +299,22 @@ function App() {
 
         <Route path="/haras/createHara" exact>
           <HaraAgregar></HaraAgregar>
+        </Route>
+
+        <Route path="/haras/:haraId/updateHara" exact>
+          <HaraUpdate></HaraUpdate>
+        </Route>
+
+        <Route path="/pelajes" exact>
+          <Pelajes></Pelajes>
+        </Route>
+
+        <Route path="/pelajes/createPelaje" exact>
+          <PelajeAgregar></PelajeAgregar>
+        </Route>
+
+        <Route path="/pelajes/:pelajeId/updatePelaje" exact>
+          <PelajeUpdate></PelajeUpdate>
         </Route>
 
         <Route path="/haras/updateHara" exact>

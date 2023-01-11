@@ -2,21 +2,19 @@ const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeColores = async () => {
-    const query = {
-        text: "SELECT * FROM color",
-    };
+  const query = {
+    text: "SELECT * FROM color",
+  };
 
-    try {
-        const { rows } = await dbConnection.query(query);
-        if (rows.length === 0)
-            httpError.noRegistrado("ningun color");
+  try {
+    const { rows } = await dbConnection.query(query);
 
-        dbConnection.end;
-        return (rows);
-    } catch (error) {
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
-};  
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
 
 // const obtenerColorIndividual = async (ColorId) => {
 //     try {
@@ -31,7 +29,7 @@ const obtenerListaDeColores = async () => {
 // const registrarColor = async (nuevoColor) => {
 //     try {
 //         const ColorCreado = await Color.registrarColor(nuevoColor);
-//         const idColorCreado = await Color.obtenerIdColorNueva(nuevoColor); 
+//         const idColorCreado = await Color.obtenerIdColorNueva(nuevoColor);
 
 //         const propietarioColor = {
 //             porcentajePropiedad: 100,
@@ -54,7 +52,6 @@ const obtenerListaDeColores = async () => {
 //         await registrarColorColor(ColorColor1);
 //         await registrarColorColor(ColorColor2);
 
-
 //         return(ColorCreado);
 //     } catch (error) {
 //         throw(error);
@@ -74,9 +71,9 @@ const obtenerListaDeColores = async () => {
 // };
 
 module.exports = {
-    obtenerListaDeColores,
-    // obtenerColorIndividual,
-    // registrarColor,
-    // actualizarColor,
-    // borrarColor,
+  obtenerListaDeColores,
+  // obtenerColorIndividual,
+  // registrarColor,
+  // actualizarColor,
+  // borrarColor,
 };

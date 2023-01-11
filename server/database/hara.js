@@ -8,7 +8,6 @@ const obtenerListaDeHaras = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0) httpError.noRegistrado("ningun hara");
 
     dbConnection.end;
     return rows;
@@ -58,38 +57,30 @@ const registrarHara = async (nuevaHara) => {
 };
 
 const actualizarHara = async (haraId, cambios) => {
-  const { 
-    nombreHara,
-    fkLugar
-   } = cambios;
+  const { nombreHara, fkLugar } = cambios;
 
-    const query = {
-        text:`UPDATE hara
+  const query = {
+    text: `UPDATE hara
         SET nombre_hara=$1,
         fk_lugar=$2
         WHERE codigo_hara=$3;`,
-        values: [
-          nombreHara,
-          fkLugar,
-          haraId
-        ],
+    values: [nombreHara, fkLugar, haraId],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0) httpError.idNoEncontrado("El hara", haraId);
+
+    dbConnection.end;
+    return nombreHara;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay un hara con el codigo '${haraId}' registrada.`,
+      };
     }
-    try {
-      const { rowCount } = await dbConnection.query(query);
-      if (rowCount === 0)
-        httpError.idNoEncontrado("El hara", haraId);
-            
-        dbConnection.end;
-        return(nombreHara);
-    } catch (error) {
-        if (error.code === "23505") {
-          throw {
-            status: 409,
-            message: `Ya hay un hara con el codigo '${haraId}' registrada.`,
-          };
-        }
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const borrarHara = async (haraId) => {

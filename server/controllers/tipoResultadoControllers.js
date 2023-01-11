@@ -1,30 +1,34 @@
 const tipoResultadoService = require("../services/tipoResultadoServices.js");
 
 const obtenerListaDeTipoResultado = async (req, res) => {
-    try {
-        const listaTipoResultado =  await tipoResultadoService.obtenerListaDeTipoResultado();
+  try {
+    const listaTipoResultado =
+      await tipoResultadoService.obtenerListaDeTipoResultado();
 
-        res.status(200).send({ status: "OK", data: listaTipoResultado });
-    } catch (error) {
-        res 
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error }});
-    }
+    res.status(200).send({ status: "OK", data: listaTipoResultado });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
-const obtenerTipoResultadoIndividual = async (req, res) => { 
-    const {
-        params: { tipoResultadoId },
-    } = req;
-    
-    try {
-        const TipoResultado = await tipoResultadoService.obtenerTipoResultadoIndividual(tipoResultadoId);
-        res.status(200).send({ status: "OK", data: TipoResultado});
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: {error: error?.message || error} });       
-    }
+const obtenerTipoResultadoIndividual = async (req, res) => {
+  const {
+    params: { tipoResultadoId },
+  } = req;
+
+  try {
+    const TipoResultado =
+      await tipoResultadoService.obtenerTipoResultadoIndividual(
+        tipoResultadoId
+      );
+    res.status(200).send({ status: "OK", data: TipoResultado });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const registrarTipoResultado = async (req, res) => { 
@@ -36,51 +40,65 @@ const registrarTipoResultado = async (req, res) => {
         nombreTipoResultado: nombreTipoResultado.toLowerCase(),
     };
 
-    try {
-        await tipoResultadoService.registrarTipoResultado(nuevoTipoResultado);
-        res.status(200).send({ status: "OK", data: `Se ha creado el tipo de resultado '${nombreTipoResultado}' de forma satisfactoria.` });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
-    }
+  try {
+    await tipoResultadoService.registrarTipoResultado(nuevoTipoResultado);
+    res
+      .status(200)
+      .send({
+        status: "OK",
+        data: `Se ha creado el tipo de resultado '${nombreTipoResultado}' de forma satisfactoria.`,
+      });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const actualizarTipoResultado = async (req, res) => {
-    const {
-        body,
-        params: { tipoResultadoId },
-    } = req;
+  const {
+    body,
+    params: { tipoResultadoId },
+  } = req;
 
-    try {
-        const tipoResultadoActualizado = await tipoResultadoService.actualizarTipoResultado(tipoResultadoId, body);
-        res.send({ status: "OK", data: `Se ha actualizado la informacion del tipo de resultado '${tipoResultadoActualizado}' de forma satisfactoria.` });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
-    }
+  try {
+    const tipoResultadoActualizado =
+      await tipoResultadoService.actualizarTipoResultado(tipoResultadoId, body);
+    res.send({
+      status: "OK",
+      data: `Se ha actualizado la informacion del tipo de resultado '${tipoResultadoActualizado}' de forma satisfactoria.`,
+    });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const borrarTipoResultado = async (req, res) => {
-    const {
-        params: { tipoResultadoId },
-    } = req;
+  const {
+    params: { tipoResultadoId },
+  } = req;
 
-    try {
-        await tipoResultadoService.borrarTipoResultado(tipoResultadoId);
-        res.status(200).send({ status: "OK", data: `El tipo de resultado con el id '${tipoResultadoId}' se ha eliminado con exito.` });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: {error: error?.message || error} });
-    }
+  try {
+    await tipoResultadoService.borrarTipoResultado(tipoResultadoId);
+    res
+      .status(200)
+      .send({
+        status: "OK",
+        data: `El tipo de resultado con el id '${tipoResultadoId}' se ha eliminado con exito.`,
+      });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 module.exports = {
-    obtenerListaDeTipoResultado,
-    obtenerTipoResultadoIndividual,
-    registrarTipoResultado,
-    actualizarTipoResultado,
-    borrarTipoResultado,
+  obtenerListaDeTipoResultado,
+  obtenerTipoResultadoIndividual,
+  registrarTipoResultado,
+  actualizarTipoResultado,
+  borrarTipoResultado,
 };

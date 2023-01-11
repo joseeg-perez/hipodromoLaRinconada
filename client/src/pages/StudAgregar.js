@@ -89,7 +89,6 @@ const StudAgregar = () => {
           (colorD) => colorD.codigo_del_color == vestimenta.colorV
         ).id_color)
     );
-    console.log(vestimentas);
     try {
       await axios.post("http://localhost:5000/api/v1/studs/registrar_stud", {
         fechaCreacion,

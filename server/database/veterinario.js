@@ -10,7 +10,6 @@ const obtenerListaDeVeterinarios = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-    if (rows.length === 0) httpError.noRegistrado("ningun veterinario");
 
     dbConnection.end;
     return rows;
@@ -103,17 +102,17 @@ const registrarVeterinario = async (nuevoVeterinario) => {
 };
 
 const actualizarVeterinario = async (veterinarioId, cambios) => {
-  const { 
+  const {
     cedulaPersona,
     nombre1Persona,
     nombre2Persona,
     apellido1Persona,
     apellido2Persona,
     fechaNacimiento,
-   } = cambios;
+  } = cambios;
 
-    const query = {
-        text:`UPDATE persona_veterinario
+  const query = {
+    text: `UPDATE persona_veterinario
         SET cedula_persona=$1,
         nombre1_persona=$2,
         nombre2_persona=$3,
@@ -121,32 +120,32 @@ const actualizarVeterinario = async (veterinarioId, cambios) => {
         apellido2_persona=$5,
         fecha_nacimiento_persona=$6
         WHERE codigo_persona=$7;`,
-        values: [
-          cedulaPersona,
-          nombre1Persona,
-          nombre2Persona,
-          apellido1Persona,
-          apellido2Persona,
-          fechaNacimiento,
-          veterinarioId
-        ],
+    values: [
+      cedulaPersona,
+      nombre1Persona,
+      nombre2Persona,
+      apellido1Persona,
+      apellido2Persona,
+      fechaNacimiento,
+      veterinarioId,
+    ],
+  };
+  try {
+    const { rowCount } = await dbConnection.query(query);
+    if (rowCount === 0)
+      httpError.idNoEncontrado("El veterinario", veterinarioId);
+
+    dbConnection.end;
+    return nombre1Persona + " " + apellido1Persona;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay un veterinario con el numero de cedula '${cedulaPersona}' registrado.`,
+      };
     }
-    try {
-      const { rowCount } = await dbConnection.query(query);
-      if (rowCount === 0)
-        httpError.idNoEncontrado("El veterinario", veterinarioId);
-            
-        dbConnection.end;
-        return(nombre1Persona+" "+apellido1Persona);
-    } catch (error) {
-        if (error.code === "23505") {
-          throw {
-            status: 409,
-            message: `Ya hay un veterinario con el numero de cedula '${cedulaPersona}' registrado.`,
-          };
-        }
-        throw { status: error?.status || 500, message: error?.message || error };
-    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
 };
 
 const borrarVeterinario = async (veterinarioId) => {

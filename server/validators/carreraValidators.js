@@ -22,11 +22,11 @@ const validateCreate = [
         .isNumeric()
         .trim()   
         .notEmpty(),
-    check("horaCarrera")
-        .trim()    
-        .exists()
-        .notEmpty()
-        .matches(regExp),
+    // check("horaCarrera")
+    //     .trim()    
+    //     .exists()
+    //     .notEmpty()
+    //     .matches(regExp),
     (req, res, next) => {
         validateResult(req, res, next)
     }

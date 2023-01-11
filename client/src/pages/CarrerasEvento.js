@@ -6,7 +6,7 @@ import InfoCarrera from "../componentes/eventos/InfoCarrera";
 const CarrerasEvento = () => {
   const location = useLocation();
   const {
-    props: { id, fecha, tipo2},
+    props: { id, fecha, tipo2 },
   } = location.state;
   console.log(tipo2);
 
@@ -198,7 +198,15 @@ const CarrerasEvento = () => {
                     genero={x.genero}
                     camp={x.camp}
                     vic={x.vic}
-                    tipo={tipo2=="agregarResultados" ? "resultado": tipo2=="inscribirEjemplar" ? "inscribir" : "ver"}
+                    tipo={
+                      tipo2 == "agregarResultados"
+                        ? "resultado"
+                        : tipo2 == "inscribirEjemplar"
+                        ? "inscribir"
+                        : tipo2 == "retirarEjemplar"
+                        ? "retirar"
+                        : "ver"
+                    }
                   ></InfoCarrera>
                 ))}
               </Row>

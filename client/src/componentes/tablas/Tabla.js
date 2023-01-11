@@ -10,7 +10,7 @@ function Tabla(props) {
         </Row>
 
         <Row style={{ height: "220px", overflowY: "scroll" }}>
-          <Table className="table-responsive">
+          <Table className={`table-responsive ${props.estilo}`}>
             <thead>{props.columnas}</thead>
             <tbody>{props.informacion.map(props.funcion)}</tbody>
           </Table>

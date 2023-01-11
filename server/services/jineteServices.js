@@ -1,33 +1,33 @@
 const Jinete = require("../database/jinete.js");
 
 const obtenerListaDeJinetes = async () => {
-    try {
-        const listaJinetes = await Jinete.obtenerListaDeJinetes();
+  try {
+    const listaJinetes = await Jinete.obtenerListaDeJinetes();
 
-        return(listaJinetes);
-    } catch (error) {
-        throw(error);
-    }
+    return listaJinetes;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const obtenerJineteIndividual = async (jineteId) => {
-    try {
-        const jinete = await Jinete.obtenerJineteIndividual(jineteId);
+  try {
+    const jinete = await Jinete.obtenerJineteIndividual(jineteId);
 
-        return(jinete);
-    } catch (error) {
-        throw(error);
-    }
+    return jinete;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const registrarJinete = async (nuevoJinete) => {
-    try {
-        const jineteCreado = await Jinete.registrarJinete(nuevoJinete);
-        
-        return(jineteCreado);
-    } catch (error) {
-        throw(error);
-    }
+  try {
+    const jineteCreado = await Jinete.registrarJinete(nuevoJinete);
+
+    return jineteCreado;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const actualizarJinete = async (jineteId, cambios) => {
@@ -41,17 +41,17 @@ const actualizarJinete = async (jineteId, cambios) => {
 };
 
 const borrarJinete = async (jineteId) => {
-    try {
-        return(await Jinete.borrarJinete(jineteId));
-    } catch (error) {
-        throw(error);
-    }
+  try {
+    return await Jinete.borrarJinete(jineteId);
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = {
-    obtenerListaDeJinetes,
-    obtenerJineteIndividual,
-    registrarJinete,
-    actualizarJinete,
-    borrarJinete,
+  obtenerListaDeJinetes,
+  obtenerJineteIndividual,
+  registrarJinete,
+  actualizarJinete,
+  borrarJinete,
 };

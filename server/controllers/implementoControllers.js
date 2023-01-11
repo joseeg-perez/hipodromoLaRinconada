@@ -31,11 +31,8 @@ const obtenerImplementoIndividual = async (req, res) => {
 };
 
 const registrarImplemento = async (req, res) => {
-  const { 
-    nombreImplemento, 
-    abreviacionImplemento,
-    descripcionImplemento 
-  } = req.body;
+  const { nombreImplemento, abreviacionImplemento, descripcionImplemento } =
+    req.body;
 
   const nuevoImplemento = {
     nombreImplemento: nombreImplemento.toLowerCase(),
@@ -44,8 +41,13 @@ const registrarImplemento = async (req, res) => {
   };
 
   try {
-    const implementoCreado = await implementoService.registrarImplemento(nuevoImplemento);
-    res.status(200).send({ status: "OK", data: `Se ha registrado el implemento '${implementoCreado}' de forma satisfactoria.` });
+    const implementoCreado = await implementoService.registrarImplemento(
+      nuevoImplemento
+    );
+    res.status(200).send({
+      status: "OK",
+      data: `Se ha registrado el implemento '${implementoCreado}' de forma satisfactoria.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -55,15 +57,21 @@ const registrarImplemento = async (req, res) => {
 
 const actualizarImplemento = async (req, res) => {
   const {
-      body,
-      params: { implementoId },
+    body,
+    params: { implementoId },
   } = req;
 
   try {
-      const implementoActualizado = await implementoService.actualizarImplemento(implementoId, body);
-      res.send({ status: "OK", data: `Se ha actualizado la informacion del implemento '${implementoActualizado}' de forma satisfactoria.` });
+    const implementoActualizado = await implementoService.actualizarImplemento(
+      implementoId,
+      body
+    );
+    res.send({
+      status: "OK",
+      data: `Se ha actualizado la informacion del implemento '${implementoActualizado}' de forma satisfactoria.`,
+    });
   } catch (error) {
-      res
+    res
       .status(error?.status || 500)
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
@@ -76,7 +84,10 @@ const borrarImplemento = async (req, res) => {
 
   try {
     await implementoService.borrarImplemento(implementoId);
-    res.status(200).send({ status: "OK", data: `El implemento con el id '${implementoId}' se ha eliminado con exito.` });
+    res.status(200).send({
+      status: "OK",
+      data: `El implemento con el id '${implementoId}' se ha eliminado con exito.`,
+    });
   } catch (error) {
     res
       .status(error?.status || 500)

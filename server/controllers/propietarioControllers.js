@@ -31,19 +31,18 @@ const obtenerPropietarioIndividual = async (req, res) => {
 };
 
 const registrarPropietario = async (req, res) => {
-    const { 
-        cedulaPersona,
-        nombre1Persona,
-        nombre2Persona,
-        apellido1Persona,
-        apellido2Persona,
-        fechaNacimiento,
-        correo,
-        fkLugar,
-        extension_tlf,
-        cuerpo_tlf,
-
-     } = req.body;
+  const {
+    cedulaPersona,
+    nombre1Persona,
+    nombre2Persona,
+    apellido1Persona,
+    apellido2Persona,
+    fechaNacimiento,
+    correo,
+    fkLugar,
+    extension_tlf,
+    cuerpo_tlf,
+  } = req.body;
 
     const nuevoPropietario = {
         cedulaPersona,
@@ -69,19 +68,23 @@ const registrarPropietario = async (req, res) => {
 };
 
 const actualizarPropietario = async (req, res) => {
-    const {
-      body,
-      params: { propietarioId },
-    } = req;
+  const {
+    body,
+    params: { propietarioId },
+  } = req;
 
-    try {
-        const propietarioActualizado = await propietarioService.actualizarPropietario(propietarioId, body);
-        res.send({ status: "OK", data: `Se ha actualizado la informacion del propietario '${propietarioActualizado}' de forma satisfactoria.` });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
-    }
+  try {
+    const propietarioActualizado =
+      await propietarioService.actualizarPropietario(propietarioId, body);
+    res.send({
+      status: "OK",
+      data: `Se ha actualizado la informacion del propietario '${propietarioActualizado}' de forma satisfactoria.`,
+    });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const borrarPropietario = async (req, res) => {

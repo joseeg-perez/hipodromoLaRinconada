@@ -2,23 +2,23 @@ const Carrera = require("../database/carrera.js");
 const { registrarCarreraRegla } = require("./carreraReglaServices.js");
 
 const obtenerListaDeCarreras = async () => {
-    try {
-        const listaCarreras = await Carrera.obtenerListaDeCarreras();
+  try {
+    const listaCarreras = await Carrera.obtenerListaDeCarreras();
 
-        return(listaCarreras);
-    } catch (error) {
-        throw(error);
-    }
+    return listaCarreras;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const obtenerCarreraIndividual = async (carreraId) => {
-    try {
-        const carrera = await Carrera.obtenerCarreraIndividual(carreraId);
+  try {
+    const carrera = await Carrera.obtenerCarreraIndividual(carreraId);
 
-        return(carrera);
-    } catch (error) {
-        throw(error);
-    }
+    return carrera;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const obtenerCarreraXEvento = async (carreraId) => {
@@ -47,26 +47,30 @@ const registrarCarrera = async (nuevaCarrera) => {
         }
         return(carreraCreada);
     } catch (error) {
+      console.log(error)
         throw(error);
     }
 };
 
 const actualizarCarrera = async (carreraId, cambios) => {
-    try {
-        const carreraActualizada = await Carrera.actualizarCarrera(carreraId, cambios);
-        
-        return(carreraActualizada);
-    } catch (error) {
-        throw(error);
-    }
+  try {
+    const carreraActualizada = await Carrera.actualizarCarrera(
+      carreraId,
+      cambios
+    );
+
+    return carreraActualizada;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const borrarCarrera = async (carreraId) => {
-    try {
-        await Carrera.borrarCarrera(carreraId);
-    } catch (error) {
-        throw(error);
-    }
+  try {
+    await Carrera.borrarCarrera(carreraId);
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = {

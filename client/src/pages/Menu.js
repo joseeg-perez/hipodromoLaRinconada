@@ -47,10 +47,16 @@ const Menu = () => {
                   CONSULTAR HISTORIAL DE CAMBIOS
                 </li>
                 <Link className="list-group-item" to="/vestimentas">
-                  REGISTRAR VESTIMENTA
+                  CONSULTAR VESTIMENTAS
+                </Link>
+                <Link className="list-group-item" to="/retiros/eventos">
+                  RETIROS
                 </Link>
                 <Link className="list-group-item" to="/haras">
                   CONSULTAR HARAS
+                </Link>
+                <Link className="list-group-item" to="/pelajes">
+                  CONSULTAR PELAEJES
                 </Link>
               </ul>
             </Card.Body>

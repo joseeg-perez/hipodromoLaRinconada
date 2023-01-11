@@ -1,42 +1,46 @@
 const entrenadorService = require("../services/entrenadorServices.js");
 
 const obtenerListaDeEntrenadores = async (req, res) => {
-    try {
-        const listaEntrenadores =  await entrenadorService.obtenerListaDeEntrenadores();
+  try {
+    const listaEntrenadores =
+      await entrenadorService.obtenerListaDeEntrenadores();
 
-        res.status(200).send({ status: "OK", data: listaEntrenadores });
-    } catch (error) {
-        res 
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error }});
-    }
+    res.status(200).send({ status: "OK", data: listaEntrenadores });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const obtenerListaDeCaballerizasVacias = async (req, res) => {
-    try {
-        const listaCaballerizas =  await entrenadorService.obtenerListaDeCaballerizasVacias();
+  try {
+    const listaCaballerizas =
+      await entrenadorService.obtenerListaDeCaballerizasVacias();
 
-        res.status(200).send({ status: "OK", data: listaCaballerizas });
-    } catch (error) {
-        res 
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error }});
-    }
+    res.status(200).send({ status: "OK", data: listaCaballerizas });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const obtenerEntrenadorIndividual = async (req, res) => {
-    const {
-        params: { entrenadorId },
-    } = req;
-    
-    try {        
-        const entrenador = await entrenadorService.obtenerEntrenadorIndividual(entrenadorId);
-        res.status(200).send({ status: "OK", data: entrenador});
-    } catch (error) {
-        res 
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error }});        
-    }
+  const {
+    params: { entrenadorId },
+  } = req;
+
+  try {
+    const entrenador = await entrenadorService.obtenerEntrenadorIndividual(
+      entrenadorId
+    );
+    res.status(200).send({ status: "OK", data: entrenador });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const registrarEntrenador = async (req, res) => {
@@ -72,19 +76,25 @@ const registrarEntrenador = async (req, res) => {
 };
 
 const actualizarEntrenador = async (req, res) => {
-    const {
-        body,
-        params: { entrenadorId },
-    } = req;
+  const {
+    body,
+    params: { entrenadorId },
+  } = req;
 
-    try {
-        const entrenadorActualizado = await entrenadorService.actualizarEntrenador(entrenadorId, body);
-        res.send({ status: "OK", data: `Se ha actualizado la informacion del entrenador '${entrenadorActualizado}' de forma satisfactoria.` });
-    } catch (error) {
-        res
-        .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
-    }
+  try {
+    const entrenadorActualizado = await entrenadorService.actualizarEntrenador(
+      entrenadorId,
+      body
+    );
+    res.send({
+      status: "OK",
+      data: `Se ha actualizado la informacion del entrenador '${entrenadorActualizado}' de forma satisfactoria.`,
+    });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const borrarEntrenador = async (req, res) => {
@@ -103,10 +113,10 @@ const borrarEntrenador = async (req, res) => {
 };
 
 module.exports = {
-    obtenerListaDeEntrenadores,
-    obtenerListaDeCaballerizasVacias,
-    obtenerEntrenadorIndividual,
-    registrarEntrenador,
-    actualizarEntrenador,
-    borrarEntrenador,
+  obtenerListaDeEntrenadores,
+  obtenerListaDeCaballerizasVacias,
+  obtenerEntrenadorIndividual,
+  registrarEntrenador,
+  actualizarEntrenador,
+  borrarEntrenador,
 };
