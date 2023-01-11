@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Col,
@@ -9,6 +9,7 @@ import {
   FormSelect,
 } from "react-bootstrap";
 import { NavLink, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const InscribirEjemplar = () => {
   const location = useLocation();
@@ -17,121 +18,167 @@ const InscribirEjemplar = () => {
   } = location.state;
   console.log(id);
 
-  const ejemplares = [
-    {
-      id: "1",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "2",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "3",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "4",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "5",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "6",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "7",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "8",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "9",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "10",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "11",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "12",
-      nombre: "Black Mamba",
-    },
-  ];
+  const [isLoading, setLoading] = useState(true);
+  const [isLoading2, setLoading2] = useState(true);
+  const [isLoading3, setLoading3] = useState(true);
+  const [isLoading4, setLoading4] = useState(true);
+  const [medicamentos, setMedicamentos] = useState([]);
+  const [implementos, setImplementos] = useState([]);
+  const [ejemplares, setEjemplares] = useState([]);
+  const [jinetes, setJinetes] = useState([]);
 
-  const medicamentos = [
-    {
-      id: "1",
-      nombre: "Atamel",
-    },
-    {
-      id: "2",
-      nombre: "Omeprasol",
-    },
-    {
-      id: "3",
-      nombre: "Dencoru",
-    },
-    {
-      id: "4",
-      nombre: "Ranitidina",
-    },
-    {
-      id: "5",
-      nombre: "Riopan",
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/medicamentos/listado_de_medicamentos")
+      .then((res) => {
+        console.log(res);
+        setMedicamentos(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/implementos/listado_de_implementos")
+      .then((res) => {
+        console.log(res);
+        setImplementos(res.data);
+        setLoading2(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/ejemplares/listado_de_ejemplares")
+      .then((res) => {
+        console.log(res);
+        setEjemplares(res.data);
+        setLoading3(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/jinetes/listado_de_jinetes")
+      .then((res) => {
+        console.log(res);
+        setJinetes(res.data);
+        setLoading4(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  if (isLoading || isLoading2 || isLoading3 || isLoading4) return <div>Cargando</div>;
+  console.log(implementos);
 
-  const implementos = [
-    {
-      id: "1",
-      nombre: "Lentes",
-    },
-    {
-      id: "2",
-      nombre: "Fulete",
-    },
-    {
-      id: "3",
-      nombre: "Hoddie",
-    },
-    {
-      id: "4",
-      nombre: "Mascara",
-    },
-    {
-      id: "5",
-      nombre: "Rodillera",
-    },
-    {
-      id: "6",
-      nombre: "Canillera",
-    },
-  ];
+  // const ejemplares = [
+  //   {
+  //     id: "1",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "2",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "3",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "4",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "5",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "6",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "7",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "8",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "9",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "10",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "11",
+  //     nombre: "Black Mamba",
+  //   },
+  //   {
+  //     id: "12",
+  //     nombre: "Black Mamba",
+  //   },
+  // ];
 
-  const jinetes = [
-    {
-      id: "1",
-      nombre: "Oscar Isaac",
-    },
-    {
-      id: "2",
-      nombre: "Marco Gimenez",
-    },
-    {
-      id: "3",
-      nombre: "Jerry Mina",
-    },
-  ];
+  // const medicamentos = [
+  //   {
+  //     id: "1",
+  //     nombre: "Atamel",
+  //   },
+  //   {
+  //     id: "2",
+  //     nombre: "Omeprasol",
+  //   },
+  //   {
+  //     id: "3",
+  //     nombre: "Dencoru",
+  //   },
+  //   {
+  //     id: "4",
+  //     nombre: "Ranitidina",
+  //   },
+  //   {
+  //     id: "5",
+  //     nombre: "Riopan",
+  //   },
+  // ];
+
+  // const implementos = [
+  //   {
+  //     id: "1",
+  //     nombre: "Lentes",
+  //   },
+  //   {
+  //     id: "2",
+  //     nombre: "Fulete",
+  //   },
+  //   {
+  //     id: "3",
+  //     nombre: "Hoddie",
+  //   },
+  //   {
+  //     id: "4",
+  //     nombre: "Mascara",
+  //   },
+  //   {
+  //     id: "5",
+  //     nombre: "Rodillera",
+  //   },
+  //   {
+  //     id: "6",
+  //     nombre: "Canillera",
+  //   },
+  // ];
+
+  // const jinetes = [
+  //   {
+  //     id: "1",
+  //     nombre: "Oscar Isaac",
+  //   },
+  //   {
+  //     id: "2",
+  //     nombre: "Marco Gimenez",
+  //   },
+  //   {
+  //     id: "3",
+  //     nombre: "Jerry Mina",
+  //   },
+  // ];
 
   let content = [];
   for (let index = 0; index < cantidad; index++) {
@@ -139,35 +186,31 @@ const InscribirEjemplar = () => {
   }
 
   let contenidoMedicamentos = [];
-  medicamentos.map((x) =>
+  medicamentos.data.map((x) =>
     contenidoMedicamentos.push(
       <div className="form-check col-auto">
         <input
           className="form-check-input"
           type="checkbox"
-          value={x.id}
-          id={x.nombre}
+          value={x.codigo_medicamento}
+          id={x.nombre_medicamento}
         ></input>
-        <label className="form-check-label" for={x.id}>
-          {x.nombre}
-        </label>
+        <label className="form-check-label">{x.nombre_medicamento}</label>
       </div>
     )
   );
 
   let contenidoImplementos = [];
-  implementos.map((x) =>
+  implementos.data.map((x) =>
     contenidoImplementos.push(
       <div className="form-check col-auto">
         <input
           className="form-check-input"
           type="checkbox"
-          value={x.id}
-          id={x.id}
+          value={x.codigo_implemento}
+          id={x.codigo_implemento}
         ></input>
-        <label className="form-check-label" for={x.id}>
-          {x.nombre}
-        </label>
+        <label className="form-check-label">{x.nombre_implemento}</label>
       </div>
     )
   );
@@ -183,11 +226,26 @@ const InscribirEjemplar = () => {
     console.log(document.getElementById("jinete").value);
     console.log(document.getElementById("pesoJinete").value);
     console.log(document.getElementById("puesto").value);
-    let medicamentoUsados=[];
-    medicamentos.map((x)=>document.getElementById(x.nombre).checked ? medicamentoUsados.push(x) : console.log("no se usa"));
-    let implementoUsados=[];
-    implementos.map((x)=>document.getElementById(x.id).checked ? implementoUsados.push(x) : console.log("no se usa"));
-    
+    let medicamentoUsados = [];
+    medicamentos.data.map((x) =>
+      document.getElementById(x.nombre_medicamento).checked
+        ? medicamentoUsados.push(x.codigo_medicamento)
+        : console.log("no se usa")
+    );
+    let implementoUsados = [];
+    implementos.data.map((x) =>
+      document.getElementById(x.codigo_implemento).checked
+        ? implementoUsados.push(x.codigo_implemento)
+        : console.log("no se usa")
+    );
+    let gualdrapa = document.getElementById("numero").value;
+    let fkCarrera = id;
+    let pesoCaballo = document.getElementById("peso").value;
+    let pesoJinete = document.getElementById("pesoJinete").value;
+    let fkEjemplar = document.getElementById("ejemplar").value;
+    let fkJinete = document.getElementById("jinete").value;
+    let puestoPista = document.getElementById("puesto").value;
+
     console.log(medicamentoUsados);
     console.log(implementoUsados);
   };
@@ -232,8 +290,8 @@ const InscribirEjemplar = () => {
                         className="col-7"
                         style={{ height: "38px", width: "220px" }}
                       >
-                        {ejemplares.map((x) => (
-                          <option value={x.id}>{x.nombre}</option>
+                        {ejemplares.data.map((x) => (
+                          <option value={x.codigo_ejemplar}>{x.nombre_ejemplar}</option>
                         ))}
                       </FormSelect>
                     </Row>
@@ -283,8 +341,8 @@ const InscribirEjemplar = () => {
                         className="col-7"
                         style={{ height: "38px", width: "220px" }}
                       >
-                        {jinetes.map((x) => (
-                          <option value={x.id}>{x.nombre}</option>
+                        {jinetes.data.map((x) => (
+                          <option value={x.codigo_persona}>{`${x.nombre1_persona} ${x.apellido1_persona}`}</option>
                         ))}
                       </FormSelect>
                     </Row>
