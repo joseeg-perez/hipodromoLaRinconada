@@ -1,20 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Card, Col, Button, Form } from "react-bootstrap";
 import InfoEventos from "../componentes/eventos/InfoEventos";
 import fotico from "../assets/registrarEvento.jpg";
 import axios from "axios";
 
 const Eventos = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [eventos, setEventos] = useState([]);
+  const [fechaEvento, setfechaEvento] = useState("");
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/eventos/listado_de_eventos")
+      .then((res) => {
+        console.log(res);
+        setEventos(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  if (isLoading) return <div>Cargando</div>;
+  console.log(eventos);
+  let hoy = new Date();
+  let dia = hoy.getDate();
+  let mes = hoy.getMonth() + 1;
+  let an = hoy.getFullYear();
+  if (dia < 10) dia = `0${dia}`;
+  if (mes < 10) mes = `0${mes}`;
+  let fechaHoy = `${an}/${mes}/${dia}`;
+  const fechaUltimoEvento =
+    eventos.data[eventos.data.length - 1].fecha_evento + 1;
+  const fechaMin = `${fechaUltimoEvento[0]}${fechaUltimoEvento[1]}${fechaUltimoEvento[2]}${fechaUltimoEvento[3]}-${fechaUltimoEvento[5]}${fechaUltimoEvento[6]}-${fechaUltimoEvento[8]}${fechaUltimoEvento[9]}`;
+  //console.log(fechaMin);
+  //console.log(fechaUltimoEvento[0]);
+  //let fechaHoy=new Date(an,mes,dia)
   let usuario1 = "crear";
   let usuario2 = "ver";
   let usuario3 = "inscribir";
-  let usuario = usuario1;
-  const [fechaEvento, setFechaEvento] = useState('')
+  let usuario = usuario3;
 
-  const handleFechaEvento = (event) => {
-    setFechaEvento(event.target.value)
-  }
-  const handleData = async (event) => {
+  const fechaHandler = (event) => {
+    setfechaEvento(event.target.value);
+  };
+
+  const agregarEventoHandler = async (event) => {
     event.preventDefault();
     try {
       await axios.post(
@@ -26,7 +54,10 @@ const Eventos = () => {
     } catch (error) {
       throw error;
     }
-  }
+    alert("Se creo el evento con éxito");
+    console.log(fechaEvento);
+    setfechaEvento("");
+  };
 
   let cardAgregarCarrera = (
     <Card className="w-75 mb-2">
@@ -44,10 +75,17 @@ const Eventos = () => {
                 </Row>
 
                 <Row className="ms-4 mt-1">
-                  <input type="date" className="col-5" onChange={handleFechaEvento}></input>
+                  <input
+                    type="date"
+                    className="col-5"
+                    onChange={fechaHandler}
+                    min={fechaMin}
+                  ></input>
                 </Row>
                 <Row className="mt-2 d-flex justify-content-center">
-                  <Button className="col-3" onClick={handleData}>Guardar</Button>
+                  <Button className="col-3" onClick={agregarEventoHandler}>
+                    Guardar
+                  </Button>
                 </Row>
               </Form>
             </Row>
@@ -60,44 +98,45 @@ const Eventos = () => {
       </Card.Body>
     </Card>
   );
-  const eventos = [
-    {
-      id: "1",
-      fecha: "09/10/2022",
-    },
-    {
-      id: "2",
-      fecha: "09/10/2022",
-    },
-    {
-      id: "3",
-      fecha: "09/10/2022",
-    },
-    {
-      id: "4",
-      fecha: "09/10/2022",
-    },
-    {
-      id: "5",
-      fecha: "09/10/2022",
-    },
-    {
-      id: "6",
-      fecha: "09/10/2022",
-    },
-    {
-      id: "7",
-      fecha: "09/10/2022",
-    },
-    {
-      id: "8",
-      fecha: "09/10/2022",
-    },
-    {
-      id: "9",
-      fecha: "09/10/2022",
-    },
-  ];
+
+  // const eventos = [
+  //   {
+  //     id: "1",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "2",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "3",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "4",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "5",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "6",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "7",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "8",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "9",
+  //     fecha: "09/10/2022",
+  //   },
+  // ];
   return (
     <Container>
       <Row className="text-center">
@@ -131,19 +170,25 @@ const Eventos = () => {
               </Row>
 
               <Row className="row row-cols-3 mt-3 text-center d-flex justify-content-center">
-                {eventos.map((x) => (
-                  <InfoEventos
-                    key={x.id}
-                    id={x.id}
-                    fecha={x.fecha}
-                    tipo={
-                      usuario == "crear"
-                        ? "eventoRegistrar"
-                        : "carrerasRegistradas"
-                    }
-                    tipo2={usuario == "inscribir" ? "inscribirEjemplar" : "ver"}
-                  ></InfoEventos>
-                ))}
+                {eventos.data.map((x) =>
+                  x.fecha_evento > fechaHoy ? (
+                    <InfoEventos
+                      key={x.codigo_evento}
+                      id={x.codigo_evento}
+                      fecha={x.fecha_evento}
+                      tipo={
+                        usuario == "crear"
+                          ? "eventoRegistrar"
+                          : "carrerasRegistradas"
+                      }
+                      tipo2={
+                        usuario == "inscribir" ? "inscribirEjemplar" : "ver"
+                      }
+                    ></InfoEventos>
+                  ) : (
+                    console.log("no")
+                  )
+                )}
               </Row>
             </Card.Body>
           </Card>

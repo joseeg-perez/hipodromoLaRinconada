@@ -1,63 +1,119 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+
+import axios from "axios";
 
 const RegistrarCarrera = () => {
-  const reglas = [
-    {
-      id: "1",
-      nombre: "DISTANCIA",
-    },
-    {
-      id: "2",
-      nombre: "GENERO",
-    },
-    {
-      id: "3",
-      nombre: "VICTORIAS MINIMAS",
-    },
-    {
-      id: "4",
-      nombre: "VICTORIAS MAXIMAS",
-    },
-    {
-      id: "5",
-      nombre: "PESO MINIMO",
-    },
-    {
-      id: "6",
-      nombre: "PESO MAXIMO",
-    },
-    {
-      id: "7",
-      nombre: "VARIANTE",
-    },
-  ];
+  const [isLoading, setLoading] = useState(true);
+  const [isLoading2, setLoading2] = useState(true);
+  const [reglas, setReglas] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    console.log("entro");
+    axios
+      .get("http://localhost:5000/api/v1/reglas/listado_de_reglas")
+      .then((res) => {
+        console.log(res);
+        setReglas(res.data);
+        setLoading2(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/categorias/listado_de_categorias")
+      .then((res) => {
+        console.log(res);
+        setCategorias(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  const location = useLocation();
+  const evento = location.state;
+  console.log(evento.id);
+  console.log(evento.numeroSigCarrera);
+  if (isLoading || isLoading2) return <div>Cargando</div>;
+
+  console.log(reglas);
+  console.log(categorias);
 
   const reglas2 = [];
-  reglas.map((x) => {
-    if (x.nombre != "DISTANCIA" && x.nombre != "GENERO") {
+  reglas.data.map((x) => {
+    if (x.nombre_regla != "Distancia" && x.nombre_regla != "Genero" && x.nombre_regla != "Participantes") {
       reglas2.push(x);
     }
   });
+  console.log(reglas2);
 
-  const formSubmissionHandler = (event) => {
+  const formSubmissionHandler = async (event) => {
     event.preventDefault();
-    console.log("entro");
-    console.log(document.getElementById("nombre").value);
-    console.log(document.getElementById("hora").value);
-    console.log(document.getElementById("cantidad").value);
-    console.log(document.getElementById("clasico").value);
-    reglas.map((x) => console.log(document.getElementById(x.nombre).value));
-    console.log(document.getElementById("premio1").value);
-    console.log(document.getElementById("premio2").value);
-    console.log(document.getElementById("premio3").value);
-    console.log(document.getElementById("premio4").value);
-    console.log(document.getElementById("premio5").value);
-    
-    // console.log(document.getElementById("monto").value);
-
-    //console.log(document.getElementById("VICTORIAS MINIMAS").value);
-    //console.log(document.querySelector('input[name="checkClasico"]:checked').value)
+    let nombreCarrera = document.getElementById("nombre").value;
+    let numeroCarrera = evento.numeroSigCarrera;
+    let premioPrimero = document.getElementById("premio1").value;
+    let premioSegundo = document.getElementById("premio2").value;
+    let premioTercero = document.getElementById("premio3").value;
+    let premioCuarto = document.getElementById("premio4").value;
+    let premioQuinto = document.getElementById("premio5").value;
+    let horaCarrera = document.getElementById("hora").value;
+    let fkEvento = evento.id;
+    let fkCategoriaCarrera = document.getElementById("categoria").value;
+    let carreraRegla = [];
+    reglas.data.map((x) =>
+      //const reglaAux={fk_regla: x.codigo_regla, valor_regla: document.getElementById(x.nombre_regla).value}
+      carreraRegla.push({
+        fk_regla: x.codigo_regla,
+        valor_regla: document.getElementById(x.nombre_regla).value,
+      })
+    );
+    console.warn(
+      "all data",
+      nombreCarrera,
+      numeroCarrera,
+      premioPrimero,
+      premioSegundo,
+      premioTercero,
+      premioCuarto,
+      premioQuinto,
+      horaCarrera,
+      fkEvento,
+      fkCategoriaCarrera,
+      carreraRegla
+    );
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/carreras/registrar_carrera",
+        {
+          nombreCarrera,
+          numeroCarrera,
+          premioPrimero,
+          premioSegundo,
+          premioTercero,
+          premioCuarto,
+          premioQuinto,
+          horaCarrera,
+          fkEvento,
+          fkCategoriaCarrera,
+          carreraRegla,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+    alert("Se creo la carrera con éxito");
+    // console.log("entro");
+    // console.log(document.getElementById("nombre").value);
+    // console.log(document.getElementById("hora").value);
+    // console.log(document.getElementById("cantidad").value);
+    // console.log(document.getElementById("categoria").value);
+    // reglas.data.map((x) =>
+    //   console.log(document.getElementById(x.nombre_regla).value)
+    // );
+    // console.log(document.getElementById("premio1").value);
+    // console.log(document.getElementById("premio2").value);
+    // console.log(document.getElementById("premio3").value);
+    // console.log(document.getElementById("premio4").value);
+    // console.log(document.getElementById("premio5").value);
   };
 
   return (
@@ -95,8 +151,9 @@ const RegistrarCarrera = () => {
                           <input
                             type="time"
                             id="hora"
-                            min="12:00"
-                            max="20:00"
+                            min="12:30"
+                            max="24:00"
+                            
                           ></input>
                         </Col>
                       </Row>
@@ -111,23 +168,26 @@ const RegistrarCarrera = () => {
                             className=""
                             type="number"
                             min={8}
-                            id="cantidad"
+                            id="Participantes"
                           ></input>
                         </Col>
                       </Row>
 
                       <Row className="mt-2">
                         <Col className="col-6">
-                          <h5>CLASICO</h5>
+                          <h5>CATEGORIA</h5>
                         </Col>
                         <Col className="col-4">
                           <select
                             className=""
                             style={{ width: "188.8px" }}
-                            id="clasico"
+                            id="categoria"
                           >
-                            <option value={1}>Si</option>
-                            <option value={0}>No</option>
+                            {categorias.data.map((x) => (
+                              <option value={x.codigo_categoria}>
+                                {x.nombre_categoria}
+                              </option>
+                            ))}
                           </select>
                         </Col>
                       </Row>
@@ -158,7 +218,7 @@ const RegistrarCarrera = () => {
                       </Row>
 
                       <Row className="d-flex justify-content-center">
-                        <select id="DISTANCIA" className="col-7">
+                        <select id="Distancia" className="col-7">
                           <option value={1200}>1200</option>
                           <option value={1400}>1400</option>
                           <option value={1600}>1600</option>
@@ -175,9 +235,9 @@ const RegistrarCarrera = () => {
                       </Row>
 
                       <Row className="d-flex justify-content-center">
-                        <select id="GENERO" className="col-7">
+                        <select id="Genero" className="col-7">
                           <option value={1}>Caballo</option>
-                          <option value={0}>Yegua</option>
+                          <option value={2}>Yegua</option>
                         </select>
                       </Row>
                     </Col>
@@ -185,14 +245,14 @@ const RegistrarCarrera = () => {
                     {reglas2.map((x) => (
                       <Col
                         className={
-                          x.id % 4 == 0
+                          x.codigo_regla % 4 == 0
                             ? "border border-2 border-dark border-top-0 border-start-0 border-end-0"
                             : "border border-2 border-dark border-top-0 border-start-0"
                         }
                         style={{ height: "75px" }}
                       >
                         <Row className="text-center">
-                          <h5>{x.nombre}</h5>
+                          <h5>{x.nombre_regla.toUpperCase()}</h5>
                         </Row>
 
                         <Row className="d-flex justify-content-center">
@@ -200,7 +260,7 @@ const RegistrarCarrera = () => {
                             className="col-7"
                             type="number"
                             min={0}
-                            id={x.nombre}
+                            id={x.nombre_regla}
                           ></input>
                         </Row>
                       </Col>

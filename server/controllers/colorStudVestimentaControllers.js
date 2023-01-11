@@ -1,5 +1,4 @@
 const colorStudVestimentaService = require("../services/colorStudVestimentaServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const registrarColorStudVestimenta = async (req, res) => {
   const { fkStudVestimenta, fkColor } = req.body;

@@ -3,7 +3,8 @@ const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeEventos = async () => {
   const query = {
-    text: "SELECT * FROM evento",
+    //text: "SELECT * FROM evento",
+    text: "SELECT codigo_evento, to_char(fecha_evento :: DATE, 'yyyy/mm/dd') as fecha_evento FROM evento",
   };
 
   try {
@@ -43,6 +44,7 @@ const registrarEvento = async (nuevoEvento) => {
         
     const values = [fechaEvento];
 
+ 
   try {
     await dbConnection.query(text, values);
 

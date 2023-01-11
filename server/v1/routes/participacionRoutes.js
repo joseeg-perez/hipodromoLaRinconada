@@ -7,7 +7,23 @@ const participacionController = require("../../controllers/participacionControll
 
 router.get("/listado_de_participaciones", participacionController.obtenerListaDeParticipaciones);
 
+router.get("/listado_jinetes_disponibles/:participacionId", validateId, participacionController.obtenerListaDeJinetesDisponibles);
+
+router.get("/puestos_ocupados/:participacionId", validateId, participacionController.obtenerPuestosOcupados),
+
+router.get("/cantidad_ejemplares_carrera/:participacionId", validateId, participacionController.cantidadEjemplaresPorParticipacion) 
+
+router.get("/cantidad_participantes_inscritos/:participacionId", validateId, participacionController.participantesInscritos);
+
+router.get("/participaciones_para_retiro/:participacionId", validateId, participacionController.obtenerParticipacionParaRetiro);
+
 router.get("/:participacionId", validateId, participacionController.obtenerParticipacionIndividual);
+
+router.get("/participaciones_en_carrera/:participacionId", validateId, participacionController.obtenerParticipacionesEnCarrera); //aqui sigo, yo
+
+router.get("/obtener_sexo_carrera/:participacionId", validateId, participacionController.obtenerSexoCarrera);
+
+router.post("/listado_de_ejemplares", participacionController.obtenerListaDeEjemplaresDisponibles);
 
 router.post("/registrar_participacion", validateCreate ,participacionController.registrarParticipacion);
 

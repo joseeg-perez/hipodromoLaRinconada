@@ -1,5 +1,4 @@
 const studService = require("../services/studServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeStuds = async (req, res) => {
   try {
@@ -149,28 +148,23 @@ const registrarStud = async (req, res) => {
     vestimentas,
   } = req.body;
 
-  const nuevoStud = {
-    nombreStud: nombreStud.toLowerCase(),
-    fechaCreacion,
-    propietarioStud,
-    color1,
-    color2,
-    vestimentas,
-  };
+    const nuevoStud = {
+        nombreStud: nombreStud.toLowerCase(),
+        fechaCreacion,
+        propietarioStud,
+        color1,
+        color2,
+        vestimentas,
+    };
 
-  try {
-    const studCreado = await studService.registrarStud(nuevoStud);
-    res
-      .status(200)
-      .send({
-        status: "OK",
-        data: `Se ha creado el stud '${studCreado}' de forma satisfactoria.`,
-      });
-  } catch (error) {
-    res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
-  }
+    try {
+        const studCreado = await studService.registrarStud(nuevoStud);
+        res.status(200).send({ status: "OK", data: `Se ha creado el stud '${ studCreado }' de forma satisfactoria.` });
+    } catch (error) {
+        res
+        .status(error?.status || 500)
+        .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
 };
 
 const actualizarStud = async (req, res) => {
@@ -211,16 +205,16 @@ const borrarStud = async (req, res) => {
 };
 
 module.exports = {
-  obtenerListaDeStuds,
-  obtenerStudIndividual,
-  obtenerPropietarioDeStud,
-  obtenerPropietarioDeStudDistintos,
-  obtenerVestimentaStud,
-  obtenerCaballoStud,
-  obtenerPosibleCaballoStud,
-  cambiarPorcentajes,
-  agregarVestimentas,
-  registrarStud,
-  actualizarStud,
-  borrarStud,
+    obtenerListaDeStuds,
+    obtenerStudIndividual,
+    obtenerPropietarioDeStud,
+    obtenerPropietarioDeStudDistintos,
+    obtenerVestimentaStud,
+    obtenerCaballoStud,
+    obtenerPosibleCaballoStud,
+    cambiarPorcentajes,
+    agregarVestimentas,
+    registrarStud,
+    actualizarStud,
+    borrarStud,
 };

@@ -1,5 +1,4 @@
 const rolService = require("../services/rolServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeRoles = async (req, res) => {
     try {
@@ -59,7 +58,6 @@ const actualizarRol = async (req, res) => {
         .status(error?.status || 500)
         .send({ status: "FAILED", data: { error: error?.message || error } });
     }
-
 };
 
 const borrarRol = async (req, res) => {

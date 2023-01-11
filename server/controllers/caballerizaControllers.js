@@ -1,5 +1,4 @@
 const caballerizaService = require("../services/caballerizaServices.js");
-const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDeCaballerizas = async (req, res) => {
   try {

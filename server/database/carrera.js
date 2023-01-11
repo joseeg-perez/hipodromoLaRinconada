@@ -33,6 +33,28 @@ const obtenerCarreraIndividual = async (carreraId) => {
   }
 };
 
+const obtenerCarreraXEvento = async (carreraId) => {
+    const query = {
+        text: `SELECT 
+                codigo_carrera, nombre_carrera , nombre_categoria, numero_carrera, premio_primero, premio_segundo, premio_tercero, premio_cuarto, premio_quinto, hora_carrera
+               FROM 
+                carrera
+               INNER JOIN 
+                categoria_carrera ON fk_categoria_carrera = codigo_categoria
+               WHERE 
+                fk_evento = $1;`,
+        values: [carreraId],
+    };
+
+    try {
+        const { rows } = await dbConnection.query(query);
+        dbConnection.end;
+        return (rows);
+    } catch (error) {
+        throw { status: error?.status || 500, message: error?.message || error };
+    }
+};
+
 const registrarCarrera = async (nuevaCarrera) => {
   const {
     nombreCarrera,
@@ -72,6 +94,7 @@ const registrarCarrera = async (nuevaCarrera) => {
     fkCategoriaCarrera,
   ];
 
+  console.log(values)
   try {
     await dbConnection.query(text, values);
 
@@ -79,7 +102,6 @@ const registrarCarrera = async (nuevaCarrera) => {
     return nombreCarrera;
   } catch (error) {
     if (error.code === "23505") {
-      console.log(error);
       throw {
         status: 409,
         message: `la carrera '${nombreCarrera}' ya ha sido registrada.`,
@@ -165,9 +187,10 @@ const borrarCarrera = async (carreraId) => {
 };
 
 module.exports = {
-  obtenerListaDeCarreras,
-  obtenerCarreraIndividual,
-  registrarCarrera,
-  actualizarCarrera,
-  borrarCarrera,
+    obtenerListaDeCarreras,
+    obtenerCarreraIndividual,
+    obtenerCarreraXEvento,
+    registrarCarrera,
+    actualizarCarrera,
+    borrarCarrera,
 };

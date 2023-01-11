@@ -1,4 +1,5 @@
 const Retiro = require("../database/Retiro.js");
+const { actualizarParticipacion } = require("./participacionServices.js");
 
 const obtenerListaDeRetiros = async () => {
   try {
@@ -22,7 +23,12 @@ const obtenerRetiroIndividual = async (retiroId) => {
 
 const registrarRetiro = async (nuevoRetiro) => {
   try {
-    await Retiro.registrarRetiro(nuevoRetiro);
+      await Retiro.registrarRetiro(nuevoRetiro);
+      const fkRetiro = (await Retiro.obtenerListaDeRetiros()).pop().codigo_retiro;
+      const nuevaParticipacion = {
+        fkRetiro,
+      }
+      await actualizarParticipacion(nuevoRetiro.codigoParticipacion, nuevaParticipacion);
   } catch (error) {
     throw error;
   }

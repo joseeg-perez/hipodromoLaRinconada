@@ -41,29 +41,32 @@ const obtenerParticipacionImplementoIndividual = async (
   }
 };
 
-const registrarParticipacionImplemento = async (
-  nuevaParticipacionImplemento
-) => {
-  const { fkImplemento, fkParticipacion } = nuevaParticipacionImplemento;
+const registrarParticipacionImplemento = async (nuevaParticipacionImplemento) => { 
+    const { 
+        fkImplemento,
+        fkParticipacion,
+     } = nuevaParticipacionImplemento;
 
-  const text = `INSERT INTO participacion_implemento(fk_implemento, fk_participacion) VALUES($1, $2)`;
+     console.log(nuevaParticipacionImplemento)
 
-  const values = [fkImplemento, fkParticipacion];
+    const text = `INSERT INTO participacion_implemento(fk_implemento, fk_participacion) VALUES($1, $2)`;
+        
+    const values = [fkImplemento, fkParticipacion];
 
-  try {
-    await dbConnection.query(text, values);
-
-    dbConnection.end;
-    return;
-  } catch (error) {
-    if (error.code === "23505") {
-      throw {
-        status: 409,
-        message: `El implemento para la participacion ya ha sido registrado.`,
-      };
-    }
-    throw { status: error?.status || 500, message: error?.message || error };
-  }
+    try {
+        await dbConnection.query(text, values);
+    
+        dbConnection.end;
+        return;
+    } catch (error) {
+        if (error.code === '23505') {
+            throw {
+                status: 409,
+                message: `El implemento para la participacion ya ha sido registrado.`,
+            }
+        }
+        throw { status: error?.status || 500, message: error?.message || error };
+    }  
 };
 
 const actualizarParticipacionImplemento = async (
