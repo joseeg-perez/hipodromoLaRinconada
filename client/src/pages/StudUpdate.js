@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { CirclePicker } from "react-color";
+import { useParams } from "react-router-dom";
 
 const StudUpdate = () => {
   const [fechaCreacion, setFechaCreacion] = useState("");
@@ -32,6 +33,8 @@ const StudUpdate = () => {
   const [togglecolor, setToggleColor] = useState(false);
   const [toggleboton, setToggleBoton] = useState(false);
   const [toggleAgregarVestimenta, setToggleAgregarVestimenta] = useState(false);
+  const [colorstud, setcolorstud] = useState(false);
+  const Params = useParams();
 
   const handleFechaCreacion = (event) => {
     setFechaCreacion(event.target.value);
@@ -74,6 +77,22 @@ const StudUpdate = () => {
     setVestimentas((vestimentas) => [...vestimentas, vestimentaStud]);
   };
 
+  const handleColores = async (event) => {
+    const sc1 = colorstud.map(
+      (sc) =>
+        sc.fk_stud == Params.studId &&
+        sc.fk_color ==
+          colores.find((color) => color.codigo_del_color == color1stud).id_color
+    ).codigo_sc;
+    const sc2 = colorstud.map(
+      (sc) =>
+        sc.fk_stud == Params.studId &&
+        sc.fk_color ==
+          colores.find((color) => color.codigo_del_color == color2stud).id_color
+    ).codigo_sc;
+    console.log(sc1, sc2)
+  };
+
   const handleData = async (event) => {
     event.preventDefault();
     const color1 = colores.data.find(
@@ -87,7 +106,7 @@ const StudUpdate = () => {
         (vestimenta.colorV = colores.data.find(
           (colorD) => colorD.codigo_del_color == vestimenta.colorV
         ).id_color),
-        console.log(vestimenta)
+      console.log(vestimenta)
     );
     console.warn(
       fechaCreacion,
@@ -129,6 +148,24 @@ const StudUpdate = () => {
 
   useEffect(() => {
     axios
+      .get(`http://localhost:5000/api/v1/colores_studs/listado_de_studColor`)
+      .then((res) => {
+        console.log(res);
+        setcolorstud(res.data.data);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(`http://localhost:5000/api/v1/studs/${Params.studId}`)
+      .then((res) => {
+        console.log(res);
+        setFechaCreacion(res.data.data[0].fecha);
+        setNombreStud(res.data.data[0].nombre_stud);
+        setColor1stud(res.data.data[0].codigo_del_color);
+        setColor2stud(res.data.data[1].codigo_del_color);
+      })
+      .catch((err) => console.log(err));
+
+    axios
       .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
       .then((res) => {
         console.log(res);
@@ -143,7 +180,22 @@ const StudUpdate = () => {
         setVestimentasDispo(res.data);
       })
       .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/vestimentas/listado_de_vestimentas")
+      .then((res) => {
+        console.log(res);
+        setVestimentasDispo(res.data);
+      })
+      .catch((err) => console.log(err));
 
+    axios
+      .get("http://localhost:5000/api/v1/colores/listado_de_colores")
+      .then((res) => {
+        console.log(res);
+        setColores(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
     axios
       .get("http://localhost:5000/api/v1/colores/listado_de_colores")
       .then((res) => {
@@ -170,11 +222,9 @@ const StudUpdate = () => {
         <Card className="mx-5 mt-3">
           <Card.Body className="px-4">
             <Form>
-              <h3 className="fw-bold mb-4 pb-2 pb-md-0 mb-md-5">
-                Editar Stud
-              </h3>
+              <h3 className="fw-bold mb-4 pb-2 pb-md-0 mb-md-5">Editar Stud</h3>
               <Row className="align-items-center">
-                <Col md="6">
+                <Col>
                   <div className="mb-3 form-floating">
                     <input
                       value={nombreStud}
@@ -186,35 +236,9 @@ const StudUpdate = () => {
                     <FormLabel>Nombre Stud</FormLabel>
                   </div>
                 </Col>
-                <Col className="mb-4">
-                  <Col>
-                    <FormLabel>Propietario:</FormLabel>
-                    <FormSelect onChange={handlePropietario}>
-                      <option value={-1} disabled={togglePropietario}>
-                        Propietario
-                      </option>
-                      {propietarios.data.map((propietario) => (
-                        <option
-                          value={propietario.codigo_persona}
-                          key={propietario.codigo_persona}
-                        >
-                          {propietario.nombre1_persona} <span> </span>
-                          {propietario.apellido1_persona}
-                        </option>
-                      ))}
-                    </FormSelect>
-                    <Link
-                      size="sm"
-                      to={`/propietarios/createPropietario`}
-                      className="text-center"
-                    >
-                      <p>No está registrado el propietario?</p>
-                    </Link>
-                  </Col>
-                </Col>
               </Row>
               <Row>
-                <Col md="6">
+                <Col>
                   <div className="mb-3 form-floating">
                     <input
                       value={fechaCreacion}
@@ -226,79 +250,8 @@ const StudUpdate = () => {
                     <FormLabel>Fecha de creacion</FormLabel>
                   </div>
                 </Col>
-                <Col></Col>
               </Row>
-              <Card className="mt-3">
-                <Card.Body>
-                  <Card.Title>Vestimentas del stud</Card.Title>
-                  <Row>
-                    <Col className="col-4">
-                      <FormSelect className="mt-3" onChange={handleVestimenta}>
-                        <option key={-1} disabled={toggleVestimenta}>
-                          Vestimenta
-                        </option>
-                        {vestimentasDispo.data.map((vestimenta) => (
-                          <option
-                            value={vestimenta.codigo_vestimenta}
-                            key={vestimenta.codigo_vestimenta}
-                          >
-                            {vestimenta.nombre_vestimenta}
-                          </option>
-                        ))}
-                      </FormSelect>
-                      {toggleAgregarVestimenta && (
-                        <Button className="sm mt-4" onClick={handleVestimentas}>
-                          Agregar Vestimenta
-                        </Button>
-                      )}
-                    </Col>
-                    <Col className="col-4">
-                      <Button
-                        className="mt-3"
-                        onClick={handleToggleColor}
-                        disabled={!toggleboton}
-                      >
-                        Color
-                      </Button>
-                      {togglecolor && (
-                        <CirclePicker
-                          className="mt-3"
-                          onChangeComplete={handleColor}
-                        />
-                      )}
-                    </Col>
-                    <Col className="col-4">
-                      <Table>
-                        <thead>
-                          <tr>
-                            <th>Vestimenta</th>
-                            <th>Color</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {vestimentas.map((vestimentaS) => (
-                            <tr>
-                              <td>
-                                {
-                                  vestimentasDispo.data.find(
-                                    (vestimenta) =>
-                                      vestimenta.codigo_vestimenta ==
-                                      vestimentaS.codigo
-                                  ).nombre_vestimenta
-                                }
-                              </td>
-                              <td
-                                className="col-1 rounded"
-                                style={{ backgroundColor: vestimentaS.colorV }}
-                              ></td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
+
               <Card className="mt-3">
                 <Card.Body>
                   <Card.Title>Colores del stud</Card.Title>
@@ -328,17 +281,25 @@ const StudUpdate = () => {
                           ></Col>
                         </Card.Body>
                       </Card>
+                      <div>
+                        <Button
+                          className="btn-success d-flex mt-5 mx-2"
+                          onClick={handleColores}
+                        >
+                          Cambiar colores
+                        </Button>
+                      </div>
                     </Col>
                   </Row>
                 </Card.Body>
               </Card>
               <Button
-                className="mb-4 mt-4 align"
+                className="mb-4 mt-4 btn-success"
                 size="lg"
                 type="submit"
                 onClick={handleData}
               >
-                Registrar
+                Confirmar cambios
               </Button>
             </Form>
           </Card.Body>
@@ -349,27 +310,6 @@ const StudUpdate = () => {
 };
 
 export default StudUpdate;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React from "react";
 // import { Button, Card, Col, Container, Row } from "react-bootstrap";
