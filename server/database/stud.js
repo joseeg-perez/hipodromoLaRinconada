@@ -1,6 +1,21 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
+const starStuds = async () => {
+  const query = {
+    text: `select * from stud`,
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
 const obtenerListaDeStuds = async () => {
   const query = {
     text: `SELECT s.codigo_stud, s.nombre_stud, 
@@ -260,6 +275,7 @@ const obtenerIdStudNueva = async (nuevoStud) => {
 };
 
 module.exports = {
+  starStuds,
   obtenerListaDeStuds,
   obtenerStudIndividual,
   obtenerPropietarioDeStud,

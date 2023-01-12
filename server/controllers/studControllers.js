@@ -1,5 +1,17 @@
 const studService = require("../services/studServices.js");
 
+const starStuds = async (req, res) => {
+  try {
+    const listaStuds = await studService.starStuds();
+
+    res.status(200).send({ status: "OK", data: listaStuds });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const obtenerListaDeStuds = async (req, res) => {
   try {
     const listaStuds = await studService.obtenerListaDeStuds();
@@ -206,6 +218,7 @@ const borrarStud = async (req, res) => {
 };
 
 module.exports = {
+  starStuds,
     obtenerListaDeStuds,
     obtenerStudIndividual,
     obtenerPropietarioDeStud,

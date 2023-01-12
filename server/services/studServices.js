@@ -10,6 +10,16 @@ const {
 } = require("./colorStudVestimentaServices.js");
 const { actualizarPropietarioStud } = require("./propietarioStudServices.js");
 
+const starStuds = async () => {
+  try {
+    const listaStuds = await Stud.starStuds();
+
+    return listaStuds;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const obtenerListaDeStuds = async () => {
   try {
     const listaStuds = await Stud.obtenerListaDeStuds();
@@ -219,6 +229,7 @@ const borrarStud = async (studId) => {
 };
 
 module.exports = {
+  starStuds,
   obtenerListaDeStuds,
   obtenerStudIndividual,
   obtenerPropietarioDeStud,

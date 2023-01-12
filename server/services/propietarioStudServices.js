@@ -3,8 +3,8 @@ const PropietarioStud = require("../database/propietarioStud.js");
 const obtenerListaDePropietarios = async () => {
   try {
     const listaPropietarios = await PropietarioStud.obtenerListaDePropietarios();
-    console.log(listaPropietarios)
-    return listaPropietarios;
+
+    return(listaPropietarios);
   } catch (error) {
     throw error;
   }
