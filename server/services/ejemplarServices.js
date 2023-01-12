@@ -59,7 +59,7 @@ const obtenerPosibleStudDelEjemplarIndividual = async (nuevoEjemplar) => {
 const registrarEjemplar = async (nuevoEjemplar) => {
   try {
     const ejemplar = await Ejemplar.registrarEjemplar(nuevoEjemplar);
-
+    console.log(ejemplar)
     return ejemplar;
   } catch (error) {
     throw error;

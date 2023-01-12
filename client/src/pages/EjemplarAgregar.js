@@ -43,7 +43,7 @@ const EjemplarAgregar = () => {
   const [caballerizas, setCaballerizas] = useState([]);
   const [caballeriza, setCaballeriza] = useState([]);
   const [studs, setStuds] = useState([]);
-  const [studEjemplar, setStudEjemplar] = useState([]);
+  const [fkPropietario, setfkPropietario] = useState([]);
   const [puestos, setPuestos] = useState([]);
   const [puestoEjemplar, setPuestoEjemplar] = useState([]);
   const [togglePelaje, settogglePelaje] = useState(false);
@@ -58,7 +58,7 @@ const EjemplarAgregar = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/studs/lista_studs")
+      .get("http://localhost:5000/api/v1/studs/listaStuds")
       .then((res) => {
         console.log(res);
         setStuds(res.data);
@@ -159,7 +159,7 @@ const EjemplarAgregar = () => {
           haraEjemplar,
           generoEjemplar,
           pelajeEjemplar,
-          studEjemplar
+          fkPropietario
         }
       );
     } catch (error) {
@@ -180,7 +180,7 @@ const EjemplarAgregar = () => {
       haraEjemplar,
       generoEjemplar,
       pelajeEjemplar,
-      studEjemplar
+      fkPropietario
     );
     setNombreEjemplar("");
     setNumeroEjemplar("");
@@ -195,7 +195,7 @@ const EjemplarAgregar = () => {
     setHaraEjemplar("");
     setPelajeEjemplar("");
     setGeneroEjemplar("");
-    studEjemplar("")
+    fkPropietario("")
   };
   const handleNombre = (event) => {
     setNombreEjemplar(event.target.value);
@@ -250,8 +250,8 @@ const EjemplarAgregar = () => {
   const handlePuesto = (event) => {
     setPuestoEjemplar(event.target.value);
   };
-  const handleStudEjemplar = (event) => {
-    setStudEjemplar(event.target.value)
+  const handlefkPropietario = (event) => {
+    setfkPropietario(event.target.value)
   }
 
   return (
@@ -517,14 +517,14 @@ const EjemplarAgregar = () => {
                   <FormGroup>
                     <FormLabel>Stud</FormLabel>
                     <FormSelect
-                    onChange={handleStudEjemplar}
-                    value={studEjemplar}
+                    onChange={handlefkPropietario}
+                    value={fkPropietario}
                     disabled={!toggleStuds}
                     >
                       <option key={1} disabled={toggleStuds}>
                         Stud
                       </option>
-                      {console.log(relacion_propStud.data)}
+                      {/* {console.log(relacion_propStud.data)} */}
                       {console.log(studs.data)}
                       {relacion_propStud.data.map(
                         (relacion) =>

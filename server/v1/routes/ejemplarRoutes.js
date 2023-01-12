@@ -11,7 +11,7 @@ router.get("/listado_de_ejemplares", ejemplarController.obtenerListaDeEjemplares
 
 router.get("/:ejemplarId", validateId, ejemplarController.obtenerEjemplarIndividual);
 
-router.post("/registrar_ejemplar", validarPermiso, validarRol([51]),  ejemplarController.registrarEjemplar);
+router.post("/registrar_ejemplar",  ejemplarController.registrarEjemplar);
 
 router.get("propietario/:ejemplarId", validateId, ejemplarController.obtenerPropietarioDelEjemplarIndividual);//Propietarios de ese ejemplar
 

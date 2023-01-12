@@ -109,6 +109,7 @@ const registrarEjemplar = async (req, res) => {
         pelajeEjemplar,
         generoEjemplar: generoEjemplar.toLowerCase(),
     };
+    console.log(nuevoEjemplar)
 
   try {
     const ejemplarCreado = await ejemplarService.registrarEjemplar(
