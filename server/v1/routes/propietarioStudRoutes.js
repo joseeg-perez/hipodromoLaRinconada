@@ -5,6 +5,8 @@ const { validateId } = require("../../validators/IDsValidator.js");
 
 const propietarioStudController = require("../../controllers/propietarioStudControllers.js");
 
+router.get("/obtener_listado_propietarioStud", propietarioStudController.obtenerListaDePropietarios)
+
 router.post("/registrar_propietarioStud", validateCreate, propietarioStudController.registrarPropietarioStud);
 
 router.patch("/:propietarioStudId", validateId, propietarioStudController.actualizarPropietarioStud);

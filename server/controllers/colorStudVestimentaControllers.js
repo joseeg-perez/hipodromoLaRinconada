@@ -1,5 +1,17 @@
 const colorStudVestimentaService = require("../services/colorStudVestimentaServices.js");
 
+const obtenerListadoDeColorStudVestimenta = async (req, res) => {
+  try {
+    const listaColorStudVestimenta = await colorStudVestimentaService.obtenerListadoDeColorStudVestimenta();
+
+    res.status(200).send({ status: "OK", data: listaColorStudVestimenta });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const registrarColorStudVestimenta = async (req, res) => {
   const { fkStudVestimenta, fkColor } = req.body;
 
@@ -70,6 +82,7 @@ const borrarColorStudVestimenta = async (req, res) => {
 };
 
 module.exports = {
+  obtenerListadoDeColorStudVestimenta,
   registrarColorStudVestimenta,
   actualizarColorStudVestimenta,
   borrarColorStudVestimenta,

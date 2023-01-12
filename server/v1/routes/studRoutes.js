@@ -11,6 +11,8 @@ const studController = require("../../controllers/studControllers.js");
 
 router.get("/listado_de_studs", studController.obtenerListaDeStuds);
 
+router.get("/listaStuds", studController.starStuds);
+
 router.get("/:studId", validateId, studController.obtenerStudIndividual);
 
 router.get("/propietarios/:studId", validateId, studController.obtenerPropietarioDeStud);//Propietarios del stud

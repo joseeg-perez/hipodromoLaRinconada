@@ -43,12 +43,6 @@ const InfoStud = (props) => {
             <Col className="col-6 ms-3">
               <Row className="text-start">
                 <p className="fw-bold">
-                  Propietario:{" "}
-                  <span className="text-muted"> {props.propietario}</span>
-                </p>
-              </Row>
-              <Row className="text-start">
-                <p className="fw-bold">
                   Está desde: <span className="text-muted"> {props.fecha}</span>
                 </p>
               </Row>

@@ -1,18 +1,29 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
+const starStuds = async () => {
+  const query = {
+    text: `select * from stud`,
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
 const obtenerListaDeStuds = async () => {
   const query = {
     text: `SELECT s.codigo_stud, s.nombre_stud, 
-	to_char(s.fecha_creacion_stud :: DATE, 'dd/mm/yyyy') as fecha,
-	concat(p.nombre1_persona,' ',p.apellido1_persona) as nombre,
-	c.codigo_del_color
-	FROM	persona_propietario p, color c, stud_color sc, stud s, 
-	propietario_stud ps
-	WHERE	sc.fk_stud = s.codigo_stud
-	AND		sc.fk_color = c.id_color
-	AND		ps.fk_propietario = p.codigo_persona
-	AND		ps.fk_stud = s.codigo_stud`,
+    to_char(s.fecha_creacion_stud :: DATE, 'dd/mm/yyyy') as fecha,
+    c.codigo_del_color
+    FROM	color c, stud_color sc, stud s
+    WHERE	sc.fk_stud = s.codigo_stud
+    AND		sc.fk_color = c.id_color`,
   };
 
   try {
@@ -28,7 +39,7 @@ const obtenerListaDeStuds = async () => {
 const obtenerStudIndividual = async (studId) => {
   const query = {
     text: `select nombre_stud, 
-    to_char(s.fecha_creacion_stud :: DATE, 'dd/mm/yyyy') as fecha, c.codigo_del_color
+    to_char(s.fecha_creacion_stud :: DATE, ''yyyy-mm-dd'') as fecha, c.codigo_del_color
     from stud s, color c, stud_color sc
     where sc.fk_stud = $1
     and codigo_stud = $1
@@ -264,6 +275,7 @@ const obtenerIdStudNueva = async (nuevoStud) => {
 };
 
 module.exports = {
+  starStuds,
   obtenerListaDeStuds,
   obtenerStudIndividual,
   obtenerPropietarioDeStud,
