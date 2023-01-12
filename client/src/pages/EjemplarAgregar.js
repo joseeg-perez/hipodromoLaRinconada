@@ -58,7 +58,7 @@ const EjemplarAgregar = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/studs/listado_de_studs")
+      .get("http://localhost:5000/api/v1/studs/lista_studs")
       .then((res) => {
         console.log(res);
         setStuds(res.data);
@@ -159,6 +159,7 @@ const EjemplarAgregar = () => {
           haraEjemplar,
           generoEjemplar,
           pelajeEjemplar,
+          studEjemplar
         }
       );
     } catch (error) {
@@ -178,7 +179,8 @@ const EjemplarAgregar = () => {
       propietarioEjemplar,
       haraEjemplar,
       generoEjemplar,
-      pelajeEjemplar
+      pelajeEjemplar,
+      studEjemplar
     );
     setNombreEjemplar("");
     setNumeroEjemplar("");
@@ -193,6 +195,7 @@ const EjemplarAgregar = () => {
     setHaraEjemplar("");
     setPelajeEjemplar("");
     setGeneroEjemplar("");
+    studEjemplar("")
   };
   const handleNombre = (event) => {
     setNombreEjemplar(event.target.value);

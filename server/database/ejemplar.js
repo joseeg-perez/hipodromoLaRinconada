@@ -23,7 +23,8 @@ const obtenerListaDeEjemplares = async () => {
     and ep.fk_ejemplar = codigo_ejemplar
 	  and ep.fecha_fin_propiedad is null
     and ep.fk_prop_stud = ps.codigo_prop_stud
-    and ps.fk_stud = codigo_stud`,
+    and ps.fk_stud = codigo_stud
+	  ORDER BY codigo_ejemplar desc`,
   };
 
   try {

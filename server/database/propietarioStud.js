@@ -3,7 +3,8 @@ const httpError = require("../helpers/httpMessages.js");
 
 const obtenerListaDePropietarios = async () => {
   const query = {
-    text: "SELECT * FROM propietario_stud",
+    text: `select * from propietario_stud
+    where fecha_fin_propiedad IS NULL`,
   };
 
   try {
