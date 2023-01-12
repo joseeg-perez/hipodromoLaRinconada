@@ -94,6 +94,7 @@ const registrarEjemplar = async (req, res) => {
         pelajeEjemplar,
         generoEjemplar,
         fkPropietario,
+        fk_puesto
      } =  req.body;
 
     const nuevoEjemplar = {
@@ -110,6 +111,7 @@ const registrarEjemplar = async (req, res) => {
         pelajeEjemplar,
         generoEjemplar: generoEjemplar.toLowerCase(),
         fkPropietario,
+        fk_puesto
     };
     console.log(nuevoEjemplar)
 

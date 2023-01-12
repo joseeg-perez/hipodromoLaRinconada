@@ -45,7 +45,7 @@ const EjemplarAgregar = () => {
   const [studs, setStuds] = useState([]);
   const [fkPropietario, setfkPropietario] = useState([]);
   const [puestos, setPuestos] = useState([]);
-  const [puestoEjemplar, setPuestoEjemplar] = useState([]);
+  const [fk_puesto, setfk_puesto] = useState("");
   const [togglePelaje, settogglePelaje] = useState(false);
   const [togglePapas, settogglePapas] = useState(false);
   const [toggleMamas, settoggleMamas] = useState(false);
@@ -142,6 +142,24 @@ const EjemplarAgregar = () => {
   const handleData = async (event) => {
     console.log(imagenEjemplar);
     event.preventDefault();
+    console.warn(
+      "all data",
+      nombreEjemplar,
+      numeroEjemplar,
+      tatlabialEjemplar,
+      precioEjemplar,
+      fecha_nacEjemplar,
+      pesoEjemplar,
+      padreEjemplar,
+      madreEjemplar,
+      imagenEjemplar,
+      propietarioEjemplar,
+      haraEjemplar,
+      generoEjemplar,
+      pelajeEjemplar,
+      fkPropietario,
+      fk_puesto
+    );
     try {
       await axios.post(
         "http://localhost:5000/api/v1/ejemplares/registrar_ejemplar",
@@ -159,7 +177,8 @@ const EjemplarAgregar = () => {
           haraEjemplar,
           generoEjemplar,
           pelajeEjemplar,
-          fkPropietario
+          fkPropietario,
+          fk_puesto
         }
       );
     } catch (error) {
@@ -248,7 +267,7 @@ const EjemplarAgregar = () => {
     settogglePuestos(true);
   };
   const handlePuesto = (event) => {
-    setPuestoEjemplar(event.target.value);
+    setfk_puesto(event.target.value);
   };
   const handlefkPropietario = (event) => {
     setfkPropietario(event.target.value)
@@ -490,7 +509,7 @@ const EjemplarAgregar = () => {
                     <FormLabel>Puesto</FormLabel>
                     <FormSelect
                       onChange={handlePuesto}
-                      value={puestoEjemplar}
+                      value={fk_puesto}
                       disabled={!togglePuestos}
                     >
                       <option key={1} disabled={togglePuestos}>
