@@ -68,7 +68,7 @@ const registrarCarrera = async (nuevaCarrera) => {
     fkEvento,
     fkCategoriaCarrera,
   } = nuevaCarrera;
-
+  //console.log(nuevaCarrera);
   const text = `INSERT INTO carrera(
         nombre_carrera,
         numero_carrera,
@@ -101,6 +101,7 @@ const registrarCarrera = async (nuevaCarrera) => {
     dbConnection.end;
     return nombreCarrera;
   } catch (error) {
+    console.log(error)
     if (error.code === "23505") {
       throw {
         status: 409,

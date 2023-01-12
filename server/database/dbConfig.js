@@ -22,7 +22,7 @@ const config = {
   port: "5432",
   host: "localhost",
   password: "123",
-  database: "postgres",
+  database: "hipodromo",
 };
 
 const pool = new Pool(config);

@@ -36,7 +36,7 @@ const Eventos = () => {
   let usuario1 = "crear";
   let usuario2 = "ver";
   let usuario3 = "inscribir";
-  let usuario = usuario3;
+  let usuario = usuario1;
 
   const fechaHandler = (event) => {
     setfechaEvento(event.target.value);
@@ -44,6 +44,7 @@ const Eventos = () => {
 
   const agregarEventoHandler = async (event) => {
     event.preventDefault();
+    console.log(fechaEvento);
     try {
       await axios.post(
         "http://localhost:5000/api/v1/eventos/registrar_evento",
@@ -55,7 +56,6 @@ const Eventos = () => {
       throw error;
     }
     alert("Se creo el evento con éxito");
-    console.log(fechaEvento);
     setfechaEvento("");
   };
 

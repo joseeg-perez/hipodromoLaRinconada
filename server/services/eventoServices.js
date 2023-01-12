@@ -26,6 +26,7 @@ const registrarEvento = async (nuevoEvento) => {
 
     return;
   } catch (error) {
+    
     throw error;
   }
 };
