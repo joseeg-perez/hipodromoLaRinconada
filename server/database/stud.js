@@ -39,7 +39,7 @@ const obtenerListaDeStuds = async () => {
 const obtenerStudIndividual = async (studId) => {
   const query = {
     text: `select nombre_stud, 
-    to_char(s.fecha_creacion_stud :: DATE, ''yyyy-mm-dd'') as fecha, c.codigo_del_color
+    to_char(s.fecha_creacion_stud :: DATE, 'yyyy-mm-dd') as fecha, c.codigo_del_color
     from stud s, color c, stud_color sc
     where sc.fk_stud = $1
     and codigo_stud = $1
