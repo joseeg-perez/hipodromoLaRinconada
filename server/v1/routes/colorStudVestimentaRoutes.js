@@ -5,6 +5,8 @@ const { validateId } = require("../../validators/IDsValidator.js");
 
 const colorStudVestimentaController = require("../../controllers/colorStudVestimentaControllers.js");
 
+router.get("/listado_de_colorStudVestimenta", colorStudVestimentaController.obtenerListadoDeColorStudVestimenta);
+
 router.post("/registrar_colorStudVestimenta", validateCreate, colorStudVestimentaController.registrarColorStudVestimenta);
 
 router.patch("/:colorStudVestimentaId", validateId, colorStudVestimentaController.actualizarColorStudVestimenta);

@@ -1,5 +1,17 @@
 const studVestimentaService = require("../services/studVestimentaServices.js");
 
+const obtenerListaDeStudsVestimentas = async (req, res) => {
+  try {
+    const listaPropietarios = await studVestimentaService.obtenerListaDeStudsVestimentas();
+
+    res.status(200).send({ status: "OK", data: listaPropietarios });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const registrarStudVestimenta = async (req, res) => {
   const { fkVestimenta, fkStud } = req.body;
 
@@ -66,6 +78,7 @@ const borrarStudVestimenta = async (req, res) => {
 };
 
 module.exports = {
+  obtenerListaDeStudsVestimentas,
   registrarStudVestimenta,
   actualizarStudVestimenta,
   borrarStudVestimenta,
