@@ -8,7 +8,6 @@ const obtenerListaDePropietarios = async () => {
 
   try {
     const { rows } = await dbConnection.query(query);
-
     dbConnection.end;
     return rows;
   } catch (error) {
