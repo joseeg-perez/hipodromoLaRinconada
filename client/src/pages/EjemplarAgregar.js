@@ -83,15 +83,15 @@ const EjemplarAgregar = () => {
         setLoading2(false);
       })
       .catch((err) => console.log(err));
-    axios
-      .get("http://localhost:5000/api/v1/puestos/listado_de_puestos")
-      .then((res) => {
-        console.log(res);
-        setPuestos(res.data);
-        setLoading1(false);
-      })
-      .catch((err) => console.log(err));
-    axios
+      axios
+        .get("http://localhost:5000/api/v1/puestos/listado_de_puestos")
+        .then((res) => {
+          console.log(res);
+          setPuestos(res.data);
+          setLoading1(false);
+        })
+        .catch((err) => console.log(err));
+      axios
       .get("http://localhost:5000/api/v1/propietarios/listado_de_propietarios")
       .then((res) => {
         console.log(res);
@@ -483,8 +483,31 @@ const EjemplarAgregar = () => {
               </Row>
 
               <Row>
-                <Col></Col>
-                <Col>
+                <Col className="mt-2">
+                <FormGroup>
+                    <FormLabel>Stud</FormLabel>
+                    <FormSelect
+                      // onChange={handleStudsPosibles}
+                      // value={studEjemplar}
+                      // disabled={!toggleStud}
+                    >
+                      <option key={1} disabled={togglePuestos}>
+                        Stud
+                      </option>
+                      {/* {relacion_studPropietario.data.map(
+                        (relacion) =>
+                          relacion.fk_propietario == propietarioEjemplar && (
+                            <option
+                              key={relacion.codigo_relacion}
+                              value={relacion.fk_stud}
+                            >
+                              {studs}
+                            </option>
+                          )
+                      )} */}
+                    </FormSelect>
+                  </FormGroup></Col>
+                <Col className="mt-4">
                   <h6 className="fw-bold mt-2" itemType="radio">
                     Genero:
                   </h6>

@@ -82,8 +82,6 @@ const StudAgregar = () => {
     const color2 = colores.data.find(
       (color) => color.codigo_del_color == color2stud
     ).id_color;
-    console.log(vestimentas);
-    console.log(colores)
     vestimentas.map(
       (vestimenta) =>
         (vestimenta.colorV = colores.data.find(
