@@ -1,4 +1,5 @@
 const Ejemplar = require("../database/ejemplar.js");
+const { registrarEjemplarPropietario } = require("./ejemplarPropietarioServices.js");
 
 const obtenerListaDeEjemplares = async () => {
   try {
@@ -59,7 +60,16 @@ const obtenerPosibleStudDelEjemplarIndividual = async (nuevoEjemplar) => {
 const registrarEjemplar = async (nuevoEjemplar) => {
   try {
     const ejemplar = await Ejemplar.registrarEjemplar(nuevoEjemplar);
-    console.log(ejemplar)
+    const idEjemplarCreado = (await Ejemplar.selectStarEjemplar()).pop().codigo_ejemplar;
+
+    const nuevoEjemplarPropietario = {
+      porcentajePropiedad: 100,
+      fechaFinPropiedad: null,
+      fkEjemplar: idEjemplarCreado,
+      fkPropStud: nuevoEjemplar.fkPropietario
+    }
+    await registrarEjemplarPropietario(nuevoEjemplarPropietario);
+
     return ejemplar;
   } catch (error) {
     throw error;

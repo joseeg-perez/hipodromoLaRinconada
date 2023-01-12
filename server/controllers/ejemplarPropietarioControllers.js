@@ -49,13 +49,12 @@ const registrarEjemplarPropietario = async (req, res) => {
   };
 
   try {
-    const ejemplarPropietarioCreado =
-      await ejemplarPropietarioService.registrarEjemplarPropietario(
+    await ejemplarPropietarioService.registrarEjemplarPropietario(
         nuevoEjemplarPropietario
       );
     res.status(200).send({
       status: "OK",
-      data: `Se ha creado el ejemplarPropietario '${ejemplarPropietarioCreado}' de forma satisfactoria.`,
+      data: `Se ha creado el propietario del ejemplar de forma satisfactoria.`,
     });
   } catch (error) {
     res

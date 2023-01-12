@@ -26,12 +26,11 @@ const obtenerEjemplarPropietarioIndividual = async (ejemplarPropietarioId) => {
 
 const registrarEjemplarPropietario = async (nuevoEjemplarPropietario) => {
   try {
-    const ejemplarPropietarioCreado =
       await EjemplarPropietario.registrarEjemplarPropietario(
         nuevoEjemplarPropietario
       );
 
-    return ejemplarPropietarioCreado;
+    return;
   } catch (error) {
     throw error;
   }
