@@ -268,6 +268,8 @@ export const EjemplarDetail = () => {
     return <div></div>;
   }
 
+  
+
   const onSeleccionPropietarioHandler = (id, propietario, event) => {
     event.preventDefault();
     console.log(id);
@@ -389,7 +391,7 @@ export const EjemplarDetail = () => {
                                 {
                                   ejemplares.data.find(
                                     (ejemplar) =>
-                                      (ejemplar.codigo_ejemplar = padreEjemplar)
+                                      (ejemplar.codigo_ejemplar == padreEjemplar)
                                   ).nombre_ejemplar
                                 }
                               </span>
@@ -406,7 +408,7 @@ export const EjemplarDetail = () => {
                                 {
                                   ejemplares.data.find(
                                     (ejemplar) =>
-                                      (ejemplar.codigo_ejemplar = madreEjemplar)
+                                      (ejemplar.codigo_ejemplar == madreEjemplar)
                                   ).nombre_ejemplar
                                 }
                               </span>
