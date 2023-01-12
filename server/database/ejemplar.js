@@ -36,6 +36,21 @@ const obtenerListaDeEjemplares = async () => {
   }
 };
 
+const selectStarEjemplar = async() => {
+  const query = {
+    text: `select * from ejemplar`,
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
 const obtenerEjemplarIndividual = async (ejemplarId) => {
   const query = {
     text: `select distinct codigo_ejemplar, nombre_ejemplar, numero_ejemplar, numero_tatuaje_labial,
@@ -310,6 +325,7 @@ const borrarEjemplar = async (ejemplarId) => {
 };
 
 module.exports = {
+    selectStarEjemplar,
     obtenerListaDeEjemplares,
     obtenerEjemplarIndividual,
     obtenerPropietarioDelEjemplarIndividual,
