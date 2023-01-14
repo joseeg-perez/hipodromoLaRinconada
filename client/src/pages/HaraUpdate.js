@@ -47,7 +47,7 @@ const HaraUpdate = (props) => {
   const handleData = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/v1/haras/registrar_hara", {
+      await axios.patch(`http://localhost:5000/api/v1/haras/${Params.haraId}`, {
         nombreHara,
         fkLugar,
       });

@@ -36,7 +36,7 @@ const Eventos = () => {
   let usuario1 = "crear";
   let usuario2 = "ver";
   let usuario3 = "inscribir";
-  let usuario = usuario1;
+  let usuario = usuario3;
 
   const fechaHandler = (event) => {
     setfechaEvento(event.target.value);
