@@ -67,6 +67,7 @@ import MotivoRetiroUpdate from "./pages/MotivoRetiroUpdate";
 import Login from "./pages/Login";
 import RegisterCard from "./pages/RegisterCard";
 import EntrenadorDetail from "./pages/EntrenadorDetail";
+import TipoApuestaAgregar from "./pages/TipoApuestaAgregar";
 
 function App() {
   return (
@@ -80,8 +81,11 @@ function App() {
           <Principal></Principal>
         </Route>
 
-        <Route path="/apuestas">
+        <Route path="/apuestas" exact>
           <Apuestas></Apuestas>
+        </Route>
+        <Route path="/apuestas/apuestasCreate" exact>
+          <TipoApuestaAgregar></TipoApuestaAgregar>
         </Route>
 
         <Route path="/menu">
