@@ -48,6 +48,7 @@ const CardLugarEdit = (props) => {
   }, []);
 
   console.log(lugares);
+  console.log(props.lugar)
 
   props.onSaveLugar(parroquia);
 
@@ -61,7 +62,7 @@ const CardLugarEdit = (props) => {
         <Card.Body>
           <Card.Title>Direccion actual: </Card.Title>
           <Card.Text className="text-muted">
-            {lugares[2].find((lug) => lug.id_lugar == props.lugar).nombre_lugar}
+            {/* {lugares[2].find((lug) => lug.id_lugar == props.lugar).nombre_lugar} */}
           </Card.Text>
           <Card.Body>
             <Row>

@@ -1,5 +1,15 @@
 const PropietarioStud = require("../database/propietarioStud.js");
 
+const obtenerListaDePropietarios = async () => {
+  try {
+    const listaPropietarios = await PropietarioStud.obtenerListaDePropietarios();
+
+    return(listaPropietarios);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const registrarPropietarioStud = async (nuevoPropietarioStud) => {
   try {
     await PropietarioStud.registrarPropietarioStud(nuevoPropietarioStud);
@@ -29,6 +39,7 @@ const borrarPropietarioStud = async (propietarioStudId) => {
 };
 
 module.exports = {
+  obtenerListaDePropietarios,
   registrarPropietarioStud,
   actualizarPropietarioStud,
   borrarPropietarioStud,

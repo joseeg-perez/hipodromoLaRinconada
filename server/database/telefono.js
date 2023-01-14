@@ -34,16 +34,16 @@ const obtenerTelefonoIndividual = async (telefonoId) => {
 };
 
 const registrarTelefono = async (nuevoTelefono) => {
-  const { extensionTelefono, cuerpoTelefono, fkPropietario, fkCliente } =
+  console.log(nuevoTelefono, 'DATABASE TELEFONO')
+  const { extensionTelefono, cuerpoTelefono, fkPropietario } =
     nuevoTelefono;
 
   const text = `INSERT INTO telefono(
         extension_tlf,
         cuerpo_tlf,
-        fk_propietario,
-        fk_cliente) VALUES($1, $2, $3, $4)`;
+        fk_propietario) VALUES($1, $2, $3)`;
 
-  const values = [extensionTelefono, cuerpoTelefono, fkPropietario, fkCliente];
+  const values = [extensionTelefono, cuerpoTelefono, fkPropietario];
 
   try {
     const { rows } = await dbConnection.query(text, values);

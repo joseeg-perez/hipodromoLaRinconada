@@ -42,7 +42,6 @@ const obtenerEjemplarPropietarioIndividual = async (ejemplarPropietarioId) => {
 const registrarEjemplarPropietario = async (nuevoEjemplarPropietario) => {
   const {
     porcentajePropiedad,
-    fechaInicioPropiedad,
     fechaFinPropiedad,
     fkEjemplar,
     fkPropStud,
@@ -50,14 +49,12 @@ const registrarEjemplarPropietario = async (nuevoEjemplarPropietario) => {
 
   const text = `INSERT INTO ejemplar_propietario(
         porcentaje_propiedad,
-        fecha_inicio_propiedad,
         fecha_fin_propiedad,
         fk_ejemplar,
-        fk_prop_stud) VALUES($1, $2, $3, $4, $5)`;
+        fk_prop_stud) VALUES($1, $2, $3, $4)`;
 
   const values = [
     porcentajePropiedad,
-    fechaInicioPropiedad,
     fechaFinPropiedad,
     fkEjemplar,
     fkPropStud,
@@ -67,7 +64,7 @@ const registrarEjemplarPropietario = async (nuevoEjemplarPropietario) => {
     const res = await dbConnection.query(text, values);
     dbConnection.end;
 
-    return nombreEjemplar;
+    return;
   } catch (error) {
     if (error.code === "23505") {
       throw {

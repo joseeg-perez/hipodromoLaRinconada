@@ -93,6 +93,8 @@ const registrarEjemplar = async (req, res) => {
         haraEjemplar,
         pelajeEjemplar,
         generoEjemplar,
+        fkPropietario,
+        fk_puesto
      } =  req.body;
 
     const nuevoEjemplar = {
@@ -108,7 +110,10 @@ const registrarEjemplar = async (req, res) => {
         haraEjemplar,
         pelajeEjemplar,
         generoEjemplar: generoEjemplar.toLowerCase(),
+        fkPropietario,
+        fk_puesto
     };
+    console.log(nuevoEjemplar)
 
   try {
     const ejemplarCreado = await ejemplarService.registrarEjemplar(

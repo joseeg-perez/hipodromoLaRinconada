@@ -1,5 +1,17 @@
 const propietarioStudService = require("../services/propietarioStudServices.js");
 
+const obtenerListaDePropietarios = async (req, res) => {
+  try {
+    const listaPropietarios = await propietarioStudService.obtenerListaDePropietarios();
+
+    res.status(200).send({ status: "OK", data: listaPropietarios });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const registrarPropietarioStud = async (req, res) => {
   const {
     porcentajePropiedad,
@@ -75,6 +87,7 @@ const borrarPropietarioStud = async (req, res) => {
 };
 
 module.exports = {
+  obtenerListaDePropietarios,
   registrarPropietarioStud,
   actualizarPropietarioStud,
   borrarPropietarioStud,

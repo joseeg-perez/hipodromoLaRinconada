@@ -98,7 +98,7 @@ const VeterinarioDetail = () => {
                   <div className="d-flex pt-1 justify-content-end mt-4">
                     <Link
                       size="sm"
-                      to={`/propietarios/${Params.veterinarioId}/updatePropietario`}
+                      to={`/veterinarios/${Params.veterinarioId}/updateVeterinario`}
                       className="text-center align-self-end"
                     >
                       <Button className="btn btn-light btn-outline-success btn-sm mx-1">

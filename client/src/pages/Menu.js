@@ -18,9 +18,15 @@ const Menu = () => {
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">CREAR ROLES</li>
                 <li className="list-group-item">CONSULTAR USUARIOS</li>
-                <li className="list-group-item">CONSULTAR JINETES</li>
-                <li className="list-group-item">CONSULTAR EJEMPLARES</li>
-                <li className="list-group-item">CONSULTAR PROPIETARIOS</li>
+                <Link className="list-group-item" to="/jinetes">
+                  CONSULTAR JINETES
+                </Link>
+                <Link className="list-group-item" to="/ejemplares">
+                  CONSULTAR EJEMPLARES
+                </Link>
+                <Link className="list-group-item" to="/propietarios">
+                  CONSULTAR PROPIETARIOS
+                </Link>
                 <Link className="list-group-item" to="/studs">
                   CONSULTAR STUDS
                 </Link>
@@ -42,7 +48,9 @@ const Menu = () => {
                 <Link className="list-group-item" to="/restaurantes">
                   CONSULTAR RESTAURANTES
                 </Link>
-                <li className="list-group-item">CONSULTAR EVENTOS</li>
+                <Link className="list-group-item" to="/eventos">
+                  CONSULTAR EVENTOS
+                </Link>
                 <li className="list-group-item">
                   CONSULTAR HISTORIAL DE CAMBIOS
                 </li>

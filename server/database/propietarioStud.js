@@ -1,6 +1,21 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
+const obtenerListaDePropietarios = async () => {
+  const query = {
+    text: `select * from propietario_stud
+    where fecha_fin_propiedad IS NULL`,
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
 const registrarPropietarioStud = async (nuevoPropietarioStud) => {
   const {
     porcentajePropiedad,
@@ -96,6 +111,7 @@ const borrarPropietarioStud = async (propietarioStudId) => {
 };
 
 module.exports = {
+  obtenerListaDePropietarios,
   registrarPropietarioStud,
   actualizarPropietarioStud,
   borrarPropietarioStud,

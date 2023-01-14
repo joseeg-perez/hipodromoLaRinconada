@@ -32,8 +32,8 @@ const PelajeUpdate = () => {
   const handleData = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(
-        "http://localhost:5000/api/v1/pelajes/registrar_pelaje",
+      await axios.patch(
+        `http://localhost:5000/api/v1/pelajes/${Params.pelajeId}`,
         {
           nombrePelaje,
           abrevPelaje,

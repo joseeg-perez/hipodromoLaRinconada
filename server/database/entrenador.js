@@ -43,8 +43,8 @@ const obtenerEntrenadorIndividual = async (entrenadorId) => {
   const query = {
     text: `SELECT codigo_persona, nombre1_persona, apellido1_persona, 
     nombre2_persona, apellido2_persona, cedula_persona, 
-    to_char(fecha_nacimiento_persona :: DATE, 'dd/mm/yyyy') as fecha_nacimiento_persona,
-    to_char(fecha_inicio :: DATE, 'dd/mm/yyyy') as fecha_inicio, 
+    to_char(fecha_nacimiento_persona :: DATE, 'yyyy-mm-dd') as fecha_nacimiento_persona,
+    to_char(fecha_inicio :: DATE, 'yyyy-mm-dd') as fecha_inicio, 
     codigo_caballeriza, cantidad_puestos 
             FROM persona_entrenador, entrenador_caballeriza, caballeriza 
             WHERE fk_entrenador = codigo_persona and fk_caballeriza = codigo_caballeriza and fecha_fin IS NULL

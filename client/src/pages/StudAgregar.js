@@ -82,12 +82,20 @@ const StudAgregar = () => {
     const color2 = colores.data.find(
       (color) => color.codigo_del_color == color2stud
     ).id_color;
-    console.log(vestimentas);
     vestimentas.map(
       (vestimenta) =>
         (vestimenta.colorV = colores.data.find(
           (colorD) => colorD.codigo_del_color == vestimenta.colorV
-        ).id_color)
+        ).id_color),
+        console.log(vestimenta)
+    );
+    console.warn(
+      fechaCreacion,
+      nombreStud,
+      propietarioStud,
+      color1,
+      color2,
+      vestimentas
     );
     try {
       await axios.post("http://localhost:5000/api/v1/studs/registrar_stud", {

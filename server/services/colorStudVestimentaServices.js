@@ -1,5 +1,15 @@
 const ColorStudVestimenta = require("../database/colorStudVestimenta.js");
 
+const obtenerListadoDeColorStudVestimenta = async () => {
+  try {
+    const listaColorStudVestimenta = await ColorStudVestimenta.obtenerListadoDeColorStudVestimenta();
+
+    return(listaColorStudVestimenta);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const registrarColorStudVestimenta = async (nuevoColorStudVestimenta) => {
   try {
     await ColorStudVestimenta.registrarColorStudVestimenta(
@@ -37,6 +47,7 @@ const borrarColorStudVestimenta = async (colorStudVestimentaId) => {
 };
 
 module.exports = {
+  obtenerListadoDeColorStudVestimenta,
   registrarColorStudVestimenta,
   actualizarColorStudVestimenta,
   borrarColorStudVestimenta,

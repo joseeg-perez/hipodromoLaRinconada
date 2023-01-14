@@ -34,14 +34,18 @@ const EjemplarAgregar = () => {
   const [isLoading3, setLoading3] = useState(true);
   const [isLoading4, setLoading4] = useState(true);
   const [isLoading5, setLoading5] = useState(true);
+  const [isLoading6, setLoading6] = useState(true);
+  const [isLoading7, setLoading7] = useState(true);
   const [pelajes, setPelajes] = useState([]);
   const [haras, setHaras] = useState([]);
   const [propietarios, setPropietarios] = useState([]);
   const [ejemplares, setEjemplares] = useState([]);
   const [caballerizas, setCaballerizas] = useState([]);
   const [caballeriza, setCaballeriza] = useState([]);
+  const [studs, setStuds] = useState([]);
+  const [fkPropietario, setfkPropietario] = useState([]);
   const [puestos, setPuestos] = useState([]);
-  const [puestoEjemplar, setPuestoEjemplar] = useState([]);
+  const [fk_puesto, setfk_puesto] = useState("");
   const [togglePelaje, settogglePelaje] = useState(false);
   const [togglePapas, settogglePapas] = useState(false);
   const [toggleMamas, settoggleMamas] = useState(false);
@@ -49,8 +53,26 @@ const EjemplarAgregar = () => {
   const [toggleCaballerizas, settoggleCaballerizas] = useState(false);
   const [togglePuestos, settogglePuestos] = useState(false);
   const [togglePropietarios, settogglePropietarios] = useState(false);
+  const [toggleStuds, settogglestuds] = useState(false)
+  const [relacion_propStud, setRelacion_propStud] = useState("");
 
   useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/studs/listaStuds")
+      .then((res) => {
+        console.log(res);
+        setStuds(res.data);
+        setLoading7(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get("http://localhost:5000/api/v1/propietarios_de_studs/obtener_listado_propietarioStud")
+      .then((res) => {
+        console.log(res);
+        setRelacion_propStud(res.data);
+        setLoading6(false);
+      })
+      .catch((err) => console.log(err));
     axios
       .get("http://localhost:5000/api/v1/pelajes/listado_de_pelajes")
       .then((res) => {
@@ -112,13 +134,32 @@ const EjemplarAgregar = () => {
     isLoading2 ||
     isLoading3 ||
     isLoading4 ||
-    isLoading5
+    isLoading5 || 
+    isLoading6
   ) {
     return <div>Cargando</div>;
   }
   const handleData = async (event) => {
     console.log(imagenEjemplar);
     event.preventDefault();
+    console.warn(
+      "all data",
+      nombreEjemplar,
+      numeroEjemplar,
+      tatlabialEjemplar,
+      precioEjemplar,
+      fecha_nacEjemplar,
+      pesoEjemplar,
+      padreEjemplar,
+      madreEjemplar,
+      imagenEjemplar,
+      propietarioEjemplar,
+      haraEjemplar,
+      generoEjemplar,
+      pelajeEjemplar,
+      fkPropietario,
+      fk_puesto
+    );
     try {
       await axios.post(
         "http://localhost:5000/api/v1/ejemplares/registrar_ejemplar",
@@ -136,6 +177,8 @@ const EjemplarAgregar = () => {
           haraEjemplar,
           generoEjemplar,
           pelajeEjemplar,
+          fkPropietario,
+          fk_puesto
         }
       );
     } catch (error) {
@@ -155,7 +198,8 @@ const EjemplarAgregar = () => {
       propietarioEjemplar,
       haraEjemplar,
       generoEjemplar,
-      pelajeEjemplar
+      pelajeEjemplar,
+      fkPropietario
     );
     setNombreEjemplar("");
     setNumeroEjemplar("");
@@ -170,6 +214,7 @@ const EjemplarAgregar = () => {
     setHaraEjemplar("");
     setPelajeEjemplar("");
     setGeneroEjemplar("");
+    fkPropietario("")
   };
   const handleNombre = (event) => {
     setNombreEjemplar(event.target.value);
@@ -202,6 +247,7 @@ const EjemplarAgregar = () => {
   };
   const handlePropietario = (event) => {
     setPropietarioEjemplar(event.target.value);
+    settogglestuds(true)
     settogglePropietarios(true);
   };
   const handleHara = (event) => {
@@ -221,8 +267,11 @@ const EjemplarAgregar = () => {
     settogglePuestos(true);
   };
   const handlePuesto = (event) => {
-    setPuestoEjemplar(event.target.value);
+    setfk_puesto(event.target.value);
   };
+  const handlefkPropietario = (event) => {
+    setfkPropietario(event.target.value)
+  }
 
   return (
     <Container>
@@ -460,7 +509,7 @@ const EjemplarAgregar = () => {
                     <FormLabel>Puesto</FormLabel>
                     <FormSelect
                       onChange={handlePuesto}
-                      value={puestoEjemplar}
+                      value={fk_puesto}
                       disabled={!togglePuestos}
                     >
                       <option key={1} disabled={togglePuestos}>
@@ -483,8 +532,34 @@ const EjemplarAgregar = () => {
               </Row>
 
               <Row>
-                <Col></Col>
-                <Col>
+                <Col className="mt-2">
+                  <FormGroup>
+                    <FormLabel>Stud</FormLabel>
+                    <FormSelect
+                    onChange={handlefkPropietario}
+                    value={fkPropietario}
+                    disabled={!toggleStuds}
+                    >
+                      <option key={1} disabled={toggleStuds}>
+                        Stud
+                      </option>
+                      {/* {console.log(relacion_propStud.data)} */}
+                      {console.log(studs.data)}
+                      {relacion_propStud.data.map(
+                        (relacion) =>
+                          relacion.fk_propietario == propietarioEjemplar && (
+                            <option
+                              key={relacion.codigo_prop_stud}
+                              value={relacion.codigo_prop_stud}
+                            >
+                              {studs.data.find((stud) => stud.codigo_stud == relacion.fk_stud).nombre_stud} 
+                            </option>
+                          )
+                      )}
+                    </FormSelect>
+                  </FormGroup>
+                </Col>
+                <Col className="mt-4">
                   <h6 className="fw-bold mt-2" itemType="radio">
                     Genero:
                   </h6>

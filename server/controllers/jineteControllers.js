@@ -16,11 +16,11 @@ const obtenerJineteIndividual = async (req, res) => {
   const {
     params: { jineteId },
   } = req;
-
   try {
     const jinete = await jineteService.obtenerJineteIndividual(jineteId);
     res.status(200).send({ status: "OK", data: jinete });
   } catch (error) {
+    console.log(error)
     res
       .status(error?.status || 500)
       .send({ status: "FAILED", data: { error: error?.message || error } });

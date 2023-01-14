@@ -22,7 +22,7 @@ const obtenerJineteIndividual = async (jineteId) => {
   const query = {
     text: `SELECT codigo_persona, cedula_persona, nombre1_persona, nombre2_persona, apellido1_persona,
     apellido2_persona, fk_rango, altura_jinete, peso_jinete,
-    to_char(fecha_nacimiento_persona :: DATE, 'dd/mm/yyyy') as fecha_nacimiento_persona
+    to_char(fecha_nacimiento_persona :: DATE, 'yyyy-mm-dd') as fecha_nacimiento_persona
     FROM persona_jinete
     WHERE codigo_persona =$1`,
     values: [jineteId],
@@ -35,6 +35,7 @@ const obtenerJineteIndividual = async (jineteId) => {
     dbConnection.end;
     return rows;
   } catch (error) {
+    console.log(error)
     throw { status: error?.status || 500, message: error?.message || error };
   }
 };

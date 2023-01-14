@@ -7,6 +7,8 @@ const { validateId } = require("../../validators/IDsValidator.js");
 
 const studVestimentaController = require("../../controllers/studVestimentaControllers.js");
 
+router.get("/listado_de_studVestimentas", studVestimentaController.obtenerListaDeStudsVestimentas)
+
 router.post(
   "/registrar_studVestimenta",
   validateCreate,

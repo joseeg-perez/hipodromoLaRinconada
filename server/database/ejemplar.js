@@ -4,7 +4,7 @@ const httpError = require("../helpers/httpMessages.js");
 const obtenerListaDeEjemplares = async () => {
   const query = {
     text: `select distinct codigo_ejemplar, nombre_ejemplar, 
-    to_char(fecha_nacimiento_ejemplar :: DATE, 'dd/mm/yyyy') as fechaNac,
+    to_char(fecha_nacimiento_ejemplar :: DATE, 'yyyy-mm-dd') as fechaNac,
     imagen_ejemplar, nombre_hara, sexo_ejemplar,
     nombre_stud, 
     concat(e.nombre1_persona, ' ', e.apellido1_persona) as entrenador,
@@ -23,7 +23,23 @@ const obtenerListaDeEjemplares = async () => {
     and ep.fk_ejemplar = codigo_ejemplar
 	  and ep.fecha_fin_propiedad is null
     and ep.fk_prop_stud = ps.codigo_prop_stud
-    and ps.fk_stud = codigo_stud`,
+    and ps.fk_stud = codigo_stud
+	  ORDER BY codigo_ejemplar desc`,
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const selectStarEjemplar = async() => {
+  const query = {
+    text: `select * from ejemplar`,
   };
 
   try {
@@ -40,7 +56,7 @@ const obtenerEjemplarIndividual = async (ejemplarId) => {
   const query = {
     text: `select distinct codigo_ejemplar, nombre_ejemplar, numero_ejemplar, numero_tatuaje_labial,
     precio_ejemplar,
-    to_char(fecha_nacimiento_ejemplar :: DATE, 'dd/mm/yyyy') as fechaNac,
+    to_char(fecha_nacimiento_ejemplar :: DATE, 'yyyy-mm-dd') as fechaNac,
     imagen_ejemplar, nombre_hara, sexo_ejemplar,
     nombre_stud, peso_ejemplar, 
     fk_madre_ejemplar, fk_padre_ejemplar, imagen_ejemplar, fk_hara, 
@@ -310,6 +326,7 @@ const borrarEjemplar = async (ejemplarId) => {
 };
 
 module.exports = {
+    selectStarEjemplar,
     obtenerListaDeEjemplares,
     obtenerEjemplarIndividual,
     obtenerPropietarioDelEjemplarIndividual,

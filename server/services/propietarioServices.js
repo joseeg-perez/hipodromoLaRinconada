@@ -32,15 +32,16 @@ const registrarPropietario = async (nuevoPropietario) => {
       nuevoPropietario
     );
     const telefonoPropietario = {
-      extension_tlf: nuevoPropietario.extension_tlf,
-      cuerpo_tlf: nuevoPropietario.cuerpo_tlf,
-      fk_propietario: idPropietarioCreado,
-      fk_cliente: null,
+      extensionTelefono: nuevoPropietario.extension_tlf,
+      cuerpoTelefono: nuevoPropietario.cuerpo_tlf,
+      fkPropietario: idPropietarioCreado
     };
+    console.log(telefonoPropietario)
     await registrarTelefono(telefonoPropietario); //Registrando el telefono del propietario
 
     return propietarioCreado;
   } catch (error) {
+    console.log(error)
     throw error;
   }
 };

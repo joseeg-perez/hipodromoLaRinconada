@@ -104,18 +104,11 @@ const Studs = () => {
             segundo = true;
           } else {
             segundo = false;
-            console.log(
-              stud.nombre,
-              stud.fecha,
-              anterior,
-              stud.codigo_del_color
-            );
             return (
               <InfoStud
                 key={stud.codigo_stud}
                 id={stud.codigo_stud}
                 nombre={stud.nombre_stud}
-                propietario={stud.nombre}
                 fecha={stud.fecha}
                 color1={anterior}
                 color2={stud.codigo_del_color}

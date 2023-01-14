@@ -1,6 +1,21 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
+const obtenerListadoDeColorStudVestimenta = async () => {
+  const query = {
+    text: "SELECT * FROM color_stud_vestimenta",
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
 const registrarColorStudVestimenta = async (nuevoColorStudVestimenta) => {
   const { fkStudVestimenta, fkColor } = nuevoColorStudVestimenta;
 
@@ -81,6 +96,7 @@ const borrarColorStudVestimenta = async (colorStudVestimentaId) => {
 };
 
 module.exports = {
+  obtenerListadoDeColorStudVestimenta,
   registrarColorStudVestimenta,
   actualizarColorStudVestimenta,
   borrarColorStudVestimenta,

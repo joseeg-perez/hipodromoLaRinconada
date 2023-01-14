@@ -1,3 +1,4 @@
+
 const express = require("express");
 const router = express.Router();
 const { validateCreate } = require("../../validators/studValidators.js");
@@ -9,6 +10,8 @@ const { validarRol } = require("../../middlewares/rolMiddleware.js");
 const studController = require("../../controllers/studControllers.js");
 
 router.get("/listado_de_studs", studController.obtenerListaDeStuds);
+
+router.get("/listaStuds", studController.starStuds);
 
 router.get("/:studId", validateId, studController.obtenerStudIndividual);
 
@@ -26,7 +29,7 @@ router.post("/cambiarPorcentajes", studController.cambiarPorcentajes);//Para cam
 
 router.post("/agregarVestimentas", studController.agregarVestimentas);//Para agregar mas vestimentas ademas de las existentes
 
-router.post("/registrar_stud",validarPermiso, validarRol([1]), validateCreate, studController.registrarStud);
+router.post("/registrar_stud", validateCreate, studController.registrarStud);
 
 router.patch("/:studId", validateId, studController.actualizarStud);
 

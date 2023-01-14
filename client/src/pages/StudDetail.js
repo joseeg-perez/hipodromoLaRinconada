@@ -290,7 +290,8 @@ const StudDetail = () => {
   const [porcentajes, setporcentajes] = useState("");
   const [EjemplaresStud, setEjemplaresStud] = useState("");
   const [UltimosPropietarios, setUltimosPropietario] = useState(informacion1);
-  const [toggleAgregarAlStud, setToggleAgregarAlStud] = useState(false);
+  const [toggleAgregarAlStud, setToggleAgregarAlStud] = useState(false)
+  const [toggleAgregarVestimentasNuevas, setToggleAgregarVestimentasNuevas] = useState(false)
 
   useEffect(() => {
     axios
@@ -396,7 +397,8 @@ const StudDetail = () => {
     setToggleAgregarVestimenta(false);
     setToggleColor(false);
     setToggleBoton(false);
-    setToggleAgregarAlStud(true);
+    setToggleAgregarAlStud(true)
+    setToggleAgregarVestimentasNuevas(true)
     const vestimentaStud = {
       codigo: vestimenta,
       colorV: color,
@@ -404,19 +406,17 @@ const StudDetail = () => {
     setNuevasVestimentas((vestimentas) => [...vestimentas, vestimentaStud]);
   };
 
-  const SubmitNuevasVestimentas = async (event) => {
+  const HandleAgregarVestimentasNuevas = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(
-        "http://localhost:5000/api/v1/studs/agregarVestimentas",
-        {
-          nuevasVestimentas,
-        }
-      );
+      await axios.post("http://localhost:5000/api/v1/studs/agregarVestimentas", {
+        nuevasVestimentas
+      });
     } catch (error) {
       throw error;
     }
-    setToggleAgregarAlStud(false);
+    setToggleAgregarAlStud(false) 
+    setToggleAgregarVestimentasNuevas(false)
   };
 
   console.log(propietarios);
@@ -468,18 +468,13 @@ const StudDetail = () => {
           propietario.idpropietario
         ).value)
     );
-    UltimosPropietarios.map((propietario) =>
-      Object.assign({}, propietario, { Stud: Params.studId })
-    );
-    console.log(fkStud);
+    UltimosPropietarios.map((propietario) => (Object.assign({}, propietario, {Stud: Params.studId})))
+    console.log("Este es el fkStud: "+fkStud);
     try {
-      await axios.post(
-        "http://localhost:5000/api/v1/studs/cambiarPorcentajes",
-        {
-          UltimosPropietarios,
-          fkStud,
-        }
-      );
+      await axios.post("http://localhost:5000/api/v1/studs/cambiarPorcentajes", {
+        UltimosPropietarios,
+        fkStud
+      });
     } catch (error) {
       throw error;
     }
@@ -686,15 +681,10 @@ const StudDetail = () => {
                     Agregar Vestimenta
                   </Button>
                 )}
-                {toggleAgregarAlStud && (
-                  <div className="d-flex align-self-end align-bottom">
-                    <Button
-                      className="sm mt-4 btn-success"
-                      onClick={SubmitNuevasVestimentas}
-                    >
-                      Agregar vestimentas nuevas al stud
-                    </Button>
-                  </div>
+                {toggleAgregarVestimentasNuevas && (
+                  <Button className="sm mt-4 btn-success" onClick={HandleAgregarVestimentasNuevas}>
+                    Agregar Vestimentas nuevas
+                  </Button>
                 )}
               </Col>
               <Col className="col-4">

@@ -92,6 +92,17 @@ const JineteUpdate = () => {
 
   const handleData = async (event) => {
     event.preventDefault();
+    console.warn(
+      cedulaPersona,
+      nombre1Persona,
+      nombre2Persona,
+      apellido1Persona,
+      apellido2Persona,
+      fechaNacimiento,
+      fkRango,
+      alturaJinete,
+      pesoJinete
+    );
     try {
       await axios.patch(
         `http://localhost:5000/api/v1/jinetes/${Params.jineteId}`,

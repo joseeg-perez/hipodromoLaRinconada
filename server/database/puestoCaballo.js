@@ -36,24 +36,24 @@ const obtenerPuestoCaballoIndividual = async (puestoCaballoId) => {
 };
 
 const registrarPuestoCaballo = async (nuevoPuestoCaballo) => {
-  const { numeroPuesto, fkCaballeriza } = nuevoPuestoCaballo;
+  const { fk_puesto, fk_ejemplar } = nuevoPuestoCaballo;
+  console.log(nuevoPuestoCaballo)
+  console.log('EN DATABASE')
+  const text = `INSERT INTO puesto_caballo(
+        fk_puesto, fk_ejemplar) VALUES($1, $2)`;
 
-  const text = `INSERT INTO puesto(
-        numero_puesto,
-        fk_caballeriza) VALUES($1, $2)`;
-
-  const values = [numeroPuesto, fkCaballeriza];
+  const values = [fk_puesto, fk_ejemplar];
 
   try {
     const { rows } = await dbConnection.query(text, values);
 
     dbConnection.end;
-    return numeroPuesto;
+    return fk_puesto;
   } catch (error) {
     if (error.code === "23505") {
       throw {
         status: 409,
-        message: `El puesto con numero ${numeroPuesto} ya ha sido registrado.`,
+        message: `El puesto con numero ${fk_puesto} ya ha sido registrado.`,
       };
     }
     throw { status: error?.status || 500, message: error?.message || error };
