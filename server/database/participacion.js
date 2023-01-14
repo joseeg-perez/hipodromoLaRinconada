@@ -247,6 +247,7 @@ const registrarParticipacion = async (nuevaParticipacion) => {
     gualdrapa,
     puestoPista,
     pesoCaballo,
+    pesoJinete,
     fkEjemplar,
     fkCarrera,
     fkJinete,
@@ -258,16 +259,18 @@ const registrarParticipacion = async (nuevaParticipacion) => {
         gualdrapa, 
         puesto_pista,
         peso_caballo,
+        peso_jinete,
         fk_ejemplar,
         fk_carrera,
         fk_jinete,
         fk_entrenador,
-        fk_stud) VALUES($1, $2, $3, $4, $5, $6, $7, $8)`;
+        fk_stud) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
         
     let values = [
         gualdrapa,
         puestoPista,
         pesoCaballo,
+        pesoJinete,
         fkEjemplar,
         fkCarrera,
         fkJinete,

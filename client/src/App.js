@@ -338,7 +338,7 @@ function App() {
           <Login></Login>
         </Route>
 
-        <Route path="/gaceta">
+        <Route path="/gaceta" exact>
           <Gaceta></Gaceta>
         </Route>
 

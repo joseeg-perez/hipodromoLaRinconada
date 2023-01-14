@@ -115,6 +115,7 @@ const registrarParticipacion = async (nuevaParticipacion) => {
             gualdrapa: nuevaParticipacion.gualdrapa,
             puestoPista: nuevaParticipacion.puestoPista,
             pesoCaballo: nuevaParticipacion.pesoCaballo,
+            pesoJinete: nuevaParticipacion.pesoJinete,
             fkEjemplar: nuevaParticipacion.fkEjemplar,
             fkCarrera: nuevaParticipacion.fkCarrera,
             fkJinete: nuevaParticipacion.fkJinete,

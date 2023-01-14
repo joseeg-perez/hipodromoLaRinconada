@@ -175,6 +175,7 @@ const registrarParticipacion = async (req, res) => {
         gualdrapa,
         puestoPista,
         pesoCaballo,
+        pesoJinete,
         fkEjemplar,
         fkCarrera,
         fkJinete,
