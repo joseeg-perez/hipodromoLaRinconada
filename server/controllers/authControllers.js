@@ -29,7 +29,7 @@ const iniciarSesion = async (req, res) => {
     username: username.toLowerCase(),
     password,
   };
-  console.log(nuevoinicioSesion);
+
   try {
     const inicioSesionCreado = await authService.iniciarSesion(
       nuevoinicioSesion

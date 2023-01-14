@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const Apuestas = () => {
   return (
     <div>
-      <p className='centered'>Apuestas</p>
+      <p className="centered">CONSULTA TIPOS DE APUESTA</p>
     </div>
-  )
-}
+  );
+};
 
-export default Apuestas
+export default Apuestas;

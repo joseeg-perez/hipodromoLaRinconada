@@ -68,6 +68,8 @@ import Login from "./pages/Login";
 import RegisterCard from "./pages/RegisterCard";
 import EntrenadorDetail from "./pages/EntrenadorDetail";
 import TipoApuestaAgregar from "./pages/TipoApuestaAgregar";
+import Gaceta from "./pages/Gaceta";
+import GacetaEvento from "./pages/GacetaEvento";
 
 function App() {
   return (
@@ -338,6 +340,14 @@ function App() {
 
         <Route path="/login">
           <Login></Login>
+        </Route>
+
+        <Route path="/gaceta">
+          <Gaceta></Gaceta>
+        </Route>
+
+        <Route path="/gaceta/:eventoId">
+          <GacetaEvento></GacetaEvento>
         </Route>
       </Switch>
     </Layout>
