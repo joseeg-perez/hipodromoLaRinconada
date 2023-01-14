@@ -1,9 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import InfoEventos from "../componentes/eventos/InfoEventos";
 import Tabla from "../componentes/tablas/Tabla";
+import axios from "axios";
 
 const Resultados = () => {
+
+  const [isLoading, setLoading] = useState(true);
+  const [eventos, setEventos] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/v1/eventos/listado_de_eventos")
+      .then((res) => {
+        console.log(res);
+        setEventos(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  if (isLoading) return <div>Cargando</div>;
+  let hoy = new Date();
+  let dia = hoy.getDate();
+  let mes = hoy.getMonth() + 1;
+  let an = hoy.getFullYear();
+  if (dia < 10) dia = `0${dia}`;
+  if (mes < 10) mes = `0${mes}`;
+  let fechaHoy = `${an}/${mes}/${dia}`;
+
   let columnas1 = (
     <tr>
       <th>Jinetes</th>
@@ -1018,55 +1041,55 @@ const Resultados = () => {
     },
   ];
 
-  const eventos=[
-    {
-      id:"1",
-      fecha: "09/10/2022",
-    },
-    {
-      id:"2",
-      fecha: "09/10/2022",
-    },
-    {
-      id:"3",
-      fecha: "09/10/2022",
-    },
-    {
-      id:"4",
-      fecha: "09/10/2022",
-    },
-    {
-      id:"5",
-      fecha: "09/10/2022",
-    },
-    {
-      id:"6",
-      fecha: "09/10/2022",
-    },
-    {
-      id:"7",
-      fecha: "09/10/2022",
-    },
-    {
-      id:"8",
-      fecha: "09/10/2022",
-    },
-    {
-      id:"9",
-      fecha: "09/10/2022",
-    },
-  ]
+  // const eventos = [
+  //   {
+  //     id: "1",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "2",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "3",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "4",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "5",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "6",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "7",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "8",
+  //     fecha: "09/10/2022",
+  //   },
+  //   {
+  //     id: "9",
+  //     fecha: "09/10/2022",
+  //   },
+  // ];
 
-  const eventos2=[
+  const eventos2 = [
     {
-      id:"1",
+      id: "1",
       fecha: "09/10/2022",
     },
     {
-      id:"2",
+      id: "2",
       fecha: "10/10/2022",
     },
-  ]
+  ];
   return (
     <Container>
       <Row className="text-center">
@@ -1228,14 +1251,26 @@ const Resultados = () => {
                 <Col className="col-auto">
                   <input type="date"></input>
                 </Col>
-                
+
                 <Col className="col-auto">
-                  <Button className="d-flex align-items-center" style={{height: "28px"}}>Buscar</Button>
+                  <Button
+                    className="d-flex align-items-center"
+                    style={{ height: "28px" }}
+                  >
+                    Buscar
+                  </Button>
                 </Col>
               </Row>
 
               <Row className="row row-cols-3 mt-3 text-center d-flex justify-content-center">
-                {eventos.map((x)=><InfoEventos key={x.id} id={x.id} fecha={x.fecha} tipo="resultados"></InfoEventos>)}
+                {/* {eventos.da.map((x) => (
+                  <InfoEventos
+                    key={x.id}
+                    id={x.id}
+                    fecha={x.fecha}
+                    tipo="resultados"
+                  ></InfoEventos>
+                ))} */}
               </Row>
             </Card.Body>
           </Card>
@@ -1257,14 +1292,31 @@ const Resultados = () => {
                 <Col className="col-auto">
                   <input type="date"></input>
                 </Col>
-                
+
                 <Col className="col-auto">
-                  <Button className="d-flex align-items-center" style={{height: "28px"}}>Buscar</Button>
+                  <Button
+                    className="d-flex align-items-center"
+                    style={{ height: "28px" }}
+                  >
+                    Buscar
+                  </Button>
                 </Col>
               </Row>
 
               <Row className="row row-cols-3 mt-3 text-center d-flex justify-content-center">
-                {eventos2.map((x)=><InfoEventos key={x.id} id={x.id} fecha={x.fecha} tipo="carrerasRegistradas" tipo2="agregarResultados"></InfoEventos>)}
+                {eventos.data.map((x) =>
+                  x.fecha_evento < fechaHoy ? (
+                    <InfoEventos
+                      key={x.codigo_evento}
+                      id={x.codigo_evento}
+                      fecha={x.fecha_evento}
+                      tipo="carrerasRegistradas"
+                      tipo2="agregarResultados"
+                    ></InfoEventos>
+                  ) : (
+                    console.log("no")
+                  )
+                )}
               </Row>
             </Card.Body>
           </Card>

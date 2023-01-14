@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -10,223 +10,85 @@ import {
 } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import CardEjemplarResultado from "../componentes/eventos/CardEjemplarResultado";
+import axios from "axios";
 
 const ResultadoAgregar = (props) => {
   const location = useLocation();
   const {
-    props: { id, fecha, distancia, cantidad },
+    props: { id, fecha, distancia, cantidad, nombre, p1, p2, p3, p4, p5 },
   } = location.state;
 
-  console.log(cantidad);
-  const ejemplares = [
-    {
-      id: "1",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "2",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "3",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "4",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "5",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "6",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "7",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "8",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "9",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "10",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "11",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "12",
-      nombre: "Black Mamba",
-    },
-    /*{
-      id: "13",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "14",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "15",
-      nombre: "Black Mamba",
-    },
-    {
-      id: "16",
-      nombre: "Black Mamba",
-    },*/
-  ];
+  const [isLoading, setLoading] = useState(true);
+  const [ejemplares, setEjemplares] = useState([]);
+  const [isLoading2, setLoading2] = useState(true);
+  const [tiposResultados, setTiposResultados] = useState([]);
+  const [cuerposDiferencia, setCuerposDiferencia] = useState([]);
+  const [isLoading3, setLoading3] = useState(true);
 
-  const tipo_resultado = [
-    {
-      id: 1,
-      nombre: "1",
-    },
-    {
-      id: 2,
-      nombre: "2",
-    },
-    {
-      id: 3,
-      nombre: "3",
-    },
-    {
-      id: 4,
-      nombre: "4",
-    },
-    {
-      id: 5,
-      nombre: "5",
-    },
-    {
-      id:6,
-      nombre: "6",
-    },
-    {
-      id: 7,
-      nombre: "7",
-    },
-    {
-      id: 8,
-      nombre: "8",
-    },
-    {
-      id: 9,
-      nombre: "9",
-    },
-    {
-      id: 10,
-      nombre: "10",
-    },
-    {
-      id: 11,
-      nombre: "11",
-    },
-    {
-      id: 12,
-      nombre: "12",
-    },
-    {
-      id: 13,
-      nombre: "13",
-    },
-    {
-      id: 14,
-      nombre: "14",
-    },
-    {
-      id: 15,
-      nombre: "15",
-    },
-    {
-      id: 16,
-      nombre: "16",
-    },
-    {
-      id: 17,
-      nombre: "Retiro",
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:5000/api/v1/participaciones/participaciones_para_retiro/${id}`
+      )
+      .then((res) => {
+        console.log(res);
+        setEjemplares(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(
+        "http://localhost:5000/api/v1/tipo_resultados/listado_de_tipoResultados"
+      )
+      .then((res) => {
+        console.log(res);
+        setTiposResultados(res.data);
+        setLoading2(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(
+        "http://localhost:5000/api/v1/cuerpos_de_diferencia/listado_de_cuerpoDiferencias"
+      )
+      .then((res) => {
+        console.log(res);
+        setCuerposDiferencia(res.data);
+        setLoading3(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  if (isLoading || isLoading2 || isLoading3) return <div>Cargando</div>;
+  console.log(tiposResultados);
+  console.log(ejemplares);
 
-  const cuerpos_diferencia = [
-    {
-      id: 1,
-      nombre: "Pescuezo",
-    },
-    {
-      id: 2,
-      nombre: "1/2",
-    },
-    {
-      id: 3,
-      nombre: "1",
-    },
-    {
-      id: 4,
-      nombre: "1 y 1/2",
-    },
-    {
-      id: 5,
-      nombre: "2",
-    },
-    {
-      id:6,
-      nombre: "2 y 1/2",
-    },
-    {
-      id: 7,
-      nombre: "3",
-    },
-    {
-      id: 8,
-      nombre: "3 y 1/2",
-    },
-    {
-      id: 9,
-      nombre: "4",
-    },
-    {
-      id: 10,
-      nombre: "4 y 1/2",
-    },
-    {
-      id: 11,
-      nombre: "5",
-    },
-    {
-      id: 12,
-      nombre: "Rodo",
-    },
-  ];
-
-  let cuerpos=[];
-  cuerpos_diferencia.map((x)=>(
+  let cuerpos = [];
+  cuerposDiferencia.data.map((x) =>
     cuerpos.push(
-      <option value={x.nombre}>{x.nombre}</option>
+      <option value={x.codigo_cuerpo_dif}>{x.nombre_cuerpo_dif}</option>
     )
-  ));
+  );
 
   let content = [];
-  for (let index = 0; index < ejemplares.length; index++) {
-    content.push(<option value={tipo_resultado[index].id}>{tipo_resultado[index].nombre}</option>);
+  for (let index = 0; index < ejemplares.data.length; index++) {
+    content.push(
+      <option value={tiposResultados.data[index].codigo_tipo_resultado}>
+        {tiposResultados.data[index].nombre_tipo_resultado}
+      </option>
+    );
   }
-  content.push(<option value={tipo_resultado[16].id}>{tipo_resultado[16].nombre}</option>)
+  //content.push(<option value={tiposResultados.data[16].id}>{tiposResultados.data[16].nombre_tipo_resultado}</option>)
 
   let lista = [];
-  for (let index = 0; index < ejemplares.length; index++) {
-    lista.push(<li className="list-group-item" style={{ height: "50px" }}>{index + 1}</li>);
+  for (let index = 0; index < ejemplares.data.length; index++) {
+    lista.push(
+      <li className="list-group-item" style={{ height: "50px" }}>
+        {index + 1}
+      </li>
+    );
   }
 
   let diferencias = [];
-  for (let index = 0; index < ejemplares.length; index++) {
+  for (let index = 0; index < ejemplares.data.length; index++) {
     diferencias.push(
       <li className="list-group-item" style={{ height: "50px" }}>
         <Row className="row row-cols-2">
@@ -240,10 +102,7 @@ const ResultadoAgregar = (props) => {
           </Col>
 
           <Col className="d-flex justify-content-center">
-            <FormSelect
-              id={`dc${index + 1}`}
-              style={{ width: "115px" }}
-            >
+            <FormSelect id={`dc${index + 1}`} style={{ width: "115px" }}>
               {cuerpos}
             </FormSelect>
           </Col>
@@ -253,7 +112,7 @@ const ResultadoAgregar = (props) => {
   }
 
   let speedRatings = [];
-  for (let index = 0; index < ejemplares.length; index++) {
+  for (let index = 0; index < ejemplares.data.length; index++) {
     speedRatings.push(
       <li className="list-group-item" style={{ height: "50px" }}>
         <Row className="row row-cols-4">
@@ -298,7 +157,7 @@ const ResultadoAgregar = (props) => {
   }
 
   let parciales = [];
-  for (let index = 0; index < ejemplares.length; index++) {
+  for (let index = 0; index < ejemplares.data.length; index++) {
     parciales.push(
       <li className="list-group-item" style={{ height: "50px" }}>
         <Row className="row row-cols-4">
@@ -307,7 +166,6 @@ const ResultadoAgregar = (props) => {
               id={`tp300${index + 1}`}
               style={{ width: "65px" }}
               placeholder="300m"
-              disabled={true}
               className="form-control"
             ></input>
           </Col>
@@ -317,7 +175,6 @@ const ResultadoAgregar = (props) => {
               id={`tp400${index + 1}`}
               style={{ width: "65px" }}
               placeholder="400m"
-              disabled={true}
               className="form-control"
             ></input>
           </Col>
@@ -327,7 +184,6 @@ const ResultadoAgregar = (props) => {
               id={`tp800${index + 1}`}
               style={{ width: "65px" }}
               placeholder="800m"
-              disabled={true}
               className="form-control"
             ></input>
           </Col>
@@ -350,21 +206,57 @@ const ResultadoAgregar = (props) => {
     event.preventDefault();
     console.log("entro");
     auxiliar = 1;
-    ejemplares.map((x) => {
-      console.log(document.getElementById(x.id).value);
-      console.log(document.getElementById(`dt${auxiliar}`).value);
-      console.log(document.getElementById(`dc${auxiliar}`).value);
-      console.log(document.getElementById(`sr300${auxiliar}`).value);
-      console.log(document.getElementById(`sr400${auxiliar}`).value);
-      console.log(document.getElementById(`sr800${auxiliar}`).value);
-      console.log(document.getElementById(`src${auxiliar}`).value);
-      //console.log(document.getElementById(`tp300${auxiliar}`).value);
-      //console.log(document.getElementById(`tp400${auxiliar}`).value);
-      //console.log(document.getElementById(`tp800${auxiliar}`).value);
-      console.log(document.getElementById(`tpc${auxiliar}`).value);
+    let resultados = [];
+    let premioEntrenador = 0;
+    let premioJinete = 0;
+    let premioPropietario = 0;
+    let premio = 0;
+    ejemplares.data.map((x) => {
+      premio =
+        auxiliar == 1
+          ? p1
+          : auxiliar == 2
+          ? p2
+          : auxiliar == 3
+          ? p3
+          : auxiliar == 4
+          ? p4
+          : auxiliar == 5
+          ? p5
+          : 0;
+      resultados.push({
+        diferenciaTiempo: `0:${document.getElementById(`dt${auxiliar}`).value}`,
+        speedRating: document.getElementById(`src${auxiliar}`).value,
+        speedRating300m: document.getElementById(`sr300${auxiliar}`).value,
+        speedRating400m: document.getElementById(`sr400${auxiliar}`).value,
+        speedRating800m: document.getElementById(`sr800${auxiliar}`).value,
+        observacion: document.getElementById("txta").value,
+        gananciaEntrenador: premio/4,
+        gananciaJinete: premio/4,
+        gananciaPropietario: premio/2,
+        tiempoTotal:`0:${document.getElementById(`tpc${auxiliar}`).value}`,
+        fkTipoResultado: document.getElementById(x.codigo_participacion).value,
+        fkCuerpoDiferencia: document.getElementById(`dc${auxiliar}`).value,
+        tiempo300m: `0:${document.getElementById(`tp300${auxiliar}`).value}`,
+        tiempo400m: `0:${document.getElementById(`tp400${auxiliar}`).value}`,
+        tiempo800m: `0:${document.getElementById(`tp800${auxiliar}`).value}`,
+      });
+      // console.log(document.getElementById(x.id).value);
+      // console.log(document.getElementById(`dt${auxiliar}`).value);
+      // console.log(document.getElementById(`dc${auxiliar}`).value);
+      // console.log(document.getElementById(`sr300${auxiliar}`).value);
+      // console.log(document.getElementById(`sr400${auxiliar}`).value);
+      // console.log(document.getElementById(`sr800${auxiliar}`).value);
+      // console.log(document.getElementById(`src${auxiliar}`).value);
+      // //console.log(document.getElementById(`tp300${auxiliar}`).value);
+      // //console.log(document.getElementById(`tp400${auxiliar}`).value);
+      // //console.log(document.getElementById(`tp800${auxiliar}`).value);
+      // console.log(document.getElementById(`tpc${auxiliar}`).value);
       auxiliar = auxiliar + 1;
     });
-    console.log(document.getElementById("txta").value);
+    console.log(resultados);
+    auxiliar=1;
+    //console.log(document.getElementById("txta").value);
     /*console.log(document.getElementById(12).value);
     console.log(document.getElementById("dt1").value);
     console.log(document.getElementById("dc1").value);*/
@@ -385,21 +277,23 @@ const ResultadoAgregar = (props) => {
                 </Row>
 
                 <Row className="row row-cols-4">
-                  {ejemplares.map((x) => (
+                  {ejemplares.data.map((x) => (
                     <Col className="mb-3">
                       <Row className="row row-cols-2 d-flex">
                         <Col className="col-8">
                           <CardEjemplarResultado
-                            key={x.id}
-                            id={x.id}
-                            nombre={x.nombre}
+                            key={x.codigo_ejemplar}
+                            id={x.codigo_ejemplar}
+                            nombre={x.nombre_ejemplar}
                           ></CardEjemplarResultado>
                         </Col>
                         <Col
                           className="col-4
                          d-flex justify-content-end"
                         >
-                          <FormSelect id={x.id}>{content}</FormSelect>
+                          <FormSelect id={x.codigo_participacion}>
+                            {content}
+                          </FormSelect>
                         </Col>
                       </Row>
                     </Col>
@@ -507,7 +401,7 @@ const ResultadoAgregar = (props) => {
 
                           <Row>
                             <ul
-                              class="list-group list-group-flush"
+                              className="list-group list-group-flush"
                               style={{ marginLeft: "6px" }}
                             >
                               {speedRatings}
@@ -552,7 +446,7 @@ const ResultadoAgregar = (props) => {
 
                           <Row>
                             <ul
-                              class="list-group list-group-flush"
+                              className="list-group list-group-flush"
                               style={{ marginLeft: "6px" }}
                             >
                               {parciales}
@@ -588,6 +482,7 @@ const ResultadoAgregar = (props) => {
             <Button onClick={formSubmissionHandler} size="xl">
               GUARDAR
             </Button>
+
           </Col>
         </Row>
       </Form>
