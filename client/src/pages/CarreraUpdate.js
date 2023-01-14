@@ -110,6 +110,7 @@ const CarreraUpdate = () => {
     } catch (error) {
       throw error;
     }
+    alert("Se actualizo con éxito");
     console.warn(
       nombreCarrera,
       numeroCarrera,

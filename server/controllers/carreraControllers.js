@@ -73,6 +73,7 @@ const registrarCarrera = async (req, res) => {
 
   try {
     const carreraCreada = await carreraService.registrarCarrera(nuevaCarrera);
+    
     res
       .status(200)
       .send({

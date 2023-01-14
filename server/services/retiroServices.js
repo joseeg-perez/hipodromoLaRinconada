@@ -30,6 +30,7 @@ const registrarRetiro = async (nuevoRetiro) => {
       }
       await actualizarParticipacion(nuevoRetiro.codigoParticipacion, nuevaParticipacion);
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
