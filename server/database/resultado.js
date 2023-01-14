@@ -41,6 +41,9 @@ const registrarResultado = async (nuevoResultado) => {
     speedRating300m,
     speedRating400m,
     speedRating800m,
+    tiempo300m,
+    tiempo400m,
+    tiempo800m,
     observacion,
     gananciaEntrenador,
     gananciaJinete,
@@ -56,13 +59,16 @@ const registrarResultado = async (nuevoResultado) => {
         speed_rating_300m,
         speed_rating_400m,
         speed_rating_800m,
+        tiempo_300m,
+        tiempo_400m,
+        tiempo_800m,
         observacion,
         ganancia_entrenador,
         ganancia_jinete,
         ganancia_propietario,
         tiempo_total,
         fk_tipo_resultado,
-        fk_cuerpo_diferencia) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
+        fk_cuerpo_diferencia) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`;
 
   const values = [
     diferenciaTiempo,
@@ -70,13 +76,16 @@ const registrarResultado = async (nuevoResultado) => {
     speedRating300m,
     speedRating400m,
     speedRating800m,
+    tiempo300m,
+    tiempo400m,
+    tiempo800m,
     observacion,
     gananciaEntrenador,
     gananciaJinete,
     gananciaPropietario,
     tiempoTotal,
     fkTipoResultado,
-    fkCuerpoDiferencia,
+    fkCuerpoDiferencia
   ];
 
   try {
@@ -89,6 +98,33 @@ const registrarResultado = async (nuevoResultado) => {
       throw {
         status: 409,
         message: `El resultado ya ha sido registrado.`,
+      };
+    }
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const actualizarCodigoParticipacion = async (participacionId, idResultadoCreado) => {
+  const query = {
+    text: `UPDATE participacion
+            SET fk_resultado=$1
+            WHERE codigo_participacion=$2;`,
+    values: [
+      idResultadoCreado,
+      participacionId,
+    ],
+  };
+  try {
+    await dbConnection.query(query);
+
+
+    dbConnection.end;
+    return;
+  } catch (error) {
+    if (error.code === "23505") {
+      throw {
+        status: 409,
+        message: `Ya hay un resultado con el codigo '${idResultadoCreado}' registrado.`,
       };
     }
     throw { status: error?.status || 500, message: error?.message || error };
@@ -178,6 +214,7 @@ const borrarResultado = async (resultadoId) => {
 
 module.exports = {
   obtenerListaDeResultados,
+  actualizarCodigoParticipacion,
   obtenerResultadoIndividual,
   registrarResultado,
   actualizarResultado,

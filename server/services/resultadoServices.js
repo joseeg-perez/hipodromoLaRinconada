@@ -1,3 +1,4 @@
+const { Result } = require("express-validator");
 const Resultado = require("../database/resultado.js");
 
 const obtenerListaDeResultados = async () => {
@@ -22,9 +23,17 @@ const obtenerResultadoIndividual = async (resultadoId) => {
 
 const registrarResultado = async (nuevoResultado) => {
   try {
-    const resultadoCreado = await Resultado.registrarResultado(nuevoResultado);
+    const listaResultados = nuevoResultado.resultados;
 
-    return resultadoCreado;
+    for (let i = 0; i < listaResultados.length; i++) {
+      const codigoParticipacion = listaResultados[i].fkParticipacion;
+      await Resultado.registrarResultado(listaResultados[i]);
+      const idResultadoCreado = (await Resultado.obtenerListaDeResultados()).pop().codigo_resultado;
+
+      await Resultado.actualizarCodigoParticipacion(codigoParticipacion, idResultadoCreado);
+    }
+
+    return;
   } catch (error) {
     throw error;
   }

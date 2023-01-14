@@ -31,37 +31,11 @@ const obtenerResultadoIndividual = async (req, res) => {
 
 const registrarResultado = async (req, res) => {
   const {
-    diferenciaTiempo,
-    speedRating,
-    speedRating300m,
-    speedRating400m,
-    speedRating800m,
-    observacion,
-    gananciaresultado,
-    gananciaJinete,
-    gananciaPropietario,
-    tiempoTotal,
-    fkTipoResultado,
-    fkCuerpoDiferencia,
-  } = req.body;
-
-  const nuevaresultado = {
-    diferenciaTiempo,
-    speedRating,
-    speedRating300m,
-    speedRating400m,
-    speedRating800m,
-    observacion,
-    gananciaresultado,
-    gananciaJinete,
-    gananciaPropietario,
-    tiempoTotal,
-    fkTipoResultado,
-    fkCuerpoDiferencia,
-  };
+    body
+  } = req;
 
   try {
-    await resultadoservice.registrarResultado(nuevaresultado);
+    await resultadoservice.registrarResultado(body);
     res.status(200).send({
       status: "OK",
       data: `Se ha registrado la resultado de forma satisfactoria.`,
