@@ -16,6 +16,53 @@ const obtenerListaDeParticipaciones = async () => {
   }
 };
 
+const obtenerListaDeInfo = async (participacionId) => {
+  const query = {
+    text: `select  e.codigo_ejemplar, ev.fecha_evento, pa.codigo_participacion, pa.peso_caballo, pa.peso_jinete, 
+    concat  (pj.nombre1_persona,' ',pj.apellido1_persona) as jinete, r.tiempo_total, r.speed_rating, r.tiempo_300m, r.tiempo_800m,
+    car.valor_regla as distancia, cr.valor_regla as variante, carre.valor_regla as participantes, ej.nombre_ejemplar as ganador,
+    res.tiempo_total as tiempo_ganador, cu.nombre_cuerpo_dif
+    from participacion pa, carrera ca, evento ev, ejemplar e, persona_jinete pj, resultado r, carrera_regla car, carrera_regla cr, 
+    carrera_regla carre, ejemplar ej, participacion par, resultado res, cuerpo_diferencia cu
+    where pa.fk_ejemplar=e.codigo_ejemplar
+    and pa.fk_jinete=pj.codigo_persona
+    and pa.fk_carrera=ca.codigo_carrera
+    and ca.fk_evento=ev.codigo_evento
+    and car.fk_carrera=ca.codigo_carrera
+    and car.fk_regla=1
+    and cr.fk_carrera=ca.codigo_carrera
+    and cr.fk_regla=7
+    and carre.fk_carrera=ca.codigo_carrera
+    and carre.fk_regla=8
+    and pa.fk_retiro is null
+    and pa.fk_resultado=r.codigo_resultado
+    and par.fk_ejemplar=ej.codigo_ejemplar
+    and par.fk_carrera=ca.codigo_carrera
+    and par.fk_resultado=res.codigo_resultado
+    and res.fk_tipo_resultado=1
+    and res.fk_cuerpo_diferencia=cu.codigo_cuerpo_dif
+    and e.codigo_ejemplar in (select  e.codigo_ejemplar
+                  from participacion pa, carrera ca, evento ev, ejemplar e
+                  where pa.fk_ejemplar=e.codigo_ejemplar
+                  and pa.fk_carrera=ca.codigo_carrera
+                  and ca.fk_evento=ev.codigo_evento
+                  and ev.codigo_evento=$1)
+    group by e.codigo_ejemplar,ev.fecha_evento, pa.codigo_participacion, pa.peso_caballo, pa.peso_jinete, jinete, 
+    r.tiempo_total, r.speed_rating, r.tiempo_300m, r.tiempo_800m, distancia, variante, participantes, ganador, tiempo_ganador,
+    cu.nombre_cuerpo_dif`,
+    values: [participacionId]
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
 const obtenerInformacionDeLaParticipacion = async (participacionId) => {
   const query = {
     text: `select distinct pa.codigo_participacion, e.nombre_ejemplar, pa.gualdrapa, pa.puesto_pista, pa.peso_caballo, pa.peso_jinete, 
@@ -426,23 +473,9 @@ const borrarParticipacion = async (participacionId) => {
   }
 };
 
-const obtenerUltimoId  = async (nombreId, nombreTabla) => {
-  const query = {
-    text: `SELECT MAX (${nombreId}) FROM ${nombreTabla}`,
-  }
-
-  try {
-    const { rows } = await dbConnection.query(query);
-
-    dbConnection.end;
-    return (rows[0]);
-} catch (error) {
-    throw { status: error?.status || 500, message: error?.message || error };
-}
-};
-
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerListaDeInfo,
   obtenerInformacionDeLaParticipacion,
   obtenerImplementosDeLaParticipacion,
   obtenerMedicamentosDeLaParticipacion,

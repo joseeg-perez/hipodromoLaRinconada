@@ -7,6 +7,8 @@ const participacionController = require("../../controllers/participacionControll
 
 router.get("/listado_de_participaciones", participacionController.obtenerListaDeParticipaciones);
 
+router.get("/tabla_informativa/:participacionId", participacionController.obtenerListaDeInfo);
+
 router.get("/informacion_de_participacion/:participacionId", participacionController.obtenerInformacionDeLaParticipacion);
 
 router.get("/medicamentos_de_participacion/:participacionId", participacionController.obtenerMedicamentosDeLaParticipacion);
