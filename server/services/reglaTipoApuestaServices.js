@@ -13,9 +13,9 @@ const obtenerListaDeReglaTipoApuesta = async () => {
 
 const obtenerReglaTipoApuestaIndividual = async (reglaTipoApuestaId) => {
   try {
-    const ReglatipoApuesta = await ReglaTipoApuesta.obtenerReglaTipoApuestaIndividual(reglaTipoApuestaId);
+    const reglaTipoApuesta = await ReglaTipoApuesta.obtenerReglaTipoApuestaIndividual(reglaTipoApuestaId);
 
-    return ReglatipoApuesta;
+    return reglaTipoApuesta;
   } catch (error) {
     throw error;
   }
@@ -33,10 +33,10 @@ const registrarReglaTipoApuesta = async (nuevoReglaTipoApuesta) => {
 
 const actualizarReglaTipoApuesta = async (reglaTipoApuestaId, cambios) => {
   try {
-    const ReglatipoApuestaActualizado =
+    const reglatipoApuestaActualizado =
       await ReglaTipoApuesta.actualizarReglaTipoApuesta(reglaTipoApuestaId, cambios);
 
-    return ReglatipoApuestaActualizado;
+    return reglatipoApuestaActualizado;
   } catch (error) {
     throw error;
   }
