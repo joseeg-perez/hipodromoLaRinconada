@@ -35,12 +35,14 @@ const registrarReglaTipoApuesta = async (req, res) => {
     const {
         fkReglaApuesta,
         fkTipoApuesta,
+        valorRegla,
         carreraRegla,
      } =  req.body;
 
      const nuevaReglaTipoApuesta = {
         fkReglaApuesta,
         fkTipoApuesta,
+        valorRegla,
         carreraRegla,
     };
 

@@ -35,6 +35,7 @@ const registrarTipoApuesta = async (nuevoTipoApuesta) => {
       const reglaTipoApuestaNuevo = {
         fkReglaApuesta: listadoCarreraRegla[i].fk_regla,
         fkTipoApuesta: idTipoApuestaCreado,  
+        valorRegla: listadoCarreraRegla[i].valor_regla
       }
       await registrarReglaTipoApuesta(reglaTipoApuestaNuevo);
     }

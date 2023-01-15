@@ -35,13 +35,14 @@ const obtenerReglaTipoApuestaIndividual = async (reglaTipoApuestaId) => {
 };
 
 const registrarReglaTipoApuesta = async (nuevoReglaTipoApuesta) => {
-  const { fkReglaApuesta, fkTipoApuesta } = nuevoReglaTipoApuesta;
+  const { fkReglaApuesta, fkTipoApuesta, valorRegla } = nuevoReglaTipoApuesta;
 
   const text = `INSERT INTO reglas_tipo_apuesta(
     fk_regla_apuesta, 
-    fk_tipo_apuesta) VALUES($1, $2)`;
+    fk_tipo_apuesta,
+    valor) VALUES($1, $2, $3)`;
 
-  const values = [fkReglaApuesta, fkTipoApuesta];
+  const values = [fkReglaApuesta, fkTipoApuesta, valorRegla];
 
   try {
     const { rows } = await dbConnection.query(text, values);
