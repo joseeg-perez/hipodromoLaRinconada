@@ -35,7 +35,9 @@ const TipoApuestaAgregar = () => {
   useEffect(() => {
     console.log("entro");
     axios
-      .get("http://localhost:5000/api/v1/reglas/listado_de_reglas")
+      .get(
+        "http://localhost:5000/api/v1/regla_tipo_apuesta/listado_de_reglaTipoApuestas"
+      )
       .then((res) => {
         console.log(res);
         setReglas(res.data);
@@ -44,7 +46,7 @@ const TipoApuestaAgregar = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleValorRegla = (event) => {};
+  const handleData = (event) => {};
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
@@ -57,6 +59,7 @@ const TipoApuestaAgregar = () => {
         valor_regla: document.getElementById(x.nombre_regla_apuesta).value,
       })
     );
+    console.warn(nombreTipoApuesta, descripcionApuesta, ApuestasRegla);
   };
   return (
     <Container>
