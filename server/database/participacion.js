@@ -16,6 +16,88 @@ const obtenerListaDeParticipaciones = async () => {
   }
 };
 
+const obtenerInformacionDeLaParticipacion = async (participacionId) => {
+  const query = {
+    text: `select distinct pa.codigo_participacion, e.nombre_ejemplar, pa.gualdrapa, pa.puesto_pista, pa.peso_caballo, pa.peso_jinete, 
+    e.sexo_ejemplar as sexo, pel.abrev_pelaje as pelaje , AGE(CURRENT_DATE, e.fecha_nacimiento_ejemplar) as edad,
+    concat  (pe.nombre1_persona,' ',pe.apellido1_persona) as entrenador, 
+    concat  (pj.nombre1_persona,' ',pj.apellido1_persona) as jinete, em.nombre_ejemplar as madre, ep.nombre_ejemplar as padre,
+    s.nombre_stud as stud
+    
+    from participacion pa,persona_jinete pj, persona_entrenador pe, carrera ca, evento ev, pelaje pel,stud s, 
+    ejemplar_propietario eprop, propietario_stud ps,
+    ejemplar e left outer join ejemplar em  on e.fk_madre_ejemplar=em.codigo_ejemplar left outer join ejemplar ep
+    on e.fk_padre_ejemplar=ep.codigo_ejemplar 
+    
+    where pa.fk_ejemplar=e.codigo_ejemplar
+    and eprop.fk_ejemplar=e.codigo_ejemplar
+    and eprop.fecha_fin_propiedad is null
+    and eprop.fk_prop_stud=ps.codigo_prop_stud
+    and ps.fecha_fin_propiedad is null
+    and ps.fk_stud=s.codigo_stud
+    and e.fk_pelaje=pel.codigo_pelaje
+    and pa.fk_jinete=pj.codigo_persona
+    and pa.fk_entrenador=pe.codigo_persona
+    and pa.fk_carrera=ca.codigo_carrera
+    and ca.fk_evento=ev.codigo_evento
+    and ev.codigo_evento=$1`,
+    values: [participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerMedicamentosDeLaParticipacion = async (participacionId) => {
+  const query = {
+    text: `SELECT codigo_participacion, nombre_medicamento
+    FROM carrera c, participacion p, participacion_medicamento pm, medicamento
+    WHERE pm.fk_medicamento = codigo_medicamento
+    AND pm.fk_participacion = codigo_participacion
+    AND p.fk_carrera = codigo_carrera
+    AND c.fk_evento = $1
+    GROUP BY codigo_participacion, nombre_medicamento`,
+    values: [participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
+const obtenerImplementosDeLaParticipacion = async (participacionId) => {
+  const query = {
+    text: `SELECT codigo_participacion, nombre_implemento
+    FROM carrera c, participacion p, participacion_implemento pi, implemento
+    WHERE pi.fk_implemento = codigo_implemento
+    AND pi.fk_participacion = codigo_participacion
+    AND p.fk_carrera = codigo_carrera
+    AND c.fk_evento = $1
+    GROUP BY codigo_participacion, nombre_implemento`,
+    values: [participacionId],
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
 const obtenerListaDeJinetesDisponibles = async (participacionId) => {
   const query = {
     text: `SELECT 
@@ -346,6 +428,9 @@ const borrarParticipacion = async (participacionId) => {
 
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerInformacionDeLaParticipacion,
+  obtenerImplementosDeLaParticipacion,
+  obtenerMedicamentosDeLaParticipacion,
   obtenerListaDeJinetesDisponibles,
   obtenerParticipacionIndividual,
   obtenerParticipacionesEnCarrera,

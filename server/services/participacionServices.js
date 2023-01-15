@@ -14,6 +14,39 @@ const obtenerListaDeParticipaciones = async () => {
   }
 };
 
+const obtenerInformacionDeLaParticipacion = async () => {
+  try {
+    const listaParticipaciones =
+      await Participacion.obtenerInformacionDeLaParticipacion();
+
+    return (listaParticipaciones);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerMedicamentosDeLaParticipacion = async () => {
+  try {
+    const listaParticipaciones =
+      await Participacion.obtenerMedicamentosDeLaParticipacion();
+
+    return (listaParticipaciones);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerImplementosDeLaParticipacion = async () => {
+  try {
+    const listaParticipaciones =
+      await Participacion.obtenerImplementosDeLaParticipacion();
+
+    return (listaParticipaciones);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const obtenerListaDeJinetesDisponibles = async (participacionId) => {
   try {
     const listaParticipaciones =
@@ -172,6 +205,9 @@ const borrarParticipacion = async (participacionId) => {
 
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerInformacionDeLaParticipacion,
+  obtenerImplementosDeLaParticipacion,
+  obtenerMedicamentosDeLaParticipacion,
   obtenerListaDeJinetesDisponibles,
   obtenerParticipacionIndividual,
   obtenerParticipacionesEnCarrera,

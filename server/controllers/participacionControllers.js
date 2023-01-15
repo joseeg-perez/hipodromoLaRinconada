@@ -13,6 +13,45 @@ const obtenerListaDeParticipaciones = async (req, res) => {
   }
 };
 
+const obtenerInformacionDeLaParticipacion = async (req, res) => {
+  try {
+    const listaDeParticipaciones =
+      await participacionService.obtenerInformacionDeLaParticipacion();
+
+    res.status(200).send({ status: "OK", data: listaDeParticipaciones });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerMedicamentosDeLaParticipacion = async (req, res) => {
+  try {
+    const listaDeParticipaciones =
+      await participacionService.obtenerMedicamentosDeLaParticipacion();
+
+    res.status(200).send({ status: "OK", data: listaDeParticipaciones });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+const obtenerImplementosDeLaParticipacion = async (req, res) => {
+  try {
+    const listaDeParticipaciones =
+      await participacionService.obtenerImplementosDeLaParticipacion();
+
+    res.status(200).send({ status: "OK", data: listaDeParticipaciones });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const obtenerListaDeJinetesDisponibles = async (req, res) => {
   const {
     params: { participacionId },
@@ -241,6 +280,9 @@ const borrarParticipacion = async (req, res) => {
 
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerInformacionDeLaParticipacion,
+  obtenerImplementosDeLaParticipacion,
+  obtenerMedicamentosDeLaParticipacion,
   obtenerListaDeJinetesDisponibles,
   obtenerParticipacionIndividual,
   obtenerParticipacionesEnCarrera,
