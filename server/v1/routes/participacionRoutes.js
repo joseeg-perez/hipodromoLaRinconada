@@ -6,13 +6,13 @@ const { validateId } = require("../../validators/IDsValidator.js");
 const participacionController = require("../../controllers/participacionControllers.js");
 
 router.get("/listado_de_participaciones", participacionController.obtenerListaDeParticipaciones);
-
+//
 router.get("/tabla_informativa/:participacionId", participacionController.obtenerListaDeInfo);
-
+//
 router.get("/informacion_de_participacion/:participacionId", participacionController.obtenerInformacionDeLaParticipacion);
-
+//
 router.get("/medicamentos_de_participacion/:participacionId", participacionController.obtenerMedicamentosDeLaParticipacion);
-
+//
 router.get("/implementos_de_participacion/:participacionId", participacionController.obtenerImplementosDeLaParticipacion);
 
 router.get("/listado_jinetes_disponibles/:participacionId", validateId, participacionController.obtenerListaDeJinetesDisponibles);

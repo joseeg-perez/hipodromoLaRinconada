@@ -56,6 +56,11 @@ const v1TipoApuestaRoutes = require("./v1/routes/tipoApuestaRoutes.js");
 const v1ReglaTipoApuestaRoutes = require("./v1/routes/reglaTipoApuestaRoutes.js");
 const v1ReglaApuestaRoutes = require("./v1/routes/reglaApuestaRoutes.js");
 const v1TarjetaDebitoRoutes = require("./v1/routes/tarjetaDebitoRoutes.js");
+const v1TarjetaCreditoRoutes = require("./v1/routes/tarjetaCreditoRoutes.js");
+const v1EfectivoRoutes = require("./v1/routes/efectivoRoutes.js");
+const v1CompraApuestaRoutes = require("./v1/routes/compraApuestaRoutes.js");
+const v1GacetaRoutes = require("./v1/routes/gacetaRoutes.js");
+
 // Puerto
 const PORT = process.env.PORT || 5000;
 
@@ -116,6 +121,14 @@ app.use("/api/v1/tipo_apuestas", v1TipoApuestaRoutes);
 app.use("/api/v1/regla_tipo_apuesta", v1ReglaTipoApuestaRoutes);
 app.use("/api/v1/regla_apuesta", v1ReglaApuestaRoutes);
 app.use("/api/v1/tarjeta_debito", v1TarjetaDebitoRoutes);
+app.use("/api/v1/tarjeta_credito", v1TarjetaCreditoRoutes);
+// app.use("/api/v1/efectivo", v1EfectivoRoutes);
+app.use("/api/v1/compra_apuesta", v1CompraApuestaRoutes);
+app.use("/api/v1/gaceta", v1GacetaRoutes);
+
+
+
+
 
 
 module.exports = { app, PORT };

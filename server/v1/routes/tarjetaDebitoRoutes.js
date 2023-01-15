@@ -5,7 +5,7 @@ const { validateId } = require("../../validators/IDsValidator.js");
 
 const tarjetaDebitoController = require("../../controllers/tarjetaDebitoControllers.js");
 
-router.get("/listado_de_tarjetaDebitos", tarjetaDebitoController.obtenerListaDeTarjetaDebito);
+router.get("/listado_de_tarjetaDebito", tarjetaDebitoController.obtenerListaDeTarjetaDebito);
 
 router.get("/:tarjetaDebitoId", validateId, tarjetaDebitoController.obtenerTarjetaDebitoIndividual);
 
