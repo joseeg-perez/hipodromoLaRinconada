@@ -2,11 +2,45 @@ const Participacion = require("../database/participacion.js");
 const { registrarParticipacionImplemento } = require("./participacionImplementoServices.js");
 const { registrarParticipacionMedicamento } = require("./participacionMedicamentoServices.js");
 const { studYEntrenadorEjemplar } = require("./ejemplarServices.js");
+const { obtenerUltimoId } = require("../helpers/queryHelper.js");
 
 const obtenerListaDeParticipaciones = async () => {
   try {
     const listaParticipaciones =
       await Participacion.obtenerListaDeParticipaciones();
+
+    return (listaParticipaciones);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerInformacionDeLaParticipacion = async () => {
+  try {
+    const listaParticipaciones =
+      await Participacion.obtenerInformacionDeLaParticipacion();
+
+    return (listaParticipaciones);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerMedicamentosDeLaParticipacion = async () => {
+  try {
+    const listaParticipaciones =
+      await Participacion.obtenerMedicamentosDeLaParticipacion();
+
+    return (listaParticipaciones);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const obtenerImplementosDeLaParticipacion = async () => {
+  try {
+    const listaParticipaciones =
+      await Participacion.obtenerImplementosDeLaParticipacion();
 
     return (listaParticipaciones);
   } catch (error) {
@@ -125,7 +159,7 @@ const registrarParticipacion = async (nuevaParticipacion) => {
         
 
         const participacionCreada = await Participacion.registrarParticipacion(participacion);
-        const idParticipacionCreada = (await Participacion.obtenerListaDeParticipaciones()).pop().codigo_participacion;
+        const idParticipacionCreada = await obtenerUltimoId("codigo_participacion", "participacion");
         const listaImplementos = nuevaParticipacion.implementoUsados;
         const listaMedicamentos = nuevaParticipacion.medicamentoUsados;
         console.log(listaImplementos, "en participacion service");
@@ -175,6 +209,9 @@ const borrarParticipacion = async (participacionId) => {
 
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerInformacionDeLaParticipacion,
+  obtenerImplementosDeLaParticipacion,
+  obtenerMedicamentosDeLaParticipacion,
   obtenerListaDeJinetesDisponibles,
   obtenerParticipacionIndividual,
   obtenerParticipacionesEnCarrera,
