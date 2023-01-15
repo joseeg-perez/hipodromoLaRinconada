@@ -36,7 +36,7 @@ const Eventos = () => {
   let usuario1 = "crear";
   let usuario2 = "ver";
   let usuario3 = "inscribir";
-  let usuario = usuario3;
+  let usuario = usuario1;
 
   const fechaHandler = (event) => {
     setfechaEvento(event.target.value);
@@ -171,7 +171,7 @@ const Eventos = () => {
 
               <Row className="row row-cols-3 mt-3 text-center d-flex justify-content-center">
                 {eventos.data.map((x) =>
-                  x.fecha_evento < fechaHoy ? (
+                  x.fecha_evento > fechaHoy ? (
                     <InfoEventos
                       key={x.codigo_evento}
                       id={x.codigo_evento}

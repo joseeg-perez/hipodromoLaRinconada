@@ -98,7 +98,7 @@ const EventosRetirar = () => {
 
               <Row className="row row-cols-3 mt-3 text-center d-flex justify-content-center">
                 {eventos.data.map((x) =>
-                  x.fecha_evento < fechaHoy ? (
+                  x.fecha_evento > fechaHoy ? (
                     <InfoEventos
                       key={x.codigo_evento}
                       id={x.codigo_evento}

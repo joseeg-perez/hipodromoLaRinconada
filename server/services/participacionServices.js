@@ -128,6 +128,9 @@ const registrarParticipacion = async (nuevaParticipacion) => {
         const idParticipacionCreada = (await Participacion.obtenerListaDeParticipaciones()).pop().codigo_participacion;
         const listaImplementos = nuevaParticipacion.implementoUsados;
         const listaMedicamentos = nuevaParticipacion.medicamentoUsados;
+        console.log(listaImplementos, "en participacion service");
+        console.log(listaMedicamentos, "en participacion service");
+        console.log(idParticipacionCreada, "en participacion service");
 
         for (let i = 0; i < listaImplementos.length; i++) {
             const nuevoImplemento = {

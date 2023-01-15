@@ -202,16 +202,14 @@ const ResultadoAgregar = (props) => {
   }
 
   let auxiliar;
-  const formSubmissionHandler = (event) => {
+  const formSubmissionHandler = async (event) => {
     event.preventDefault();
     console.log("entro");
     auxiliar = 1;
     let resultados = [];
-    let premioEntrenador = 0;
-    let premioJinete = 0;
-    let premioPropietario = 0;
     let premio = 0;
     ejemplares.data.map((x) => {
+      auxiliar=document.getElementById(x.codigo_participacion).value;
       premio =
         auxiliar == 1
           ? p1
@@ -231,15 +229,16 @@ const ResultadoAgregar = (props) => {
         speedRating400m: document.getElementById(`sr400${auxiliar}`).value,
         speedRating800m: document.getElementById(`sr800${auxiliar}`).value,
         observacion: document.getElementById("txta").value,
-        gananciaEntrenador: premio/4,
-        gananciaJinete: premio/4,
-        gananciaPropietario: premio/2,
+        gananciaEntrenador: Math.trunc(premio/4),
+        gananciaJinete: Math.trunc(premio/4) ,
+        gananciaPropietario: Math.trunc(premio/2),
         tiempoTotal:`0:${document.getElementById(`tpc${auxiliar}`).value}`,
         fkTipoResultado: document.getElementById(x.codigo_participacion).value,
         fkCuerpoDiferencia: document.getElementById(`dc${auxiliar}`).value,
         tiempo300m: `0:${document.getElementById(`tp300${auxiliar}`).value}`,
         tiempo400m: `0:${document.getElementById(`tp400${auxiliar}`).value}`,
         tiempo800m: `0:${document.getElementById(`tp800${auxiliar}`).value}`,
+        fkParticipacion: x.codigo_participacion,
       });
       // console.log(document.getElementById(x.id).value);
       // console.log(document.getElementById(`dt${auxiliar}`).value);
@@ -255,6 +254,18 @@ const ResultadoAgregar = (props) => {
       auxiliar = auxiliar + 1;
     });
     console.log(resultados);
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/resultados/registrar_resultado",
+        {
+          resultados,
+        }
+      );
+    } catch (error) {
+      //alert("Falla");
+      throw error;
+    }
+    alert("Se registraron los resultados con éxito");
     auxiliar=1;
     //console.log(document.getElementById("txta").value);
     /*console.log(document.getElementById(12).value);
