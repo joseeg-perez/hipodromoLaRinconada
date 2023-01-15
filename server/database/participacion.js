@@ -426,6 +426,21 @@ const borrarParticipacion = async (participacionId) => {
   }
 };
 
+const obtenerUltimoId  = async (nombreId, nombreTabla) => {
+  const query = {
+    text: `SELECT MAX (${nombreId}) FROM ${nombreTabla}`,
+  }
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return (rows[0]);
+} catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+}
+};
+
 module.exports = {
   obtenerListaDeParticipaciones,
   obtenerInformacionDeLaParticipacion,

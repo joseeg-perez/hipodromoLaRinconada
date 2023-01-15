@@ -54,6 +54,7 @@ const v1PuestoCaballoRoutes = require("./v1/routes/puestoCaballoRoutes.js");
 const v1EjemplarPropietarioRoutes = require("./v1/routes/ejemplarPropietarioRoutes.js");
 const v1TipoApuestaRoutes = require("./v1/routes/tipoApuestaRoutes.js");
 const v1ReglaTipoApuestaRoutes = require("./v1/routes/reglaTipoApuestaRoutes.js");
+const v1ReglaApuesta = require("./v1/routes/reglaApuestaRoutes.js");
 
 // Puerto
 const PORT = process.env.PORT || 5000;
@@ -113,6 +114,7 @@ app.use("/api/v1/ejemplar_propietario", v1EjemplarPropietarioRoutes);
 app.use("/api/v1/tipo_resultados", v1tipoResultadoRoutes);
 app.use("/api/v1/tipo_apuestas", v1TipoApuestaRoutes);
 app.use("/api/v1/regla_tipo_apuesta", v1ReglaTipoApuestaRoutes);
+app.use("/api/v1/regla_apuesta", v1ReglaApuesta);
 
 
 module.exports = { app, PORT };

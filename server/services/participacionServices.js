@@ -2,6 +2,7 @@ const Participacion = require("../database/participacion.js");
 const { registrarParticipacionImplemento } = require("./participacionImplementoServices.js");
 const { registrarParticipacionMedicamento } = require("./participacionMedicamentoServices.js");
 const { studYEntrenadorEjemplar } = require("./ejemplarServices.js");
+const { obtenerUltimoId } = require("../helpers/queryHelper.js");
 
 const obtenerListaDeParticipaciones = async () => {
   try {
@@ -158,7 +159,7 @@ const registrarParticipacion = async (nuevaParticipacion) => {
         
 
         const participacionCreada = await Participacion.registrarParticipacion(participacion);
-        const idParticipacionCreada = (await Participacion.obtenerListaDeParticipaciones()).pop().codigo_participacion;
+        const idParticipacionCreada = await obtenerUltimoId("codigo_participacion", "participacion");
         const listaImplementos = nuevaParticipacion.implementoUsados;
         const listaMedicamentos = nuevaParticipacion.medicamentoUsados;
 
