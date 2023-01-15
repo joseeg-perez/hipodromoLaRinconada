@@ -357,7 +357,7 @@ const InscribirEjemplar = () => {
     let fkJinete = document.getElementById("jinete").value;
     //let puestoPista = document.getElementById("puesto").value;
     let puestoPista = document.getElementById("puesto").value;
-
+    //console.log(pesoJinete)
     console.log(medicamentoUsados);
     console.log(implementoUsados);
     try {

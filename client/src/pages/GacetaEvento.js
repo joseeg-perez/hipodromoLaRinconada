@@ -1,10 +1,11 @@
 import React from 'react'
+import { Container } from 'react-bootstrap'
 
 const GacetaEvento = () => {
   return (
-    <div>
-      <p>Gaceta evento</p>
-    </div>
+    <Container>
+        
+    </Container>
   )
 }
 
