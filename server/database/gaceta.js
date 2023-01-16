@@ -23,7 +23,7 @@ const obtenerListaQuery2 = async (gacetaId) => {
       e.sexo_ejemplar as sexo, pel.abrev_pelaje as pelaje , AGE(CURRENT_DATE, e.fecha_nacimiento_ejemplar) as edad,
       concat  (pe.nombre1_persona,' ',pe.apellido1_persona) as entrenador, 
       concat  (pj.nombre1_persona,' ',pj.apellido1_persona) as jinete, em.nombre_ejemplar as madre, ep.nombre_ejemplar as padre,
-      s.nombre_stud as stud, count(par.codigo_participacion) as participaciones
+      s.nombre_stud as stud, count(par.codigo_participacion) as participaciones, pa.fk_carrera
       
       from participacion pa,persona_jinete pj, persona_entrenador pe, carrera ca, evento ev, pelaje pel,stud s, 
       ejemplar_propietario eprop, propietario_stud ps,participacion par,
@@ -48,7 +48,7 @@ const obtenerListaQuery2 = async (gacetaId) => {
       and ev.codigo_evento=$1
       
       group by pa.codigo_participacion,e.codigo_ejemplar, e.nombre_ejemplar, pa.gualdrapa, pa.puesto_pista, pa.peso_caballo, 
-      pa.peso_jinete, sexo, pelaje ,edad, entrenador, jinete,madre, padre, stud`,
+      pa.peso_jinete, sexo, pelaje ,edad, entrenador, jinete,madre, padre, stud, pa.fk_carrera`,
       values: [gacetaId]
     };
   
@@ -108,7 +108,7 @@ const obtenerListaQuery4 = async (gacetaId) => {
 
 const obtenerListaQuery5 = async (gacetaId) => {
     const query = {
-      text: `select  e.codigo_ejemplar, ev.fecha_evento, pa.codigo_participacion, pa.peso_caballo, pa.peso_jinete, 
+      text: `select  e.codigo_ejemplar, to_char(ev.fecha_evento :: DATE, 'dd-mm-yyyy') as fecha  , pa.codigo_participacion, pa.peso_caballo, pa.peso_jinete, 
       concat  (pj.nombre1_persona,' ',pj.apellido1_persona) as jinete, r.tiempo_total, r.speed_rating, r.tiempo_300m, r.tiempo_800m,
       car.valor_regla as distancia, cr.valor_regla as variante, carre.valor_regla as participantes, ej.nombre_ejemplar as ganador,
       res.tiempo_total as tiempo_ganador, cu.nombre_cuerpo_dif, ca.premio_primero
@@ -230,7 +230,7 @@ const obtenerListaQuery7 = async (gacetaId) => {
 const obtenerListaQuery8 = async (gacetaId) => {
     const query = {
       text: `select distinct pa.codigo_participacion,e.codigo_ejemplar, e.nombre_ejemplar,
-      (count (ep.nombre_ejemplar)+count (em.nombre_ejemplar))
+      (count (ep.nombre_ejemplar)+count (em.nombre_ejemplar)) as produccion
       
       from participacion pa, carrera ca,
       ejemplar e left outer join ejemplar em  on em.fk_madre_ejemplar=e.codigo_ejemplar left outer join ejemplar ep
