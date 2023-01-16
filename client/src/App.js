@@ -107,9 +107,6 @@ function App() {
         <Route path="/registrar">
           <RegisterCard></RegisterCard>
         </Route>
-        <Route path="/pago">
-          <Pago></Pago>
-        </Route>
 
         <Route path="/ejemplares/createEjemplar" exact>
           <EjemplarAgregar></EjemplarAgregar>

@@ -33,23 +33,6 @@ const Pago = () => {
                     </div>
                   </Col>
                 </Row>
-                {/* <Col>
-              <FormSelect onChange={handleCaballeriza}>
-                <option key={-1} disabled={toggleCaballeriza}>
-                  Banco
-                </option>
-                {caballerizas.data.map((caballeriza) => (
-                  <option
-                    key={caballeriza.codigo_caballeriza}
-                    value={caballeriza.codigo_caballeriza}
-                  >
-                    {caballeriza.codigo_caballeriza} (puestos:
-                    <span> </span>
-                    {caballeriza.cantidad_puestos})
-                  </option>
-                ))}
-              </FormSelect>
-            </Col> */}
                 <Row className="d-flex align-items-center">
                   <Col>
                     <div className="mb-3 form-floating">

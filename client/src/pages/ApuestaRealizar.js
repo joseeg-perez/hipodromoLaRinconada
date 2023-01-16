@@ -11,6 +11,8 @@ import {
   Table,
 } from "react-bootstrap";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Pago from "./Pago";
 
 const ApuestaRealizar = () => {
   const [TiposDeApuesta, setTiposDeApuesta] = useState([]);
@@ -33,8 +35,10 @@ const ApuestaRealizar = () => {
   const [toggleSeleccionEjemplares, settoggleSeleccionEjemplares] =
     useState(false);
   const [ContEjemplares, setContEjemplares] = useState(0);
+  const [togglePago, settogglePago] = useState(false);
   const [toggleCarrera, settoggleCarrera] = useState(true);
   const [CarrerasSeleccionadas, setCarrerasSeleccionadas] = useState([]);
+  const [CarrerasOrdenadas, setCarrerasOrdenadas] = useState([]);
   const [EjemplaresSeleccionados, setEjemplaresSeleccionados] = useState([]);
   useEffect(() => {
     axios
@@ -64,6 +68,10 @@ const ApuestaRealizar = () => {
   const fechaUltimoEvento =
     eventos.data[eventos.data.length - 1].fecha_evento + 1;
   const fechaMin = `${fechaUltimoEvento[0]}${fechaUltimoEvento[1]}${fechaUltimoEvento[2]}${fechaUltimoEvento[3]}-${fechaUltimoEvento[5]}${fechaUltimoEvento[6]}-${fechaUltimoEvento[8]}${fechaUltimoEvento[9]}`;
+
+  const handleCardPago = (event) => {
+    settogglePago(true);
+  };
 
   const handleTipoApuesta = async (event) => {
     event.preventDefault();
@@ -104,7 +112,7 @@ const ApuestaRealizar = () => {
       (regla) => regla.nombre_regla_apuesta == "costo apuesta"
     ).valor;
     let fk_tipo_apuesta = document.getElementById("Tipo de Apuesta").value;
-    console.warn(costoApuesta, EjemplaresSeleccionados);
+    console.warn(costoApuesta, EjemplaresSeleccionados, fk_tipo_apuesta);
   };
 
   const handleEvento = async (event) => {
@@ -118,8 +126,41 @@ const ApuestaRealizar = () => {
       )
       .then((res) => {
         console.log(res);
-        setCarreras(res.data);
+
+        if (
+          reglas.data.find(
+            (regla) => regla.nombre_regla_apuesta == "escogencia de carreras"
+          ).valor == 0
+        ) {
+          setCarreras(res.data.data);
+        } else if (
+          reglas.data.find(
+            (regla) => regla.nombre_regla_apuesta == "escogencia de carreras"
+          ).valor == 1
+        ) {
+          setCarreras(
+            res.data.data.slice(
+              0,
+              reglas.data.find(
+                (regla) => (regla.nombre_regla_apuesta = "cantidad de carreras")
+              ).valor
+            )
+          );
+        } else {
+          setCarreras(
+            res.data.data
+              .reverse()
+              .slice(
+                0,
+                reglas.data.find(
+                  (regla) =>
+                    (regla.nombre_regla_apuesta = "cantidad de carreras")
+                ).valor
+              )
+          );
+        }
         setLoadingCarreras(false);
+        settoggleEvento(false);
       })
       .catch((err) => console.log(err));
   };
@@ -132,7 +173,7 @@ const ApuestaRealizar = () => {
     ) {
       setLoadingNuevasCarreras(true);
       let CarrerasDispo;
-      let indexInicial = Carreras.data.findIndex(
+      let indexInicial = Carreras.findIndex(
         (carrera) =>
           carrera.codigo_carrera == document.getElementById("carrera").value
       );
@@ -141,11 +182,11 @@ const ApuestaRealizar = () => {
         reglas.data.find(
           (regla) => regla.nombre_regla_apuesta == "cantidad de carreras"
         ).valor;
-      if (indexFinal - indexInicial >= Carreras.data.length)
-        CarrerasDispo = Carreras.data.slice(indexInicial);
-      else CarrerasDispo = Carreras.data.slice(indexInicial, indexFinal);
+      if (indexFinal - indexInicial >= Carreras.length)
+        CarrerasDispo = Carreras.slice(indexInicial);
+      else CarrerasDispo = Carreras.slice(indexInicial, indexFinal);
       console.log(CarrerasDispo);
-      setCarreras(CarrerasDispo);
+      setCarrerasOrdenadas(CarrerasDispo);
     }
     setCarrerasSeleccionadas((prevState) => {
       return [...prevState, document.getElementById("carrera").value];
@@ -263,20 +304,43 @@ const ApuestaRealizar = () => {
             <option value={-1} disabled={!toggleCarrera}>
               carrera
             </option>
+            {console.log(CarrerasOrdenadas)}
+            {console.log(Carreras)}
             {!isLoadingCarreras &&
-              !LoadingNuevasCarreras &&
-              Carreras.data.map((carrera) => (
-                <option
-                  value={carrera.codigo_carrera}
-                  disabled={
-                    CarrerasSeleccionadas.find(
-                      (carreraS) => carreraS == carrera.codigo_carrera
-                    ) != null
-                  }
-                >
-                  Carrera Nro. {carrera.numero_carrera} ({carrera.hora_carrera})
-                </option>
-              ))}
+            !LoadingNuevasCarreras &&
+            (reglas.data.find(
+              (regla) => regla.nombre_regla_apuesta == "orden de carreras"
+            ).valor == 0 ||
+              CarrerasOrdenadas.length == 0)
+              ? Carreras.map((carrera) => (
+                  <option
+                    value={carrera.codigo_carrera}
+                    disabled={
+                      CarrerasSeleccionadas.find(
+                        (carreraS) => carreraS == carrera.codigo_carrera
+                      ) != null
+                    }
+                  >
+                    Carrera Nro. {carrera.numero_carrera} (
+                    {carrera.hora_carrera})
+                  </option>
+                ))
+              : !isLoadingCarreras &&
+                !LoadingNuevasCarreras &&
+                CarrerasOrdenadas.length > 0 &&
+                CarrerasOrdenadas.map((carrera) => (
+                  <option
+                    value={carrera.codigo_carrera}
+                    disabled={
+                      CarrerasSeleccionadas.find(
+                        (carreraS) => carreraS == carrera.codigo_carrera
+                      ) != null
+                    }
+                  >
+                    Carrera Nro. {carrera.numero_carrera} (
+                    {carrera.hora_carrera})
+                  </option>
+                ))}
           </FormSelect>
           <Button
             className="mt-3"
@@ -294,7 +358,7 @@ const ApuestaRealizar = () => {
             <tbody>
               {CarrerasSeleccionadas.map((carreraS) => (
                 <tr>
-                  {Carreras.data.map(
+                  {Carreras.map(
                     (carrera) =>
                       carrera.codigo_carrera == carreraS && (
                         <td id="carreraS">
@@ -471,9 +535,25 @@ const ApuestaRealizar = () => {
         <Col></Col>
       </Row>
       <div className="text-center">
-        <Button className="mt-4 btn-success" onClick={handlePago}>
-          Proceder al pago
-        </Button>
+        {carrerasFull && EjemplaresFull && (
+          <Button
+            className="btn btn-success btn-xl mx-1 mt-5"
+            onClick={handleCardPago}
+          >
+            Proceder al Pago
+          </Button>
+        )}
+        {togglePago && (
+          <Pago
+            apuesta={EjemplaresSeleccionados}
+            costo={
+              reglas.data.find(
+                (regla) => regla.nombre_regla_apuesta == "costo apuesta"
+              ).valor
+            }
+            TipoApuesta={document.getElementById("Tipo de Apuesta").value}
+          ></Pago>
+        )}
       </div>
     </Container>
   );
