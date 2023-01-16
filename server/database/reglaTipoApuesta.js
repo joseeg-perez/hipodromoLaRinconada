@@ -18,7 +18,10 @@ const obtenerListaDeReglaTipoApuesta = async () => {
 
 const obtenerReglaTipoApuestaIndividual = async (reglaTipoApuestaId) => {
   const query = {
-    text: "SELECT * FROM reglas_tipo_apuesta WHERE codigo_regla_tipo_apuesta=$1",
+    text: `SELECT nombre_regla_apuesta, valor 
+    FROM reglas_tipo_apuesta, regla_apuesta
+    WHERE fk_tipo_apuesta = $1
+    AND fk_regla_apuesta = codigo_regla_apuesta`,
     values: [reglaTipoApuestaId],
   };
 
@@ -75,7 +78,7 @@ const actualizarReglaTipoApuesta = async (reglaTipoApuestaId, cambios) => {
       httpError.idNoEncontrado("El tipo de apuesta", reglaTipoApuestaId);
 
     dbConnection.end;
-    return ;
+    return;
   } catch (error) {
     if (error.code === "23505") {
       throw {

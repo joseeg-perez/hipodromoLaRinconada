@@ -36,7 +36,7 @@ const TipoApuestaAgregar = () => {
     console.log("entro");
     axios
       .get(
-        "http://localhost:5000/api/v1/regla_tipo_apuesta/listado_de_reglaTipoApuestas"
+        "http://localhost:5000/api/v1/regla_apuesta/listado_de_reglaApuestas"
       )
       .then((res) => {
         console.log(res);
@@ -48,18 +48,31 @@ const TipoApuestaAgregar = () => {
 
   const handleData = (event) => {};
 
-  const formSubmissionHandler = (event) => {
+  const formSubmissionHandler = async (event) => {
     event.preventDefault();
-    let nombreTipoApuesta = document.getElementById("nombre").value;
-    let descripcionApuesta = document.getElementById("descripcion").value;
-    let ApuestasRegla = [];
+    let nombreApuestaRegla = document.getElementById("nombre").value;
+    let descripcionApuestaRegla = document.getElementById("descripcion").value;
+    let carreraRegla = [];
     reglas.data.map((x) =>
-      ApuestasRegla.push({
+      carreraRegla.push({
         fk_regla: x.codigo_regla_apuesta,
         valor_regla: document.getElementById(x.nombre_regla_apuesta).value,
       })
     );
-    console.warn(nombreTipoApuesta, descripcionApuesta, ApuestasRegla);
+    console.warn(nombreApuestaRegla, descripcionApuestaRegla, carreraRegla);
+    try {
+      await axios.post(
+        "http://localhost:5000/api/v1/tipo_apuestas/registrar_tipoApuesta",
+        {
+          nombreApuestaRegla,
+          descripcionApuestaRegla,
+          carreraRegla,
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+    alert("Se creo el tipo de apuesta con éxito");
   };
   return (
     <Container>
@@ -78,7 +91,7 @@ const TipoApuestaAgregar = () => {
           <div className="mt-3">
             <FormLabel>Descripcion</FormLabel>
             <textarea
-              id=" descripcion"
+              id="descripcion"
               className="form-control"
               rows="4"
             ></textarea>
@@ -87,7 +100,7 @@ const TipoApuestaAgregar = () => {
             <Row>
               <Col className="col-6 mt-3">
                 <FormLabel>Cantidad de Carreras para la apuesta</FormLabel>
-                <FormSelect id="Cantidad de carreras">
+                <FormSelect id="cantidad de carreras">
                   <option value={1}>1</option>
                   <option value={2}>2</option>
                   <option value={3}>3</option>
@@ -104,7 +117,7 @@ const TipoApuestaAgregar = () => {
               </Col>
               <Col className="col-6 mt-3">
                 <FormLabel>Cantidad de Caballos por carrera</FormLabel>
-                <FormSelect id="Cantidad de caballos">
+                <FormSelect id="cantidad de caballos">
                   <option value={0}>Sín límite</option>
                   <option value={1}>1</option>
                   <option value={2}>2</option>
@@ -128,7 +141,7 @@ const TipoApuestaAgregar = () => {
             <Row>
               <Col className="col-6 mt-3">
                 <FormLabel>Orden de carreras en la apuesta</FormLabel>
-                <FormSelect id="Orden de carrersa">
+                <FormSelect id="orden de carreras">
                   <option value={1}>Sí</option>
                   <option value={0}>No</option>
                 </FormSelect>
@@ -136,7 +149,7 @@ const TipoApuestaAgregar = () => {
               <Col className="col-6 mt-3">
                 <FormLabel>Multiplicador por caballo apostado</FormLabel>
                 <input
-                  id="Multiplicador por caballo"
+                  id="multiplicador por caballo apostado"
                   type="number"
                   className="form-control"
                   placeholder="0 Bs"
@@ -146,7 +159,7 @@ const TipoApuestaAgregar = () => {
             <Row>
               <Col className="col-6 mt-3">
                 <FormLabel>Escogencia de carreras</FormLabel>
-                <FormSelect id="Escogencia de carreras">
+                <FormSelect id="escogencia de carreras">
                   <option value={0}>No importa</option>
                   <option value={1}>Primeras</option>
                   <option value={2}>Ultimas</option>
@@ -155,7 +168,7 @@ const TipoApuestaAgregar = () => {
               <Col className="col-6 mt-3">
                 <FormLabel>Mínimo otorgado por x Bs apostados</FormLabel>
                 <input
-                  id="Multiplicador por caballo"
+                  id="minimo otorgado por x bs apostados"
                   type="number"
                   className="form-control"
                   placeholder="0 Bs"
@@ -163,18 +176,18 @@ const TipoApuestaAgregar = () => {
               </Col>
             </Row>
             <Row>
-              <Col className="col-6 mt-3">
+              {/* <Col className="col-6 mt-3">
                 <FormLabel>Escogencia de carreras</FormLabel>
                 <FormSelect id="Escogencia de carreras">
                   <option value={0}>No importa</option>
                   <option value={1}>Primeras</option>
                   <option value={2}>Ultimas</option>
                 </FormSelect>
-              </Col>
+              </Col> */}
               <Col className="col-6 mt-3">
                 <FormLabel>Costo apuesta</FormLabel>
                 <input
-                  id="Multiplicador por caballo"
+                  id="costo apuesta"
                   type="number"
                   className="form-control"
                   placeholder="0 Bs"
@@ -183,9 +196,8 @@ const TipoApuestaAgregar = () => {
             </Row>
           </div>
           <Button onClick={formSubmissionHandler} size="xl" className="mt-4">
-            GUARDAR
+            Crear Tipo de Apuesta
           </Button>
-          <h1>SIRVE</h1>
         </FormGroup>
       </Form>
     </Container>

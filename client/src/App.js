@@ -71,6 +71,7 @@ import TipoApuestaAgregar from "./pages/TipoApuestaAgregar";
 import Gaceta from "./pages/Gaceta";
 import GacetaEvento from "./pages/GacetaEvento";
 import ApuestaRealizar from "./pages/ApuestaRealizar";
+import Pago from "./pages/Pago";
 
 function App() {
   return (
@@ -105,6 +106,9 @@ function App() {
 
         <Route path="/registrar">
           <RegisterCard></RegisterCard>
+        </Route>
+        <Route path="/pago">
+          <Pago></Pago>
         </Route>
 
         <Route path="/ejemplares/createEjemplar" exact>
