@@ -1,14 +1,14 @@
 const dbConnection = require("../database/dbConfig.js");
 const httpError = require("../helpers/httpMessages.js");
 
-const obtenerListaDeTarjetaDebito = async () => {
+const obtenerListaDeTarjetaCredito = async () => {
     const query = {
-        text: "SELECT * FROM metodo_pago_td",
+        text: "SELECT * FROM metodo_pago_tc",
       };
     
       try {
         const { rows } = await dbConnection.query(query);
-        if (rows.length === 0) httpError.noRegistrado("ningun tipo de tarjeta de debito");
+        if (rows.length === 0) httpError.noRegistrado("ningun tipo de tarjeta de credito");
     
         dbConnection.end;
         return rows;
@@ -17,15 +17,15 @@ const obtenerListaDeTarjetaDebito = async () => {
       }
 };
 
-const obtenerTarjetaDebitoIndividual = async (tarjetaDebitoId) => {
+const obtenerTarjetaCreditoIndividual = async (tarjetaCreditoId) => {
     const query = {
-        text: "SELECT * FROM metodo_pago_td WHERE codigo_metodo=$1",
-        values: [tarjetaDebitoId],
+        text: "SELECT * FROM metodo_pago_tc WHERE codigo_metodo=$1",
+        values: [tarjetaCreditoId],
       };
     
       try {
         const { rows } = await dbConnection.query(query);
-        if (rows.length === 0) httpError.idNoEncontrado("La tarjeta de debito", tarjetaDebitoId);
+        if (rows.length === 0) httpError.idNoEncontrado("La tarjeta de credito", tarjetaCreditoId);
     
         dbConnection.end;
         return rows;
@@ -34,23 +34,20 @@ const obtenerTarjetaDebitoIndividual = async (tarjetaDebitoId) => {
       }
 };
 
-const registrarTarjetaDebito = async (nuevaTarjetaDebito) => {
+const registrarTarjetaCredito = async (nuevaTarjetaCredito) => {
     const { 
         fechaVencimiento,
-        tipoCuenta,
         numeroTarjeta,
         fkBanco,
-     } = nuevaTarjetaDebito;
+     } = nuevaTarjetaCredito;
 
-    const text = `INSERT INTO metodo_pago_td(
+    const text = `INSERT INTO metodo_pago_tc(
         fecha_vencimiento,
-        tipo_cuenta,
         numero_tarjeta,
-        fk_banco) VALUES($1, $2, $3, $4)`;
+        fk_banco) VALUES($1, $2, $3)`;
         
     const values = [
         fechaVencimiento,
-        tipoCuenta,
         numeroTarjeta,
         fkBanco
     ];
@@ -64,32 +61,30 @@ const registrarTarjetaDebito = async (nuevaTarjetaDebito) => {
     if (error.code === "23505") {
       throw {
         status: 409,
-        message: `La tarjeta de debito ya ha sido registrada.`,
+        message: `La tarjeta de credito ya ha sido registrada.`,
       };
     }
     throw { status: error?.status || 500, message: error?.message || error };
   }
 };
 
-const actualizarTarjetaDebito = async (tarjetaDebitoId, cambios) => {
+const actualizarTarjetaCredito = async (tarjetaCreditoId, cambios) => {
     const { 
         fechaVencimiento,
-        tipoCuenta,
         numeroTarjeta,
-        fkBanco } = cambios;
+        fkBanco, } = cambios;
 
   const query = {
-    text: `UPDATE metodo_pago_td
+    text: `UPDATE metodo_pago_tc
             SET fecha_vencimiento=$1, 
-            tipo_cuenta=$2,
-            numero_tarjeta=$3,
-            fk_banco=$4
-            WHERE codigo_metodo=$5;`,
-    values: [fechaVencimiento, tipoCuenta, numeroTarjeta, fkBanco, tarjetaDebitoId],
+            numero_tarjeta=$2,
+            fk_banco=$3
+            WHERE codigo_metodo=$4;`,
+    values: [fechaVencimiento, numeroTarjeta, fkBanco, tarjetaCreditoId],
   };
   try {
     const { rowCount } = await dbConnection.query(query);
-    if (rowCount === 0) httpError.idNoEncontrado("La tarjeta de debito", tarjetaDebitoId);
+    if (rowCount === 0) httpError.idNoEncontrado("La tarjeta de credito", tarjetaCreditoId);
 
     dbConnection.end;
     return;
@@ -97,22 +92,22 @@ const actualizarTarjetaDebito = async (tarjetaDebitoId, cambios) => {
     if (error.code === "23505") {
       throw {
         status: 409,
-        message: `Ya hay una tarjeta de debito con el codigo '${tarjetaDebitoId}' registrada.`,
+        message: `Ya hay una tarjeta de credito con el codigo '${tarjetaCreditoId}' registrada.`,
       };
     }
     throw { status: error?.status || 500, message: error?.message || error };
   }  
 };
 
-const borrarTarjetaDebito = async (tarjetaDebitoId) => {
+const borrarTarjetaCredito = async (tarjetaCreditoId) => {
     const query = {
-        text: "DELETE FROM metodo_pago_td WHERE codigo_metodo=$1",
-        values: [tarjetaDebitoId],
+        text: "DELETE FROM metodo_pago_tc WHERE codigo_metodo=$1",
+        values: [tarjetaCreditoId],
       };
     
       try {
         const { rowCount } = await dbConnection.query(query);
-        if (rowCount === 0) httpError.idNoEncontrado("La tarjeta de debito ", tarjetaDebitoId);
+        if (rowCount === 0) httpError.idNoEncontrado("La tarjeta de Credito ", tarjetaCreditoId);
     
         dbConnection.end;
         return;
@@ -122,9 +117,9 @@ const borrarTarjetaDebito = async (tarjetaDebitoId) => {
 };
 
 module.exports = {
-  obtenerListaDeTarjetaDebito,
-  obtenerTarjetaDebitoIndividual,
-  registrarTarjetaDebito,
-  actualizarTarjetaDebito,
-  borrarTarjetaDebito,
+  obtenerListaDeTarjetaCredito,
+  obtenerTarjetaCreditoIndividual,
+  registrarTarjetaCredito,
+  actualizarTarjetaCredito,
+  borrarTarjetaCredito,
 };

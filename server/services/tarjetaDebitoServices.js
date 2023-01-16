@@ -2,9 +2,9 @@ const TarjetaDebito = require("../database/tarjetaDebito.js");
 
 const obtenerListaDeTarjetaDebito = async () => {
   try {
-    const listaTarjetaDebitos = await TarjetaDebito.obtenerListaDeTarjetaDebito();
+    const listaTarjetaDebito = await TarjetaDebito.obtenerListaDeTarjetaDebito();
 
-    return listaTarjetaDebitos;
+    return listaTarjetaDebito;
   } catch (error) {
     throw error;
   }

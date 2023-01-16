@@ -2,9 +2,9 @@ const tarjetaDebitoService = require("../services/tarjetaDebitoServices.js");
 
 const obtenerListaDeTarjetaDebito = async (req, res) => {
   try {
-    const listaTarjetaDebitos = await tarjetaDebitoService.obtenerListaDeTarjetaDebito();
+    const listaTarjetaDebitos= await tarjetaDebitoService.obtenerListaDeTarjetaDebito();
 
-    res.status(200).send({ status: "OK", data: listaTarjetaDebitos });
+    res.status(200).send({ status: "OK", data: listaTarjetaDebito });
   } catch (error) {
     res
       .status(error?.status || 500)
