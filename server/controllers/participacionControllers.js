@@ -13,6 +13,23 @@ const obtenerListaDeParticipaciones = async (req, res) => {
   }
 };
 
+const obtenerListaDeInfo = async (req, res) => {
+  const {
+    params: { participacionId },
+  } = req;
+  
+  try {
+    const listaDeParticipaciones =
+      await participacionService.obtenerListaDeInfo(participacionId);
+
+    res.status(200).send({ status: "OK", data: listaDeParticipaciones });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const obtenerInformacionDeLaParticipacion = async (req, res) => {
   try {
     const listaDeParticipaciones =
@@ -280,6 +297,7 @@ const borrarParticipacion = async (req, res) => {
 
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerListaDeInfo,
   obtenerInformacionDeLaParticipacion,
   obtenerImplementosDeLaParticipacion,
   obtenerMedicamentosDeLaParticipacion,

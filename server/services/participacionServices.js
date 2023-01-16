@@ -15,6 +15,17 @@ const obtenerListaDeParticipaciones = async () => {
   }
 };
 
+const obtenerListaDeInfo = async (participacionId) => {
+  try {
+    const listaParticipaciones =
+      await Participacion.obtenerListaDeInfo(participacionId);
+
+    return (listaParticipaciones);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const obtenerInformacionDeLaParticipacion = async () => {
   try {
     const listaParticipaciones =
@@ -209,6 +220,7 @@ const borrarParticipacion = async (participacionId) => {
 
 module.exports = {
   obtenerListaDeParticipaciones,
+  obtenerListaDeInfo,
   obtenerInformacionDeLaParticipacion,
   obtenerImplementosDeLaParticipacion,
   obtenerMedicamentosDeLaParticipacion,
