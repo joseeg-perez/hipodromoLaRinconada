@@ -31,7 +31,8 @@ const obtenerResultadoEvento = async (resultadoId) => {
     and p.fk_resultado=r.codigo_resultado
     and r.fk_cuerpo_diferencia=cp.codigo_cuerpo_dif
     group by c.codigo_carrera,p.codigo_participacion, e.codigo_ejemplar,puesto,caballo,entrenador, jinete, p.peso_jinete, 
-    p.peso_caballo, p.gualdrapa, p.puesto_pista,r.tiempo_total,cuerpos`,
+    p.peso_caballo, p.gualdrapa, p.puesto_pista,r.tiempo_total,cuerpos
+    order by puesto`,
     values: [resultadoId]
   };
 

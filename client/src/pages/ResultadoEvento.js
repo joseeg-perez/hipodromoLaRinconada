@@ -24,10 +24,18 @@ const ResultadoEvento = () => {
         setLoading(false);
       })
       .catch((err) => console.log(err));
+    axios
+      .get(`http://localhost:5000/api/v1/resultados/resultados_evento/${id}`)
+      .then((res) => {
+        console.log(res);
+        setResultados(res.data);
+        setLoading2(false);
+      })
+      .catch((err) => console.log(err));
   }, []);
-  if (isLoading) return <div>Cargando</div>;
+  if (isLoading || isLoading2) return <div>Cargando</div>;
 
-  console.log(carreras);
+  console.log(resultados);
   let columnas6 = (
     <tr>
       <th>Pos</th>
@@ -51,6 +59,16 @@ const ResultadoEvento = () => {
     };
   }
   carreras.data.map((x) => grid.push(x));
+
+  for (let index = 0; index < grid.length; index++) {
+    resultados.data.map((x) =>
+      x.codigo_carrera == grid[index].codigo_carrera ? (
+        grid[index].resultadoParticipaciones.push(x)
+      ) : (
+        <p></p>
+      )
+    );
+  }
   console.log(grid);
   return (
     <Container>
@@ -106,7 +124,26 @@ const ResultadoEvento = () => {
                   </Row>
                 </Card.Header>
                 <Card.Body>
-                  <p>aca la tabla</p>
+                  <Row className="row row-cols-1">
+                    <Tabla
+                      
+                      columnas={columnas6}
+                      informacion={x.resultadoParticipaciones}
+                      funcion={(x) => (
+                        <tr>
+                          <td>{`${x.puesto}`}</td>
+                          <td>{`${x.gualdrapa}`}</td>
+                          <td>{`${x.caballo}`}</td>
+                          <td>{`${x.puesto_pista}`}</td>
+                          <td>{`${x.jinete}`}</td>
+                          <td>{`${x.peso_jinete}`}</td>
+                          <td>{`${x.entrenador}`}</td>
+                          <td>{`${x.tiempo_total}`}</td>
+                          <td>{`${x.cuerpos}`}</td>
+                        </tr>
+                      )}
+                    ></Tabla>
+                  </Row>
                 </Card.Body>
               </Card>
             </Col>
