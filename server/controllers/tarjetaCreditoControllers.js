@@ -29,15 +29,21 @@ const obtenerTarjetaCreditoIndividual = async (req, res) => {
 
 const registrarTarjetaCredito = async (req, res) => { 
     const {
-        fechaVencimiento,
-        numeroTarjeta,
-        fkBanco,
+        fecha_vencimiento,
+        numero_tarjeta,
+        banco,
+        TipoApuesta,
+        costo,
+        apuesta,
      } =  req.body;
 
     const nuevaTarjetaCredito = {
-        fechaVencimiento,
-        numeroTarjeta,
-        fkBanco,
+      fecha_vencimiento,
+      numero_tarjeta,
+      banco,
+      TipoApuesta,
+      costo,
+      apuesta,
     };
 
   try {

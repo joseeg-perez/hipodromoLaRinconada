@@ -37,7 +37,6 @@ const obtenerCompraApuestaIndividual = async (compraApuestaId) => {
 const registrarCompraApuesta = async (nuevoCompraApuesta) => {
   const { 
     montoTotal,
-    fechaCompra,
     fkUsuario,
     fkCliente,
     fkTipoApuesta,
@@ -45,15 +44,13 @@ const registrarCompraApuesta = async (nuevoCompraApuesta) => {
 
   const text = `INSERT INTO compra_apuesta(
     monto_total,
-    fecha_compra,
     fk_usuario,
     fk_cliente,
     fk_tipo_apuesta,
-    fk_taquilla) VALUES($1, $2, $3, $4, $5, $6)`;
+    fk_taquilla) VALUES($1, $2, $3, $4, $5)`;
 
   const values = [
         montoTotal,
-        fechaCompra,
         fkUsuario,
         fkCliente,
         fkTipoApuesta,

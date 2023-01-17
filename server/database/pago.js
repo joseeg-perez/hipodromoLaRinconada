@@ -37,29 +37,53 @@ const obtenerPagoIndividual = async (pagoId) => {
 const registrarPago = async (nuevoPago) => {
   const { 
         montoPago,
-        fechaPago,
         fkCompra,
-        fkTd,
         fkTc,
-        fkEfectivo, 
+        fkTd,
+        fkEfectivo,
     } = nuevoPago;
+
+  let values = [];
 
   const text = `INSERT INTO pago(
     monto_pago,
-    fecha_pago,
     fk_compra,
-    fk_td,
     fk_tc,
-    fk_efectivo) VALUES($1, $2, $3, $4, $5, $6)`;
+    fk_td,
+    fk_efectivo) VALUES($1, $2, $3, $4, $5)`;
 
-  const values = [
+    if (fkTc !== undefined){
+      console.log("credito")
+      values = [
         montoPago,
-        fechaPago,
         fkCompra,
-        fkTd,
         fkTc,
+        null,
+        null
+      ];
+    }
+
+    else if (fkTd !== undefined){
+      console.log("debito")
+      values = [
+        montoPago,
+        fkCompra,
+        null,
+        fkTd,
+        null
+      ];
+    }
+
+    else if (fkEfectivo !== undefined){
+      console.log("efectivo")
+      values = [
+        montoPago,
+        fkCompra,
+        null,
+        null,
         fkEfectivo
-    ];
+      ];
+    }
 
   try {
     await dbConnection.query(text, values);

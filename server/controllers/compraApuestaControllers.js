@@ -34,7 +34,6 @@ const obtenerCompraApuestaIndividual = async (req, res) => {
 const registrarCompraApuesta = async (req, res) => { 
     const {
       montoTotal,
-      fechaCompra,
       fkUsuario,
       fkCliente,
       fkTipoApuesta,
@@ -43,7 +42,6 @@ const registrarCompraApuesta = async (req, res) => {
 
      const nuevaCompraApuesta = {
         montoTotal,
-        fechaCompra,
         fkUsuario,
         fkCliente,
         fkTipoApuesta,

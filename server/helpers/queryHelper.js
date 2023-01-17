@@ -1,6 +1,5 @@
 const dbConnection = require("../database/dbConfig.js");
 
-
 const obtenerUltimoId  = async (nombreId, nombreTabla) => {
     const query = {
       text: `SELECT MAX(${nombreId}) FROM ${nombreTabla}`,
