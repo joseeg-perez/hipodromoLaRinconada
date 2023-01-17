@@ -11,11 +11,95 @@ import {
   Row,
 } from "react-bootstrap";
 
-const Pago = () => {
+const Pago = (props) => {
   const [bancos, setbancos] = useState([]);
   const [isLoading, setLoading] = useState([]);
   const [toggleMetodos, settoggleMetodos] = useState(false);
   const [metodo, setmetodo] = useState("");
+
+  const handleData = async (event) => {
+    let apuesta = props.apuesta;
+    let TipoApuesta = props.TipoApuesta;
+    let costo = props.costo;
+
+    if (metodo == 2) {
+      let denominacion = document.getElementById("efectivo").value;
+      console.warn(apuesta, TipoApuesta, costo, denominacion);
+      try {
+        await axios.post(
+          "http://localhost:5000/api/v1/efectivo/registrar_efectivo",
+          {
+            apuesta,
+            TipoApuesta,
+            costo,
+            denominacion,
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
+      alert("Se creo el tipo de apuesta con éxito");
+    } else if (metodo == 1) {
+      let numero_tarjeta = document.getElementById("numerotarjeta").value;
+      let fecha_vencimiento = document.getElementById("fecha_expiracion").value;
+      let banco = document.getElementById("banco").value;
+      console.warn(
+        apuesta,
+        TipoApuesta,
+        costo,
+        numero_tarjeta,
+        fecha_vencimiento,
+        banco
+      );
+      try {
+        await axios.post(
+          "http://localhost:5000/api/v1/tarjeta_credito/registrar_tarjetaCredito",
+          {
+            apuesta,
+            TipoApuesta,
+            costo,
+            numero_tarjeta,
+            fecha_vencimiento,
+            banco,
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
+      alert("Se creo el tipo de apuesta con éxito");
+    } else if (metodo == 0) {
+      let numero_tarjeta = document.getElementById("numerotarjeta").value;
+      let tipo_cuenta = document.getElementById("tipocuenta").value;
+      let fecha_vencimiento = document.getElementById("fecha_expiracion").value;
+      let banco = document.getElementById("banco").value;
+      console.warn(
+        apuesta,
+        TipoApuesta,
+        costo,
+        tipo_cuenta,
+        numero_tarjeta,
+        fecha_vencimiento,
+        banco
+      );
+      try {
+        await axios.post(
+          "http://localhost:5000/api/v1/tarjeta_debito/registrar_tarjetaDebito",
+          {
+            apuesta,
+            TipoApuesta,
+            costo,
+            tipo_cuenta,
+            numero_tarjeta,
+            fecha_vencimiento,
+            banco
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
+      alert("Se creo el tipo de apuesta con éxito");
+    }
+  };
 
   const handleMetodos = (event) => {
     settoggleMetodos(true);
@@ -64,7 +148,7 @@ const Pago = () => {
                 {toggleMetodos && metodo == 2 ? (
                   <div className="mt-3 mb-3 form-floating">
                     <input
-                      id="numerotarjeta"
+                      id="efectivo"
                       type="number"
                       className="form-control"
                       placeholder="Numero de tarjeta"
@@ -118,7 +202,7 @@ const Pago = () => {
                 )}
                 <Row>
                   <Col size="3" className="mt-4">
-                    <Button color="info" rounded>
+                    <Button color="info" rounded onClick={handleData}>
                       Confirmar Pago
                     </Button>
                   </Col>
