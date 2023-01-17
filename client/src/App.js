@@ -75,14 +75,12 @@ import Pago from "./pages/Pago";
 import Reportes from "./pages/Reportes";
 import Reporte1 from "./pages/Reportes/Reporte1";
 import Reporte4 from "./pages/Reportes/Reporte4";
-<<<<<<< HEAD
 import Reporte2 from "./pages/Reportes/Reporte2";
 import Reporte3 from "./pages/Reportes/Reporte3";
 import Reporte5 from "./pages/Reportes/Reporte5";
 import Reporte6 from "./pages/Reportes/Reporte6";
 import Reporte7 from "./pages/Reportes/Reporte7";
 import Reporte8 from "./pages/Reportes/Reporte8";
-=======
 import Reporte15 from "./pages/Reportes/Reporte15";
 import Reporte14 from "./pages/Reportes/Reporte14";
 import Reporte13 from "./pages/Reportes/Reporte13";
@@ -90,7 +88,6 @@ import Reporte12 from "./pages/Reportes/Reporte12";
 import Reporte11 from "./pages/Reportes/Reporte11";
 import Reporte10 from "./pages/Reportes/Reporte10";
 import Reporte9 from "./pages/Reportes/Reporte9";
->>>>>>> f35f771b9fc76adc4d8ef995c050800b9b497785
 
 function App() {
   return (
