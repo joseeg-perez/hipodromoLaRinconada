@@ -73,6 +73,8 @@ import GacetaEvento from "./pages/GacetaEvento";
 import ApuestaRealizar from "./pages/ApuestaRealizar";
 import Pago from "./pages/Pago";
 import Reportes from "./pages/Reportes";
+import Reporte1 from "./pages/Reportes/Reporte1";
+import Reporte4 from "./pages/Reportes/Reporte4";
 
 function App() {
   return (
@@ -359,6 +361,14 @@ function App() {
 
         <Route path="/reportes">
           <Reportes></Reportes>
+        </Route>
+
+        <Route path="/reporte1" exact>
+          <Reporte1></Reporte1>
+        </Route>
+
+        <Route path="/reporte4" exact>
+          <Reporte4></Reporte4>
         </Route>
       </Switch>
     </Layout>
