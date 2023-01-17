@@ -1096,7 +1096,7 @@ const Resultados = () => {
         <h1>RESULTADOS</h1>
       </Row>
 
-      <Row className="mt-3">
+      {/* <Row className="mt-3">
         <Col className="justify-content-center align-items-center mx-5">
           <Card>
             <Card.Body style={{ height: "1479px", overflowY: "scroll" }}>
@@ -1234,14 +1234,14 @@ const Resultados = () => {
             </Card.Body>
           </Card>
         </Col>
-      </Row>
+      </Row> */}
 
       <Row className="mt-3 mb-2">
         <Col className="justify-content-center align-items-center mx-5">
           <Card>
             <Card.Body style={{ height: "478px", overflowY: "scroll" }}>
               <Row className="text-center">
-                <h3>EVENTOS ANTERIORES</h3>
+                <h3>EVENTOS</h3>
               </Row>
 
               <Row className="d-flex justify-content-center row-cols-2 mt-2">
@@ -1263,14 +1263,29 @@ const Resultados = () => {
               </Row>
 
               <Row className="row row-cols-3 mt-3 text-center d-flex justify-content-center">
-                {/* {eventos.da.map((x) => (
+                
+              {/* {eventos.data.map((x) =>
+                  x.fecha_evento < fechaHoy ? (
+                    <InfoEventos
+                      key={x.codigo_evento}
+                      id={x.codigo_evento}
+                      fecha={x.fecha_evento}
+                      tipo="resultados"
+                     
+                    ></InfoEventos>
+                  ) : (
+                    console.log("no")
+                  )
+                )} */}
+                
+                {eventos.data.map((x) => (
                   <InfoEventos
-                    key={x.id}
-                    id={x.id}
-                    fecha={x.fecha}
+                    key={x.codigo_evento}
+                    id={x.codigo_evento}
+                    fecha={x.fecha_evento}
                     tipo="resultados"
                   ></InfoEventos>
-                ))} */}
+                ))}
               </Row>
             </Card.Body>
           </Card>

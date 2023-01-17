@@ -2,8 +2,12 @@ const dbConnection = require("../database/dbConfig.js");
 
 const obtenerListaQuery1 = async (gacetaId) => {
   const query = {
-    text: `select *from carrera
-    where fk_evento=$1`,
+    text: `select codigo_carrera, fk_categoria_carrera, fk_evento, hora_carrera, nombre_carrera, numero_carrera, premio_primero, premio_segundo,
+    premio_tercero,premio_cuarto, premio_quinto, valor_regla
+    from carrera, carrera_regla
+    where fk_evento=$1
+    and fk_carrera=codigo_carrera
+    and fk_regla=1`,
     values: [gacetaId]
   };
 
@@ -23,10 +27,12 @@ const obtenerListaQuery2 = async (gacetaId) => {
       e.sexo_ejemplar as sexo, pel.abrev_pelaje as pelaje , AGE(CURRENT_DATE, e.fecha_nacimiento_ejemplar) as edad,
       concat  (pe.nombre1_persona,' ',pe.apellido1_persona) as entrenador, 
       concat  (pj.nombre1_persona,' ',pj.apellido1_persona) as jinete, em.nombre_ejemplar as madre, ep.nombre_ejemplar as padre,
-      s.nombre_stud as stud, count(par.codigo_participacion) as participaciones, pa.fk_carrera
+      s.nombre_stud as stud, count(par.codigo_participacion) as participaciones, pa.fk_carrera,(DATE_PART('year', ev.fecha_evento)*365 - DATE_PART('year', even.fecha_evento) * 365 +
+      (DATE_PART('month',  ev.fecha_evento)*30 - DATE_PART('month', even.fecha_evento)*30)+			  
+      DATE_PART('day', ev.fecha_evento) - DATE_PART('day', even.fecha_evento)) as diferencia_dias
       
       from participacion pa,persona_jinete pj, persona_entrenador pe, carrera ca, evento ev, pelaje pel,stud s, 
-      ejemplar_propietario eprop, propietario_stud ps,participacion par,
+      ejemplar_propietario eprop, propietario_stud ps,participacion par,evento even, participacion p, carrera c,
       ejemplar e left outer join ejemplar em  on e.fk_madre_ejemplar=em.codigo_ejemplar left outer join ejemplar ep
       on e.fk_padre_ejemplar=ep.codigo_ejemplar 
       
@@ -45,10 +51,19 @@ const obtenerListaQuery2 = async (gacetaId) => {
       and par.fk_resultado is not null
       and par.fk_entrenador=pe.codigo_persona
       and par.fk_jinete=pj.codigo_persona
+      and p.fk_ejemplar=e.codigo_ejemplar
+      and p.fk_carrera=c.codigo_carrera
+      and c.fk_evento=even.codigo_evento
+      and even.fecha_evento =(select max(ev.fecha_evento)
+					    from evento ev, participacion p, carrera c
+					    where e.codigo_ejemplar=p.fk_ejemplar
+					    and p.fk_carrera=c.codigo_carrera
+					    and c.fk_evento=ev.codigo_evento
+					    and p.fk_resultado is not null)
       and ev.codigo_evento=$1
       
       group by pa.codigo_participacion,e.codigo_ejemplar, e.nombre_ejemplar, pa.gualdrapa, pa.puesto_pista, pa.peso_caballo, 
-      pa.peso_jinete, sexo, pelaje ,edad, entrenador, jinete,madre, padre, stud, pa.fk_carrera`,
+      pa.peso_jinete, sexo, pelaje ,edad, entrenador, jinete,madre, padre, stud, pa.fk_carrera, diferencia_dias`,
       values: [gacetaId]
     };
   
@@ -108,10 +123,10 @@ const obtenerListaQuery4 = async (gacetaId) => {
 
 const obtenerListaQuery5 = async (gacetaId) => {
     const query = {
-      text: `select  e.codigo_ejemplar, to_char(ev.fecha_evento :: DATE, 'dd-mm-yyyy') as fecha  , pa.codigo_participacion, pa.peso_caballo, pa.peso_jinete, 
-      concat  (pj.nombre1_persona,' ',pj.apellido1_persona) as jinete, r.tiempo_total, r.speed_rating, r.tiempo_300m, r.tiempo_800m,
+      text: `select  e.codigo_ejemplar, to_char(ev.fecha_evento, 'dd-mm') as fecha_evento, pa.codigo_participacion, pa.peso_caballo, pa.peso_jinete, 
+      concat  (pj.nombre1_persona,' ',pj.apellido1_persona) as jinete, to_char(r.tiempo_total, 'MI:SS') as tiempo_total, r.speed_rating, to_char(r.tiempo_300m, 'SS') as tiempo_300m, to_char(r.tiempo_800m, 'MI:SS') as tiempo_800m,
       car.valor_regla as distancia, cr.valor_regla as variante, carre.valor_regla as participantes, ej.nombre_ejemplar as ganador,
-      res.tiempo_total as tiempo_ganador, cu.nombre_cuerpo_dif, ca.premio_primero
+      to_char(res.tiempo_total, 'MI:SS') as tiempo_ganador, cu.nombre_cuerpo_dif, ca.premio_primero
       from participacion pa, carrera ca, evento ev, ejemplar e, persona_jinete pj, resultado r, carrera_regla car, carrera_regla cr, 
       carrera_regla carre, ejemplar ej, participacion par, resultado res, cuerpo_diferencia cu
       where pa.fk_ejemplar=e.codigo_ejemplar
@@ -132,11 +147,11 @@ const obtenerListaQuery5 = async (gacetaId) => {
       and res.fk_tipo_resultado=1
       and res.fk_cuerpo_diferencia=cu.codigo_cuerpo_dif
       and e.codigo_ejemplar in (select  e.codigo_ejemplar
-                                from participacion pa, carrera ca, evento ev, ejemplar e
-                                where pa.fk_ejemplar=e.codigo_ejemplar
-                                and pa.fk_carrera=ca.codigo_carrera
-                                and ca.fk_evento=ev.codigo_evento
-                                and ev.codigo_evento=$1)
+                    from participacion pa, carrera ca, evento ev, ejemplar e
+                    where pa.fk_ejemplar=e.codigo_ejemplar
+                    and pa.fk_carrera=ca.codigo_carrera
+                    and ca.fk_evento=ev.codigo_evento
+                    and ev.codigo_evento=$1)
       group by e.codigo_ejemplar,ev.fecha_evento, pa.codigo_participacion, pa.peso_caballo, pa.peso_jinete, jinete, 
       r.tiempo_total, r.speed_rating, r.tiempo_300m, r.tiempo_800m, distancia, variante, participantes, ganador, tiempo_ganador,
       cu.nombre_cuerpo_dif, ca.premio_primero`,
