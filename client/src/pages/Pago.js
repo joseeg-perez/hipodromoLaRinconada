@@ -16,6 +16,11 @@ const Pago = (props) => {
   const [isLoading, setLoading] = useState([]);
   const [toggleMetodos, settoggleMetodos] = useState(false);
   const [metodo, setmetodo] = useState("");
+  const [fecha_vencimiento, setfecha] = useState("");
+
+  const handlefecha = (event) => {
+    setfecha(event.target.value);
+  };
 
   const handleData = async (event) => {
     let apuesta = props.apuesta;
@@ -41,7 +46,6 @@ const Pago = (props) => {
       alert("Se creo el tipo de apuesta con éxito");
     } else if (metodo == 1) {
       let numero_tarjeta = document.getElementById("numerotarjeta").value;
-      let fecha_vencimiento = document.getElementById("fecha_expiracion").value;
       let banco = document.getElementById("banco").value;
       console.warn(
         apuesta,
@@ -70,7 +74,6 @@ const Pago = (props) => {
     } else if (metodo == 0) {
       let numero_tarjeta = document.getElementById("numerotarjeta").value;
       let tipo_cuenta = document.getElementById("tipocuenta").value;
-      let fecha_vencimiento = document.getElementById("fecha_expiracion").value;
       let banco = document.getElementById("banco").value;
       console.warn(
         apuesta,
@@ -91,7 +94,7 @@ const Pago = (props) => {
             tipo_cuenta,
             numero_tarjeta,
             fecha_vencimiento,
-            banco
+            banco,
           }
         );
       } catch (error) {
@@ -126,13 +129,17 @@ const Pago = (props) => {
               <h3>Pago</h3>
             </Card.Header>
             <Card.Body className="p-4">
+              <h6 className="text-start">Costo total:</h6>
+              <p className="text-start">{props.costo} Bs</p>
               <Form>
                 <Row>
                   <Col className="text-start">
                     <FormLabel className="text-start">Banco</FormLabel>
                     <FormSelect id="banco" disabled={metodo == 2}>
                       {bancos.data.map((banco) => (
-                        <option>{banco.nombre_banco}</option>
+                        <option value={banco.codigo_banco}>
+                          {banco.nombre_banco}
+                        </option>
                       ))}
                     </FormSelect>
                   </Col>
@@ -184,19 +191,16 @@ const Pago = (props) => {
                       )}
                     </Row>
                     <Row>
-                      <Col className="mt-3 text-start">
-                        <FormLabel className="text-start">
-                          Fecha de expiracion
-                        </FormLabel>
+                      <div className="mt-3 form-floating">
                         <input
-                          label="Expiration"
+                          value={fecha_vencimiento}
+                          type="date"
                           className="form-control"
-                          id="fecha_expiracion"
-                          type="fecha_expiracion"
-                          placeholder="MM/YYYY"
-                          maxLength={7}
+                          placeholder="First name"
+                          onChange={handlefecha}
                         />
-                      </Col>
+                        <FormLabel>Fecha de expiración</FormLabel>
+                      </div>
                     </Row>
                   </div>
                 )}

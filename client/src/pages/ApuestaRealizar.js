@@ -544,15 +544,17 @@ const ApuestaRealizar = () => {
           </Button>
         )}
         {togglePago && (
-          <Pago
-            apuesta={EjemplaresSeleccionados}
-            costo={
-              reglas.data.find(
-                (regla) => regla.nombre_regla_apuesta == "costo apuesta"
-              ).valor
-            }
-            TipoApuesta={document.getElementById("Tipo de Apuesta").value}
-          ></Pago>
+          <div>
+            <Pago
+              apuesta={EjemplaresSeleccionados}
+              costo={
+                reglas.data.find(
+                  (regla) => regla.nombre_regla_apuesta == "costo apuesta"
+                ).valor
+              }
+              TipoApuesta={document.getElementById("Tipo de Apuesta").value}
+            ></Pago>
+          </div>
         )}
       </div>
     </Container>
