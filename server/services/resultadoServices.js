@@ -11,6 +11,16 @@ const obtenerListaDeResultados = async () => {
   }
 };
 
+const obtenerResultadoEvento = async (resultadoId) => {
+  try {
+    const listaResultados = await Resultado.obtenerResultadoEvento(resultadoId);
+
+    return listaResultados;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const obtenerResultadoIndividual = async (resultadoId) => {
   try {
     const resultado = await Resultado.obtenerResultadoIndividual(resultadoId);
@@ -59,6 +69,7 @@ const borrarResultado = async (resultadoId) => {
 
 module.exports = {
   obtenerListaDeResultados,
+  obtenerResultadoEvento,
   obtenerResultadoIndividual,
   registrarResultado,
   actualizarResultado,

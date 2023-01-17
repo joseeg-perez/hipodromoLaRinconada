@@ -1,4 +1,8 @@
 const TarjetaCredito = require("../database/tarjetaCredito.js");
+const { obtenerUltimoId } = require("../helpers/queryHelper.js");
+const { registrarCompraApuesta } = require("../database/compraApuesta.js");
+const { registrarPago } = require("../database/pago.js");
+const { registrarApuestaParticipacion } = require("../database/apuestaParticipacion.js");
 
 const obtenerListaDeTarjetaCredito = async () => {
   try {
@@ -23,10 +27,37 @@ const obtenerTarjetaCreditoIndividual = async (tarjetaCreditoId) => {
 const registrarTarjetaCredito = async (nuevaTarjetaCredito) => {
   try {
     await TarjetaCredito.registrarTarjetaCredito(nuevaTarjetaCredito);
+    const idTarjetaCreditoNueva = await obtenerUltimoId("codigo_metodo", "metodo_pago_tc");
+    const nuevaCompraApuesta = {
+      montoTotal: nuevaTarjetaCredito.costo,
+      fkCliente: 1,
+      fkTipoApuesta: nuevaTarjetaCredito.TipoApuesta,
+      fkTaquilla: 1,
+    }
+    await registrarCompraApuesta(nuevaCompraApuesta);
+    const idCompraApuestaNueva = await obtenerUltimoId("codigo_compra", "compra_apuesta");
+
+    const nuevoPago = {
+        montoPago: nuevaTarjetaCredito.costo,
+        fkCompra: idCompraApuestaNueva,
+        fkTc: idTarjetaCreditoNueva,
+    }
+    await registrarPago(nuevoPago);
+    const idPagoNuevo = await obtenerUltimoId("codigo_pago", "pago");
+
+    const listaApuesta = nuevaTarjetaCredito.apuesta;
+    for (let i = 0; i < listaApuesta.length; i++) {
+      const nuevaApuestaParticipacion = {
+        fkParticipacion: listaApuesta[i].participacion[0].codigo_participacion,
+        fkTipoApuesta: nuevaTarjetaCredito.TipoApuesta,
+        posicion: listaApuesta[i].posicion,
+        fkPago: idPagoNuevo,
+      }
+      await registrarApuestaParticipacion(nuevaApuestaParticipacion)      
+    }
 
     return;
   } catch (error) {
-    
     throw error;
   }
 };

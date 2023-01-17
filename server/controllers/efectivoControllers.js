@@ -29,13 +29,17 @@ const obtenerEfectivoIndividual = async (req, res) => {
 
 const registrarEfectivo = async (req, res) => {
   const { 
-        denominacion,
-        fkBanco,
-    } = req.body;
+      TipoApuesta,
+      costo,
+      denominacion,
+      apuesta,
+  } = req.body;
 
   const nuevoEfectivo = {
-        denominacion,
-        fkBanco,
+      TipoApuesta,
+      costo,
+      denominacion,
+      apuesta,
   };
 
   try {
