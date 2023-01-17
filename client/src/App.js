@@ -75,12 +75,22 @@ import Pago from "./pages/Pago";
 import Reportes from "./pages/Reportes";
 import Reporte1 from "./pages/Reportes/Reporte1";
 import Reporte4 from "./pages/Reportes/Reporte4";
+<<<<<<< HEAD
 import Reporte2 from "./pages/Reportes/Reporte2";
 import Reporte3 from "./pages/Reportes/Reporte3";
 import Reporte5 from "./pages/Reportes/Reporte5";
 import Reporte6 from "./pages/Reportes/Reporte6";
 import Reporte7 from "./pages/Reportes/Reporte7";
 import Reporte8 from "./pages/Reportes/Reporte8";
+=======
+import Reporte15 from "./pages/Reportes/Reporte15";
+import Reporte14 from "./pages/Reportes/Reporte14";
+import Reporte13 from "./pages/Reportes/Reporte13";
+import Reporte12 from "./pages/Reportes/Reporte12";
+import Reporte11 from "./pages/Reportes/Reporte11";
+import Reporte10 from "./pages/Reportes/Reporte10";
+import Reporte9 from "./pages/Reportes/Reporte9";
+>>>>>>> f35f771b9fc76adc4d8ef995c050800b9b497785
 
 function App() {
   return (
@@ -401,6 +411,33 @@ function App() {
           <Reporte8></Reporte8>
         </Route>
 
+        <Route path="/reporte9" exact>
+          <Reporte9></Reporte9>
+        </Route>
+
+        <Route path="/reporte10" exact>
+          <Reporte10></Reporte10>
+        </Route>
+
+        <Route path="/reporte11" exact>
+          <Reporte11></Reporte11>
+        </Route>
+
+        <Route path="/reporte12" exact>
+          <Reporte12></Reporte12>
+        </Route>
+
+        <Route path="/reporte13" exact>
+          <Reporte13></Reporte13>
+        </Route>
+
+        <Route path="/reporte14" exact>
+          <Reporte14></Reporte14>
+        </Route>
+
+        <Route path="/reporte15" exact>
+          <Reporte15></Reporte15>
+        </Route>
       </Switch>
     </Layout>
   );
