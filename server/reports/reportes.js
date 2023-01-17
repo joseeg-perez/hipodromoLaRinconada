@@ -169,6 +169,7 @@ const ventas_entradas_al_recinto = (req, res) => {
 };
 
 module.exports = {
+    usuario_roles,
     apuestas_por_taquilla,
     apuestas_por_taquilla_tipo_apuesta,
     carreras_mas_frecuentes,

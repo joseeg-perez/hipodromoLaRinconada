@@ -12,6 +12,22 @@ const obtenerListaDeResultados = async (req, res) => {
   }
 };
 
+const obtenerResultadoEvento = async (req, res) => {
+  const {
+    params: { resultadoId },
+  } = req;
+
+  try {
+    const listaResultados = await resultadoservice.obtenerResultadoEvento(resultadoId);
+
+    res.status(200).send({ status: "OK", data: listaResultados });
+  } catch (error) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
 const obtenerResultadoIndividual = async (req, res) => {
   const {
     params: { resultadoId },
@@ -86,6 +102,7 @@ const borrarResultado = async (req, res) => {
 
 module.exports = {
   obtenerListaDeResultados,
+  obtenerResultadoEvento,
   obtenerResultadoIndividual,
   registrarResultado,
   actualizarResultado,

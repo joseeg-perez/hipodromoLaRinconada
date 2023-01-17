@@ -16,6 +16,35 @@ const obtenerListaDeResultados = async () => {
   }
 };
 
+const obtenerResultadoEvento = async (resultadoId) => {
+  const query = {
+    text: `select c.codigo_carrera,p.codigo_participacion, e.codigo_ejemplar,r.fk_tipo_resultado as puesto,e.nombre_ejemplar as caballo,
+    concat  (pe.nombre1_persona,' ',pe.apellido1_persona) as entrenador, 
+    concat  (pj.nombre1_persona,' ',pj.apellido1_persona) as jinete, p.peso_jinete, p.peso_caballo, p.gualdrapa, p.puesto_pista,
+    to_char(r.tiempo_total, 'MI:SS') as tiempo_total,cp.nombre_cuerpo_dif as cuerpos
+    from participacion p, ejemplar e, persona_entrenador pe, persona_jinete pj, resultado r, cuerpo_diferencia cp,carrera c
+    where c.fk_evento=$1
+    and p.fk_carrera=c.codigo_carrera
+    and p.fk_ejemplar=e.codigo_ejemplar
+    and p.fk_jinete=pj.codigo_persona
+    and p.fk_entrenador=pe.codigo_persona
+    and p.fk_resultado=r.codigo_resultado
+    and r.fk_cuerpo_diferencia=cp.codigo_cuerpo_dif
+    group by c.codigo_carrera,p.codigo_participacion, e.codigo_ejemplar,puesto,caballo,entrenador, jinete, p.peso_jinete, 
+    p.peso_caballo, p.gualdrapa, p.puesto_pista,r.tiempo_total,cuerpos`,
+    values: [resultadoId]
+  };
+
+  try {
+    const { rows } = await dbConnection.query(query);
+
+    dbConnection.end;
+    return rows;
+  } catch (error) {
+    throw { status: error?.status || 500, message: error?.message || error };
+  }
+};
+
 const obtenerResultadoIndividual = async (resultadoId) => {
   const query = {
     text: "SELECT * FROM resultado WHERE codigo_resultado=$1",
@@ -214,6 +243,7 @@ const borrarResultado = async (resultadoId) => {
 
 module.exports = {
   obtenerListaDeResultados,
+  obtenerResultadoEvento,
   actualizarCodigoParticipacion,
   obtenerResultadoIndividual,
   registrarResultado,
