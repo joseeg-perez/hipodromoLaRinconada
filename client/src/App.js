@@ -75,6 +75,12 @@ import Pago from "./pages/Pago";
 import Reportes from "./pages/Reportes";
 import Reporte1 from "./pages/Reportes/Reporte1";
 import Reporte4 from "./pages/Reportes/Reporte4";
+import Reporte2 from "./pages/Reportes/Reporte2";
+import Reporte3 from "./pages/Reportes/Reporte3";
+import Reporte5 from "./pages/Reportes/Reporte5";
+import Reporte6 from "./pages/Reportes/Reporte6";
+import Reporte7 from "./pages/Reportes/Reporte7";
+import Reporte8 from "./pages/Reportes/Reporte8";
 
 function App() {
   return (
@@ -367,9 +373,34 @@ function App() {
           <Reporte1></Reporte1>
         </Route>
 
+        <Route path="/reporte2" exact>
+          <Reporte2></Reporte2>
+        </Route>
+
+        <Route path="/reporte3" exact>
+          <Reporte3></Reporte3>
+        </Route>
+
         <Route path="/reporte4" exact>
           <Reporte4></Reporte4>
         </Route>
+
+        <Route path="/reporte5">
+          <Reporte5></Reporte5>
+        </Route>
+
+        <Route path="/reporte6">
+          <Reporte6></Reporte6>
+        </Route>
+
+        <Route path="/reporte7">
+          <Reporte7></Reporte7>
+        </Route>
+
+        <Route path="/reporte8">
+          <Reporte8></Reporte8>
+        </Route>
+
       </Switch>
     </Layout>
   );
