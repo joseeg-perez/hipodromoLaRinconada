@@ -66,6 +66,9 @@ const Menu = () => {
                 <Link className="list-group-item" to="/pelajes">
                   CONSULTAR PELAEJES
                 </Link>
+                <Link className="list-group-item" to="/apuestas/apuestasCreate">
+                  CREAR TIPO DE APUESTA
+                </Link>
                 <Link className="list-group-item" to="/gaceta">
                   CONSULTAR GACETA
                 </Link>

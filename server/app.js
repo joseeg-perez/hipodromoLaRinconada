@@ -60,6 +60,8 @@ const v1TarjetaCreditoRoutes = require("./v1/routes/tarjetaCreditoRoutes.js");
 const v1EfectivoRoutes = require("./v1/routes/efectivoRoutes.js");
 const v1CompraApuestaRoutes = require("./v1/routes/compraApuestaRoutes.js");
 const v1GacetaRoutes = require("./v1/routes/gacetaRoutes.js");
+const v1PagoRoutes = require("./v1/routes/pagoRoutes.js");
+const v1BancoRoutes = require("./v1/routes/bancoRoutes.js");
 
 // Puerto
 const PORT = process.env.PORT || 5000;
@@ -122,9 +124,12 @@ app.use("/api/v1/regla_tipo_apuesta", v1ReglaTipoApuestaRoutes);
 app.use("/api/v1/regla_apuesta", v1ReglaApuestaRoutes);
 app.use("/api/v1/tarjeta_debito", v1TarjetaDebitoRoutes);
 app.use("/api/v1/tarjeta_credito", v1TarjetaCreditoRoutes);
-// app.use("/api/v1/efectivo", v1EfectivoRoutes);
+app.use("/api/v1/efectivo", v1EfectivoRoutes);
 app.use("/api/v1/compra_apuesta", v1CompraApuestaRoutes);
 app.use("/api/v1/gaceta", v1GacetaRoutes);
+app.use("/api/v1/pagos", v1PagoRoutes);
+app.use("/api/v1/bancos", v1BancoRoutes);
+
 
 
 

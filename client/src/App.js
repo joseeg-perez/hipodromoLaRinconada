@@ -67,8 +67,11 @@ import MotivoRetiroUpdate from "./pages/MotivoRetiroUpdate";
 import Login from "./pages/Login";
 import RegisterCard from "./pages/RegisterCard";
 import EntrenadorDetail from "./pages/EntrenadorDetail";
+import TipoApuestaAgregar from "./pages/TipoApuestaAgregar";
 import Gaceta from "./pages/Gaceta";
 import GacetaEvento from "./pages/GacetaEvento";
+import ApuestaRealizar from "./pages/ApuestaRealizar";
+import Pago from "./pages/Pago";
 
 function App() {
   return (
@@ -82,8 +85,15 @@ function App() {
           <Principal></Principal>
         </Route>
 
-        <Route path="/apuestas">
+        <Route path="/apuestas" exact>
           <Apuestas></Apuestas>
+        </Route>
+
+        <Route path="/apuestas/apuestasCreate" exact>
+          <TipoApuestaAgregar></TipoApuestaAgregar>
+        </Route>
+        <Route path="/apuestas/hacerApuesta" exact>
+          <ApuestaRealizar></ApuestaRealizar>
         </Route>
 
         <Route path="/menu">

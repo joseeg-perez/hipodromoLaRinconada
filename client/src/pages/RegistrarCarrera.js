@@ -40,7 +40,11 @@ const RegistrarCarrera = () => {
 
   const reglas2 = [];
   reglas.data.map((x) => {
-    if (x.nombre_regla != "Distancia" && x.nombre_regla != "Genero" && x.nombre_regla != "Participantes") {
+    if (
+      x.nombre_regla != "Distancia" &&
+      x.nombre_regla != "Genero" &&
+      x.nombre_regla != "Participantes"
+    ) {
       reglas2.push(x);
     }
   });
@@ -153,7 +157,6 @@ const RegistrarCarrera = () => {
                             id="hora"
                             min="12:30"
                             max="24:00"
-                            
                           ></input>
                         </Col>
                       </Row>

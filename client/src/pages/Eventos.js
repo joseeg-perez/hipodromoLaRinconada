@@ -49,7 +49,7 @@ const Eventos = () => {
       await axios.post(
         "http://localhost:5000/api/v1/eventos/registrar_evento",
         {
-          fechaEvento
+          fechaEvento,
         }
       );
     } catch (error) {

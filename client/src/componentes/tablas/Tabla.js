@@ -12,6 +12,7 @@ function Tabla(props) {
         <Row style={{ height: "220px", overflowY: "scroll" }}>
           <Table className={`table-responsive ${props.estilo}`}>
             <thead>{props.columnas}</thead>
+            {console.log(props.informacion)}
             <tbody>{props.informacion.map(props.funcion)}</tbody>
           </Table>
         </Row>
