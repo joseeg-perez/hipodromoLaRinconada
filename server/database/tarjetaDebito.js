@@ -36,10 +36,10 @@ const obtenerTarjetaDebitoIndividual = async (tarjetaDebitoId) => {
 
 const registrarTarjetaDebito = async (nuevaTarjetaDebito) => {
     const { 
-        fechaVencimiento,
-        tipoCuenta,
-        numeroTarjeta,
-        fkBanco,
+        fecha_vencimiento,
+        tipo_cuenta,
+        numero_tarjeta,
+        banco,
      } = nuevaTarjetaDebito;
 
     const text = `INSERT INTO metodo_pago_td(
@@ -49,11 +49,11 @@ const registrarTarjetaDebito = async (nuevaTarjetaDebito) => {
         fk_banco) VALUES($1, $2, $3, $4)`;
         
     const values = [
-        fechaVencimiento,
-        tipoCuenta,
-        numeroTarjeta,
-        fkBanco
-    ];
+        fecha_vencimiento,
+        tipo_cuenta,
+        numero_tarjeta,
+        banco,
+      ];
 
   try {
     await dbConnection.query(text, values);

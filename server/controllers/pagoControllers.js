@@ -30,7 +30,6 @@ const obtenerPagoIndividual = async (req, res) => {
 const registrarPago = async (req, res) => {
   const { 
         montoPago,
-        fechaPago,
         fkCompra,
         fkTd,
         fkTc,
@@ -39,7 +38,6 @@ const registrarPago = async (req, res) => {
 
   const nuevoPago = {
         montoPago,
-        fechaPago,
         fkCompra,
         fkTd,
         fkTc,

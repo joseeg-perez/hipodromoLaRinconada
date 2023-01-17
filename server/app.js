@@ -62,6 +62,7 @@ const v1CompraApuestaRoutes = require("./v1/routes/compraApuestaRoutes.js");
 const v1GacetaRoutes = require("./v1/routes/gacetaRoutes.js");
 const v1PagoRoutes = require("./v1/routes/pagoRoutes.js");
 const v1BancoRoutes = require("./v1/routes/bancoRoutes.js");
+const v1ApuestaParticipacion = require("./v1/routes/apuestaParticipacionRoutes.js");
 
 // Puerto
 const PORT = process.env.PORT || 5000;
@@ -83,7 +84,7 @@ app.use("/api/v1/entrenadores", v1EntrenadorRouter);
 app.use("/api/v1/propietarios", v1PropietarioRouter);
 app.use("/api/v1/roles", v1RolRouter);
 app.use("/api/v1/studs", v1StudRouter);
-app.use("/api/v1/reportes", v1ReporteRouter);
+// app.use("/api/v1/reportes", v1ReporteRouter);
 app.use("/api/v1/auth", v1AuthRouter);
 app.use("/api/v1/haras", v1HaraRouter);
 app.use("/api/v1/implementos", v1ImplementoRouter);
@@ -129,11 +130,6 @@ app.use("/api/v1/compra_apuesta", v1CompraApuestaRoutes);
 app.use("/api/v1/gaceta", v1GacetaRoutes);
 app.use("/api/v1/pagos", v1PagoRoutes);
 app.use("/api/v1/bancos", v1BancoRoutes);
-
-
-
-
-
-
+app.use("/api/v1/apuesta_participacion", v1ApuestaParticipacion);
 
 module.exports = { app, PORT };

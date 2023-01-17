@@ -36,9 +36,9 @@ const obtenerTarjetaCreditoIndividual = async (tarjetaCreditoId) => {
 
 const registrarTarjetaCredito = async (nuevaTarjetaCredito) => {
     const { 
-        fechaVencimiento,
-        numeroTarjeta,
-        fkBanco,
+        fecha_vencimiento,
+        numero_tarjeta,
+        banco,
      } = nuevaTarjetaCredito;
 
     const text = `INSERT INTO metodo_pago_tc(
@@ -47,9 +47,9 @@ const registrarTarjetaCredito = async (nuevaTarjetaCredito) => {
         fk_banco) VALUES($1, $2, $3)`;
         
     const values = [
-        fechaVencimiento,
-        numeroTarjeta,
-        fkBanco
+        fecha_vencimiento,
+        numero_tarjeta,
+        banco
     ];
 
   try {

@@ -37,12 +37,11 @@ const obtenerEfectivoIndividual = async (efectivoId) => {
 const registrarEfectivo = async (nuevoEfectivo) => {
   const { 
         denominacion,
-        fkBanco, 
     } = nuevoEfectivo;
 
-  const text = `INSERT INTO metodo_pago_efectivo(denominacion, fk_banco) VALUES($1, $2)`;
+  const text = `INSERT INTO metodo_pago_efectivo(denominacion) VALUES($1)`;
 
-  const values = [denominacion, fkBanco];
+  const values = [denominacion];
 
   try {
     await dbConnection.query(text, values);
@@ -66,9 +65,8 @@ const actualizarEfectivo = async (efectivoId, cambios) => {
   const query = {
     text: `UPDATE metodo_pago_efectivo
         SET denominacion=$1,
-        fk_banco=$2
-        WHERE codigo_metodo=$3;`,
-    values: [denominacion, fkBanco, efectivoId],
+        WHERE codigo_metodo=$2;`,
+    values: [denominacion, efectivoId],
   };
 
   try {
