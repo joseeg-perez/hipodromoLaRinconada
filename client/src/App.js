@@ -72,6 +72,7 @@ import Gaceta from "./pages/Gaceta";
 import GacetaEvento from "./pages/GacetaEvento";
 import ApuestaRealizar from "./pages/ApuestaRealizar";
 import Pago from "./pages/Pago";
+import Reportes from "./pages/Reportes";
 
 function App() {
   return (
@@ -354,6 +355,10 @@ function App() {
 
         <Route path="/gaceta/:eventoId">
           <GacetaEvento></GacetaEvento>
+        </Route>
+
+        <Route path="/reportes">
+          <Reportes></Reportes>
         </Route>
       </Switch>
     </Layout>

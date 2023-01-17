@@ -1,962 +1,118 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import Tabla from "../componentes/tablas/Tabla";
+import axios from "axios";
 
 const ResultadoEvento = () => {
   const location = useLocation();
   const {
     props: { id, fecha },
   } = location.state;
-  
 
+  const [isLoading, setLoading] = useState(true);
+  const [isLoading2, setLoading2] = useState(true);
+  const [carreras, setCarreras] = useState([]);
+  const [resultados, setResultados] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/v1/gaceta/query1/${id}`)
+      .then((res) => {
+        console.log(res);
+        setCarreras(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  if (isLoading) return <div>Cargando</div>;
+
+  console.log(carreras);
   let columnas6 = (
     <tr>
       <th>Pos</th>
-      <th>Nombre</th>
       <th>Num</th>
+      <th>Nombre</th>
+      <th>P.P</th>
       <th>Jinete</th>
-      <th>Stud</th>
+      <th>Peso Jinete</th>
+      <th>Entrenador</th>
       <th>Tiempo</th>
-      <th>Remate 300m</th>
-      <th>Remate 400m</th>
-      <th>Remate 800m</th>
+      <th>Dif. Cuerpos</th>
     </tr>
   );
 
-  const resultados = [
-    {
-      id: "1",
-      nombre: "Carrera 1",
-      posiciones: [
-        {
-          pos: 1,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "15:30",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 2,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 3,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 4,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 5,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 6,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 7,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 8,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 9,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 10,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 11,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 12,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 13,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 14,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-      ],
-    },
-    {
-      id: "2",
-      nombre: "Carrera 2",
-      posiciones: [
-        {
-          pos: 1,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "15:30",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 2,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 3,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 4,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 5,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 6,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 7,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 8,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 9,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 10,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 11,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 12,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 13,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 14,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-      ],
-    },
-    {
-      id: "3",
-      nombre: "Carrera 3",
-      posiciones: [
-        {
-          pos: 1,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "15:30",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 2,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 3,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 4,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 5,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 6,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 7,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 8,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 9,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 10,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 11,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 12,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 13,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 14,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-      ],
-    },
-    {
-      id: "4",
-      nombre: "Carrera 4",
-      posiciones: [
-        {
-          pos: 1,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "15:30",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 2,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 3,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 4,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 5,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 6,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 7,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 8,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 9,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 10,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 11,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 12,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 13,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 14,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-      ],
-    },
-    {
-      id: "5",
-      nombre: "Carrera 5",
-      posiciones: [
-        {
-          pos: 1,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "15:30",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 2,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 3,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 4,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 5,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 6,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 7,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 8,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 9,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 10,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-      ],
-    },
-    {
-      id: "6",
-      nombre: "Carrera 6",
-      posiciones: [
-        {
-          pos: 1,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "15:30",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 2,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 3,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 4,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 5,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 6,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 7,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 8,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 9,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 10,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 11,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-        {
-          pos: 12,
-          nombre: "Wixy",
-          num: 44,
-          jinete: "Pedro Navaja",
-          stud: "Papa Pedro",
-          tiempo: "+1.4 seg",
-          rem_300m: "42km/h",
-          rem_400m: "40km/h",
-          rem_800m: "436km/h",
-        },
-      ],
-    },
-  ];
+  let grid = [];
 
+  for (let index = 0; index < carreras.data.length; index++) {
+    carreras.data[index] = {
+      ...carreras.data[index],
+      resultadoParticipaciones: [],
+    };
+  }
+  carreras.data.map((x) => grid.push(x));
+  console.log(grid);
   return (
     <Container>
       <Row className="text-center">
         <h1>{`RESULTADOS DEL EVENTO DEL ${fecha}`}</h1>
       </Row>
 
-      <Row>
-        <Col className="justify-content-center align-items-center mx-5">
-          <Card>
-            <Card.Body style={{ height: "500px", overflowY: "scroll" }}>
-              <Row className="row row-cols-1">
-                {resultados.map((x) => (
-                  <Tabla
-                    titulo={x.nombre}
-                    columnas={columnas6}
-                    informacion={x.posiciones}
-                    funcion={(x) => (
-                      <tr>
-                        <td>{`${x.pos}`}</td>
-                        <td>{`${x.nombre}`}</td>
-                        <td>{`${x.num}`}</td>
-                        <td>{`${x.jinete}`}</td>
-                        <td>{`${x.stud}`}</td>
-                        <td>{`${x.tiempo}`}</td>
-                        <td>{`${x.rem_300m}`}</td>
-                        <td>{`${x.rem_400m}`}</td>
-                        <td>{`${x.rem_800m}`}</td>
-                      </tr>
-                    )}
-                  ></Tabla>
-                ))}
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      {grid.map((x) => (
+        <Row className="mt-3">
+          <Row className="ms-5">
+            <h2>{`CARRERA Nro.${x.numero_carrera}`}</h2>
+          </Row>
+          <Row>
+            <Col className="justify-content-center align-items-center mx-5">
+              <Card className="mb-4">
+                <Card.Header>
+                  <Row>
+                    <Col className="col-auto">
+                      <h4>{`NOMBRE: ${x.nombre_carrera.toUpperCase()}`}</h4>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col className="col-auto">
+                      <h4>{`HORA: ${x.hora_carrera}`}</h4>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="col-auto">
+                      <h4>{`DISTANCIA: ${x.valor_regla}mts`}</h4>
+                    </Col>
+                  </Row>
+                  <Row className="row row-cols-6">
+                    <Col className="col-auto">
+                      <h4>{`PREMIOS: `}</h4>
+                    </Col>
+
+                    <Col className="col-auto">
+                      <h4>{`1ro: ${x.premio_primero}$`}</h4>
+                    </Col>
+                    <Col className="col-auto">
+                      <h4>{`2do: ${x.premio_segundo}$`}</h4>
+                    </Col>
+                    <Col className="col-auto">
+                      <h4>{`3ro: ${x.premio_tercero}$`}</h4>
+                    </Col>
+                    <Col className="col-auto">
+                      <h4>{`4to: ${x.premio_cuarto}$`}</h4>
+                    </Col>
+                    <Col className="col-auto">
+                      <h4>{`5to: ${x.premio_quinto}$`}</h4>
+                    </Col>
+                  </Row>
+                </Card.Header>
+                <Card.Body>
+                  <p>aca la tabla</p>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Row>
+      ))}
     </Container>
   );
 };
